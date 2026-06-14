@@ -1,6 +1,8 @@
 /**
- * 네이버 블로그 이웃새글 수집기
- * 실행: CLAUDE_API_KEY=... NAVER_COOKIE=... node scripts/scrape-naver.js
+ * 네이버 블로그 이웃새글 수집기 v2
+ * 방식: Playwright 네트워크 인터셉션 (CSS 셀렉터 불필요)
+ * - Naver SPA가 로드될 때 발생하는 XHR/fetch 응답을 직접 캡처
+ * - AngularJS 렌더링 완료 여부와 무관하게 안정적으로 동작
  */
 
 import { chromium } from 'playwright';
@@ -45,13 +47,7 @@ async function analyzePost(title, content, blogName) {
     return JSON.parse(text);
   } catch (e) {
     console.warn('  AI 분석 실패, 기본값 사용:', e.message);
-    return {
-      summary: title,
-      stocks: [],
-      sector: '기타',
-      signal: '중립',
-      key_points: [],
-    };
+    return { summary: title, stocks: [], sector: '기타', signal: '중립', key_points: [] };
   }
 }
 
@@ -62,10 +58,7 @@ async function fetchPostContent(context, url) {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
     await page.waitForTimeout(2000);
 
-    // 네이버 블로그는 mainFrame 안에 iframe 구조
     let text = '';
-
-    // iframe 탐색
     for (const frame of page.frames()) {
       const t = await frame.evaluate(() => {
         const sel = '#postViewArea, .se-main-container, .post-view, #post-area, .blog_main';
@@ -75,7 +68,6 @@ async function fetchPostContent(context, url) {
       if (t && t.length > text.length) text = t;
     }
 
-    // fallback: body 전체
     if (text.length < 50) {
       text = await page.evaluate(() => document.body.innerText?.slice(0, 2000) ?? '');
     }
@@ -86,145 +78,14 @@ async function fetchPostContent(context, url) {
   }
 }
 
-// ─── 이웃새글 목록 파싱 ──────────────────────────────────────────────────────
-async function scrapePostList(page) {
-  // 섹션 블로그 이웃새글 페이지
+// ─── 이웃새글 목록 수집 (API 인터셉션) ──────────────────────────────────────
+async function scrapePostList(browser, cookies) {
   const TARGET = 'https://section.blog.naver.com/BlogHome.naver?directoryNo=0&currentPage=1&groupId=0';
 
-  // AngularJS SPA: domcontentloaded 후 렌더링 대기
-  await page.goto(TARGET, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  // 캡처된 API 응답 저장소
+  const capturedPosts = [];
+  const seenUrls = new Set();
 
-  // 이웃새글 아이템이 DOM에 나타날 때까지 최대 15초 대기
-  try {
-    await page.waitForSelector(
-      '.post_article_comments, .list_post_article, .item.multi_pic, .item.basic',
-      { timeout: 15000 }
-    );
-    console.log('✅ 이웃새글 섹션 로드 확인');
-  } catch {
-    console.warn('⚠️ waitForSelector 타임아웃 - 3초 추가 대기 후 계속');
-    await page.waitForTimeout(3000);
-  }
-
-  // [수정 B] 로그인 페이지 리다이렉트 감지
-  const currentUrl = page.url();
-  const title = await page.title();
-  console.log(`📄 현재 페이지: "${title}" (${currentUrl})`);
-  if (
-    currentUrl.includes('nid.naver.com') ||
-    title.includes('로그인') ||
-    title.toLowerCase().includes('login')
-  ) {
-    console.error('❌ 네이버 로그인 페이지로 리다이렉트됨. 쿠키가 만료되었습니다.');
-    console.error('   GitHub Secrets의 NAVER_COOKIE를 갱신해주세요.');
-    process.exit(1);
-  }
-
-  // 스크롤로 더 많은 글 로드
-  for (let i = 0; i < 4; i++) {
-    await page.evaluate(() => window.scrollBy(0, 800));
-    await page.waitForTimeout(600);
-  }
-
-  // 디버그: 현재 페이지 HTML 일부 출력
-  const debugHtml = await page.evaluate(() => document.body.innerHTML.slice(0, 3000));
-  console.log('\n🔍 페이지 HTML 샘플 (앞 3000자):\n', debugHtml.slice(0, 1500));
-
-  const posts = await page.evaluate(() => {
-    const results = [];
-
-    // ── 1단계: 이웃새글 섹션 컨테이너 탐색 ──────────────────────────────────
-    // DevTools breadcrumb: post_article_comments → div.item.multi_pic → ...
-    const containerSelectors = [
-      '.post_article_comments',
-      '#post_article_comments',
-      '.list_post_article',
-      '.area_buddy',
-      '.section_buddy',
-      '[class*="post_article"]',
-      '[id*="post_article"]',
-    ];
-
-    let container = null;
-    let foundContainerSel = '';
-    for (const sel of containerSelectors) {
-      const el = document.querySelector(sel);
-      if (el) { container = el; foundContainerSel = sel; break; }
-    }
-    console.log('[scraper] 컨테이너:', foundContainerSel || '못 찾음 (전체 페이지 탐색)');
-
-    const scope = container || document;
-
-    // ── 2단계: 아이템 탐색 ────────────────────────────────────────────────────
-    // DevTools: div.item.multi_pic (또는 div.item)
-    let items = Array.from(scope.querySelectorAll('div.item.multi_pic, div.item.basic'));
-    if (items.length === 0) items = Array.from(scope.querySelectorAll('.item'));
-    console.log('[scraper] 아이템 수:', items.length);
-
-    items.forEach((item) => {
-      // ── URL: blog.naver.com/userid/postno 형식 ────────────────────────────
-      // a.text 가 briefContents 링크 (DevTools 확인됨)
-      // 제목 링크는 a.title 또는 별도 요소일 가능성
-      const allLinks = Array.from(item.querySelectorAll('a[href*="blog.naver.com"]'));
-      const postLink = allLinks.find(a => /blog\.naver\.com\/[^/]+\/\d+/.test(a.href));
-      if (!postLink) return;
-
-      const url = postLink.href;
-
-      // ── 제목: 여러 셀렉터 순차 시도 ─────────────────────────────────────
-      const titleEl = item.querySelector(
-        'a.title, .tit_post, strong.title, .title_post, .tit a, ' +
-        '.info_post a.title, a[class*="title"], .subject, .post_title'
-      );
-      // a.text = 발췌(excerpt), 제목 못 찾으면 fallback
-      const excerptEl = item.querySelector('a.text, .desc .text, .desc a');
-
-      let title = titleEl?.textContent?.trim();
-      if (!title || title.length < 2) {
-        title = excerptEl?.textContent?.trim()?.slice(0, 80) || '(제목 없음)';
-      }
-
-      // ── 블로그명: 여러 셀렉터 순차 시도 ────────────────────────────────
-      const blogEl = item.querySelector(
-        '.nick, .blog_name, .writer, .author, ' +
-        '.info_writer .nick, .name_writer, .tit_writer, ' +
-        '.profile_area .nick, .writer_info .name, ' +
-        '.area_writer .nick, [class*="nick"], [class*="writer"]'
-      );
-      const blog_name = blogEl?.textContent?.trim() || '알 수 없음';
-
-      results.push({ title, url, blog_name });
-    });
-
-    // ── 3단계: 아이템을 못 찾았을 때만 fallback (핫토픽 제외 시도) ─────────
-    if (results.length === 0) {
-      console.log('[scraper] fallback: a 태그 전수 탐색 (이웃새글 섹션 우선)');
-      // 핫토픽/광고 등 제외하기 위해 이웃새글 섹션 기준으로 제한
-      const buddySection = document.querySelector(
-        '.area_buddy, .section_buddy, [class*="buddy"], [class*="post_article"]'
-      );
-      const searchBase = buddySection || document;
-      const links = Array.from(searchBase.querySelectorAll('a[href*="blog.naver.com"]'));
-      const seen = new Set();
-      links.forEach(a => {
-        const url = a.href;
-        if (seen.has(url) || !url.match(/blog\.naver\.com\/[^/]+\/\d+/)) return;
-        seen.add(url);
-        results.push({ title: a.textContent?.trim() || '(제목 없음)', url, blog_name: '알 수 없음' });
-      });
-    }
-
-    return results;
-  });
-
-  return posts;
-}
-
-// ─── 메인 ────────────────────────────────────────────────────────────────────
-async function main() {
-  console.log(`\n📅 ${TODAY} 이웃새글 수집 시작`);
-
-  const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     userAgent:
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -232,59 +93,225 @@ async function main() {
     locale: 'ko-KR',
   });
 
-  // ── 네이버 쿠키 주입 ──────────────────────────────────────────────────────
-  const cookieStr = process.env.NAVER_COOKIE || '';
-  if (!cookieStr) {
-    console.warn('⚠️  NAVER_COOKIE 미설정. 비로그인 상태로 시도합니다.');
-  } else {
-    const cookies = cookieStr
-      .split(';')
-      .map(c => {
-        const idx = c.indexOf('=');
-        if (idx < 0) return null;
-        return {
-          name: c.slice(0, idx).trim(),
-          value: c.slice(idx + 1).trim(),
-          domain: '.naver.com',
-          path: '/',
-        };
-      })
-      .filter(Boolean);
-    await context.addCookies(cookies);
-    console.log(`🍪 쿠키 ${cookies.length}개 주입 완료`);
-  }
+  await context.addCookies(cookies);
+
+  // ── 네트워크 응답 인터셉션 ───────────────────────────────────────────────
+  context.on('response', async (response) => {
+    const url = response.url();
+
+    // Naver 블로그 API 패턴 탐지
+    const isNaverApi =
+      url.includes('section.blog.naver.com') ||
+      url.includes('blog.naver.com/api') ||
+      url.includes('/BlogFeed') ||
+      url.includes('/SympathyFeed') ||
+      url.includes('buddyFeeds') ||
+      url.includes('sympathyFeeds') ||
+      url.includes('followFeeds') ||
+      url.includes('/PostList') ||
+      url.includes('/Feed') ||
+      url.includes('currentPage') ||
+      url.includes('groupId');
+
+    if (!isNaverApi) return;
+
+    // JSON 응답만 처리
+    const contentType = response.headers()['content-type'] || '';
+    if (!contentType.includes('json')) return;
+
+    try {
+      const json = await response.json().catch(() => null);
+      if (!json) return;
+
+      console.log(`📡 API 캡처: ${url.slice(0, 100)}`);
+      console.log(`   응답 키: ${Object.keys(json).join(', ')}`);
+
+      // 응답 구조에서 포스트 목록 추출 시도
+      // Naver API는 다양한 형태로 응답할 수 있음
+      const candidates = [
+        json?.result?.postList,
+        json?.result?.items,
+        json?.result?.feeds,
+        json?.postList,
+        json?.items,
+        json?.feeds,
+        json?.data?.postList,
+        json?.data?.items,
+        json?.data?.feeds,
+        Array.isArray(json) ? json : null,
+      ].filter(Boolean);
+
+      for (const list of candidates) {
+        if (!Array.isArray(list) || list.length === 0) continue;
+
+        console.log(`   포스트 목록 발견: ${list.length}개`);
+
+        list.forEach((item) => {
+          // 다양한 필드명 처리
+          const postUrl =
+            item?.blogUrl || item?.url || item?.link ||
+            (item?.blogId && item?.logNo
+              ? `https://blog.naver.com/${item.blogId}/${item.logNo}`
+              : null);
+
+          if (!postUrl || seenUrls.has(postUrl)) return;
+          if (!postUrl.match(/blog\.naver\.com\/[^/]+\/\d+/)) return;
+
+          seenUrls.add(postUrl);
+
+          const title =
+            item?.title || item?.postTitle || item?.subject || '(제목 없음)';
+          const blog_name =
+            item?.blogName || item?.nickName || item?.nick ||
+            item?.author || item?.writerName || '알 수 없음';
+
+          capturedPosts.push({ title, url: postUrl, blog_name });
+        });
+      }
+    } catch (e) {
+      // JSON 파싱 실패 → 무시
+    }
+  });
 
   const page = await context.newPage();
 
   try {
-    // [수정 F] 기존 posts.json의 URL 목록 로드 (중복 분석 방지)
+    console.log('🌐 페이지 로드 시작...');
+    await page.goto(TARGET, { waitUntil: 'domcontentloaded', timeout: 30000 });
+
+    // API 호출이 완료될 때까지 대기 (네트워크 응답 수집용)
+    await page.waitForTimeout(5000);
+
+    // 로그인 확인
+    const currentUrl = page.url();
+    const title = await page.title();
+    console.log(`📄 현재 페이지: "${title}" (${currentUrl})`);
+
+    if (currentUrl.includes('nid.naver.com') || title.includes('로그인')) {
+      console.error('❌ 네이버 로그인 페이지로 리다이렉트됨. 쿠키가 만료되었습니다.');
+      process.exit(1);
+    }
+
+    // 스크롤로 추가 API 호출 유도
+    for (let i = 0; i < 3; i++) {
+      await page.evaluate(() => window.scrollBy(0, 1000));
+      await page.waitForTimeout(1000);
+    }
+
+    // 추가 API 응답 대기
+    await page.waitForTimeout(2000);
+
+    console.log(`\n📊 API 인터셉션으로 수집된 포스트: ${capturedPosts.length}개`);
+
+    // API 인터셉션으로 못 가져온 경우 → DOM fallback
+    if (capturedPosts.length === 0) {
+      console.log('⚠️ API 인터셉션 실패 → DOM 직접 추출 시도');
+
+      // 페이지 HTML 전체 덤프 (디버그용)
+      const html = await page.content();
+      const htmlPath = path.join(__dirname, '../public/data/debug_page.html');
+      fs.mkdirSync(path.dirname(htmlPath), { recursive: true });
+      fs.writeFileSync(htmlPath, html, 'utf-8');
+      console.log(`🔍 페이지 HTML 저장됨: ${htmlPath} (${html.length}자)`);
+
+      // DOM에서 blog.naver.com/id/no 패턴 링크 추출
+      const domPosts = await page.evaluate(() => {
+        const results = [];
+        const seen = new Set();
+        const links = Array.from(document.querySelectorAll('a[href*="blog.naver.com"]'));
+        links.forEach(a => {
+          const url = a.href;
+          if (seen.has(url) || !url.match(/blog\.naver\.com\/[^/]+\/\d+/)) return;
+          seen.add(url);
+          // 부모 요소에서 블로그명 찾기
+          const parent = a.closest('[class*="item"], [class*="post"], li, article') || a.parentElement;
+          const blogEl = parent?.querySelector('[class*="nick"], [class*="writer"], [class*="blog_name"], [class*="author"]');
+          results.push({
+            title: a.textContent?.trim() || '(제목 없음)',
+            url,
+            blog_name: blogEl?.textContent?.trim() || '알 수 없음',
+          });
+        });
+        return results;
+      });
+
+      console.log(`   DOM fallback: ${domPosts.length}개 링크 발견`);
+      capturedPosts.push(...domPosts);
+    }
+
+  } finally {
+    await page.close();
+    await context.close();
+  }
+
+  return capturedPosts;
+}
+
+// ─── 메인 ────────────────────────────────────────────────────────────────────
+async function main() {
+  console.log(`\n📅 ${TODAY} 이웃새글 수집 시작 (v2: API 인터셉션)`);
+
+  // 쿠키 파싱
+  const cookieStr = process.env.NAVER_COOKIE || '';
+  if (!cookieStr) {
+    console.warn('⚠️  NAVER_COOKIE 미설정. 비로그인 상태로 시도합니다.');
+  }
+
+  const cookies = cookieStr
+    .split(';')
+    .map(c => {
+      const idx = c.indexOf('=');
+      if (idx < 0) return null;
+      return {
+        name: c.slice(0, idx).trim(),
+        value: c.slice(idx + 1).trim(),
+        domain: '.naver.com',
+        path: '/',
+      };
+    })
+    .filter(Boolean);
+
+  console.log(`🍪 쿠키 ${cookies.length}개 준비`);
+
+  const browser = await chromium.launch({ headless: true });
+
+  try {
+    // 기존 posts.json 로드 (중복 방지)
     let existingUrls = new Set();
     try {
       const existing = JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf-8'));
       if (existing.date === TODAY && Array.isArray(existing.posts)) {
         existingUrls = new Set(existing.posts.map(p => p.url));
-        console.log(`♻️  기존 데이터 ${existingUrls.size}개 URL 로드 (중복 스킵용)`);
+        console.log(`♻️  기존 데이터 ${existingUrls.size}개 URL 로드`);
       }
-    } catch {
-      // posts.json 없으면 무시
-    }
+    } catch { /* posts.json 없으면 무시 */ }
 
-    // 이웃새글 목록 수집
-    const rawPosts = await scrapePostList(page);
-    console.log(`\n📋 이웃새글 ${rawPosts.length}개 발견`);
+    // 이웃새글 수집
+    const rawPosts = await scrapePostList(browser, cookies);
+    console.log(`\n📋 총 ${rawPosts.length}개 발견`);
 
     if (rawPosts.length === 0) {
-      console.error('❌ 글 목록이 비어있습니다. 쿠키를 확인하거나 URL 구조가 바뀌었을 수 있습니다.');
+      console.error('❌ 글 목록이 비어있습니다.');
+      console.error('   → 쿠키 만료 또는 Naver API 구조 변경 가능성');
       await browser.close();
       process.exit(1);
     }
 
-    // 최대 MAX_POSTS개, 중복 URL 제외
+    // 중복 제거 및 최대 개수 제한
     const limited = rawPosts
       .filter(p => !existingUrls.has(p.url))
       .slice(0, MAX_POSTS);
 
-    console.log(`🆕 신규 글 ${limited.length}개 처리 예정 (중복 ${rawPosts.length - limited.length - Math.max(0, rawPosts.length - MAX_POSTS)}개 스킵)`);
+    console.log(`🆕 신규 ${limited.length}개 처리 예정`);
+
+    // 본문 수집용 context
+    const contentContext = await browser.newContext({
+      userAgent:
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+        '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+      locale: 'ko-KR',
+    });
+    await contentContext.addCookies(cookies);
 
     const results = [];
 
@@ -292,16 +319,14 @@ async function main() {
       const post = limited[i];
       console.log(`\n[${i + 1}/${limited.length}] ${post.blog_name} - ${post.title}`);
 
-      // 본문 가져오기
-      const content = await fetchPostContent(context, post.url).catch(e => {
+      const content = await fetchPostContent(contentContext, post.url).catch(e => {
         console.warn('  본문 실패:', e.message);
         return '';
       });
       console.log(`  본문 ${content.length}자`);
 
-      // [수정 E] 빈 본문이면 Claude API 스킵
       if (content.length < 30) {
-        console.warn('  ⚠️ 본문이 너무 짧아 AI 분석 스킵');
+        console.warn('  ⚠️ 본문 짧음 → AI 분석 스킵');
         results.push({
           id: String(Date.now()) + String(i),
           date: TODAY,
@@ -309,15 +334,11 @@ async function main() {
           title: post.title,
           url: post.url,
           summary: '본문 추출 실패 (비공개 글이거나 이미지 전용 글)',
-          stocks: [],
-          sector: '기타',
-          signal: '중립',
-          key_points: [],
+          stocks: [], sector: '기타', signal: '중립', key_points: [],
         });
         continue;
       }
 
-      // Claude 분석
       const analysis = await analyzePost(post.title, content, post.blog_name);
       console.log(`  → ${analysis.sector} | ${analysis.signal} | ${analysis.stocks.join(', ')}`);
 
@@ -334,11 +355,12 @@ async function main() {
         key_points: analysis.key_points,
       });
 
-      // Rate limit 방지
       if (i < limited.length - 1) await new Promise(r => setTimeout(r, 800));
     }
 
-    // ── posts.json 저장 ────────────────────────────────────────────────────
+    await contentContext.close();
+
+    // 저장
     fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
     fs.writeFileSync(OUTPUT_PATH, JSON.stringify({ date: TODAY, posts: results }, null, 2), 'utf-8');
     console.log(`\n✅ 완료: ${results.length}개 저장 → ${OUTPUT_PATH}`);
