@@ -91,9 +91,20 @@ async function scrapePostList(page) {
   // 섹션 블로그 이웃새글 페이지
   const TARGET = 'https://section.blog.naver.com/BlogHome.naver?directoryNo=0&currentPage=1&groupId=0';
 
-  // [수정 A] networkidle → domcontentloaded (Naver SPA에서 networkidle은 timeout 위험)
+  // AngularJS SPA: domcontentloaded 후 렌더링 대기
   await page.goto(TARGET, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(3000);
+
+  // 이웃새글 아이템이 DOM에 나타날 때까지 최대 15초 대기
+  try {
+    await page.waitForSelector(
+      '.post_article_comments, .list_post_article, .item.multi_pic, .item.basic',
+      { timeout: 15000 }
+    );
+    console.log('✅ 이웃새글 섹션 로드 확인');
+  } catch {
+    console.warn('⚠️ waitForSelector 타임아웃 - 3초 추가 대기 후 계속');
+    await page.waitForTimeout(3000);
+  }
 
   // [수정 B] 로그인 페이지 리다이렉트 감지
   const currentUrl = page.url();
@@ -115,56 +126,93 @@ async function scrapePostList(page) {
     await page.waitForTimeout(600);
   }
 
+  // 디버그: 현재 페이지 HTML 일부 출력
+  const debugHtml = await page.evaluate(() => document.body.innerHTML.slice(0, 3000));
+  console.log('\n🔍 페이지 HTML 샘플 (앞 3000자):\n', debugHtml.slice(0, 1500));
+
   const posts = await page.evaluate(() => {
     const results = [];
 
-    // 여러 selector 시도 (네이버 UI 변경 대응)
-    const selectors = [
-      '.buddy_lst .item',
-      '.lst_buddy .item',
-      '.list_buddy .item',
-      '[class*="buddyPost"] li',
-      '.area_list_recent .item',
-      'ul.lst_post > li',
+    // ── 1단계: 이웃새글 섹션 컨테이너 탐색 ──────────────────────────────────
+    // DevTools breadcrumb: post_article_comments → div.item.multi_pic → ...
+    const containerSelectors = [
+      '.post_article_comments',
+      '#post_article_comments',
+      '.list_post_article',
+      '.area_buddy',
+      '.section_buddy',
+      '[class*="post_article"]',
+      '[id*="post_article"]',
     ];
 
-    let items = [];
-    for (const sel of selectors) {
-      items = Array.from(document.querySelectorAll(sel));
-      if (items.length > 0) break;
+    let container = null;
+    let foundContainerSel = '';
+    for (const sel of containerSelectors) {
+      const el = document.querySelector(sel);
+      if (el) { container = el; foundContainerSel = sel; break; }
     }
+    console.log('[scraper] 컨테이너:', foundContainerSel || '못 찾음 (전체 페이지 탐색)');
 
-    // 못 찾으면 a 태그 중 blog.naver.com 링크 추출
-    if (items.length === 0) {
-      const links = Array.from(document.querySelectorAll('a[href*="blog.naver.com"]'));
+    const scope = container || document;
+
+    // ── 2단계: 아이템 탐색 ────────────────────────────────────────────────────
+    // DevTools: div.item.multi_pic (또는 div.item)
+    let items = Array.from(scope.querySelectorAll('div.item.multi_pic, div.item.basic'));
+    if (items.length === 0) items = Array.from(scope.querySelectorAll('.item'));
+    console.log('[scraper] 아이템 수:', items.length);
+
+    items.forEach((item) => {
+      // ── URL: blog.naver.com/userid/postno 형식 ────────────────────────────
+      // a.text 가 briefContents 링크 (DevTools 확인됨)
+      // 제목 링크는 a.title 또는 별도 요소일 가능성
+      const allLinks = Array.from(item.querySelectorAll('a[href*="blog.naver.com"]'));
+      const postLink = allLinks.find(a => /blog\.naver\.com\/[^/]+\/\d+/.test(a.href));
+      if (!postLink) return;
+
+      const url = postLink.href;
+
+      // ── 제목: 여러 셀렉터 순차 시도 ─────────────────────────────────────
+      const titleEl = item.querySelector(
+        'a.title, .tit_post, strong.title, .title_post, .tit a, ' +
+        '.info_post a.title, a[class*="title"], .subject, .post_title'
+      );
+      // a.text = 발췌(excerpt), 제목 못 찾으면 fallback
+      const excerptEl = item.querySelector('a.text, .desc .text, .desc a');
+
+      let title = titleEl?.textContent?.trim();
+      if (!title || title.length < 2) {
+        title = excerptEl?.textContent?.trim()?.slice(0, 80) || '(제목 없음)';
+      }
+
+      // ── 블로그명: 여러 셀렉터 순차 시도 ────────────────────────────────
+      const blogEl = item.querySelector(
+        '.nick, .blog_name, .writer, .author, ' +
+        '.info_writer .nick, .name_writer, .tit_writer, ' +
+        '.profile_area .nick, .writer_info .name, ' +
+        '.area_writer .nick, [class*="nick"], [class*="writer"]'
+      );
+      const blog_name = blogEl?.textContent?.trim() || '알 수 없음';
+
+      results.push({ title, url, blog_name });
+    });
+
+    // ── 3단계: 아이템을 못 찾았을 때만 fallback (핫토픽 제외 시도) ─────────
+    if (results.length === 0) {
+      console.log('[scraper] fallback: a 태그 전수 탐색 (이웃새글 섹션 우선)');
+      // 핫토픽/광고 등 제외하기 위해 이웃새글 섹션 기준으로 제한
+      const buddySection = document.querySelector(
+        '.area_buddy, .section_buddy, [class*="buddy"], [class*="post_article"]'
+      );
+      const searchBase = buddySection || document;
+      const links = Array.from(searchBase.querySelectorAll('a[href*="blog.naver.com"]'));
       const seen = new Set();
       links.forEach(a => {
         const url = a.href;
-        if (seen.has(url)) return;
-        if (!url.match(/blog\.naver\.com\/[^/]+\/\d+/)) return;
+        if (seen.has(url) || !url.match(/blog\.naver\.com\/[^/]+\/\d+/)) return;
         seen.add(url);
-        results.push({
-          title: a.textContent?.trim() || '(제목 없음)',
-          url,
-          blog_name: '알 수 없음',
-        });
+        results.push({ title: a.textContent?.trim() || '(제목 없음)', url, blog_name: '알 수 없음' });
       });
-      return results;
     }
-
-    items.forEach(item => {
-      const titleEl = item.querySelector('strong.title, .tit_post, h4, strong, .tit');
-      const linkEl   = item.querySelector('a[href*="naver.com"]');
-      const blogEl   = item.querySelector('.blog_name, .nick, .name, .author, .writer');
-
-      if (linkEl && titleEl) {
-        results.push({
-          title: titleEl.textContent?.trim() || linkEl.textContent?.trim() || '(제목 없음)',
-          url: linkEl.href,
-          blog_name: blogEl?.textContent?.trim() || '알 수 없음',
-        });
-      }
-    });
 
     return results;
   });
