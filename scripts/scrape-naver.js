@@ -80,7 +80,8 @@ async function fetchPostContent(context, url) {
 
 // ─── 이웃새글 목록 수집 (API 인터셉션) ──────────────────────────────────────
 async function scrapePostList(browser, cookies) {
-  const TARGET = 'https://section.blog.naver.com/BlogHome.naver?directoryNo=0&currentPage=1&groupId=0';
+  // section.blog.naver.com은 headless 봇 차단 → 구버전 URL 사용
+  const TARGET = 'https://blog.naver.com/SympathyList.naver';
 
   // 캡처된 API 응답 저장소
   const capturedPosts = [];
@@ -91,6 +92,14 @@ async function scrapePostList(browser, cookies) {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
       '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
     locale: 'ko-KR',
+    extraHTTPHeaders: {
+      'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+    },
+  });
+
+  // 봇 감지 우회: navigator.webdriver 숨기기
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
 
   await context.addCookies(cookies);
@@ -191,6 +200,10 @@ async function scrapePostList(browser, cookies) {
       console.error('❌ 네이버 로그인 페이지로 리다이렉트됨. 쿠키가 만료되었습니다.');
       process.exit(1);
     }
+    if (title.includes('Access Denied') || title.includes('접근 거부')) {
+      console.error('❌ Access Denied - Naver 봇 차단. 쿠키 재확인 필요.');
+      process.exit(1);
+    }
 
     // 스크롤로 추가 API 호출 유도
     for (let i = 0; i < 3; i++) {
@@ -273,7 +286,15 @@ async function main() {
 
   console.log(`🍪 쿠키 ${cookies.length}개 준비`);
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    args: [
+      '--disable-blink-features=AutomationControlled',
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+    ],
+  });
 
   try {
     // 기존 posts.json 로드 (중복 방지)
