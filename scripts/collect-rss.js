@@ -78,17 +78,18 @@ async function analyzePost(title, content, blogName) {
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
-  "summary": "2~3문장 투자 관점 요약",
-  "stocks": ["언급 종목명 (없으면 빈 배열)"],
-  "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|기타",
+  "summary": "글쓴이의 핵심 주장과 투자 근거를 2~3문장으로 요약. 투자와 무관한 글이면 '투자 관련 내용 없음'으로 명시",
+  "stocks": ["언급된 종목명만 (없으면 빈 배열)"],
+  "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|자동차·로봇|방산|부동산|소재·화학|거시경제|기타",
   "signal": "매수|중립|매도",
-  "key_points": ["핵심 포인트 1", "핵심 포인트 2", "핵심 포인트 3"]
+  "signal_reason": "signal 판단 근거 1문장. 글쓴이가 명시적 매수/매도 의견을 밝힌 경우에만 매수/매도 사용. 투자 의견이 없거나 불분명하면 반드시 중립",
+  "key_points": ["핵심 포인트 1 (수치나 근거 포함)", "핵심 포인트 2", "핵심 포인트 3"]
 }`;
 
   try {
     const res = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 512,
+      max_tokens: 800,
       messages: [{ role: 'user', content: prompt }],
     });
     const text = res.content[0].text.trim()
@@ -96,7 +97,7 @@ async function analyzePost(title, content, blogName) {
     return JSON.parse(text);
   } catch (e) {
     console.warn('  AI 분석 실패:', e.message);
-    return { summary: title, stocks: [], sector: '기타', signal: '중립', key_points: [] };
+    return { summary: title, stocks: [], sector: '기타', signal: '중립', signal_reason: '', key_points: [] };
   }
 }
 
@@ -162,6 +163,7 @@ async function main() {
       stocks: analysis.stocks,
       sector: analysis.sector,
       signal: analysis.signal,
+      signal_reason: analysis.signal_reason || '',
       key_points: analysis.key_points,
     });
 
