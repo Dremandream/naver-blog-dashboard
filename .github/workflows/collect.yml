@@ -11,7 +11,7 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 30        # [수정 D] Playwright hang 시 과금 방지
+    timeout-minutes: 10
 
     steps:
       - name: 코드 체크아웃
@@ -26,14 +26,10 @@ jobs:
       - name: 의존성 설치
         run: npm ci
 
-      - name: Playwright 브라우저 설치
-        run: npx playwright install chromium --with-deps
-
-      - name: 이웃새글 수집 및 요약
+      - name: 이웃새글 수집 및 요약 (RSS)
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
-          NAVER_COOKIE: ${{ secrets.NAVER_COOKIE }}
-        run: node scripts/scrape-naver.js
+        run: node scripts/collect-rss.js
 
       - name: posts.json 커밋 & 푸시
         run: |
