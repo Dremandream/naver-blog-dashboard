@@ -92,17 +92,24 @@
 
 | Step | 상태 | 비고 |
 |---|---|---|
-| Step 1. blogs.json | ⬜ 대기 | |
-| Step 2. collect-rss.js | ⬜ 대기 | |
-| Step 3. 로컬 검증 | ⬜ 대기 | **사람 승인 필요** |
-| Step 4. Claude AI 요약 | ⬜ 대기 | |
-| Step 5. posts.json 저장 | ⬜ 대기 | |
-| Step 6. GitHub Actions | ⬜ 대기 | **사람 승인 필요** |
-| Step 7. 스케줄 확인 | ⬜ 대기 | |
+| Step 1. blogs.json | ✅ 완료 | |
+| Step 2. collect-rss.js | ✅ 완료 | |
+| Step 3. 로컬 검증 | ✅ 완료 | 사람 확인 완료 |
+| Step 4. Claude AI 요약 | ✅ 완료 | sector/signal/key_points 정상 |
+| Step 5. posts.json 저장 | ✅ 완료 | |
+| Step 6. GitHub Actions | ✅ 완료 | 사람 확인 완료 (#10 Success) |
+| Step 7. 스케줄 확인 | ✅ 완료 | 매일 KST 08:00 가동 중 |
+
+---
+
+## Phase 2 — 개선 작업
+
+> 개선 항목이 확정되면 아래에 추가합니다.
+> 시작 전 반드시: 항목 확정 → plan 작성 → 사람 승인 → 구현
 
 ---
 
 ## 절대 원칙
-- Step 3 사람 확인 전 Step 4 절대 시작 금지
-- Step 6 사람 확인 전 완료 선언 금지
+- 개선 작업도 구현 전 plan 먼저
 - 막히면 구현 계속하지 말고 즉시 보고
+- "완료"는 Vercel 대시보드에서 직접 눈으로 확인
