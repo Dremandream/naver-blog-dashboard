@@ -23,6 +23,10 @@ export default function PostCard({ post }) {
 
       <p className="card-summary">{post.summary}</p>
 
+      {post.signal_reason && (
+        <p className="signal-reason">💬 {post.signal_reason}</p>
+      )}
+
       <div className="card-stocks">
         {(post.stocks || []).map((s) => (
           <span key={s} className="stock-tag">{s}</span>
