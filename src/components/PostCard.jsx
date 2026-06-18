@@ -4,11 +4,11 @@ const SIGNAL_CONFIG = {
   매도: { cls: "badge-sell",    label: "🔴 매도" },
 };
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, onCardClick, onStockClick }) {
   const sig = SIGNAL_CONFIG[post.signal] ?? { cls: "badge-neutral", label: post.signal };
 
   return (
-    <article className="card">
+    <article className="card card-clickable" onClick={() => onCardClick(post)}>
       <div className="card-top">
         <div className="card-meta">
           <span className="blog-name">{post.blog_name}</span>
@@ -17,7 +17,13 @@ export default function PostCard({ post }) {
         <span className={`badge ${sig.cls}`}>{sig.label}</span>
       </div>
 
-      <a className="card-title" href={post.url} target="_blank" rel="noreferrer">
+      <a
+        className="card-title"
+        href={post.url}
+        target="_blank"
+        rel="noreferrer"
+        onClick={(e) => e.stopPropagation()}
+      >
         {post.title}
       </a>
 
@@ -29,7 +35,14 @@ export default function PostCard({ post }) {
 
       <div className="card-stocks">
         {(post.stocks || []).map((s) => (
-          <span key={s} className="stock-tag">{s}</span>
+          <span
+            key={s}
+            className="stock-tag stock-tag-clickable"
+            onClick={(e) => { e.stopPropagation(); onStockClick(s); }}
+            title={`${s} 종목 필터`}
+          >
+            {s}
+          </span>
         ))}
         <span className="sector-tag">{post.sector}</span>
       </div>
