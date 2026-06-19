@@ -155,7 +155,7 @@ async function main() {
 
     if (process.env.CLAUDE_API_KEY && post.content.length > 30) {
       analysis = await analyzePost(post.title, post.content, post.blog_name);
-      console.log(`  → ${analysis.sector} | ${analysis.signal} | ${analysis.stocks.join(', ') || '종목 없음'}`);
+      console.log(`  → ${analysis.sector} | ${analysis.stocks.join(', ') || '종목 없음'}`);
     }
 
     results.push({
