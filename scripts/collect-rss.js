@@ -173,15 +173,41 @@ async function main() {
     if (i < collected.length - 1) await new Promise(r => setTimeout(r, 500));
   }
 
-  // ── 저장 ──────────────────────────────────────────────────────────────────
+  // ── 저장 (7일 히스토리 누적) ──────────────────────────────────────────────
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
+
+  // 기존 데이터 읽기
+  let existingPosts = [];
+  if (fs.existsSync(OUTPUT_PATH)) {
+    try {
+      const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
+      existingPosts = JSON.parse(raw).posts ?? [];
+    } catch (e) {
+      console.warn('⚠️  기존 posts.json 읽기 실패, 새로 시작합니다.');
+    }
+  }
+
+  // 7일 전 날짜 (KST) — 이보다 오래된 글은 제거
+  const WEEK_AGO_KST = new Date(Date.now() - 7 * 86400000).toLocaleDateString('ko-KR', {
+    timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).replace(/\. /g, '-').replace('.', '');
+
+  // 새 글 ID 목록 (중복 방지)
+  const newIds = new Set(results.map(p => p.id));
+
+  // 병합: 기존 글(7일 이내 + 중복 아닌 것) + 새 글 → 날짜 내림차순
+  const merged = [
+    ...existingPosts.filter(p => p.date >= WEEK_AGO_KST && !newIds.has(p.id)),
+    ...results,
+  ].sort((a, b) => b.date.localeCompare(a.date));
+
   fs.writeFileSync(
     OUTPUT_PATH,
-    JSON.stringify({ date: TODAY_KST, posts: results }, null, 2),
+    JSON.stringify({ date: TODAY_KST, posts: merged }, null, 2),
     'utf-8'
   );
 
-  console.log(`\n✅ 완료: ${results.length}개 저장 → ${OUTPUT_PATH}`);
+  console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장 → ${OUTPUT_PATH}`);
 }
 
 main().catch(err => {
