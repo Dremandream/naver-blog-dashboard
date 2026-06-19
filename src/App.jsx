@@ -13,8 +13,7 @@ function getKSTDate(offsetDays = 0) {
 }
 
 const DATES    = ["전체", "오늘", "어제", "최근 7일"];
-const SIGNALS  = ["전체", "매수", "중립", "매도"];
-const SORT_OPT = ["최신순", "매수 우선", "블로그별"];
+const SORT_OPT = ["최신순", "블로그별"];
 
 export default function App() {
   const [data, setData]               = useState(null);
@@ -24,7 +23,6 @@ export default function App() {
 
   // 필터 state
   const [selectedSector, setSelectedSector] = useState("전체");
-  const [selectedSignal, setSelectedSignal] = useState("전체");
   const [selectedBlog,   setSelectedBlog]   = useState("전체");
   const [selectedDate,   setSelectedDate]   = useState("전체");
   const [sortBy,         setSortBy]         = useState("최신순");
@@ -48,12 +46,12 @@ export default function App() {
   const sectors = ["전체", ...new Set(posts.map((p) => p.sector))];
   const blogs   = ["전체", ...new Set(posts.map((p) => p.blog_name))];
 
-  // ── 날짜 필터 범위 계산 ───────────────────────────────────────────────────────
+  // ── 날짜 필터 범위 계산
   const todayKST     = getKSTDate(0);
   const yesterdayKST = getKSTDate(1);
   const weekAgoKST   = getKSTDate(7);
 
-  // ── 필터 + 정렬 ──────────────────────────────────────────────────────────────
+  // ── 필터 + 정렬
   const filtered = posts
     .filter((p) => {
       if (selectedDate === "오늘")      return p.date === todayKST;
@@ -62,7 +60,6 @@ export default function App() {
       return true;
     })
     .filter((p) => selectedSector === "전체" || p.sector === selectedSector)
-    .filter((p) => selectedSignal === "전체" || p.signal === selectedSignal)
     .filter((p) => selectedBlog   === "전체" || p.blog_name === selectedBlog)
     .filter((p) => {
       const q = searchQuery.toLowerCase();
@@ -75,19 +72,15 @@ export default function App() {
     });
 
   const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === "매수 우선") {
-      const order = { 매수: 0, 중립: 1, 매도: 2 };
-      return (order[a.signal] ?? 1) - (order[b.signal] ?? 1);
-    }
     if (sortBy === "블로그별") return a.blog_name.localeCompare(b.blog_name, "ko");
     return b.date.localeCompare(a.date); // 최신순 (기본)
   });
 
-  const signalCounts = {
-    매수: posts.filter((p) => p.signal === "매수").length,
-    중립: posts.filter((p) => p.signal === "중립").length,
-    매도: posts.filter((p) => p.signal === "매도").length,
-  };
+  // 섹터별 글 수 (StatsBar용)
+  const sectorCounts = posts.reduce((acc, p) => {
+    acc[p.sector] = (acc[p.sector] || 0) + 1;
+    return acc;
+  }, {});
 
   return (
     <div className="app">
@@ -111,20 +104,17 @@ export default function App() {
       </header>
 
       <main className="main">
-        <StatsBar total={posts.length} counts={signalCounts} />
+        <StatsBar total={posts.length} sectors={sectorCounts} />
         <FilterBar
           sectors={sectors}
-          signals={SIGNALS}
           blogs={blogs}
           dates={DATES}
           sortOptions={SORT_OPT}
           selectedSector={selectedSector}
-          selectedSignal={selectedSignal}
           selectedBlog={selectedBlog}
           selectedDate={selectedDate}
           sortBy={sortBy}
           onSectorChange={setSelectedSector}
-          onSignalChange={setSelectedSignal}
           onBlogChange={setSelectedBlog}
           onDateChange={setSelectedDate}
           onSortChange={setSortBy}

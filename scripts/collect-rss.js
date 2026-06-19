@@ -83,15 +83,11 @@ async function analyzePost(title, content, blogName) {
 - 플랫폼: 카카오, 네이버, 구글, 메타, AI서비스, 앱
 - 자동차·로봇: 현대차, 기아, 로봇, 테슬라, 자율주행
 
-[signal_reason 규칙] 절대 빈칸 금지. 본문이 없으면 "본문 내용 부족으로 제목 기반 분류"로 명시.
-
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
   "summary": "글쓴이의 핵심 주장과 투자 근거를 2~3문장으로 요약. 본문이 없거나 투자와 무관하면 '투자 관련 내용 없음'으로 명시",
   "stocks": ["언급된 종목명만 (없으면 빈 배열)"],
   "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|자동차·로봇|방산|부동산|소재·화학|거시경제|기타",
-  "signal": "매수|중립|매도",
-  "signal_reason": "signal 판단 근거 1문장 (절대 빈칸 금지). 글쓴이가 명시적 매수/매도 의견을 밝힌 경우에만 매수/매도. 불분명하면 중립. 본문 없으면 '본문 내용 부족으로 제목 기반 분류'",
   "key_points": ["핵심 포인트 1 (수치나 근거 포함)", "핵심 포인트 2", "핵심 포인트 3"]
 }`;
 
@@ -106,7 +102,7 @@ async function analyzePost(title, content, blogName) {
     return JSON.parse(text);
   } catch (e) {
     console.warn('  AI 분석 실패:', e.message);
-    return { summary: title, stocks: [], sector: '기타', signal: '중립', signal_reason: 'AI 분석 실패', key_points: [] };
+    return { summary: title, stocks: [], sector: '기타', key_points: [] };
   }
 }
 
@@ -155,7 +151,7 @@ async function main() {
     const post = collected[i];
     console.log(`\n[${i + 1}/${collected.length}] AI 분석 중: ${post.blog_name} - ${post.title}`);
 
-    let analysis = { summary: post.title, stocks: [], sector: '기타', signal: '중립', key_points: [] };
+    let analysis = { summary: post.title, stocks: [], sector: '기타', key_points: [] };
 
     if (process.env.CLAUDE_API_KEY && post.content.length > 30) {
       analysis = await analyzePost(post.title, post.content, post.blog_name);
@@ -171,8 +167,6 @@ async function main() {
       summary: analysis.summary,
       stocks: analysis.stocks,
       sector: analysis.sector,
-      signal: analysis.signal,
-      signal_reason: analysis.signal_reason || '',
       key_points: analysis.key_points,
     });
 
