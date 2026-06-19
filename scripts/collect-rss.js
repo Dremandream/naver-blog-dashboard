@@ -76,13 +76,22 @@ async function analyzePost(title, content, blogName) {
 제목: ${title}
 본문: ${content.slice(0, 2000)}
 
+[sector 분류 기준] 본문이 짧거나 없어도 제목 키워드로 반드시 분류하세요. 기타는 정말 어떤 섹터에도 해당하지 않을 때만 사용.
+- 반도체: HBM, DRAM, LPDDR, 메모리, 반도체, 삼성전자, SK하이닉스, 엔비디아, AI칩, 파운드리
+- 거시경제: 수출, 금리, 환율, GDP, 코스닥, 코스피, 주도주, 시장, 지수, 수급, 매크로
+- 2차전지: 배터리, 전기차, 양극재, 음극재, LG에너지, 삼성SDI
+- 플랫폼: 카카오, 네이버, 구글, 메타, AI서비스, 앱
+- 자동차·로봇: 현대차, 기아, 로봇, 테슬라, 자율주행
+
+[signal_reason 규칙] 절대 빈칸 금지. 본문이 없으면 "본문 내용 부족으로 제목 기반 분류"로 명시.
+
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
-  "summary": "글쓴이의 핵심 주장과 투자 근거를 2~3문장으로 요약. 투자와 무관한 글이면 '투자 관련 내용 없음'으로 명시",
+  "summary": "글쓴이의 핵심 주장과 투자 근거를 2~3문장으로 요약. 본문이 없거나 투자와 무관하면 '투자 관련 내용 없음'으로 명시",
   "stocks": ["언급된 종목명만 (없으면 빈 배열)"],
   "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|자동차·로봇|방산|부동산|소재·화학|거시경제|기타",
   "signal": "매수|중립|매도",
-  "signal_reason": "signal 판단 근거 1문장. 글쓴이가 명시적 매수/매도 의견을 밝힌 경우에만 매수/매도 사용. 투자 의견이 없거나 불분명하면 반드시 중립",
+  "signal_reason": "signal 판단 근거 1문장 (절대 빈칸 금지). 글쓴이가 명시적 매수/매도 의견을 밝힌 경우에만 매수/매도. 불분명하면 중립. 본문 없으면 '본문 내용 부족으로 제목 기반 분류'",
   "key_points": ["핵심 포인트 1 (수치나 근거 포함)", "핵심 포인트 2", "핵심 포인트 3"]
 }`;
 
@@ -97,7 +106,7 @@ async function analyzePost(title, content, blogName) {
     return JSON.parse(text);
   } catch (e) {
     console.warn('  AI 분석 실패:', e.message);
-    return { summary: title, stocks: [], sector: '기타', signal: '중립', signal_reason: '', key_points: [] };
+    return { summary: title, stocks: [], sector: '기타', signal: '중립', signal_reason: 'AI 분석 실패', key_points: [] };
   }
 }
 
