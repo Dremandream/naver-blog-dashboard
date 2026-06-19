@@ -153,13 +153,13 @@ async function main() {
 
     let analysis = { summary: post.title, stocks: [], sector: '기타', key_points: [] };
 
-    if (process.env.CLAUDE_API_KEY && post.content.length > 30) {
+    if (process.env.CLAUDE_API_KEY) {
       analysis = await analyzePost(post.title, post.content, post.blog_name);
       console.log(`  → ${analysis.sector} | ${analysis.stocks.join(', ') || '종목 없음'}`);
     }
 
     results.push({
-      id: `${post.blog_id}_${Date.now()}_${i}`,
+      id: `${post.blog_id}_${post.postDate}_${post.url.split('/').pop() || i}`,
       date: post.postDate,
       blog_name: post.blog_name,
       title: post.title,
