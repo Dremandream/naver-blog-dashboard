@@ -114,7 +114,14 @@ async function main() {
   const { blogs } = JSON.parse(fs.readFileSync(BLOGS_PATH, 'utf-8'));
   console.log(`📋 블로그 ${blogs.length}개: ${blogs.map(b => b.name).join(', ')}\n`);
 
-  const targetDates = new Set([TODAY_KST, YESTERDAY_KST]);
+  // 최근 7일 날짜 목록 생성 (임시 백필용 — 완료 후 원래대로 되돌릴 것)
+  const targetDates = new Set(
+    Array.from({ length: 7 }, (_, i) =>
+      new Date(Date.now() - i * 86400000).toLocaleDateString('ko-KR', {
+        timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).replace(/\. /g, '-').replace('.', '')
+    )
+  );
   const collected = [];
 
   // ── RSS 수집 ──────────────────────────────────────────────────────────────
