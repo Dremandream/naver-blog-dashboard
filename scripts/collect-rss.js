@@ -39,6 +39,60 @@ function fetchRSS(blogId) {
   });
 }
 
+// ─── 본문 전문 수집 (모바일 페이지) ──────────────────────────────────────────
+function fetchMobileHTML(url, depth = 0) {
+  return new Promise((resolve, reject) => {
+    if (depth > 3) return reject(new Error('리다이렉트 과다'));
+    https.get(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
+        'Accept': 'text/html,application/xhtml+xml',
+        'Accept-Language': 'ko-KR,ko;q=0.9',
+      },
+    }, (res) => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        const next = res.headers.location.startsWith('http')
+          ? res.headers.location
+          : `https://m.blog.naver.com${res.headers.location}`;
+        return fetchMobileHTML(next, depth + 1).then(resolve, reject);
+      }
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => resolve({ status: res.statusCode, html: data }));
+    }).on('error', reject);
+  });
+}
+
+function extractBody(html) {
+  // SmartEditor ONE
+  let m = html.match(/<div[^>]*class="[^"]*se-main-container[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<div[^>]*class="[^"]*se_component_wrap/)
+       || html.match(/<div[^>]*class="[^"]*se-main-container[^"]*"[^>]*>([\s\S]*)/);
+  // 구버전 에디터
+  if (!m) m = html.match(/<div[^>]*id="viewTypeSelector"[^>]*>([\s\S]*?)<div[^>]*class="[^"]*post_footer/);
+  if (!m) return null;
+
+  return m[1]
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/<style[\s\S]*?<\/style>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+async function fetchFullContent(postUrl) {
+  try {
+    const mUrl = postUrl.replace('https://blog.naver.com', 'https://m.blog.naver.com');
+    const { status, html } = await fetchMobileHTML(mUrl);
+    if (status !== 200) return null;
+    return extractBody(html);
+  } catch {
+    return null;
+  }
+}
+
 // ─── RSS 파싱 ────────────────────────────────────────────────────────────────
 function parseAllPosts(xml, blogId, blogName) {
   const items = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
@@ -70,11 +124,17 @@ function parseAllPosts(xml, blogId, blogName) {
 
 // ─── Claude AI 투자 요약 ──────────────────────────────────────────────────────
 async function analyzePost(title, content, blogName) {
-  const prompt = `다음 블로그 글을 투자 관점으로 분석하세요.
+  const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래 블로그 글을 읽고, 독자가 원글을 열지 않아도 판단할 수 있게 정보를 최대한 구체적으로 추출하세요.
 
 블로그: ${blogName}
 제목: ${title}
-본문: ${content.slice(0, 2000)}
+본문: ${content.slice(0, 6000)}
+
+[추출 규칙 — 매우 중요]
+1. 글에 실제로 나온 내용만 추출. 수치·주장을 지어내지 마세요.
+2. 두루뭉술 금지: "긍정적 전망" (X) → "2Q 영업이익 90조 전망, 컨센서스 75~84조 상회" (O)
+3. 숫자가 있으면 반드시 포함: 목표가, 전망치, 증감률, 날짜, 밸류에이션.
+4. 글쓴이의 논리 구조(주장 → 근거)를 보존하세요.
 
 [sector 분류 기준] 본문이 짧거나 없어도 제목 키워드로 반드시 분류하세요. 기타는 정말 어떤 섹터에도 해당하지 않을 때만 사용.
 - 반도체: HBM, DRAM, LPDDR, 메모리, 반도체, 삼성전자, SK하이닉스, 엔비디아, AI칩, 파운드리
@@ -85,16 +145,20 @@ async function analyzePost(title, content, blogName) {
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
-  "summary": "글쓴이의 핵심 주장과 투자 근거를 2~3문장으로 요약. 본문이 없거나 투자와 무관하면 '투자 관련 내용 없음'으로 명시",
+  "summary": "핵심 주장 + 투자 근거를 2~3문장. 구체 수치 포함. 본문이 없거나 투자와 무관하면 '투자 관련 내용 없음'",
   "stocks": ["언급된 종목명만 (없으면 빈 배열)"],
   "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|자동차·로봇|방산|부동산|소재·화학|거시경제|기타",
-  "key_points": ["핵심 포인트 1 (수치나 근거 포함)", "핵심 포인트 2", "핵심 포인트 3"]
+  "key_points": ["핵심 포인트 3~5개, 각각 수치·근거 포함"],
+  "numbers": ["글에 나온 핵심 수치 최대 4개, 맥락 포함 (예: 'SK하이닉스 목표가 320만원 (UBS)') — 없으면 빈 배열"],
+  "stance": "강세|약세|중립|해당없음 (글쓴이의 시각 톤. 추천이 아니라 글의 논조)",
+  "reasoning": "글쓴이 주장의 가장 중요한 근거 1문장 — 없으면 빈 문자열",
+  "risks": ["글쓴이가 직접 언급한 리스크·유보 조건만 (없으면 빈 배열)"]
 }`;
 
   try {
     const res = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 800,
+      max_tokens: 1200,
       messages: [{ role: 'user', content: prompt }],
     });
     const text = res.content[0].text.trim()
@@ -102,7 +166,10 @@ async function analyzePost(title, content, blogName) {
     return JSON.parse(text);
   } catch (e) {
     console.warn('  AI 분석 실패:', e.message);
-    return { summary: title, stocks: [], sector: '기타', key_points: [] };
+    return {
+      summary: title, stocks: [], sector: '기타', key_points: [],
+      numbers: [], stance: '해당없음', reasoning: '', risks: [],
+    };
   }
 }
 
@@ -149,13 +216,25 @@ async function main() {
 
   for (let i = 0; i < collected.length; i++) {
     const post = collected[i];
-    console.log(`\n[${i + 1}/${collected.length}] AI 분석 중: ${post.blog_name} - ${post.title}`);
+    console.log(`\n[${i + 1}/${collected.length}] 분석 중: ${post.blog_name} - ${post.title}`);
 
-    let analysis = { summary: post.title, stocks: [], sector: '기타', key_points: [] };
+    // 본문 전문 수집 (실패 시 RSS description 그대로 사용)
+    const fullBody = await fetchFullContent(post.url);
+    if (fullBody && fullBody.length > post.content.length) {
+      console.log(`  📄 본문 전문 수집: ${fullBody.length.toLocaleString()}자 (RSS: ${post.content.length}자)`);
+      post.content = fullBody;
+    } else {
+      console.log(`  📄 RSS 본문 사용: ${post.content.length}자`);
+    }
+
+    let analysis = {
+      summary: post.title, stocks: [], sector: '기타', key_points: [],
+      numbers: [], stance: '해당없음', reasoning: '', risks: [],
+    };
 
     if (process.env.CLAUDE_API_KEY) {
       analysis = await analyzePost(post.title, post.content, post.blog_name);
-      console.log(`  → ${analysis.sector} | ${analysis.stocks.join(', ') || '종목 없음'}`);
+      console.log(`  → ${analysis.sector} | ${analysis.stance || '-'} | ${analysis.stocks.join(', ') || '종목 없음'}`);
     }
 
     results.push({
@@ -168,6 +247,10 @@ async function main() {
       stocks: analysis.stocks,
       sector: analysis.sector,
       key_points: analysis.key_points,
+      numbers: analysis.numbers ?? [],
+      stance: analysis.stance ?? '해당없음',
+      reasoning: analysis.reasoning ?? '',
+      risks: analysis.risks ?? [],
     });
 
     if (i < collected.length - 1) await new Promise(r => setTimeout(r, 500));
