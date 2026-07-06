@@ -50,3 +50,32 @@
 ## 작업 분담 (충돌 방지)
 - 파일 수정: Cowork (이 세션)
 - 스크립트 실행 / git: Claude Code — 단, 파일 수정은 하지 않기
+
+---
+
+# 추가: 일별 종합 브리핑 (세션 5b)
+
+## 배경
+사용자 의문: "요약만 보면 깊은 사고가 사라진다. 대시보드가 필요한가?"
+→ 결론: 대시보드 역할 = 판단 대체가 아니라 **선별 + 비교**.
+→ 개별 글 요약으론 안 되는 것: 블로거 간 합의/이견 비교. 이걸 브리핑으로 제공.
+
+## 원칙
+- "판단/추천" 아님. 합의·이견·근거 비교만. (signal 실패 교훈)
+- 업종별 판단 칸은 만들지 않기로 결정 (글 수 부족, 판단 프레임 위험)
+
+## 구조
+1. collect-rss.js: 개별 분석 후 `generateDailyBrief(results)` 1회 호출
+   - 입력: 그날 수집 글들의 {blog_name, title, sector, stance, summary, numbers}
+   - 출력: { headline, brief, consensus[], divergence[], hot_stocks[] }
+   - posts.json에 `daily_brief: { date, ...}` 최상위 필드로 저장
+   - 글 0개면 스킵(기존 early return), 1개면 비교 없이 요약만 하도록 프롬프트에 명시
+2. src/components/DailyBrief.jsx 신규: 대시보드 최상단 브리핑 카드
+   - daily_brief 없으면 렌더링 안 함 (하위호환)
+3. App.jsx: StatsBar 위에 <DailyBrief brief={data?.daily_brief} />
+4. App.css: 브리핑 카드 스타일
+
+## 완료 기준
+- Actions 실행 후 posts.json에 daily_brief 생성
+- Vercel 대시보드 최상단에 브리핑 카드 표시
+- 이견(divergence)이 실제로 의미 있는 내용인지 눈으로 확인

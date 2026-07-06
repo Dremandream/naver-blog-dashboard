@@ -88,6 +88,22 @@ h1 { font-size: 18px; font-weight: 700; }
 .modal-read-more { display: block; text-align: center; margin-top: 4px; padding: 10px; background: #f8fafc; border-radius: 10px; color: #3b82f6; font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s; }
 .modal-read-more:hover { background: #eff6ff; }
 
+/* ===== 일별 브리핑 (세션 5b) ===== */
+.daily-brief { background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #1d4ed8; border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+.brief-header { display: flex; justify-content: space-between; align-items: center; }
+.brief-label { font-size: 13px; font-weight: 700; color: #1d4ed8; }
+.brief-date { font-size: 12px; color: #94a3b8; }
+.brief-headline { font-size: 16px; font-weight: 700; color: #1a1a2e; line-height: 1.4; }
+.brief-body { font-size: 13px; color: #475569; line-height: 1.7; }
+.brief-row { display: flex; gap: 10px; align-items: flex-start; }
+.brief-tag { flex-shrink: 0; border-radius: 6px; padding: 3px 10px; font-size: 11px; font-weight: 700; white-space: nowrap; margin-top: 1px; }
+.brief-tag-consensus { background: #f0fdf4; color: #15803d; }
+.brief-tag-divergence { background: #fef2f2; color: #dc2626; }
+.brief-tag-hot { background: #fffbeb; color: #b45309; }
+.brief-list { display: flex; flex-direction: column; gap: 4px; }
+.brief-list li { font-size: 13px; color: #475569; line-height: 1.5; list-style: none; }
+.brief-stocks { align-items: center; }
+
 /* ===== 정보 밀도 업그레이드 (세션 5) ===== */
 .card-badges { display: flex; gap: 6px; align-items: center; }
 .stance-badge { border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 700; white-space: nowrap; }

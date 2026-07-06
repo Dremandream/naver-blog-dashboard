@@ -3,6 +3,7 @@ import PostCard from "./components/PostCard";
 import PostModal from "./components/PostModal";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
+import DailyBrief from "./components/DailyBrief";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -104,6 +105,7 @@ export default function App() {
       </header>
 
       <main className="main">
+        <DailyBrief brief={data?.daily_brief} onStockClick={setSearchQuery} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
         <FilterBar
           sectors={sectors}

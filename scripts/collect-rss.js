@@ -173,6 +173,52 @@ async function analyzePost(title, content, blogName) {
   }
 }
 
+// ─── 일별 종합 브리핑 ─────────────────────────────────────────────────────────
+async function generateDailyBrief(posts) {
+  const digest = posts.map(p => ({
+    blog: p.blog_name,
+    title: p.title,
+    sector: p.sector,
+    stance: p.stance,
+    summary: p.summary,
+    numbers: p.numbers,
+  }));
+
+  const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래는 오늘 수집된 투자 블로거들의 글 분석 결과입니다. 이를 종합해 "그날의 브리핑"을 작성하세요.
+
+${JSON.stringify(digest, null, 2)}
+
+[작성 원칙 — 매우 중요]
+1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 블로거들의 시각을 비교·정리만 합니다.
+2. 핵심은 비교: 누가 어떤 근거로 무엇을 주장하는지, 어디서 겹치고 어디서 갈리는지.
+3. 글이 1개뿐이면 비교 없이 그 글의 핵심만 정리하고 consensus/divergence는 빈 배열.
+4. 투자 무관 글은 무시하세요.
+5. 구체 수치를 포함하세요.
+
+반드시 아래 JSON만 출력하세요 (마크다운 없이):
+{
+  "headline": "오늘의 핵심 한 줄 (예: '3명이 삼성전자 2Q 실적 주목 — 강세 시각 우세')",
+  "brief": "블로거들의 시각을 비교하는 종합 3~5문장. '콤디티는 ~근거로 강세, 의교창은 ~' 형식",
+  "consensus": ["여러 블로거가 공통으로 보는 시각 (없으면 빈 배열)"],
+  "divergence": ["의견이 갈리는 지점 — 깊게 확인할 가치가 있는 부분 (없으면 빈 배열)"],
+  "hot_stocks": ["2명 이상이 언급한 종목 (없으면 빈 배열)"]
+}`;
+
+  try {
+    const res = await client.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }],
+    });
+    const text = res.content[0].text.trim()
+      .replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    return JSON.parse(text);
+  } catch (e) {
+    console.warn('  브리핑 생성 실패:', e.message);
+    return null;
+  }
+}
+
 // ─── 메인 ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\n📅 ${TODAY_KST} RSS 수집 시작`);
@@ -256,15 +302,29 @@ async function main() {
     if (i < collected.length - 1) await new Promise(r => setTimeout(r, 500));
   }
 
+  // ── 일별 종합 브리핑 ──────────────────────────────────────────────────────
+  let dailyBrief = null;
+  if (process.env.CLAUDE_API_KEY && results.length > 0) {
+    console.log('\n📰 일별 브리핑 생성 중...');
+    const brief = await generateDailyBrief(results);
+    if (brief) {
+      dailyBrief = { date: TODAY_KST, post_count: results.length, ...brief };
+      console.log(`  → ${brief.headline}`);
+    }
+  }
+
   // ── 저장 (7일 히스토리 누적) ──────────────────────────────────────────────
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
 
   // 기존 데이터 읽기
   let existingPosts = [];
+  let existingBrief = null;
   if (fs.existsSync(OUTPUT_PATH)) {
     try {
       const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
-      existingPosts = JSON.parse(raw).posts ?? [];
+      const parsed = JSON.parse(raw);
+      existingPosts = parsed.posts ?? [];
+      existingBrief = parsed.daily_brief ?? null;
     } catch (e) {
       console.warn('⚠️  기존 posts.json 읽기 실패, 새로 시작합니다.');
     }
@@ -286,7 +346,10 @@ async function main() {
 
   fs.writeFileSync(
     OUTPUT_PATH,
-    JSON.stringify({ date: TODAY_KST, posts: merged }, null, 2),
+    JSON.stringify(
+      { date: TODAY_KST, daily_brief: dailyBrief ?? existingBrief, posts: merged },
+      null, 2
+    ),
     'utf-8'
   );
 
