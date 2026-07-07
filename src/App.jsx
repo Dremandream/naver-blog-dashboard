@@ -139,4 +139,13 @@ export default function App() {
         )}
       </main>
 
-      <footer 
+      <footer className="footer">
+        자동 수집 · Claude AI 요약 · 투자 참고용 (매매 권유 아님)
+      </footer>
+
+      {selectedPost && (
+        <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+      )}
+    </div>
+  );
+}

@@ -345,4 +345,33 @@ async function main() {
     timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
   }).replace(/\. /g, '-').replace('.', '');
 
-  // daily_briefs 배열 업데이트: 오늘 브리
+  // daily_briefs 배열 업데이트: 오늘 브리핑을 맨 앞에, 최대 7개 유지
+  let updatedBriefs = existingBriefs.filter(b => b.date !== TODAY_KST); // 오늘 것 중복 제거
+  if (todayBrief) updatedBriefs = [todayBrief, ...updatedBriefs];
+  updatedBriefs = updatedBriefs.slice(0, 7); // 최대 7일치 유지
+
+  // 새 글 ID 목록 (중복 방지)
+  const newIds = new Set(results.map(p => p.id));
+
+  // 병합: 기존 글(7일 이내 + 중복 아닌 것) + 새 글 → 날짜 내림차순
+  const merged = [
+    ...existingPosts.filter(p => p.date >= WEEK_AGO_KST && !newIds.has(p.id)),
+    ...results,
+  ].sort((a, b) => b.date.localeCompare(a.date));
+
+  fs.writeFileSync(
+    OUTPUT_PATH,
+    JSON.stringify(
+      { date: TODAY_KST, daily_briefs: updatedBriefs, posts: merged },
+      null, 2
+    ),
+    'utf-8'
+  );
+
+  console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장, 브리핑 ${updatedBriefs.length}일치 → ${OUTPUT_PATH}`);
+}
+
+main().catch(err => {
+  console.error('\n🔥 오류:', err);
+  process.exit(1);
+});
