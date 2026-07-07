@@ -163,7 +163,7 @@ async function analyzePost(title, content, blogName) {
     });
     const text = res.content[0].text.trim()
       .replace(/^```json\s*/, '').replace(/\s*```$/, '');
-    return JSON.parse(text);
+    const _r=JSON.parse(text); _r.generatedAt=new Date().toISOString(); return _r;
   } catch (e) {
     console.warn('  AI 분석 실패:', e.message);
     return {
@@ -212,7 +212,7 @@ ${JSON.stringify(digest, null, 2)}
     });
     const text = res.content[0].text.trim()
       .replace(/^```json\s*/, '').replace(/\s*```$/, '');
-    return JSON.parse(text);
+    const _r=JSON.parse(text); _r.generatedAt=new Date().toISOString(); return _r;
   } catch (e) {
     console.warn('  브리핑 생성 실패:', e.message);
     return null;
@@ -306,7 +306,7 @@ async function main() {
   let dailyBrief = null;
   if (process.env.CLAUDE_API_KEY && results.length > 0) {
     console.log('\n📰 일별 브리핑 생성 중...');
-    const brief = await generateDailyBrief(results);
+    const todayStr=new Date().toISOString().slice(0,10); const brief=(existingBrief&&existingBrief.generatedAt&&existingBrief.gener
     if (brief) {
       dailyBrief = { date: TODAY_KST, post_count: results.length, ...brief };
       console.log(`  → ${brief.headline}`);

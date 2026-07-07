@@ -5,7 +5,7 @@ export default function DailyBrief({ brief, onStockClick }) {
     <section className="daily-brief">
       <div className="brief-header">
         <span className="brief-label">📰 오늘의 브리핑</span>
-        <span className="brief-date">{brief.date} · 글 {brief.post_count}개 종합</span>
+        <span className="brief-date">{brief.date} · 글 {brief.post_count}개 종합{brief.generatedAt && <span style={{fontSize:'11px',color:'#aaa',marginLeft:'8px'}}>{new Date(brief.generatedAt).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} 기준</span>}</span>
       </div>
 
       <p className="brief-headline">{brief.headline}</p>
@@ -32,7 +32,7 @@ export default function DailyBrief({ brief, onStockClick }) {
       {brief.hot_stocks?.length > 0 && (
         <div className="brief-row brief-stocks">
           <span className="brief-tag brief-tag-hot">공통 언급</span>
-          <div className="card-stocks">
+          <div className="card-stocks" style={{flexWrap:'wrap'}}>
             {brief.hot_stocks.map((s) => (
               <span
                 key={s}
