@@ -5,6 +5,7 @@ import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
 import WeeklyTrend from "./components/WeeklyTrend";
+import SpikeAlert from "./components/SpikeAlert";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -107,6 +108,7 @@ export default function App() {
 
       <main className="main">
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSearchQuery} />
+        <SpikeAlert posts={posts} />
         <WeeklyTrend briefs={data?.daily_briefs} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
         <FilterBar
