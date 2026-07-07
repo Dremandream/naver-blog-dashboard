@@ -302,31 +302,41 @@ async function main() {
     if (i < collected.length - 1) await new Promise(r => setTimeout(r, 500));
   }
 
-  // ── 일별 종합 브리핑 ──────────────────────────────────────────────────────
-  let dailyBrief = null;
-  if (process.env.CLAUDE_API_KEY && results.length > 0) {
-    console.log('\n📰 일별 브리핑 생성 중...');
-    const todayStr=new Date().toISOString().slice(0,10); const brief=(existingBrief&&existingBrief.generatedAt&&existingBrief.gener
-    if (brief) {
-      dailyBrief = { date: TODAY_KST, post_count: results.length, ...brief };
-      console.log(`  → ${brief.headline}`);
-    }
-  }
-
   // ── 저장 (7일 히스토리 누적) ──────────────────────────────────────────────
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
 
-  // 기존 데이터 읽기
+  // 기존 데이터 읽기 (daily_brief 단수 → daily_briefs 배열 하위 호환)
   let existingPosts = [];
-  let existingBrief = null;
+  let existingBriefs = [];
   if (fs.existsSync(OUTPUT_PATH)) {
     try {
       const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
       const parsed = JSON.parse(raw);
       existingPosts = parsed.posts ?? [];
-      existingBrief = parsed.daily_brief ?? null;
+      if (parsed.daily_briefs) {
+        existingBriefs = parsed.daily_briefs;
+      } else if (parsed.daily_brief) {
+        existingBriefs = [parsed.daily_brief]; // 기존 단수 데이터 마이그레이션
+      }
     } catch (e) {
       console.warn('⚠️  기존 posts.json 읽기 실패, 새로 시작합니다.');
+    }
+  }
+
+  // ── 일별 종합 브리핑 ──────────────────────────────────────────────────────
+  let todayBrief = null;
+  if (process.env.CLAUDE_API_KEY && results.length > 0) {
+    console.log('\n📰 일별 브리핑 생성 중...');
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const cachedBrief = existingBriefs[0];
+    const isCached = cachedBrief && cachedBrief.generatedAt &&
+      cachedBrief.generatedAt.slice(0, 10) === todayStr;
+    const brief = isCached
+      ? (console.log('[DailyBrief] 캐시 사용:', cachedBrief.generatedAt) || cachedBrief)
+      : await generateDailyBrief(results);
+    if (brief) {
+      todayBrief = { date: TODAY_KST, post_count: results.length, ...brief };
+      console.log(`  → ${brief.headline}`);
     }
   }
 
@@ -335,28 +345,4 @@ async function main() {
     timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
   }).replace(/\. /g, '-').replace('.', '');
 
-  // 새 글 ID 목록 (중복 방지)
-  const newIds = new Set(results.map(p => p.id));
-
-  // 병합: 기존 글(7일 이내 + 중복 아닌 것) + 새 글 → 날짜 내림차순
-  const merged = [
-    ...existingPosts.filter(p => p.date >= WEEK_AGO_KST && !newIds.has(p.id)),
-    ...results,
-  ].sort((a, b) => b.date.localeCompare(a.date));
-
-  fs.writeFileSync(
-    OUTPUT_PATH,
-    JSON.stringify(
-      { date: TODAY_KST, daily_brief: dailyBrief ?? existingBrief, posts: merged },
-      null, 2
-    ),
-    'utf-8'
-  );
-
-  console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장 → ${OUTPUT_PATH}`);
-}
-
-main().catch(err => {
-  console.error('\n🔥 오류:', err);
-  process.exit(1);
-});
+  // daily_briefs 배열 업데이트: 오늘 브리

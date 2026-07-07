@@ -4,6 +4,7 @@ import PostModal from "./components/PostModal";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
+import WeeklyTrend from "./components/WeeklyTrend";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -105,7 +106,8 @@ export default function App() {
       </header>
 
       <main className="main">
-        <DailyBrief brief={data?.daily_brief} onStockClick={setSearchQuery} />
+        <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSearchQuery} />
+        <WeeklyTrend briefs={data?.daily_briefs} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
         <FilterBar
           sectors={sectors}
@@ -137,13 +139,4 @@ export default function App() {
         )}
       </main>
 
-      <footer className="footer">
-        자동 수집 · Claude AI 요약 · 투자 참고용 (매매 권유 아님)
-      </footer>
-
-      {selectedPost && (
-        <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
-      )}
-    </div>
-  );
-}
+      <footer 
