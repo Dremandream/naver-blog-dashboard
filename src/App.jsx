@@ -32,7 +32,7 @@ export default function App() {
   const [searchQuery,    setSearchQuery]    = useState("");
 
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getKSTDate(0);
     fetch(`/data/posts.json?d=${today}`)
       .then((r) => {
         if (!r.ok) throw new Error("데이터를 불러올 수 없습니다");
@@ -108,8 +108,8 @@ export default function App() {
 
       <main className="main">
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSearchQuery} />
-        <SpikeAlert posts={posts} />
-        <WeeklyTrend briefs={data?.daily_briefs} />
+        <SpikeAlert posts={posts} onStockClick={setSearchQuery} />
+        <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSearchQuery} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
         <FilterBar
           sectors={sectors}

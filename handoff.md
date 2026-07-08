@@ -1,60 +1,61 @@
 # Handoff - 네이버 블로그 투자 대시보드
 
 ## 마지막 업데이트
-2026-07-07 (세션 5)
+2026-07-08 (세션 6)
 
 ---
 
-## 현재 상태: 정보 밀도 업그레이드 배포 완료 ✅ (Vercel 확인 완료)
+## 현재 상태: 주간 트렌드 + 스파이크 감지 배포 완료 ✅
 
-### 세션 5에서 완료된 것 (Cowork에서 파일 수정 완료)
-- [x] 본문 전문 수집: m.blog.naver.com 단순 HTTP fetch (검증: HTTP 200, 2,162자 추출 성공)
-- [x] AI 분석 입력 2000자 → 6000자
-- [x] 프롬프트 새 필드: numbers(핵심 수치), stance(강세/약세/중립 논조), reasoning(핵심 근거), risks(리스크)
-- [x] PostCard: 수치 칩 + 강세/약세 뱃지 (중립은 숨김 — signal 교훈)
-- [x] PostModal: 요약→수치→근거→리스크→포인트 구조화
-- [x] 로컬 실행 검증 (3건 수집 성공, posts.json은 되돌림)
-- [x] scripts/test-fetch-body.js 추가 (본문 수집 검증용, 유지)
+### 세션 6에서 완료된 것
 
-### 세션 5 배포 결과 (2026-07-07)
-- [x] git push (커밋 a093dba) → GitHub Actions #38 수동 실행 성공 (52초)
-- [x] 본문 전문 수집 작동 확인: RSS 16자 → 507자, 403자 → 2,158자, 410자 → 930자
-- [x] Vercel 확인: 수치 칩·강세 뱃지 정상 표시, 기존 글 하위호환 OK
-- [x] stance 유효성 확인: 강세 2건 / 해당없음 1건 — signal 때와 달리 변별력 있음
+- [x] **DailyBrief 타임스탬프** — generatedAt 표시 + 모바일 flexWrap
+- [x] **collect-rss.js daily_briefs 배열 마이그레이션** — daily_brief(단수) → daily_briefs(배열, 최대 7개)
+- [x] **하루 1회 캐싱** — 오늘 날짜 브리핑이 이미 있으면 Claude API 호출 생략
+- [x] **TDZ 버그 수정** — existingBrief 선언 전 사용 오류 해결
+- [x] **WeeklyTrend 컴포넌트** — 최근 7일 hot_stocks 언급 빈도 막대그래프 (보라색 테마)
+- [x] **SpikeAlert 컴포넌트** — 오늘 ≥2회 언급 + 전일 대비 2배 이상 종목 자동 표시 (빨간 테마)
+- [x] **텔레그램 알림 코드** — collect-rss.js에 sendTelegram() 함수 추가, collect.yml secrets 연결
+- [x] **Git 복구** — catastrophic temp-index commit 이후 refs/heads/main 수동 복구 완료
+- [x] GitHub push 완료 (커밋 7370f10 → 9a46d9d → 7f5bedd)
+- [x] Vercel 배포 확인 — WeeklyTrend "삼성전자 3/3일" 렌더링 확인
 
-### 다음 세션 후보 (구현 전 필요성 확인할 것)
-- sector가 "거시경제|반도체"처럼 복수로 나오는 버그 → 프롬프트에 "하나만" 명시 필요
-- 크로스 블로그 인사이트: "오늘 N명이 언급한 종목" 집계 (프론트 계산)
-- 카카오/이메일 daily digest
+### ⚠️ 텔레그램 알림 — 코드 완성, Secrets 미등록
 
-### 세션 4에서 완료된 것
-- [x] 블로그 닉네임 반영 (피터케이, 선진짱, Teddy 미술관, 너쟁이, 씹배, 잠실개미, 혀니루)
-- [x] signal 기능 완전 제거 (UI + 프롬프트 + 저장 로직)
-- [x] 본문 없는 블로그도 AI 분석 실행 (content 길이 조건 제거)
-- [x] post ID 안정화 (`blog_id_날짜_포스트번호` 형태 → 중복 방지)
-- [x] 7일 히스토리 누적 저장 (매일 덮어쓰기 → 누적 병합으로 변경)
+코드는 완성됐지만 GitHub Secrets가 아직 등록 안 됨. 다음 세션 또는 PC/폰 브라우저에서 직접 추가 필요:
 
-### 현재 아키텍처
+1. https://github.com/Dremandream/naver-blog-dashboard/settings/secrets/actions/new
+   - Name: `TELEGRAM_BOT_TOKEN`
+   - Secret: (봇 토큰 — 채팅에서 확인)
+2. 같은 URL에서
+   - Name: `TELEGRAM_CHAT_ID`
+   - Secret: `88580301`
+
+등록 후 `fix_and_push.bat` 실행 → 내일 오전 8시부터 자동 알림
+
+---
+
+## 현재 아키텍처
 
 ```
 매일 KST 08:00 GitHub Actions 자동 실행
   → collect-rss.js 실행
   → 10개 블로그 RSS fetch (오늘 + 어제)
-  → Claude Haiku AI 분석 (sector, summary, stocks, key_points)
-  → 기존 posts.json과 병합 (7일치 유지, 중복 제거)
+  → Claude Haiku AI 분석
+  → daily_briefs 배열 업데이트 (최대 7일치)
+  → 7일 히스토리 병합 저장 → posts.json
+  → 텔레그램 브리핑 발송 (Secrets 등록 후 활성화)
   → Vercel 자동 배포
-  → 대시보드 갱신
 ```
 
-### 현재 대시보드 기능
-- 섹터 필터 / 블로그 필터 / 날짜 필터 / 정렬
-- 카드 클릭 → 상세 모달
-- 종목 태그 클릭 → 검색 필터
-- StatsBar: 전체 글 수 + 섹터별 글 수
+---
 
-### 현재 데이터 현황 (2026-06-19 기준)
-- 블로그 10개, 글 8개 (히스토리 누적 시작일)
-- 7일 후부터 70~80개 수준 예상
+## 현재 대시보드 기능
+
+- 📰 **DailyBrief** — 오늘 브리핑 + 합의/이견/공통종목 + 생성시각
+- ⚡ **SpikeAlert** — 급증 종목 자동 감지 (데이터 축적 후 표시)
+- 📊 **WeeklyTrend** — 7일 종목 언급 빈도 막대 그래프
+- 섹터/블로그/날짜 필터, 종목 태그 검색, 카드 모달
 
 ---
 
@@ -62,22 +63,30 @@
 
 ```
 naver-blog-dashboard/
-├── config/blogs.json          # 블로그 10개 + 닉네임
-├── scripts/collect-rss.js     # RSS 수집 + AI 요약 + 7일 누적 저장
-├── public/data/posts.json     # 수집 데이터 (7일치 누적)
-├── src/App.jsx                # 메인 (필터/정렬/모달 state)
+├── config/blogs.json
+├── scripts/collect-rss.js        # RSS + AI + daily_briefs + 텔레그램
+├── public/data/posts.json        # 7일치 누적 데이터
+├── src/App.jsx
+├── src/components/DailyBrief.jsx
+├── src/components/WeeklyTrend.jsx  ← 세션 6 신규
+├── src/components/SpikeAlert.jsx   ← 세션 6 신규
 ├── src/components/PostCard.jsx
 ├── src/components/PostModal.jsx
 ├── src/components/FilterBar.jsx
 ├── src/components/StatsBar.jsx
+├── fix_and_push.bat              # 빌드+커밋+push (index.lock/HEAD.lock 자동 제거)
 └── .github/workflows/collect.yml
 ```
 
 ---
 
 ## 알려진 이슈 / 주의사항
-- git push 시 `.git/index.lock` 충돌 자주 발생 → Claude Code에서 `del .git\index.lock` 후 재시도
-- Cowork에서 파일 수정 후 Claude Code에서 push 시 충돌 가능 → "로컬 유지" 선택 시 Cowork 수정본이 날아갈 수 있음. push 후 파일 상태 확인 필요
+
+- `HEAD.lock` / `index.lock` 충돌 → `fix_and_push.bat`이 자동 제거함
+- Cowork에서 파일 수정 → Claude Code에서 push → 충돌 가능 → "로컬 유지" 선택 시 Cowork 수정본 유실
+- SpikeAlert은 데이터가 2일 이상 쌓여야 표시됨 (정상)
+- WeeklyTrend는 2일 이상 연속 언급 종목만 표시됨 (정상)
+- fix_and_push.bat: 배치 파일 안에 한국어 경로 있으면 CP949 인코딩 오류 → ASCII만 사용
 
 ---
 
@@ -85,7 +94,7 @@ naver-blog-dashboard/
 1. 이 파일 첨부
 2. "이어서 진행해줘" 입력
 
-## 남은 개선 아이디어
-- 카카오톡 / 이메일 알림 (특정 종목 언급 시)
-- 모바일 UI 최적화
-- 블로그 추가
+## 남은 개선 아이디어 (구현 전 필요성 확인)
+- ~~블로거 신뢰도 점수~~ → 제거 (이미 검증된 블로거만 등록, 불필요)
+- 텔레그램 알림 → GitHub Secrets 등록 후 활성화 대기 중
+- 뉴스 크로스체크 (외부 API 필요)

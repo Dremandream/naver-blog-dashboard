@@ -17,26 +17,40 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
 
-const TODAY_KST = new Date().toLocaleDateString('ko-KR', {
-  timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
-}).replace(/\. /g, '-').replace('.', '');
+// KST 날짜 유틸 (YYYY-MM-DD)
+function kstDate(offsetDays = 0) {
+  return new Date(Date.now() - offsetDays * 86400000).toLocaleDateString('ko-KR', {
+    timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).replace(/\. /g, '-').replace('.', '');
+}
+const TODAY_KST     = kstDate(0);
+const YESTERDAY_KST = kstDate(1);
+const WEEK_AGO_KST  = kstDate(7);
 
-// 어제 날짜 (KST)
-const YESTERDAY_KST = new Date(Date.now() - 86400000).toLocaleDateString('ko-KR', {
-  timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
-}).replace(/\. /g, '-').replace('.', '');
+// 종목명 별칭 정규화 테이블
+const ALIASES_PATH = path.join(__dirname, '../config/stock-aliases.json');
+let stockAliases = {};
+try {
+  stockAliases = JSON.parse(fs.readFileSync(ALIASES_PATH, 'utf8'));
+} catch {
+  console.warn('⚠️  stock-aliases.json 로드 실패 — 별칭 정규화 스킵');
+}
 
 const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
 
-// ─── RSS fetch ───────────────────────────────────────────────────────────────
-function fetchRSS(blogId) {
-  return new Promise((resolve, reject) => {
-    https.get(`https://rss.blog.naver.com/${blogId}.xml`, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => resolve(data));
-    }).on('error', reject);
-  });
+// ─── RSS fetch (15초 타임아웃 + 상태코드 체크) ───────────────────────────────
+async function fetchRSS(blogId) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(`https://rss.blog.naver.com/${blogId}.xml`, {
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    return await response.text();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // ─── 본문 전문 수집 (모바일 페이지) ──────────────────────────────────────────
@@ -163,7 +177,15 @@ async function analyzePost(title, content, blogName) {
     });
     const text = res.content[0].text.trim()
       .replace(/^```json\s*/, '').replace(/\s*```$/, '');
-    const _r=JSON.parse(text); _r.generatedAt=new Date().toISOString(); return _r;
+    const result = JSON.parse(text);
+    // AI 응답 스키마 검증 (배열 타입 보장)
+    const normalizeArr = v => Array.isArray(v) ? v : [];
+    result.stocks     = normalizeArr(result.stocks).map(s => stockAliases[s] || s);
+    result.key_points = normalizeArr(result.key_points);
+    result.numbers    = normalizeArr(result.numbers);
+    result.risks      = normalizeArr(result.risks);
+    result.generatedAt = new Date().toISOString();
+    return result;
   } catch (e) {
     console.warn('  AI 분석 실패:', e.message);
     return {
@@ -229,6 +251,7 @@ async function main() {
 
   const targetDates = new Set([TODAY_KST, YESTERDAY_KST]);
   const collected = [];
+  let fetchFailures = 0;
 
   // ── RSS 수집 ──────────────────────────────────────────────────────────────
   for (const blog of blogs) {
@@ -242,15 +265,21 @@ async function main() {
 
       collected.push(...recent);
     } catch (e) {
+      fetchFailures++;
       console.log(`❌ ${blog.name}: ${e.message}`);
     }
   }
 
-  console.log(`\n📊 수집 완료: ${collected.length}개`);
+  console.log(`\n📊 수집 완료: ${collected.length}개 (fetch 실패 ${fetchFailures}/${blogs.length})`);
+
+  // 모든 블로그 fetch 실패 → GitHub Actions 실패 처리
+  if (blogs.length > 0 && fetchFailures === blogs.length) {
+    console.error('🔥 모든 블로그 RSS 수집 실패 — 종료 코드 1');
+    process.exit(1);
+  }
 
   if (collected.length === 0) {
-    console.log('최근 2일간 새 글이 없습니다. posts.json을 업데이트하지 않습니다.');
-    return;
+    console.log('최근 2일간 새 글이 없습니다. 기존 데이터 7일 필터링 + 저장만 수행합니다.');
   }
 
   // ── Claude AI 요약 ────────────────────────────────────────────────────────
@@ -327,27 +356,22 @@ async function main() {
   let todayBrief = null;
   if (process.env.CLAUDE_API_KEY && results.length > 0) {
     console.log('\n📰 일별 브리핑 생성 중...');
-    const todayStr = new Date().toISOString().slice(0, 10);
     const cachedBrief = existingBriefs[0];
-    const isCached = cachedBrief && cachedBrief.generatedAt &&
-      cachedBrief.generatedAt.slice(0, 10) === todayStr;
+    const isCached = cachedBrief && cachedBrief.date === TODAY_KST;
     const brief = isCached
       ? (console.log('[DailyBrief] 캐시 사용:', cachedBrief.generatedAt) || cachedBrief)
       : await generateDailyBrief(results);
     if (brief) {
-      todayBrief = { date: TODAY_KST, post_count: results.length, ...brief };
+      todayBrief = { ...brief, date: TODAY_KST, post_count: results.length };
       console.log(`  → ${brief.headline}`);
     }
   }
 
-  // 7일 전 날짜 (KST) — 이보다 오래된 글은 제거
-  const WEEK_AGO_KST = new Date(Date.now() - 7 * 86400000).toLocaleDateString('ko-KR', {
-    timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
-  }).replace(/\. /g, '-').replace('.', '');
-
   // daily_briefs 배열 업데이트: 오늘 브리핑을 맨 앞에, 최대 7개 유지
-  let updatedBriefs = existingBriefs.filter(b => b.date !== TODAY_KST); // 오늘 것 중복 제거
-  if (todayBrief) updatedBriefs = [todayBrief, ...updatedBriefs];
+  let updatedBriefs = existingBriefs;
+  if (todayBrief) {
+    updatedBriefs = [todayBrief, ...existingBriefs.filter(b => b.date !== TODAY_KST)]; // 오늘 것 중복 제거
+  }
   updatedBriefs = updatedBriefs.slice(0, 7); // 최대 7일치 유지
 
   // 새 글 ID 목록 (중복 방지)
@@ -369,6 +393,58 @@ async function main() {
   );
 
   console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장, 브리핑 ${updatedBriefs.length}일치 → ${OUTPUT_PATH}`);
+
+  // ── 텔레그램 알림 ──────────────────────────────────────────────────────────
+  if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID && todayBrief) {
+    await sendTelegram(todayBrief, results.length);
+  }
+}
+
+async function sendTelegram(brief, postCount) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  // HTML 특수문자 이스케이프 (parse_mode: HTML 안전성)
+  const esc = (s = '') => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  const stocks = brief.hot_stocks?.length
+    ? `\n📌 공통 언급: ${esc(brief.hot_stocks.join(', '))}`
+    : '';
+  const consensus = brief.consensus?.length
+    ? `\n✅ 합의: ${esc(brief.consensus[0])}`
+    : '';
+  const divergence = brief.divergence?.length
+    ? `\n⚡ 이견: ${esc(brief.divergence[0])}`
+    : '';
+
+  const text = [
+    `📈 <b>네이버 블로그 투자 브리핑</b> (${esc(brief.date)})`,
+    `글 ${postCount}개 종합`,
+    ``,
+    `<b>${esc(brief.headline)}</b>`,
+    ``,
+    esc(brief.brief),
+    stocks,
+    consensus,
+    divergence,
+  ].filter(Boolean).join('\n').slice(0, 4000);
+
+  try {
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML' }),
+    });
+    const json = await res.json();
+    if (json.ok) {
+      console.log('📲 텔레그램 알림 전송 완료');
+    } else {
+      console.warn('⚠️  텔레그램 전송 실패:', json.description);
+    }
+  } catch (e) {
+    console.warn('⚠️  텔레그램 전송 오류:', e.message);
+  }
 }
 
 main().catch(err => {

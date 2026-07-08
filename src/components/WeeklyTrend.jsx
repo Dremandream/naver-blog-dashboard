@@ -1,4 +1,4 @@
-export default function WeeklyTrend({ briefs }) {
+export default function WeeklyTrend({ briefs, onStockClick }) {
   if (!briefs || briefs.length < 2) return null;
 
   const totalDays = briefs.length;
@@ -30,7 +30,11 @@ export default function WeeklyTrend({ briefs }) {
       <div className="trend-list">
         {ranked.map(([stock, cnt]) => (
           <div key={stock} className="trend-row">
-            <span className="trend-stock">{stock}</span>
+            <span
+              className="trend-stock"
+              onClick={() => onStockClick?.(stock)}
+              style={onStockClick ? { cursor: 'pointer' } : {}}
+            >{stock}</span>
             <div className="trend-bar-wrap">
               <div
                 className="trend-bar"

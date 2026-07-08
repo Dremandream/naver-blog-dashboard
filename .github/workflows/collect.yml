@@ -29,6 +29,8 @@ jobs:
       - name: 이웃새글 수집 및 요약 (RSS)
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/collect-rss.js
 
       - name: posts.json 커밋 & 푸시
@@ -38,5 +40,6 @@ jobs:
           git add public/data/posts.json
           git diff --staged --quiet && echo "변경 없음" || (
             git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M') 이웃새글 업데이트"
+            git pull --rebase origin main
             git push
           )
