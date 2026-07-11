@@ -37,8 +37,8 @@ export default function MarketPulse({ posts }) {
   return (
     <section className="market-pulse">
       <div className="brief-header">
-        <span className="brief-label">📊 오늘의 시장 심리</span>
-        <span className="brief-date">글 {posts.length}개 기준</span>
+        <span className="brief-label">📊 시장 심리</span>
+        <span className="brief-date">최근 2일 · 글 {posts.length}개 기준</span>
       </div>
 
       <div className="mp-body">

@@ -88,10 +88,10 @@ export default function App() {
     return b.date.localeCompare(a.date); // 최신순 (기본)
   });
 
-  // 최신 수집일 글만 (오늘의 시장 심리·핵심 종목용). 없으면 전체.
-  const latestDate = data?.date;
-  const todayPosts = posts.filter((p) => p.date === latestDate);
-  const pulsePosts = todayPosts.length > 0 ? todayPosts : posts;
+  // 최근 수집 2일치 글 (시장 심리·핵심 종목용) — 브리핑과 동일 기간(오늘+어제)으로 맞춤.
+  // 아침엔 '오늘' 글이 적어 어제 저녁 글까지 봐야 대표성이 생김.
+  const recentDates = [...new Set(posts.map((p) => p.date))].sort().reverse().slice(0, 2);
+  const pulsePosts = posts.filter((p) => recentDates.includes(p.date));
 
   // 섹터별 글 수 (StatsBar용)
   const sectorCounts = posts.reduce((acc, p) => {

@@ -21,8 +21,8 @@ export default function TodayStocks({ posts, onStockClick }) {
   return (
     <section className="today-stocks">
       <div className="brief-header">
-        <span className="brief-label">🎯 오늘의 핵심 종목</span>
-        <span className="brief-date">2회 이상 언급 · 강세/약세 비율</span>
+        <span className="brief-label">🎯 핵심 종목</span>
+        <span className="brief-date">최근 2일 · 2회 이상 언급 · 강세/약세 비율</span>
       </div>
       <div className="ts-grid">
         {stocks.map((s) => {
