@@ -39,6 +39,27 @@ try {
 
 const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
 
+// ─── 견고한 JSON 파서 ────────────────────────────────────────────────────────
+// 모델이 JSON 앞뒤에 설명/코드펜스를 붙여도 안전하게 첫 번째 {...} 블록만 추출.
+function parseJSONLoose(raw) {
+  let t = String(raw).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+  // 첫 '{' 부터 괄호 균형이 맞는 지점까지 스캔 (문자열 내 중괄호 무시)
+  const start = t.indexOf('{');
+  if (start === -1) return JSON.parse(t); // 실패 시 원래대로 throw
+  let depth = 0, inStr = false, esc = false;
+  for (let i = start; i < t.length; i++) {
+    const c = t[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === '\\') esc = true;
+      else if (c === '"') inStr = false;
+    } else if (c === '"') inStr = true;
+    else if (c === '{') depth++;
+    else if (c === '}') { depth--; if (depth === 0) return JSON.parse(t.slice(start, i + 1)); }
+  }
+  return JSON.parse(t.slice(start)); // 닫힘 못 찾으면 원래 오류 전파
+}
+
 // ─── RSS fetch (15초 타임아웃 + 상태코드 체크) ───────────────────────────────
 async function fetchRSS(blogId) {
   const controller = new AbortController();
@@ -243,9 +264,7 @@ async function analyzePost(title, content, blogName) {
       max_tokens: 1800,
       messages: [{ role: 'user', content: prompt }],
     });
-    const text = res.content[0].text.trim()
-      .replace(/^```json\s*/, '').replace(/\s*```$/, '');
-    const result = JSON.parse(text);
+    const result = parseJSONLoose(res.content[0].text);
     // sector 단일화: 여러 개("반도체|거시경제")로 나오면 첫 번째만 사용 (필터 매칭 보장)
     if (typeof result.sector === 'string') result.sector = result.sector.split(/[|,/]/)[0].trim();
     // AI 응답 스키마 검증 (배열 타입 보장)
@@ -313,9 +332,7 @@ ${JSON.stringify(digest, null, 2)}
       max_tokens: 3000,
       messages: [{ role: 'user', content: prompt }],
     });
-    const text = res.content[0].text.trim()
-      .replace(/^```json\s*/, '').replace(/\s*```$/, '');
-    const _r=JSON.parse(text); _r.generatedAt=new Date().toISOString(); return _r;
+    const _r = parseJSONLoose(res.content[0].text); _r.generatedAt=new Date().toISOString(); return _r;
   } catch (e) {
     console.warn('  브리핑 생성 실패:', e.message);
     return null;
