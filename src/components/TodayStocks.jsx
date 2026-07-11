@@ -34,40 +34,25 @@ export default function TodayStocks({ posts, onStockClick }) {
     <section className="today-stocks">
       <div className="brief-header">
         <span className="brief-label">🎯 핵심 종목</span>
-        <span className="brief-date">최근 2일 · 2회 이상 언급 · 강세/약세 비율</span>
+        <span className="brief-date">최근 2일 · 2명 이상 언급 · 클릭 → 종목 리포트</span>
       </div>
       <div className="ts-grid">
-        {stocks.map((s) => {
-          const total = s.bull + s.bear + s.neutral || 1;
-          return (
-            <button
-              key={s.name}
-              className="ts-item"
-              onClick={() => onStockClick?.(s.name)}
-              title={`${s.name} 검색`}
-            >
-              <div className="ts-top">
-                <span className="ts-name">
-                  {s.name}
-                  {s.bull > 0 && s.bear > 0 && (
-                    <span className="ts-split" title="강세·약세 시각이 갈리는 종목 — 리서치 가치 높음">🔀 의견 갈림</span>
-                  )}
-                </span>
-                <span className="ts-count">{s.count}명</span>
-              </div>
-              <div className="ts-bar">
-                <span className="ts-seg ts-bull" style={{ width: `${(s.bull / total) * 100}%` }} />
-                <span className="ts-seg ts-neutral" style={{ width: `${(s.neutral / total) * 100}%` }} />
-                <span className="ts-seg ts-bear" style={{ width: `${(s.bear / total) * 100}%` }} />
-              </div>
-              <div className="ts-legend">
-                {s.bull > 0 && <span className="ts-l-bull">강세 {s.bull}</span>}
-                {s.neutral > 0 && <span className="ts-l-neutral">중립 {s.neutral}</span>}
-                {s.bear > 0 && <span className="ts-l-bear">약세 {s.bear}</span>}
-              </div>
-            </button>
-          );
-        })}
+        {stocks.map((s) => (
+          <button
+            key={s.name}
+            className="ts-item"
+            onClick={() => onStockClick?.(s.name)}
+            title={`${s.name} 리포트 열기`}
+          >
+            <span className="ts-name">
+              {s.name}
+              {s.bull > 0 && s.bear > 0 && (
+                <span className="ts-split" title="강세·약세 시각이 갈리는 종목 — 리서치 가치 높음">🔀 갈림</span>
+              )}
+            </span>
+            <span className="ts-count">{s.count}명 ›</span>
+          </button>
+        ))}
       </div>
     </section>
   );

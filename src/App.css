@@ -176,43 +176,35 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .modal-reasoning { font-size: 13px; color: #475569; line-height: 1.6; background: #f8fafc; border-left: 3px solid #3b82f6; padding: 10px 12px; border-radius: 0 8px 8px 0; }
 .modal-risks li { color: #b45309; }
 
-/* ===== 오늘의 시장 심리 (MarketPulse) ===== */
-.market-pulse { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
-.mp-body { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
-.mp-block { display: flex; align-items: center; gap: 16px; }
-.mp-donut { width: 96px; height: 96px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.mp-donut-hole { width: 58px; height: 58px; background: #fff; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.mp-donut-num { font-size: 20px; font-weight: 800; color: #0f172a; line-height: 1; }
-.mp-donut-label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
-.mp-legend { display: flex; flex-direction: column; gap: 5px; list-style: none; padding: 0; margin: 0; }
-.mp-legend li { font-size: 12px; color: #475569; display: flex; align-items: center; gap: 6px; }
-.mp-legend b { color: #0f172a; }
-.mp-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
-.mp-stance { flex-direction: column; align-items: stretch; gap: 10px; min-width: 220px; flex: 1; }
-.mp-stance-bar { display: flex; height: 22px; border-radius: 8px; overflow: hidden; background: #f1f5f9; }
-.mp-s { height: 100%; }
-.mp-s-bull { background: #ef4444; }
-.mp-s-neutral { background: #cbd5e1; }
-.mp-s-bear { background: #3b82f6; }
-.mp-stance-legend { display: flex; gap: 16px; list-style: none; padding: 0; margin: 0; }
-.mp-stance-legend li { font-size: 12px; color: #475569; display: flex; align-items: center; gap: 6px; }
-.mp-stance-legend b { color: #0f172a; }
-.mp-d-bull { background: #ef4444; } .mp-d-neutral { background: #cbd5e1; } .mp-d-bear { background: #3b82f6; }
-
 /* ===== 오늘의 핵심 종목 (TodayStocks) ===== */
 .today-stocks { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
-.ts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 14px; }
-.ts-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 6px; transition: border-color .15s, background .15s; }
-.ts-item:hover { border-color: #14b8a6; background: #f0fdfa; }
-.ts-top { display: flex; justify-content: space-between; align-items: center; }
-.ts-name { font-size: 14px; font-weight: 700; color: #0f172a; }
-.ts-count { font-size: 12px; font-weight: 700; color: #14b8a6; background: #ccfbf1; border-radius: 6px; padding: 1px 8px; }
+.ts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-top: 14px; }
+.ts-item { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 12px; cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 8px; transition: border-color .15s, background .15s; }
+.ts-item:hover { border-color: #6366f1; background: #f5f5ff; }
+.ts-name { font-size: 13.5px; font-weight: 700; color: #0f172a; display: flex; align-items: center; }
+.ts-count { font-size: 12px; font-weight: 700; color: #64748b; white-space: nowrap; }
 .ts-bar { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background: #e2e8f0; }
 .ts-seg { height: 100%; }
 .ts-bull { background: #ef4444; } .ts-neutral { background: #cbd5e1; } .ts-bear { background: #3b82f6; }
 .ts-legend { display: flex; gap: 8px; font-size: 11px; }
 .ts-l-bull { color: #dc2626; } .ts-l-neutral { color: #64748b; } .ts-l-bear { color: #2563eb; }
 .ts-split { font-size: 10px; font-weight: 700; color: #b45309; background: #fef3c7; border-radius: 5px; padding: 1px 6px; margin-left: 6px; white-space: nowrap; }
+
+/* ===== 개별 종목 리포트 (StockReport 모달) ===== */
+.sr-modal { max-width: 620px; }
+.sr-title { font-size: 22px; font-weight: 800; color: #0f172a; letter-spacing: -.01em; }
+.sr-meta { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+.sr-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #eef2f6; margin-bottom: 18px; }
+.sr-section { margin-bottom: 18px; }
+.sr-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.sr-item { border-left: 3px solid #e5e7eb; padding-left: 12px; }
+.sr-item-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; }
+.sr-item-head b { color: #0f172a; }
+.sr-date { font-size: 11px; color: #94a3b8; }
+.sr-link { font-size: 11px; color: #6366f1; text-decoration: none; margin-left: auto; }
+.sr-link:hover { text-decoration: underline; }
+.sr-text { font-size: 13px; color: #334155; line-height: 1.6; margin-top: 3px; }
+.sr-empty { color: #94a3b8; text-align: center; padding: 20px; }
 
 /* 카드 리스크(약세 논거) 노출 — 확증편향 방지 */
 .card-risk { font-size: 12px; color: #b45309; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 8px 10px; line-height: 1.5; margin: 0; }

@@ -6,9 +6,9 @@ import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
 import WeeklyTrend from "./components/WeeklyTrend";
 import SpikeAlert from "./components/SpikeAlert";
-import MarketPulse from "./components/MarketPulse";
 import TodayStocks from "./components/TodayStocks";
 import Revisions from "./components/Revisions";
+import StockReport from "./components/StockReport";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -27,6 +27,7 @@ export default function App() {
   const [loading, setLoading]         = useState(true);
   const [error, setError]             = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedStock, setSelectedStock] = useState(null);
 
   // 필터 state
   const [selectedSector, setSelectedSector] = useState("전체");
@@ -122,12 +123,11 @@ export default function App() {
       </header>
 
       <main className="main">
-        <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSearchQuery} />
-        <Revisions posts={posts} onStockClick={setSearchQuery} />
-        <MarketPulse posts={pulsePosts} />
-        <TodayStocks posts={pulsePosts} onStockClick={setSearchQuery} />
-        <SpikeAlert posts={posts} onStockClick={setSearchQuery} />
-        <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSearchQuery} />
+        <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSelectedStock} />
+        <Revisions posts={posts} onStockClick={setSelectedStock} />
+        <TodayStocks posts={pulsePosts} onStockClick={setSelectedStock} />
+        <SpikeAlert posts={posts} onStockClick={setSelectedStock} />
+        <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 
         <div className="section-divider">
@@ -174,6 +174,10 @@ export default function App() {
 
       {selectedPost && (
         <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+      )}
+
+      {selectedStock && (
+        <StockReport stock={selectedStock} posts={posts} onClose={() => setSelectedStock(null)} />
       )}
     </div>
   );
