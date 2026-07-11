@@ -13,7 +13,7 @@ export default function DailyBrief({ brief, onStockClick }) {
 
       {brief.consensus?.length > 0 && (
         <div className="brief-row">
-          <span className="brief-tag brief-tag-consensus">합의</span>
+          <span className="brief-tag brief-tag-consensus">공통 시각</span>
           <ul className="brief-list">
             {brief.consensus.map((c, i) => <li key={i}>{c}</li>)}
           </ul>
@@ -22,7 +22,7 @@ export default function DailyBrief({ brief, onStockClick }) {
 
       {brief.divergence?.length > 0 && (
         <div className="brief-row">
-          <span className="brief-tag brief-tag-divergence">이견</span>
+          <span className="brief-tag brief-tag-divergence">엇갈린 시각</span>
           <ul className="brief-list">
             {brief.divergence.map((d, i) => <li key={i}>{d}</li>)}
           </ul>
@@ -31,7 +31,7 @@ export default function DailyBrief({ brief, onStockClick }) {
 
       {brief.hot_stocks?.length > 0 && (
         <div className="brief-row brief-stocks">
-          <span className="brief-tag brief-tag-hot">공통 언급</span>
+          <span className="brief-tag brief-tag-hot">함께 주목한 종목</span>
           <div className="card-stocks" style={{flexWrap:'wrap'}}>
             {brief.hot_stocks.map((s) => (
               <span

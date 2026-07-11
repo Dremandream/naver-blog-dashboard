@@ -24,7 +24,7 @@ export default function WeeklyTrend({ briefs, onStockClick }) {
   return (
     <section className="weekly-trend">
       <div className="brief-header">
-        <span className="brief-label">📊 주간 합의 트렌드</span>
+        <span className="brief-label">📊 주간 관심 종목 트렌드</span>
         <span className="brief-date">최근 {totalDays}일 종목 언급 빈도</span>
       </div>
       <div className="trend-list">
