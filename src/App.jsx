@@ -127,6 +127,12 @@ export default function App() {
         <SpikeAlert posts={posts} onStockClick={setSearchQuery} />
         <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSearchQuery} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
+
+        <div className="section-divider">
+          <h2>개별 글</h2>
+          <span className="sd-count">{sorted.length}건</span>
+        </div>
+
         <FilterBar
           sectors={sectors}
           blogs={blogs}
