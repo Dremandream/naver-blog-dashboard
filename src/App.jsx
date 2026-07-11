@@ -5,7 +5,6 @@ import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
 import WeeklyTrend from "./components/WeeklyTrend";
-import SpikeAlert from "./components/SpikeAlert";
 import TodayStocks from "./components/TodayStocks";
 import Revisions from "./components/Revisions";
 import StockReport from "./components/StockReport";
@@ -126,7 +125,6 @@ export default function App() {
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSelectedStock} />
         <Revisions posts={posts} onStockClick={setSelectedStock} />
         <TodayStocks posts={pulsePosts} onStockClick={setSelectedStock} />
-        <SpikeAlert posts={posts} onStockClick={setSelectedStock} />
         <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 
