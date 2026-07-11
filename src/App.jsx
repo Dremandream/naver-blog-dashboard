@@ -8,6 +8,7 @@ import WeeklyTrend from "./components/WeeklyTrend";
 import SpikeAlert from "./components/SpikeAlert";
 import MarketPulse from "./components/MarketPulse";
 import TodayStocks from "./components/TodayStocks";
+import Revisions from "./components/Revisions";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -122,6 +123,7 @@ export default function App() {
 
       <main className="main">
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSearchQuery} />
+        <Revisions posts={posts} onStockClick={setSearchQuery} />
         <MarketPulse posts={pulsePosts} />
         <TodayStocks posts={pulsePosts} onStockClick={setSearchQuery} />
         <SpikeAlert posts={posts} onStockClick={setSearchQuery} />
