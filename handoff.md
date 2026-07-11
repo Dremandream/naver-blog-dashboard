@@ -15,8 +15,25 @@
   - 각 글에 `source: 'telegram' | 'blog'` 필드 추가
 - [x] **PostCard 텔레그램 배지** — `source==='telegram'`일 때 "📱 텔레그램" 표시 (App.css `.source-telegram`)
 - [x] **버그 수정 2건** — (1) 긴 텔레그램 글 JSON 잘림 → `max_tokens` 1200→1800, (2) sector 다중값("반도체|거시경제") → 첫 번째만 사용
-- [x] **로컬 검증 완료** — `node scripts/collect-rss.js` 전체 10개 분석 성공(텔레그램 4개 포함), `npm run build` 통과
-- [ ] **git push 대기** — 사용자 확인 후 push → Vercel 배포 → 텔레그램 카드 확인
+- [x] **텔레그램 채널 5개** — 투자콤, 잠실개미(텔레), IT는 SK, 캬오의 공부방, 너쟁이(텔레)
+- [x] **브리핑 라벨 자연스럽게** — 합의→공통 시각, 이견→엇갈린 시각, 공통 언급→함께 주목한 종목, 주간 합의 트렌드→주간 관심 종목 트렌드
+- [x] **소스 필터** — FilterBar에 블로그/텔레그램 필터 추가 (App.jsx `selectedSource`)
+- [x] **텔레그램 제목 개선** — analyzePost에 `headline` 필드 추가 → 텔레그램 카드는 AI 헤드라인 사용
+- [x] **MarketPulse (신규)** — 오늘 섹터 분포 도넛 + 강세/약세/중립 비율 막대
+- [x] **TodayStocks (신규)** — 전 소스 통합 종목별 언급수 + 강세/약세 비율 바
+- [x] **투자자 관점 개선** — (1) 카드에 리스크(bear case) 한 줄 노출 → 확증편향 방지, (2) 핵심종목 '🔀 의견 갈림' 배지 → 강세·약세 갈리는 종목 부각(군중심리 방지)
+- [x] **배포 완료** — Vercel 라이브 확인, 매일 KST 08:00 자동 수집에 텔레그램 포함
+
+### 세션 9 신규/수정 파일
+- `config/telegram-channels.json` (신규, 5채널)
+- `scripts/collect-rss.js` — 텔레그램 수집·파싱, headline, source, 버그수정
+- `src/components/MarketPulse.jsx` (신규), `src/components/TodayStocks.jsx` (신규)
+- `src/components/FilterBar.jsx` (소스 필터), `PostCard.jsx` (배지·리스크), `DailyBrief.jsx`/`WeeklyTrend.jsx` (라벨)
+- `src/App.jsx`, `src/App.css`
+
+### 소스 적정선 메모 (사용자와 논의)
+- 현재 총 15개 소스 (블로그 10 + 텔레그램 5). 적정 범위 15~20개.
+- 25개 초과 시 `generateDailyBrief` max_tokens(1000) 상향 + SpikeAlert/WeeklyTrend 임계값 튜닝 필요.
 
 ### 텔레그램 수집 주의사항
 - 공개 채널만 가능 (`t.me/s/채널명` 접속됨). 비공개면 수집 불가.
