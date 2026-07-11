@@ -35,7 +35,12 @@ export default function TodayStocks({ posts, onStockClick }) {
               title={`${s.name} 검색`}
             >
               <div className="ts-top">
-                <span className="ts-name">{s.name}</span>
+                <span className="ts-name">
+                  {s.name}
+                  {s.bull > 0 && s.bear > 0 && (
+                    <span className="ts-split" title="강세·약세 시각이 갈리는 종목 — 리서치 가치 높음">🔀 의견 갈림</span>
+                  )}
+                </span>
                 <span className="ts-count">{s.count}회</span>
               </div>
               <div className="ts-bar">

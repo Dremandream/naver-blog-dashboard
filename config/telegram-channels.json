@@ -2,6 +2,8 @@
   "channels": [
     { "id": "comvestment", "name": "투자콤" },
     { "id": "jake8lee", "name": "잠실개미(텔레)" },
-    { "id": "skitteam", "name": "IT는 SK" }
+    { "id": "skitteam", "name": "IT는 SK" },
+    { "id": "Kyaooo", "name": "캬오의 공부방" },
+    { "id": "nje2e", "name": "너쟁이(텔레)" }
   ]
 }

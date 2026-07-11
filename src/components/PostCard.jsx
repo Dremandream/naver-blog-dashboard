@@ -62,6 +62,10 @@ export default function PostCard({ post, onCardClick, onStockClick }) {
           ))}
         </ul>
       )}
+
+      {post.risks?.length > 0 && (
+        <p className="card-risk">⚠️ 리스크: {post.risks[0]}</p>
+      )}
     </article>
   );
 }
