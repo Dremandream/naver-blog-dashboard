@@ -121,6 +121,9 @@ h1 { font-size: 18px; font-weight: 700; }
 .brief-tag-consensus { background: #f0fdf4; color: #15803d; }
 .brief-tag-divergence { background: #fef2f2; color: #dc2626; }
 .brief-tag-hot { background: #fffbeb; color: #b45309; }
+.brief-tag-minority { background: #f5f3ff; color: #7c3aed; }
+/* 소수의견은 눈에 띄게 — 투자 가치 높은 지점 */
+.brief-tag-minority + .brief-list li { color: #5b21b6; font-weight: 500; }
 .brief-list { display: flex; flex-direction: column; gap: 4px; }
 .brief-list li { font-size: 13px; color: #475569; line-height: 1.5; list-style: none; }
 .brief-stocks { align-items: center; }

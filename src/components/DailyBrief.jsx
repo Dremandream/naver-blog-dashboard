@@ -29,6 +29,15 @@ export default function DailyBrief({ brief, onStockClick }) {
         </div>
       )}
 
+      {brief.minority?.length > 0 && (
+        <div className="brief-row">
+          <span className="brief-tag brief-tag-minority">🔍 소수·역발상</span>
+          <ul className="brief-list">
+            {brief.minority.map((m, i) => <li key={i}>{m}</li>)}
+          </ul>
+        </div>
+      )}
+
       {brief.hot_stocks?.length > 0 && (
         <div className="brief-row brief-stocks">
           <span className="brief-tag brief-tag-hot">함께 주목한 종목</span>
