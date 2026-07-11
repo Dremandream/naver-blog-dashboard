@@ -10,6 +10,9 @@ export default function PostCard({ post, onCardClick, onStockClick }) {
     <article className="card card-clickable" onClick={() => onCardClick(post)}>
       <div className="card-top">
         <div className="card-meta">
+          {post.source === 'telegram' && (
+            <span className="source-badge source-telegram">📱 텔레그램</span>
+          )}
           <span className="blog-name">{post.blog_name}</span>
           <span className="card-date">{post.date}</span>
         </div>

@@ -1,37 +1,60 @@
 # Handoff - 네이버 블로그 투자 대시보드
 
 ## 마지막 업데이트
-2026-07-08 (세션 6)
+2026-07-11 (세션 9)
 
 ---
 
-## 현재 상태: 주간 트렌드 + 스파이크 감지 배포 완료 ✅
+## 세션 9에서 완료된 것 — 텔레그램 채널 통합 ✅
 
-### 세션 6에서 완료된 것
+- [x] **텔레그램 공개 채널 3개 통합 수집** — 투자콤(comvestment), 잠실개미(텔레)(jake8lee), IT는 SK(skitteam)
+  - 수집 방식: `t.me/s/{채널}` 웹 미리보기 스크래핑 (인증 불필요, 공개 채널만)
+  - `config/telegram-channels.json` 신규
+  - `collect-rss.js`: `fetchTelegramChannel()`, `parseTelegramMessages()`, `stripHtml()` 추가
+  - 채널별로 **하루치 메시지를 1개 글로 병합** 후 기존 `analyzePost` 파이프라인에 투입 → 종합 브리핑 자동 통합
+  - 각 글에 `source: 'telegram' | 'blog'` 필드 추가
+- [x] **PostCard 텔레그램 배지** — `source==='telegram'`일 때 "📱 텔레그램" 표시 (App.css `.source-telegram`)
+- [x] **버그 수정 2건** — (1) 긴 텔레그램 글 JSON 잘림 → `max_tokens` 1200→1800, (2) sector 다중값("반도체|거시경제") → 첫 번째만 사용
+- [x] **로컬 검증 완료** — `node scripts/collect-rss.js` 전체 10개 분석 성공(텔레그램 4개 포함), `npm run build` 통과
+- [ ] **git push 대기** — 사용자 확인 후 push → Vercel 배포 → 텔레그램 카드 확인
 
-- [x] **DailyBrief 타임스탬프** — generatedAt 표시 + 모바일 flexWrap
-- [x] **collect-rss.js daily_briefs 배열 마이그레이션** — daily_brief(단수) → daily_briefs(배열, 최대 7개)
-- [x] **하루 1회 캐싱** — 오늘 날짜 브리핑이 이미 있으면 Claude API 호출 생략
-- [x] **TDZ 버그 수정** — existingBrief 선언 전 사용 오류 해결
-- [x] **WeeklyTrend 컴포넌트** — 최근 7일 hot_stocks 언급 빈도 막대그래프 (보라색 테마)
-- [x] **SpikeAlert 컴포넌트** — 오늘 ≥2회 언급 + 전일 대비 2배 이상 종목 자동 표시 (빨간 테마)
-- [x] **텔레그램 알림 코드** — collect-rss.js에 sendTelegram() 함수 추가, collect.yml secrets 연결
-- [x] **Git 복구** — catastrophic temp-index commit 이후 refs/heads/main 수동 복구 완료
-- [x] GitHub push 완료 (커밋 7370f10 → 9a46d9d → 7f5bedd)
-- [x] Vercel 배포 확인 — WeeklyTrend "삼성전자 3/3일" 렌더링 확인
+### 텔레그램 수집 주의사항
+- 공개 채널만 가능 (`t.me/s/채널명` 접속됨). 비공개면 수집 불가.
+- 채널 추가: `config/telegram-channels.json`에 `{ "id": "채널핸들", "name": "표시이름" }`
+- 채널 표시이름은 `t.me/s/{id}` 페이지 `og:title`에서 확인 가능
 
-### ⚠️ 텔레그램 알림 — 코드 완성, Secrets 미등록
+---
 
-코드는 완성됐지만 GitHub Secrets가 아직 등록 안 됨. 다음 세션 또는 PC/폰 브라우저에서 직접 추가 필요:
+## 현재 상태 (세션 8): 전체 완성 ✅ — GitHub Actions #41 실제 실행 성공 확인
 
-1. https://github.com/Dremandream/naver-blog-dashboard/settings/secrets/actions/new
-   - Name: `TELEGRAM_BOT_TOKEN`
-   - Secret: (봇 토큰 — 채팅에서 확인)
-2. 같은 URL에서
-   - Name: `TELEGRAM_CHAT_ID`
-   - Secret: `88580301`
+### 세션 8에서 완료된 것
 
-등록 후 `fix_and_push.bat` 실행 → 내일 오전 8시부터 자동 알림
+- [x] **전체 점검 완료** — Fable 9개 개선사항 코드 전부 확인 (collect-rss.js, App.jsx, SpikeAlert.jsx, WeeklyTrend.jsx, collect.yml)
+- [x] **Vercel 라이브 배포 확인** — DailyBrief, WeeklyTrend 정상 표시 (블로그 카드 37개)
+- [x] **GitHub Actions 수동 실행 (#41) 성공** — 1분 49초, 커밋 c6d7b8f 기준, 전체 파이프라인 정상
+- [x] **텔레그램 알림 미등록 결정** — 대시보드로 충분, 코드는 유지 (나중에 원하면 Secrets만 등록하면 됨)
+
+### 세션 7에서 완료된 것
+
+- [x] **KST 날짜 버그 수정** — `kstDate()` 함수로 UTC 오류 해결
+  - collect-rss.js: `TODAY_KST`, `YESTERDAY_KST`, `WEEK_AGO_KST` 모두 KST 기준
+  - App.jsx: `getKSTDate(0)` 캐시버스터 (UTC→KST)
+- [x] **텔레그램 HTML parse_mode** — 마크다운 대신 HTML, `esc()` 이스케이프, 4000자 제한
+- [x] **블로거 Set 기반 카운트** — SpikeAlert: 포스트 수 대신 고유 블로거 수 (Set)
+- [x] **종목 별칭 정규화** — `config/stock-aliases.json` 추가 (하이닉스→SK하이닉스 등)
+- [x] **RSS fetch 타임아웃** — 15초 AbortController + `!response.ok` 체크
+- [x] **AI 응답 스키마 검증** — `normalizeArr()` 함수
+- [x] **0결과 처리** — 기존 briefs 유지, 전체 실패 시 `process.exit(1)`
+- [x] **종목 클릭 검색** — SpikeAlert/WeeklyTrend 클릭 → SearchQuery 연동 (`onStockClick`)
+- [x] **collect.yml 충돌 방지** — `git pull --rebase origin main` 추가
+- [x] **GitHub push 완료** — 커밋 c6d7b8f (세션 내 git index 부패 복구 포함)
+
+### 텔레그램 알림 — 코드 완성, 등록 보류 (의도적 결정)
+
+대시보드에서 직접 확인하는 방식으로 운영하기로 결정. 코드는 그대로 유지됨.
+나중에 필요하면 GitHub Secrets만 등록하면 즉시 활성화:
+- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` = `88580301`
+- URL: https://github.com/Dremandream/naver-blog-dashboard/settings/secrets/actions/new
 
 ---
 
@@ -40,11 +63,13 @@
 ```
 매일 KST 08:00 GitHub Actions 자동 실행
   → collect-rss.js 실행
-  → 10개 블로그 RSS fetch (오늘 + 어제)
-  → Claude Haiku AI 분석
+  → 10개 블로그 RSS fetch (KST 오늘 + 어제, 15초 타임아웃)
+  → Claude Haiku AI 분석 + 스키마 검증
+  → 종목 별칭 정규화 (stock-aliases.json)
   → daily_briefs 배열 업데이트 (최대 7일치)
   → 7일 히스토리 병합 저장 → posts.json
   → 텔레그램 브리핑 발송 (Secrets 등록 후 활성화)
+  → git pull --rebase + git push (충돌 방지)
   → Vercel 자동 배포
 ```
 
@@ -53,8 +78,8 @@
 ## 현재 대시보드 기능
 
 - 📰 **DailyBrief** — 오늘 브리핑 + 합의/이견/공통종목 + 생성시각
-- ⚡ **SpikeAlert** — 급증 종목 자동 감지 (데이터 축적 후 표시)
-- 📊 **WeeklyTrend** — 7일 종목 언급 빈도 막대 그래프
+- ⚡ **SpikeAlert** — 급증 종목 (고유 블로거 수 기준, 오늘 ≥2명 + 전일 대비 2배)
+- 📊 **WeeklyTrend** — 7일 종목 언급 빈도 막대 그래프 (클릭→검색)
 - 섹터/블로그/날짜 필터, 종목 태그 검색, 카드 모달
 
 ---
@@ -64,29 +89,34 @@
 ```
 naver-blog-dashboard/
 ├── config/blogs.json
+├── config/stock-aliases.json      ← 세션 7 신규 (종목 별칭)
 ├── scripts/collect-rss.js        # RSS + AI + daily_briefs + 텔레그램
 ├── public/data/posts.json        # 7일치 누적 데이터
-├── src/App.jsx
+├── src/App.jsx                   # KST 캐시버스터
+├── src/App.css                   # hover 스타일
 ├── src/components/DailyBrief.jsx
-├── src/components/WeeklyTrend.jsx  ← 세션 6 신규
-├── src/components/SpikeAlert.jsx   ← 세션 6 신규
+├── src/components/WeeklyTrend.jsx  # onStockClick
+├── src/components/SpikeAlert.jsx   # 블로거 Set 카운트 + onStockClick
 ├── src/components/PostCard.jsx
 ├── src/components/PostModal.jsx
 ├── src/components/FilterBar.jsx
 ├── src/components/StatsBar.jsx
-├── fix_and_push.bat              # 빌드+커밋+push (index.lock/HEAD.lock 자동 제거)
-└── .github/workflows/collect.yml
+├── fix_and_push.bat              # 빌드+커밋+push (lock 자동 제거)
+├── unlock_and_commit.bat         # ← 세션 7 신규: 재귀 lock 제거 + 커밋
+├── pull_push.bat                 # ← 세션 7 신규: pull --rebase + push
+└── .github/workflows/collect.yml # git pull --rebase 추가
 ```
 
 ---
 
 ## 알려진 이슈 / 주의사항
 
-- `HEAD.lock` / `index.lock` 충돌 → `fix_and_push.bat`이 자동 제거함
-- Cowork에서 파일 수정 → Claude Code에서 push → 충돌 가능 → "로컬 유지" 선택 시 Cowork 수정본 유실
+- `HEAD.lock` / `index.lock` 충돌 → `unlock_and_commit.bat` 사용 (재귀 삭제 포함)
+- `refs/heads/main.lock` 도 생길 수 있음 → `unlock_and_commit.bat`이 처리
+- git push 전 `git pull --rebase` 필요 (GitHub Actions가 매일 posts.json 커밋)
 - SpikeAlert은 데이터가 2일 이상 쌓여야 표시됨 (정상)
 - WeeklyTrend는 2일 이상 연속 언급 종목만 표시됨 (정상)
-- fix_and_push.bat: 배치 파일 안에 한국어 경로 있으면 CP949 인코딩 오류 → ASCII만 사용
+- Cowork에서 파일 수정 → Claude Code에서 push → 충돌 가능 → "로컬 유지" 선택 시 Cowork 수정본 유실
 
 ---
 
@@ -94,7 +124,16 @@ naver-blog-dashboard/
 1. 이 파일 첨부
 2. "이어서 진행해줘" 입력
 
-## 남은 개선 아이디어 (구현 전 필요성 확인)
-- ~~블로거 신뢰도 점수~~ → 제거 (이미 검증된 블로거만 등록, 불필요)
-- 텔레그램 알림 → GitHub Secrets 등록 후 활성화 대기 중
-- 뉴스 크로스체크 (외부 API 필요)
+## 다음 개선 아이디어 (세션 8에서 논의, 구현 전 확인 필요)
+
+기존 posts.json 데이터만으로 구현 가능한 것:
+- **섹터 분포 도넛 차트** — 오늘 posts[].sector 집계, 어떤 테마가 뜨거운지 시각화
+- **스탠스 비율 막대** — 강세/약세/중립 블로거 수 (posts[].stance), 시장 심리 요약
+- **종목 히트맵** — 7일 × 상위 10종목 격자, 언급 많을수록 진한 색
+- **블로거 성향 점수** — 블로거별 평균 강세/약세 성향 점수화
+
+외부 API 필요한 것:
+- 주가 크로스체크 — 블로거 예측 vs 실제 주가 등락 비교
+- 뉴스 크로스체크
+
+추천 구현 순서: 섹터 도넛 + 스탠스 비율 → 히트맵 → 블로거 성향

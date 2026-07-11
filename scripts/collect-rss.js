@@ -15,6 +15,7 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
+const TELEGRAM_PATH = path.join(__dirname, '../config/telegram-channels.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
 
 // KST 날짜 유틸 (YYYY-MM-DD)
@@ -136,6 +137,71 @@ function parseAllPosts(xml, blogId, blogName) {
   });
 }
 
+// ─── 텔레그램 공개 채널 수집 (t.me/s/ 웹 미리보기) ───────────────────────────
+async function fetchTelegramChannel(channelId) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  try {
+    const response = await fetch(`https://t.me/s/${channelId}`, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; blog-dashboard/1.0)' },
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    return await response.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// HTML 엔티티 디코드 + 태그 제거
+function stripHtml(s) {
+  return s
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(parseInt(d, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .trim();
+}
+
+// 채널 HTML → 메시지 배열 [{ text, postDate, url }]
+function parseTelegramMessages(html, channelId) {
+  const messages = [];
+  // 메시지 텍스트 블록
+  const textRe = /<div class="tgme_widget_message_text[^"]*"[^>]*>([\s\S]*?)<\/div>/g;
+  // 메시지 래퍼(데이터 속성 + 시간 포함)를 순서대로 매칭
+  const wrapRe = /data-post="([^"]+)"[\s\S]*?<time[^>]*datetime="([^"]+)"/g;
+
+  const texts = [];
+  let tm;
+  while ((tm = textRe.exec(html)) !== null) texts.push(stripHtml(tm[1]));
+
+  const metas = [];
+  let wm;
+  while ((wm = wrapRe.exec(html)) !== null) {
+    metas.push({ post: wm[1], datetime: wm[2] });
+  }
+
+  // 텍스트가 없는 메시지(사진만 등)가 있으면 개수가 어긋날 수 있어,
+  // 텍스트 블록 기준으로 가장 가까운 메타를 매칭하기보다 최소 개수만큼 정렬 매칭
+  const n = Math.min(texts.length, metas.length);
+  for (let i = 0; i < n; i++) {
+    const text = texts[i];
+    if (!text) continue;
+    const postDate = new Date(metas[i].datetime).toLocaleDateString('ko-KR', {
+      timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit',
+    }).replace(/\. /g, '-').replace('.', '');
+    messages.push({
+      text,
+      postDate,
+      url: `https://t.me/${metas[i].post}`,
+    });
+  }
+  return messages;
+}
+
 // ─── Claude AI 투자 요약 ──────────────────────────────────────────────────────
 async function analyzePost(title, content, blogName) {
   const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래 블로그 글을 읽고, 독자가 원글을 열지 않아도 판단할 수 있게 정보를 최대한 구체적으로 추출하세요.
@@ -172,12 +238,14 @@ async function analyzePost(title, content, blogName) {
   try {
     const res = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1200,
+      max_tokens: 1800,
       messages: [{ role: 'user', content: prompt }],
     });
     const text = res.content[0].text.trim()
       .replace(/^```json\s*/, '').replace(/\s*```$/, '');
     const result = JSON.parse(text);
+    // sector 단일화: 여러 개("반도체|거시경제")로 나오면 첫 번째만 사용 (필터 매칭 보장)
+    if (typeof result.sector === 'string') result.sector = result.sector.split(/[|,/]/)[0].trim();
     // AI 응답 스키마 검증 (배열 타입 보장)
     const normalizeArr = v => Array.isArray(v) ? v : [];
     result.stocks     = normalizeArr(result.stocks).map(s => stockAliases[s] || s);
@@ -199,6 +267,7 @@ async function analyzePost(title, content, blogName) {
 async function generateDailyBrief(posts) {
   const digest = posts.map(p => ({
     blog: p.blog_name,
+    source: p.source === 'telegram' ? '텔레그램' : '블로그',
     title: p.title,
     sector: p.sector,
     stance: p.stance,
@@ -270,7 +339,45 @@ async function main() {
     }
   }
 
-  console.log(`\n📊 수집 완료: ${collected.length}개 (fetch 실패 ${fetchFailures}/${blogs.length})`);
+  console.log(`\n📊 블로그 수집 완료: ${collected.length}개 (fetch 실패 ${fetchFailures}/${blogs.length})`);
+
+  // ── 텔레그램 채널 수집 ─────────────────────────────────────────────────────
+  let channels = [];
+  try {
+    ({ channels } = JSON.parse(fs.readFileSync(TELEGRAM_PATH, 'utf-8')));
+  } catch {
+    console.warn('⚠️  telegram-channels.json 로드 실패 — 텔레그램 수집 스킵');
+  }
+
+  if (channels.length > 0) {
+    console.log(`\n📱 텔레그램 채널 ${channels.length}개: ${channels.map(c => c.name).join(', ')}`);
+    for (const ch of channels) {
+      try {
+        const html = await fetchTelegramChannel(ch.id);
+        const msgs = parseTelegramMessages(html, ch.id);
+        // 채널별로 하루치 메시지를 1개 글로 병합 (targetDates 범위만)
+        for (const date of targetDates) {
+          const dayMsgs = msgs.filter(m => m.postDate === date);
+          if (dayMsgs.length === 0) continue;
+          const content = dayMsgs.map(m => m.text).join('\n\n---\n\n').slice(0, 8000);
+          collected.push({
+            blog_id: ch.id,
+            blog_name: ch.name,
+            title: `${ch.name} 텔레그램 (${date}, ${dayMsgs.length}건)`,
+            url: dayMsgs[0].url,
+            content,
+            postDate: date,
+            source: 'telegram',
+          });
+          console.log(`✅ ${ch.name}: [${date}] ${dayMsgs.length}건 병합`);
+        }
+      } catch (e) {
+        console.log(`❌ ${ch.name} (텔레그램): ${e.message}`);
+      }
+    }
+  }
+
+  console.log(`\n📊 전체 수집: ${collected.length}개 (블로그 ${blogs.length} + 텔레그램 ${channels.length}채널)`);
 
   // 모든 블로그 fetch 실패 → GitHub Actions 실패 처리
   if (blogs.length > 0 && fetchFailures === blogs.length) {
@@ -293,13 +400,17 @@ async function main() {
     const post = collected[i];
     console.log(`\n[${i + 1}/${collected.length}] 분석 중: ${post.blog_name} - ${post.title}`);
 
-    // 본문 전문 수집 (실패 시 RSS description 그대로 사용)
-    const fullBody = await fetchFullContent(post.url);
-    if (fullBody && fullBody.length > post.content.length) {
-      console.log(`  📄 본문 전문 수집: ${fullBody.length.toLocaleString()}자 (RSS: ${post.content.length}자)`);
-      post.content = fullBody;
+    // 본문 전문 수집 (텔레그램은 이미 본문 확보 → 스킵, 블로그만 수집)
+    if (post.source === 'telegram') {
+      console.log(`  📱 텔레그램 본문 사용: ${post.content.length}자`);
     } else {
-      console.log(`  📄 RSS 본문 사용: ${post.content.length}자`);
+      const fullBody = await fetchFullContent(post.url);
+      if (fullBody && fullBody.length > post.content.length) {
+        console.log(`  📄 본문 전문 수집: ${fullBody.length.toLocaleString()}자 (RSS: ${post.content.length}자)`);
+        post.content = fullBody;
+      } else {
+        console.log(`  📄 RSS 본문 사용: ${post.content.length}자`);
+      }
     }
 
     let analysis = {
@@ -315,6 +426,7 @@ async function main() {
     results.push({
       id: `${post.blog_id}_${post.postDate}_${post.url.split('/').pop() || i}`,
       date: post.postDate,
+      source: post.source || 'blog',
       blog_name: post.blog_name,
       title: post.title,
       url: post.url,
@@ -394,7 +506,7 @@ async function main() {
 
   console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장, 브리핑 ${updatedBriefs.length}일치 → ${OUTPUT_PATH}`);
 
-  // ── 텔레그램 알림 ──────────────────────────────────────────────────────────
+  // ── 텔레그램 알림 ──────────────────────────────────────────────────────────────────────────
   if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID && todayBrief) {
     await sendTelegram(todayBrief, results.length);
   }
