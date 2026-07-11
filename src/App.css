@@ -100,6 +100,36 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .daily-brief { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px 26px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 14px; }
 /* 종합의견은 히어로 — 살짝 강조 */
 .daily-brief { box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+
+/* ===== 종합 리포트 (증권사 리포트 톤) ===== */
+.daily-brief.report { padding: 28px 30px; gap: 18px; }
+.report-head { border-bottom: 2px solid #0f172a; padding-bottom: 14px; }
+.report-kicker { font-size: 11px; font-weight: 800; letter-spacing: .12em; color: #6366f1; text-transform: uppercase; margin-bottom: 6px; }
+.report-headline { font-size: 21px; font-weight: 800; color: #0f172a; line-height: 1.4; letter-spacing: -.01em; }
+.report-meta { font-size: 12px; color: #94a3b8; margin-top: 8px; }
+.report-summary { font-size: 14.5px; color: #1e293b; line-height: 1.9; }
+.report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.report-block { border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; background: #fff; }
+.report-block-title { font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+.report-list { list-style: none; display: flex; flex-direction: column; gap: 7px; padding: 0; }
+.report-list li { font-size: 13px; line-height: 1.65; color: #334155; padding-left: 14px; position: relative; }
+.report-list li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; }
+/* 논거 유형별 색 (한국식: 강세=빨강, 약세=파랑) */
+.report-bull { background: #fef5f5; border-color: #fadcdc; }
+.report-bull .report-block-title { color: #b91c1c; }
+.report-bull .report-list li::before { background: #ef4444; }
+.report-bear { background: #f3f7fe; border-color: #d6e4fb; }
+.report-bear .report-block-title { color: #1d4ed8; }
+.report-bear .report-list li::before { background: #3b82f6; }
+.report-minority { background: #faf8ff; border-color: #e7ddfb; }
+.report-minority .report-block-title { color: #7c3aed; }
+.report-minority .report-list li::before { background: #8b5cf6; }
+.report-watch { background: #fffdf5; border-color: #f5ecc9; }
+.report-watch .report-block-title { color: #b45309; }
+.report-watch .report-list li::before { background: #f59e0b; }
+.report-stocks { border: none; padding: 4px 0 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.report-stocks .report-block-title { margin-bottom: 0; color: #475569; }
+@media (max-width: 600px) { .report-grid { grid-template-columns: 1fr; } .daily-brief.report { padding: 20px 18px; } }
 /* ===== 스파이크 감지 ===== */
 .spike-alert { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
 .spike-label { font-size: 12px; font-weight: 700; color: #334155; letter-spacing: .01em; }
