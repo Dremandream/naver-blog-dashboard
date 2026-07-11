@@ -31,6 +31,15 @@
 - `src/components/FilterBar.jsx` (소스 필터), `PostCard.jsx` (배지·리스크), `DailyBrief.jsx`/`WeeklyTrend.jsx` (라벨)
 - `src/App.jsx`, `src/App.css`
 
+### 세션 9 후반 추가 작업 (검토 → 3건 개선)
+- [x] **종합의견 Opus 업그레이드** — generateDailyBrief만 Haiku→Opus (하루 1회), max_tokens 3000. 개별분석은 Haiku 유지
+- [x] **소수·역발상 의견(minority)** — 브리핑에 필드+렌더링 추가. 다수 강세론에 묻힐 역발상 관점 부각
+- [x] **시장심리·핵심종목 기간 통일** — '오늘'만→'최근 2일'(브리핑과 동일). 아침에 카드 빈약하던 문제 해결
+- [x] **인물(person) 단위 중복집계 제거** — config에 person 태그. 같은 사람 블로그+텔레그램 1명으로(너쟁이/잠실개미). TodayStocks/SpikeAlert/MarketPulse + 브리핑 digest 반영
+- [x] **종목명 정규화** — stock-aliases 확장(해외 티커) + 프롬프트에 한글 정식명 통일 지시
+- [x] **PRD.md 신규** (현행 SSOT), SKILL.md 텔레그램 절차, cowork-prompt.md는 `../archive/`로 이동(구버전)
+- [x] **검증 완료** — 재수집 오류 없음, person 13/13, 종목명 깨끗, 컴포넌트 로직 스모크테스트 통과, 라이브 배포 확인
+
 ### 소스 적정선 메모 (사용자와 논의)
 - 현재 총 15개 소스 (블로그 10 + 텔레그램 5). 적정 범위 15~20개.
 - 25개 초과 시 `generateDailyBrief` max_tokens(1000) 상향 + SpikeAlert/WeeklyTrend 임계값 튜닝 필요.
