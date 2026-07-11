@@ -25,13 +25,16 @@ export default function MarketPulse({ posts }) {
   });
   const donut = `conic-gradient(${stops.join(", ")})`;
 
-  // 스탠스 집계
-  const stance = { 강세: 0, 약세: 0, 중립: 0 };
+  // 스탠스 집계 — 인물(person) 단위. 같은 사람이 여러 글을 써도 심리는 1표.
+  const personStance = {};
   for (const p of posts) {
-    if (p.stance === "강세") stance.강세 += 1;
-    else if (p.stance === "약세") stance.약세 += 1;
-    else stance.중립 += 1;
+    const person = p.person || p.blog_name || "unknown";
+    const st = p.stance === "강세" ? "강세" : p.stance === "약세" ? "약세" : "중립";
+    const cur = personStance[person];
+    if (!cur || (cur === "중립" && st !== "중립")) personStance[person] = st;
   }
+  const stance = { 강세: 0, 약세: 0, 중립: 0 };
+  for (const st of Object.values(personStance)) stance[st] += 1;
   const totalStance = stance.강세 + stance.약세 + stance.중립 || 1;
 
   return (

@@ -109,7 +109,7 @@ async function fetchFullContent(postUrl) {
 }
 
 // ─── RSS 파싱 ────────────────────────────────────────────────────────────────
-function parseAllPosts(xml, blogId, blogName) {
+function parseAllPosts(xml, blogId, blogName, person) {
   const items = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
 
   return items.map(item => {
@@ -128,6 +128,7 @@ function parseAllPosts(xml, blogId, blogName) {
     return {
       blog_id: blogId,
       blog_name: blogName,
+      person: person || blogName,
       title,
       url: url.split('?')[0],
       content: desc.replace(/<[^>]+>/g, '').slice(0, 2000),
@@ -227,7 +228,7 @@ async function analyzePost(title, content, blogName) {
 {
   "headline": "이 글의 핵심을 담은 30자 이내 한 줄 제목 (예: 'SK하이닉스 ADR 상장 + 반도체 수출 급증')",
   "summary": "핵심 주장 + 투자 근거를 2~3문장. 구체 수치 포함. 본문이 없거나 투자와 무관하면 '투자 관련 내용 없음'",
-  "stocks": ["언급된 종목명만 (없으면 빈 배열)"],
+  "stocks": ["언급된 종목명만. 정식 명칭으로 통일: 한국 종목은 정확한 한글 상장명(예: 'SK하이닉스','삼성전자'), 해외 종목은 널리 쓰이는 한글명(예: '엔비디아','마이크론','메타'). 오타·영문약자 금지. (없으면 빈 배열)"],
   "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|자동차·로봇|방산|부동산|소재·화학|거시경제|기타",
   "key_points": ["핵심 포인트 3~5개, 각각 수치·근거 포함"],
   "numbers": ["글에 나온 핵심 수치 최대 4개, 맥락 포함 (예: 'SK하이닉스 목표가 320만원 (UBS)') — 없으면 빈 배열"],
@@ -269,6 +270,7 @@ async function analyzePost(title, content, blogName) {
 async function generateDailyBrief(posts) {
   const digest = posts.map(p => ({
     blog: p.blog_name,
+    person: p.person || p.blog_name,
     source: p.source === 'telegram' ? '텔레그램' : '블로그',
     title: p.title,
     sector: p.sector,
@@ -287,8 +289,9 @@ ${JSON.stringify(digest, null, 2)}
 2. 핵심은 비교: 누가 어떤 근거로 무엇을 주장하는지, 어디서 겹치고 어디서 갈리는지.
 3. 구체 수치를 반드시 포함 (목표가, 전망치, 증감률 등).
 4. 투자 무관 글은 무시하세요.
-5. **소수의견(minority)이 가장 중요**: 다수와 다르게 보는 1~2명의 근거 있는 시각, 또는 남들이 놓친 관점을 반드시 찾아내세요. 다수 합의는 이미 시장에 반영됐을 가능성이 크고, 소수·역발상 의견이 오히려 리서치 가치가 높습니다. 억지로 만들지 말되, 실제로 있으면 놓치지 마세요.
-6. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
+5. **동일 인물 중복 주의**: 같은 person이 블로그와 텔레그램에 모두 쓸 수 있습니다(예: '너쟁이', '잠실개미'). "몇 명이 합의"를 셀 때 person 기준으로 세고, 같은 사람을 2명으로 세지 마세요.
+6. **소수의견(minority)이 가장 중요**: 다수와 다르게 보는 1~2명의 근거 있는 시각, 또는 남들이 놓친 관점을 반드시 찾아내세요. 다수 합의는 이미 시장에 반영됐을 가능성이 크고, 소수·역발상 의견이 오히려 리서치 가치가 높습니다. 억지로 만들지 말되, 실제로 있으면 놓치지 마세요.
+7. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
@@ -331,7 +334,7 @@ async function main() {
   for (const blog of blogs) {
     try {
       const xml = await fetchRSS(blog.id);
-      const posts = parseAllPosts(xml, blog.id, blog.name);
+      const posts = parseAllPosts(xml, blog.id, blog.name, blog.person);
       const recent = posts.filter(p => targetDates.has(p.postDate));
 
       console.log(`✅ ${blog.name}: 최근 2일 ${recent.length}개`);
@@ -368,6 +371,7 @@ async function main() {
           collected.push({
             blog_id: ch.id,
             blog_name: ch.name,
+            person: ch.person || ch.name,
             title: `${ch.name} 텔레그램 (${date}, ${dayMsgs.length}건)`,
             url: dayMsgs[0].url,
             content,
@@ -433,6 +437,7 @@ async function main() {
       date: post.postDate,
       source: post.source || 'blog',
       blog_name: post.blog_name,
+      person: post.person || post.blog_name,
       // 텔레그램 글은 기계적 제목 대신 AI 헤드라인 사용 (건수는 뒤에 유지)
       title: post.source === 'telegram' && analysis.headline
         ? `${analysis.headline} (${post.title.match(/\d+건/)?.[0] || ''})`.replace(' ()', '')

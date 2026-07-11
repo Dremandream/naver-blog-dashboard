@@ -8,7 +8,7 @@ export default function SpikeAlert({ posts, onStockClick }) {
     if (!byDate[p.date]) byDate[p.date] = {};
     p.stocks.forEach(s => {
       if (!byDate[p.date][s]) byDate[p.date][s] = new Set();
-      byDate[p.date][s].add(p.blog_name || p.blog_id || 'unknown');
+      byDate[p.date][s].add(p.person || p.blog_name || p.blog_id || 'unknown');
     });
   });
 

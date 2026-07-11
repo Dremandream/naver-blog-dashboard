@@ -5,9 +5,17 @@
 ---
 
 ## SKILL 1: 새 블로그 추가
-1. config/blogs.json에 추가: `{ "id": "블로그ID", "name": "닉네임" }`
+1. config/blogs.json에 추가: `{ "id": "블로그ID", "name": "닉네임", "person": "인물명" }`
 2. RSS 실제 확인: `https://rss.blog.naver.com/{blogId}.xml`
 3. git push → GitHub Actions Run workflow → 대시보드 확인
+- `person`: 같은 사람이 텔레그램에도 있으면 동일 값으로 맞춰 중복 집계 방지
+
+## SKILL 1-B: 새 텔레그램 채널 추가
+1. 공개 여부 확인: `https://t.me/s/{채널핸들}` 접속되면 공개(수집 가능)
+2. 채널명 확인: 같은 페이지 og:title
+3. config/telegram-channels.json에 추가: `{ "id": "채널핸들", "name": "표시이름", "person": "인물명" }`
+4. git push → GitHub Actions → 대시보드 확인
+- 비공개 채널은 수집 불가
 
 ## SKILL 2: AI 프롬프트 개선
 - 파일: `scripts/collect-rss.js` → `analyzePost()` 함수 내 prompt 변수
