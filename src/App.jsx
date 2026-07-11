@@ -6,6 +6,8 @@ import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
 import WeeklyTrend from "./components/WeeklyTrend";
 import SpikeAlert from "./components/SpikeAlert";
+import MarketPulse from "./components/MarketPulse";
+import TodayStocks from "./components/TodayStocks";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -17,6 +19,7 @@ function getKSTDate(offsetDays = 0) {
 
 const DATES    = ["전체", "오늘", "어제", "최근 7일"];
 const SORT_OPT = ["최신순", "블로그별"];
+const SOURCES  = ["전체", "블로그", "텔레그램"];
 
 export default function App() {
   const [data, setData]               = useState(null);
@@ -27,6 +30,7 @@ export default function App() {
   // 필터 state
   const [selectedSector, setSelectedSector] = useState("전체");
   const [selectedBlog,   setSelectedBlog]   = useState("전체");
+  const [selectedSource, setSelectedSource] = useState("전체");
   const [selectedDate,   setSelectedDate]   = useState("전체");
   const [sortBy,         setSortBy]         = useState("최신순");
   const [searchQuery,    setSearchQuery]    = useState("");
@@ -65,6 +69,11 @@ export default function App() {
     .filter((p) => selectedSector === "전체" || p.sector === selectedSector)
     .filter((p) => selectedBlog   === "전체" || p.blog_name === selectedBlog)
     .filter((p) => {
+      if (selectedSource === "전체") return true;
+      const src = p.source === "telegram" ? "텔레그램" : "블로그";
+      return src === selectedSource;
+    })
+    .filter((p) => {
       const q = searchQuery.toLowerCase();
       return (
         !q ||
@@ -78,6 +87,11 @@ export default function App() {
     if (sortBy === "블로그별") return a.blog_name.localeCompare(b.blog_name, "ko");
     return b.date.localeCompare(a.date); // 최신순 (기본)
   });
+
+  // 최신 수집일 글만 (오늘의 시장 심리·핵심 종목용). 없으면 전체.
+  const latestDate = data?.date;
+  const todayPosts = posts.filter((p) => p.date === latestDate);
+  const pulsePosts = todayPosts.length > 0 ? todayPosts : posts;
 
   // 섹터별 글 수 (StatsBar용)
   const sectorCounts = posts.reduce((acc, p) => {
@@ -108,6 +122,8 @@ export default function App() {
 
       <main className="main">
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSearchQuery} />
+        <MarketPulse posts={pulsePosts} />
+        <TodayStocks posts={pulsePosts} onStockClick={setSearchQuery} />
         <SpikeAlert posts={posts} onStockClick={setSearchQuery} />
         <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSearchQuery} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
@@ -115,13 +131,16 @@ export default function App() {
           sectors={sectors}
           blogs={blogs}
           dates={DATES}
+          sources={SOURCES}
           sortOptions={SORT_OPT}
           selectedSector={selectedSector}
           selectedBlog={selectedBlog}
+          selectedSource={selectedSource}
           selectedDate={selectedDate}
           sortBy={sortBy}
           onSectorChange={setSelectedSector}
           onBlogChange={setSelectedBlog}
+          onSourceChange={setSelectedSource}
           onDateChange={setSelectedDate}
           onSortChange={setSortBy}
         />

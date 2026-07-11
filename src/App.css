@@ -135,6 +135,43 @@ h1 { font-size: 18px; font-weight: 700; }
 .modal-reasoning { font-size: 13px; color: #475569; line-height: 1.6; background: #f8fafc; border-left: 3px solid #3b82f6; padding: 10px 12px; border-radius: 0 8px 8px 0; }
 .modal-risks li { color: #b45309; }
 
+/* ===== 오늘의 시장 심리 (MarketPulse) ===== */
+.market-pulse { background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #0ea5e9; border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; }
+.mp-body { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+.mp-block { display: flex; align-items: center; gap: 16px; }
+.mp-donut { width: 96px; height: 96px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.mp-donut-hole { width: 58px; height: 58px; background: #fff; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.mp-donut-num { font-size: 20px; font-weight: 800; color: #0f172a; line-height: 1; }
+.mp-donut-label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+.mp-legend { display: flex; flex-direction: column; gap: 5px; list-style: none; padding: 0; margin: 0; }
+.mp-legend li { font-size: 12px; color: #475569; display: flex; align-items: center; gap: 6px; }
+.mp-legend b { color: #0f172a; }
+.mp-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
+.mp-stance { flex-direction: column; align-items: stretch; gap: 10px; min-width: 220px; flex: 1; }
+.mp-stance-bar { display: flex; height: 22px; border-radius: 8px; overflow: hidden; background: #f1f5f9; }
+.mp-s { height: 100%; }
+.mp-s-bull { background: #ef4444; }
+.mp-s-neutral { background: #cbd5e1; }
+.mp-s-bear { background: #3b82f6; }
+.mp-stance-legend { display: flex; gap: 16px; list-style: none; padding: 0; margin: 0; }
+.mp-stance-legend li { font-size: 12px; color: #475569; display: flex; align-items: center; gap: 6px; }
+.mp-stance-legend b { color: #0f172a; }
+.mp-d-bull { background: #ef4444; } .mp-d-neutral { background: #cbd5e1; } .mp-d-bear { background: #3b82f6; }
+
+/* ===== 오늘의 핵심 종목 (TodayStocks) ===== */
+.today-stocks { background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #14b8a6; border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; }
+.ts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 14px; }
+.ts-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 6px; transition: border-color .15s, background .15s; }
+.ts-item:hover { border-color: #14b8a6; background: #f0fdfa; }
+.ts-top { display: flex; justify-content: space-between; align-items: center; }
+.ts-name { font-size: 14px; font-weight: 700; color: #0f172a; }
+.ts-count { font-size: 12px; font-weight: 700; color: #14b8a6; background: #ccfbf1; border-radius: 6px; padding: 1px 8px; }
+.ts-bar { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background: #e2e8f0; }
+.ts-seg { height: 100%; }
+.ts-bull { background: #ef4444; } .ts-neutral { background: #cbd5e1; } .ts-bear { background: #3b82f6; }
+.ts-legend { display: flex; gap: 8px; font-size: 11px; }
+.ts-l-bull { color: #dc2626; } .ts-l-neutral { color: #64748b; } .ts-l-bear { color: #2563eb; }
+
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
   h1 { font-size: 15px; }

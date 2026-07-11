@@ -225,6 +225,7 @@ async function analyzePost(title, content, blogName) {
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
+  "headline": "이 글의 핵심을 담은 30자 이내 한 줄 제목 (예: 'SK하이닉스 ADR 상장 + 반도체 수출 급증')",
   "summary": "핵심 주장 + 투자 근거를 2~3문장. 구체 수치 포함. 본문이 없거나 투자와 무관하면 '투자 관련 내용 없음'",
   "stocks": ["언급된 종목명만 (없으면 빈 배열)"],
   "sector": "반도체|2차전지|플랫폼|바이오|금융|에너지|자동차·로봇|방산|부동산|소재·화학|거시경제|기타",
@@ -252,6 +253,7 @@ async function analyzePost(title, content, blogName) {
     result.key_points = normalizeArr(result.key_points);
     result.numbers    = normalizeArr(result.numbers);
     result.risks      = normalizeArr(result.risks);
+    result.headline   = typeof result.headline === 'string' ? result.headline.trim() : '';
     result.generatedAt = new Date().toISOString();
     return result;
   } catch (e) {
@@ -428,7 +430,10 @@ async function main() {
       date: post.postDate,
       source: post.source || 'blog',
       blog_name: post.blog_name,
-      title: post.title,
+      // 텔레그램 글은 기계적 제목 대신 AI 헤드라인 사용 (건수는 뒤에 유지)
+      title: post.source === 'telegram' && analysis.headline
+        ? `${analysis.headline} (${post.title.match(/\d+건/)?.[0] || ''})`.replace(' ()', '')
+        : post.title,
       url: post.url,
       summary: analysis.summary,
       stocks: analysis.stocks,

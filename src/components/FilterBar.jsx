@@ -1,7 +1,7 @@
 export default function FilterBar({
-  sectors, blogs, dates, sortOptions,
-  selectedSector, selectedBlog, selectedDate, sortBy,
-  onSectorChange, onBlogChange, onDateChange, onSortChange,
+  sectors, blogs, dates, sources, sortOptions,
+  selectedSector, selectedBlog, selectedSource, selectedDate, sortBy,
+  onSectorChange, onBlogChange, onSourceChange, onDateChange, onSortChange,
 }) {
   return (
     <div className="filter-bar">
@@ -15,6 +15,21 @@ export default function FilterBar({
               onClick={() => onDateChange(d)}
             >
               {d}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="filter-group">
+        <span className="filter-label">소스</span>
+        <div className="filter-chips">
+          {(sources ?? []).map((s) => (
+            <button
+              key={s}
+              className={`chip ${selectedSource === s ? "chip-active" : ""}`}
+              onClick={() => onSourceChange(s)}
+            >
+              {s === "텔레그램" ? "📱 텔레그램" : s === "블로그" ? "📝 블로그" : s}
             </button>
           ))}
         </div>
