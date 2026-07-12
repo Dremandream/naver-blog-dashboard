@@ -114,33 +114,28 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .report-headline { font-size: 21px; font-weight: 800; color: #0f172a; line-height: 1.4; letter-spacing: -.01em; }
 .report-meta { font-size: 12px; color: #94a3b8; margin-top: 8px; }
 .report-summary { font-size: 14.5px; color: #1e293b; line-height: 1.9; }
-.report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.report-block { border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 16px; background: #fff; }
-.report-block-title { font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
-.report-list { list-style: none; display: flex; flex-direction: column; gap: 7px; padding: 0; }
-.report-list li { font-size: 13px; line-height: 1.65; color: #334155; padding-left: 14px; position: relative; }
+.report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+/* 납작한 블록: 배경·테두리 없이 제목색+불릿점색만으로 위계 (박스 무지개 제거) */
+.report-block { padding: 0; background: none; border: none; }
+.report-block-title { font-size: 12.5px; font-weight: 800; color: #0f172a; margin-bottom: 7px; }
+.report-list { list-style: none; display: flex; flex-direction: column; gap: 6px; padding: 0; }
+.report-list li { font-size: 13px; line-height: 1.6; color: #334155; padding-left: 13px; position: relative; }
 .report-list li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; }
-/* 논거 유형별 색 (한국식: 강세=빨강, 약세=파랑) */
-.report-bull { background: #fef5f5; border-color: #fadcdc; }
 .report-bull .report-block-title { color: #b91c1c; }
 .report-bull .report-list li::before { background: #ef4444; }
-.report-bear { background: #f3f7fe; border-color: #d6e4fb; }
 .report-bear .report-block-title { color: #1d4ed8; }
 .report-bear .report-list li::before { background: #3b82f6; }
-.report-minority { background: #faf8ff; border-color: #e7ddfb; }
 .report-minority .report-block-title { color: #7c3aed; }
 .report-minority .report-list li::before { background: #8b5cf6; }
-.report-crowding { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 600; line-height: 1.5; }
-.report-neglected { background: #f5f9ff; border-color: #d6e4fb; }
-.report-neglected .report-block-title { color: #1d4ed8; }
-.report-neglected .report-list li::before { background: #3b82f6; }
-.report-price { background: #f6fbf7; border-color: #d3ecd9; }
+.report-neglected .report-block-title { color: #0891b2; }
+.report-neglected .report-list li::before { background: #06b6d4; }
 .report-price .report-block-title { color: #15803d; }
 .report-price .report-list li::before { background: #22c55e; }
-.report-watch { background: #fffdf5; border-color: #f5ecc9; }
 .report-watch .report-block-title { color: #b45309; }
 .report-watch .report-list li::before { background: #f59e0b; }
-.report-stocks { border: none; padding: 4px 0 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+/* 쏠림 경고만 배너 유지 (핵심 경고) */
+.report-crowding { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 600; line-height: 1.5; }
+.report-stocks { padding: 10px 0 0; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .report-stocks .report-block-title { margin-bottom: 0; color: #475569; }
 @media (max-width: 600px) { .report-grid { grid-template-columns: 1fr; } .daily-brief.report { padding: 20px 18px; } }
 .brief-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }

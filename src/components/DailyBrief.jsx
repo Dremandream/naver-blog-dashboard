@@ -66,10 +66,15 @@ export default function DailyBrief({ briefs, onStockClick }) {
         <ReportBlock variant="bear" title="📉 약세·신중 논거" items={bear} />
       </div>
 
-      <ReportBlock variant="minority" title="🔍 소수·역발상 의견" items={brief.minority} />
-      <ReportBlock variant="neglected" title="🧭 소외된 시각 (다른 섹터·반대 포지션)" items={brief.neglected} />
-      <ReportBlock variant="price" title="⚖️ 말 vs 가격" items={brief.price_check} />
-      <ReportBlock variant="watch" title="🎯 관전 포인트" items={brief.watch_points} />
+      <div className="report-grid">
+        <ReportBlock variant="minority" title="🔍 소수·역발상" items={brief.minority} />
+        <ReportBlock variant="neglected" title="🧭 소외된 시각 (다른 섹터·반대)" items={brief.neglected} />
+      </div>
+
+      <div className="report-grid">
+        <ReportBlock variant="price" title="⚖️ 말 vs 가격" items={brief.price_check} />
+        <ReportBlock variant="watch" title="🎯 관전 포인트" items={brief.watch_points} />
+      </div>
 
       {brief.hot_stocks?.length > 0 && (
         <div className="report-block report-stocks">
