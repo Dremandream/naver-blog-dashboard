@@ -15,7 +15,13 @@ function SourceLine({ p }) {
   );
 }
 
-export default function StockReport({ stock, posts, onClose }) {
+function Pct({ v }) {
+  if (v == null) return null;
+  const cls = v > 0 ? "at-px-up" : v < 0 ? "at-px-down" : "at-px-flat";
+  return <span className={cls}>{v > 0 ? "+" : ""}{v}%</span>;
+}
+
+export default function StockReport({ stock, posts, price, onClose }) {
   if (!stock) return null;
 
   const rel = posts
@@ -53,6 +59,12 @@ export default function StockReport({ stock, posts, onClose }) {
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
 
+        {price && (
+          <div className="sr-price">
+            <span className="sr-price-now">{price.price.toLocaleString()}{price.market === "KR" ? "원" : ""}</span>
+            <span className="sr-price-chg">1일 <Pct v={price.d1} /> · 5일 <Pct v={price.d5} /> · 20일 <Pct v={price.d20} /></span>
+          </div>
+        )}
         <div className="sr-meta">
           최근 {dates.length}일 · 언급 {total}명 · 강세 {bull} / 약세 {bear} / 중립 {neutral}
         </div>

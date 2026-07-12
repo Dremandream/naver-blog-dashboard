@@ -36,7 +36,13 @@ const STATUS = {
   idle: { label: "· 소강", cls: "at-idle" },
 };
 
-export default function AttentionTrends({ posts, onStockClick }) {
+function Pct({ v }) {
+  if (v == null) return <span className="at-px-na">—</span>;
+  const cls = v > 0 ? "at-px-up" : v < 0 ? "at-px-down" : "at-px-flat";
+  return <span className={cls}>{v > 0 ? "+" : ""}{v}%</span>;
+}
+
+export default function AttentionTrends({ posts, prices = {}, onStockClick }) {
   if (!posts || posts.length === 0) return null;
 
   const dates = [...new Set(posts.map((p) => p.date))].sort().reverse();
@@ -98,20 +104,29 @@ export default function AttentionTrends({ posts, onStockClick }) {
       </div>
 
       <div className="at-list">
-        {rows.map((x) => (
-          <button key={x.stock} className="at-row" onClick={() => onStockClick?.(x.stock)} title={`${x.stock} 리포트 열기`}>
-            <span className="at-name">
-              {x.stock}
-              {x.split && <span className="at-split" title="강세·약세가 갈리는 종목">🔀</span>}
-            </span>
-            <span className="at-bar-wrap">
-              <span className="at-bar" style={{ width: `${(x.week / maxWeek) * 100}%` }} />
-            </span>
-            <span className="at-week">{x.week}명</span>
-            <span className="at-delta">{x.p}→{x.r}</span>
-            <span className={`at-status ${STATUS[x.status].cls}`}>{STATUS[x.status].label}</span>
-          </button>
-        ))}
+        <div className="at-row at-head" aria-hidden="true">
+          <span>종목</span><span>7일 언급</span><span></span><span>변화</span><span>상태</span>
+          <span className="at-px-col">주가 1일</span><span className="at-px-col">5일</span>
+        </div>
+        {rows.map((x) => {
+          const px = prices[x.stock];
+          return (
+            <button key={x.stock} className="at-row" onClick={() => onStockClick?.(x.stock)} title={`${x.stock} 리포트 열기`}>
+              <span className="at-name">
+                {x.stock}
+                {x.split && <span className="at-split" title="강세·약세가 갈리는 종목">🔀</span>}
+              </span>
+              <span className="at-bar-wrap">
+                <span className="at-bar" style={{ width: `${(x.week / maxWeek) * 100}%` }} />
+              </span>
+              <span className="at-week">{x.week}명</span>
+              <span className="at-delta">{x.p}→{x.r}</span>
+              <span className={`at-status ${STATUS[x.status].cls}`}>{STATUS[x.status].label}</span>
+              <span className="at-px-col"><Pct v={px?.d1} /></span>
+              <span className="at-px-col"><Pct v={px?.d5} /></span>
+            </button>
+          );
+        })}
       </div>
 
       {flips.length > 0 && (

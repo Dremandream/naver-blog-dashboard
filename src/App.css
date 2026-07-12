@@ -173,7 +173,14 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .at-c-up { color: #dc2626; font-weight: 700; }
 .at-c-down { color: #2563eb; font-weight: 700; }
 .at-list { display: flex; flex-direction: column; gap: 3px; margin-top: 14px; }
-.at-row { display: grid; grid-template-columns: 130px 1fr 44px 52px 66px; align-items: center; gap: 10px; background: none; border: none; border-radius: 6px; padding: 6px 8px; cursor: pointer; text-align: left; transition: background .12s; }
+.at-row { display: grid; grid-template-columns: 130px 1fr 44px 52px 66px 62px 56px; align-items: center; gap: 10px; background: none; border: none; border-radius: 6px; padding: 6px 8px; cursor: pointer; text-align: left; transition: background .12s; }
+.at-head { cursor: default; padding-bottom: 2px; }
+.at-head span { font-size: 10.5px; font-weight: 700; color: #b6bec9; letter-spacing: .02em; }
+.at-px-col { font-size: 12.5px; font-weight: 700; text-align: right; }
+.at-px-up { color: #dc2626; }
+.at-px-down { color: #2563eb; }
+.at-px-flat { color: #64748b; }
+.at-px-na { color: #cbd5e1; }
 .at-row:hover { background: #f6f7ff; }
 .at-name { font-size: 13.5px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 4px; }
 .at-split { font-size: 11px; }
@@ -190,7 +197,12 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .at-flips { margin-top: 14px; padding-top: 12px; border-top: 1px solid #f1f5f9; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .at-flips-label { font-size: 12px; font-weight: 800; color: #7c3aed; }
 .at-flip { font-size: 12px; color: #475569; background: #faf8ff; border: 1px solid #e7ddfb; border-radius: 6px; padding: 2px 8px; }
-@media (max-width: 600px) { .at-row { grid-template-columns: 96px 1fr 60px; } .at-delta, .at-status { display: none; } }
+@media (max-width: 600px) { .at-row { grid-template-columns: 96px 1fr 60px 56px; } .at-delta, .at-status, .at-px-col:last-child { display: none; } }
+
+/* StockReport 주가 헤더 */
+.sr-price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+.sr-price-now { font-size: 19px; font-weight: 800; color: #0f172a; }
+.sr-price-chg { font-size: 13px; color: #64748b; }
 
 /* ===== Responsive ===== */
 @media (max-width: 600px) {

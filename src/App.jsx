@@ -116,7 +116,7 @@ export default function App() {
 
       <main className="main">
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSelectedStock} />
-        <AttentionTrends posts={posts} onStockClick={setSelectedStock} />
+        <AttentionTrends posts={posts} prices={data?.prices} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 
         <div className="section-divider">
@@ -166,7 +166,7 @@ export default function App() {
       )}
 
       {selectedStock && (
-        <StockReport stock={selectedStock} posts={posts} onClose={() => setSelectedStock(null)} />
+        <StockReport stock={selectedStock} posts={posts} price={data?.prices?.[selectedStock]} onClose={() => setSelectedStock(null)} />
       )}
     </div>
   );

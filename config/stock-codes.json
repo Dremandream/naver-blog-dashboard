@@ -1,0 +1,52 @@
+{
+  "SK하이닉스": {
+    "code": "000660",
+    "market": "KR",
+    "matched": "SK하이닉스"
+  },
+  "삼성전자": {
+    "code": "005930",
+    "market": "KR",
+    "matched": "삼성전자"
+  },
+  "마이크론": {
+    "code": "MU.O",
+    "market": "US",
+    "matched": "마이크론 테크놀로지"
+  },
+  "메타": {
+    "code": "META.O",
+    "market": "US",
+    "matched": "메타"
+  },
+  "엔비디아": {
+    "code": "NVDA.O",
+    "market": "US",
+    "matched": "엔비디아"
+  },
+  "삼양식품": {
+    "code": "003230",
+    "market": "KR",
+    "matched": "삼양식품"
+  },
+  "마이크로소프트": {
+    "code": "MSFT.O",
+    "market": "US",
+    "matched": "마이크로소프트"
+  },
+  "아마존": {
+    "code": "AMZN.O",
+    "market": "US",
+    "matched": "아마존닷컴"
+  },
+  "TSMC": {
+    "code": "TSM",
+    "market": "US",
+    "matched": "TSMC(타이완반도체제조) ADR"
+  },
+  "키옥시아": {
+    "code": "285A.T",
+    "market": "US",
+    "matched": "키옥시아 홀딩스"
+  }
+}

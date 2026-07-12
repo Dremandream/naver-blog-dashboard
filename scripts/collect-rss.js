@@ -224,6 +224,87 @@ function parseTelegramMessages(html, channelId) {
   return messages;
 }
 
+// ─── 주가 수집 (네이버 금융, 무료 공개 API) ──────────────────────────────────
+const CODES_PATH = path.join(__dirname, '../config/stock-codes.json');
+
+async function fetchJSON(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000);
+  try {
+    const res = await fetch(url, { signal: controller.signal, headers: { 'User-Agent': 'Mozilla/5.0' } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// 이름 → { code, market } (네이버 자동완성, 캐시 우선). 비상장이면 null 캐시.
+async function resolveStockCode(name, cache) {
+  if (name in cache) return cache[name];
+  try {
+    const raw = await fetchJSON(`https://ac.stock.naver.com/ac?q=${encodeURIComponent(name)}&target=stock`);
+    const item = (JSON.parse(raw).items || []).find(i => i.category === 'stock');
+    cache[name] = item
+      ? { code: item.reutersCode || item.code, market: item.nationCode === 'KOR' ? 'KR' : 'US', matched: item.name }
+      : null; // 비상장/미매칭
+  } catch {
+    return undefined; // 일시 오류 — 캐시하지 않음
+  }
+  return cache[name];
+}
+
+function yyyymmdd(offsetDays = 0) {
+  return new Date(Date.now() - offsetDays * 86400000).toISOString().slice(0, 10).replace(/-/g, '');
+}
+
+// 일봉 종가 배열 (과거→최신)
+async function fetchCloses(info) {
+  if (info.market === 'KR') {
+    const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${info.code}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
+    // 유사 JSON([['날짜',...],["20260601",시,고,저,종,...]) → 행 파싱
+    const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
+    return rows.map(r => Number(r[5]));
+  }
+  const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/item/${info.code}/day?startDateTime=${yyyymmdd(45)}0000&endDateTime=${yyyymmdd(0)}2359`);
+  return JSON.parse(raw).map(c => Number(c.closePrice));
+}
+
+function pctChange(closes, n) {
+  if (closes.length < n + 1) return null;
+  const last = closes[closes.length - 1], prev = closes[closes.length - 1 - n];
+  return prev ? Math.round(((last - prev) / prev) * 1000) / 10 : null;
+}
+
+// 종목명 목록 → { 종목명: { price, d1, d5, d20, market } }
+async function fetchPrices(stockNames) {
+  let cache = {};
+  try { cache = JSON.parse(fs.readFileSync(CODES_PATH, 'utf8')); } catch { /* 첫 실행 */ }
+
+  const prices = {};
+  for (const name of stockNames) {
+    try {
+      const info = await resolveStockCode(name, cache);
+      if (!info) { if (info === null) console.log(`  ⏭️  ${name}: 비상장/미매칭 스킵`); continue; }
+      const closes = await fetchCloses(info);
+      if (closes.length === 0) continue;
+      prices[name] = {
+        market: info.market,
+        price: closes[closes.length - 1],
+        d1: pctChange(closes, 1),
+        d5: pctChange(closes, 5),
+        d20: pctChange(closes, 20),
+      };
+      console.log(`  💹 ${name}(${info.market}): ${prices[name].price.toLocaleString()} | 1일 ${prices[name].d1}% 5일 ${prices[name].d5}%`);
+      await new Promise(r => setTimeout(r, 250));
+    } catch (e) {
+      console.warn(`  ⚠️  ${name} 시세 실패: ${e.message}`);
+    }
+  }
+  fs.writeFileSync(CODES_PATH, JSON.stringify(cache, null, 2), 'utf-8');
+  return prices;
+}
+
 // ─── Claude AI 투자 요약 ──────────────────────────────────────────────────────
 async function analyzePost(title, content, blogName) {
   const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래 블로그 글을 읽고, 독자가 원글을 열지 않아도 판단할 수 있게 정보를 최대한 구체적으로 추출하세요.
@@ -529,10 +610,30 @@ async function main() {
     ...results,
   ].sort((a, b) => b.date.localeCompare(a.date));
 
+  // ── 주가 수집 (7일 내 2명 이상 언급 종목, 상한 25) ─────────────────────────
+  console.log('\n💹 주가 수집 중...');
+  const personsByStock = {};
+  for (const p of merged) {
+    for (const s of p.stocks ?? []) {
+      (personsByStock[s] = personsByStock[s] || new Set()).add(p.person || p.blog_name);
+    }
+  }
+  const priceTargets = Object.entries(personsByStock)
+    .filter(([, persons]) => persons.size >= 2)
+    .sort((a, b) => b[1].size - a[1].size)
+    .slice(0, 25)
+    .map(([name]) => name);
+  let prices = {};
+  try {
+    prices = await fetchPrices(priceTargets);
+  } catch (e) {
+    console.warn('⚠️  주가 수집 실패(여론 데이터는 정상 저장):', e.message);
+  }
+
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify(
-      { date: TODAY_KST, daily_briefs: updatedBriefs, posts: merged },
+      { date: TODAY_KST, daily_briefs: updatedBriefs, prices, posts: merged },
       null, 2
     ),
     'utf-8'
