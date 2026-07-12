@@ -39,6 +39,7 @@ export default function DailyBrief({ brief, onStockClick }) {
       </div>
 
       <ReportBlock variant="minority" title="🔍 소수·역발상 의견" items={brief.minority} />
+      <ReportBlock variant="price" title="⚖️ 말 vs 가격" items={brief.price_check} />
       <ReportBlock variant="watch" title="🎯 관전 포인트" items={brief.watch_points} />
 
       {brief.hot_stocks?.length > 0 && (

@@ -124,6 +124,9 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .report-minority { background: #faf8ff; border-color: #e7ddfb; }
 .report-minority .report-block-title { color: #7c3aed; }
 .report-minority .report-list li::before { background: #8b5cf6; }
+.report-price { background: #f6fbf7; border-color: #d3ecd9; }
+.report-price .report-block-title { color: #15803d; }
+.report-price .report-list li::before { background: #22c55e; }
 .report-watch { background: #fffdf5; border-color: #f5ecc9; }
 .report-watch .report-block-title { color: #b45309; }
 .report-watch .report-list li::before { background: #f59e0b; }

@@ -5,6 +5,8 @@
     { "id": "skitteam", "name": "IT는 SK", "person": "IT는 SK" },
     { "id": "Kyaooo", "name": "캬오의 공부방", "person": "캬오의 공부방" },
     { "id": "nje2e", "name": "너쟁이(텔레)", "person": "너쟁이" },
-    { "id": "pengmeup", "name": "펭미업", "person": "펭미업" }
+    { "id": "pengmeup", "name": "펭미업", "person": "펭미업" },
+    { "id": "aetherjapanresearch", "name": "에테르 일본&미국", "person": "에테르" },
+    { "id": "kimcharger", "name": "김찰저", "person": "김찰저" }
   ]
 }

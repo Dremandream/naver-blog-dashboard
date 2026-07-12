@@ -367,7 +367,7 @@ async function analyzePost(title, content, blogName) {
 }
 
 // ─── 일별 종합 브리핑 ─────────────────────────────────────────────────────────
-async function generateDailyBrief(posts) {
+async function generateDailyBrief(posts, prices = {}) {
   const digest = posts.map(p => ({
     blog: p.blog_name,
     person: p.person || p.blog_name,
@@ -380,9 +380,16 @@ async function generateDailyBrief(posts) {
     numbers: p.numbers,
   }));
 
+  const priceLines = Object.entries(prices)
+    .map(([name, v]) => `${name}: 현재 ${v.price.toLocaleString()}${v.market === 'KR' ? '원' : '$'} | 1일 ${v.d1 ?? '?'}% | 5일 ${v.d5 ?? '?'}% | 20일 ${v.d20 ?? '?'}%`)
+    .join('\n');
+
   const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래는 오늘 수집된 투자 블로거·텔레그램 채널들의 글 분석 결과입니다. 이를 종합해 독자가 15개 소스를 직접 안 읽어도 되도록 "그날의 종합의견"을 작성하세요.
 
 ${JSON.stringify(digest, null, 2)}
+
+[실제 주가 데이터 — 여론과 대조할 것]
+${priceLines || '(주가 데이터 없음)'}
 
 [작성 원칙 — 매우 중요]
 1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 필자들의 시각을 비교·정리만 합니다.
@@ -394,7 +401,8 @@ ${JSON.stringify(digest, null, 2)}
 7. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
 
 8. **관전 포인트(watch_points)**: 앞으로 시장 방향을 가를 확인 변수·촉매·일정을 짚으세요(예: '7/20 빅테크 CAPEX 발표', 'HBM 가격 협상', '외국인 순매수 전환 여부'). 독자가 스스로 판단하도록 돕는 체크리스트입니다.
-9. 이것은 증권사 리포트처럼 읽혀야 합니다. 각 논거는 "누가 — 무엇을 — 어떤 수치·근거로" 완결된 문장으로.
+9. **말 vs 가격 대조(divergence 분석) — 매우 중요**: 위 주가 데이터와 여론을 반드시 대조하세요. 여론이 강세인데 주가가 하락 중이면(또는 반대) 그 괴리를 headline과 price_check에 명시하고, 가능한 해석(선반영 소화 vs 수급 이탈 vs 매수 기회)을 병기하세요. 여론과 가격이 같은 방향이면 "추세 확인"으로 서술하세요. 가격은 여론보다 정직한 신호일 수 있습니다.
+10. 이것은 증권사 리포트처럼 읽혀야 합니다. 각 논거는 "누가 — 무엇을 — 어떤 수치·근거로" 완결된 문장으로.
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
@@ -403,6 +411,7 @@ ${JSON.stringify(digest, null, 2)}
   "bull_case": ["강세 논거 — '누가: 근거+수치' 완결 문장 2~4개 (없으면 빈 배열)"],
   "bear_case": ["약세·신중 논거 — '누가: 근거+수치' 완결 문장 2~4개 (없으면 빈 배열)"],
   "minority": ["소수·역발상 관점 — 다수와 다른 근거 있는 시각이나 남들이 놓친 관점. 누가 왜 그렇게 보는지 근거까지 (진짜 없으면 빈 배열)"],
+  "price_check": ["말 vs 가격 대조 — 여론과 주가가 역행/동행하는 종목과 그 해석. 예: 'SK하이닉스: 여론 강세 7명 vs 5일 -10% 역행 — 선반영 소화 vs 수급 이탈 쟁점' (주가 데이터 없으면 빈 배열)"],
   "watch_points": ["앞으로 확인할 핵심 변수·촉매·일정 2~4개 (없으면 빈 배열)"],
   "hot_stocks": ["2명 이상(person 기준) 언급 종목 (없으면 빈 배열)"]
 }`;
@@ -579,28 +588,6 @@ async function main() {
     }
   }
 
-  // ── 일별 종합 브리핑 ──────────────────────────────────────────────────────
-  let todayBrief = null;
-  if (process.env.CLAUDE_API_KEY && results.length > 0) {
-    console.log('\n📰 일별 브리핑 생성 중...');
-    const cachedBrief = existingBriefs[0];
-    const isCached = cachedBrief && cachedBrief.date === TODAY_KST;
-    const brief = isCached
-      ? (console.log('[DailyBrief] 캐시 사용:', cachedBrief.generatedAt) || cachedBrief)
-      : await generateDailyBrief(results);
-    if (brief) {
-      todayBrief = { ...brief, date: TODAY_KST, post_count: results.length };
-      console.log(`  → ${brief.headline}`);
-    }
-  }
-
-  // daily_briefs 배열 업데이트: 오늘 브리핑을 맨 앞에, 최대 7개 유지
-  let updatedBriefs = existingBriefs;
-  if (todayBrief) {
-    updatedBriefs = [todayBrief, ...existingBriefs.filter(b => b.date !== TODAY_KST)]; // 오늘 것 중복 제거
-  }
-  updatedBriefs = updatedBriefs.slice(0, 7); // 최대 7일치 유지
-
   // 새 글 ID 목록 (중복 방지)
   const newIds = new Set(results.map(p => p.id));
 
@@ -610,7 +597,7 @@ async function main() {
     ...results,
   ].sort((a, b) => b.date.localeCompare(a.date));
 
-  // ── 주가 수집 (7일 내 2명 이상 언급 종목, 상한 25) ─────────────────────────
+  // ── 주가 수집 (7일 내 2명 이상 언급 종목, 상한 25) — 브리핑보다 먼저 ───────
   console.log('\n💹 주가 수집 중...');
   const personsByStock = {};
   for (const p of merged) {
@@ -629,6 +616,28 @@ async function main() {
   } catch (e) {
     console.warn('⚠️  주가 수집 실패(여론 데이터는 정상 저장):', e.message);
   }
+
+  // ── 일별 종합 브리핑 (주가 데이터 포함 → 말 vs 가격 괴리 분석) ──────────────
+  let todayBrief = null;
+  if (process.env.CLAUDE_API_KEY && results.length > 0) {
+    console.log('\n📰 일별 브리핑 생성 중...');
+    const cachedBrief = existingBriefs[0];
+    const isCached = cachedBrief && cachedBrief.date === TODAY_KST;
+    const brief = isCached
+      ? (console.log('[DailyBrief] 캐시 사용:', cachedBrief.generatedAt) || cachedBrief)
+      : await generateDailyBrief(results, prices);
+    if (brief) {
+      todayBrief = { ...brief, date: TODAY_KST, post_count: results.length };
+      console.log(`  → ${brief.headline}`);
+    }
+  }
+
+  // daily_briefs 배열 업데이트: 오늘 브리핑을 맨 앞에, 최대 7개 유지
+  let updatedBriefs = existingBriefs;
+  if (todayBrief) {
+    updatedBriefs = [todayBrief, ...existingBriefs.filter(b => b.date !== TODAY_KST)]; // 오늘 것 중복 제거
+  }
+  updatedBriefs = updatedBriefs.slice(0, 7); // 최대 7일치 유지
 
   fs.writeFileSync(
     OUTPUT_PATH,
