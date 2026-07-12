@@ -4,9 +4,7 @@ import PostModal from "./components/PostModal";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
-import WeeklyTrend from "./components/WeeklyTrend";
-import TodayStocks from "./components/TodayStocks";
-import Revisions from "./components/Revisions";
+import AttentionTrends from "./components/AttentionTrends";
 import StockReport from "./components/StockReport";
 import "./App.css";
 
@@ -89,11 +87,6 @@ export default function App() {
     return b.date.localeCompare(a.date); // 최신순 (기본)
   });
 
-  // 최근 수집 2일치 글 (시장 심리·핵심 종목용) — 브리핑과 동일 기간(오늘+어제)으로 맞춤.
-  // 아침엔 '오늘' 글이 적어 어제 저녁 글까지 봐야 대표성이 생김.
-  const recentDates = [...new Set(posts.map((p) => p.date))].sort().reverse().slice(0, 2);
-  const pulsePosts = posts.filter((p) => recentDates.includes(p.date));
-
   // 섹터별 글 수 (StatsBar용)
   const sectorCounts = posts.reduce((acc, p) => {
     acc[p.sector] = (acc[p.sector] || 0) + 1;
@@ -123,9 +116,7 @@ export default function App() {
 
       <main className="main">
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSelectedStock} />
-        <Revisions posts={posts} onStockClick={setSelectedStock} />
-        <TodayStocks posts={pulsePosts} onStockClick={setSelectedStock} />
-        <WeeklyTrend briefs={data?.daily_briefs} onStockClick={setSelectedStock} />
+        <AttentionTrends posts={posts} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 
         <div className="section-divider">
