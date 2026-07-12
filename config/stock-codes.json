@@ -49,5 +49,15 @@
     "market": "US",
     "matched": "키옥시아 홀딩스"
   },
-  "난야테크": null
+  "난야테크": null,
+  "애플": {
+    "code": "AAPL.O",
+    "market": "US",
+    "matched": "애플"
+  },
+  "인텔": {
+    "code": "INTC.O",
+    "market": "US",
+    "matched": "인텔"
+  }
 }
