@@ -1,182 +1,88 @@
-# Handoff - 네이버 블로그 투자 대시보드
+# Handoff — 네이버 블로그·텔레그램 투자 리서치 대시보드
 
 ## 마지막 업데이트
-2026-07-11 (세션 9)
+2026-07-12 (세션 9~10, Claude Code CLI / Opus)
+
+> ⚠️ 이 문서는 다음 세션(더 작은 모델 포함)이 그대로 이어받을 수 있게 작성됨.
+> 규칙: **CLAUDE.md 필독** → 기능 만들기 전 필요성 확인 / 검증→구조→구현 / 완료=라이브 확인.
 
 ---
 
-## 세션 9에서 완료된 것 — 텔레그램 채널 통합 ✅
+## 1. 현재 상태: 전체 완성, 라이브 운영 중 ✅
 
-- [x] **텔레그램 공개 채널 3개 통합 수집** — 투자콤(comvestment), 잠실개미(텔레)(jake8lee), IT는 SK(skitteam)
-  - 수집 방식: `t.me/s/{채널}` 웹 미리보기 스크래핑 (인증 불필요, 공개 채널만)
-  - `config/telegram-channels.json` 신규
-  - `collect-rss.js`: `fetchTelegramChannel()`, `parseTelegramMessages()`, `stripHtml()` 추가
-  - 채널별로 **하루치 메시지를 1개 글로 병합** 후 기존 `analyzePost` 파이프라인에 투입 → 종합 브리핑 자동 통합
-  - 각 글에 `source: 'telegram' | 'blog'` 필드 추가
-- [x] **PostCard 텔레그램 배지** — `source==='telegram'`일 때 "📱 텔레그램" 표시 (App.css `.source-telegram`)
-- [x] **버그 수정 2건** — (1) 긴 텔레그램 글 JSON 잘림 → `max_tokens` 1200→1800, (2) sector 다중값("반도체|거시경제") → 첫 번째만 사용
-- [x] **텔레그램 채널 5개** — 투자콤, 잠실개미(텔레), IT는 SK, 캬오의 공부방, 너쟁이(텔레)
-- [x] **브리핑 라벨 자연스럽게** — 합의→공통 시각, 이견→엇갈린 시각, 공통 언급→함께 주목한 종목, 주간 합의 트렌드→주간 관심 종목 트렌드
-- [x] **소스 필터** — FilterBar에 블로그/텔레그램 필터 추가 (App.jsx `selectedSource`)
-- [x] **텔레그램 제목 개선** — analyzePost에 `headline` 필드 추가 → 텔레그램 카드는 AI 헤드라인 사용
-- [x] **MarketPulse (신규)** — 오늘 섹터 분포 도넛 + 강세/약세/중립 비율 막대
-- [x] **TodayStocks (신규)** — 전 소스 통합 종목별 언급수 + 강세/약세 비율 바
-- [x] **투자자 관점 개선** — (1) 카드에 리스크(bear case) 한 줄 노출 → 확증편향 방지, (2) 핵심종목 '🔀 의견 갈림' 배지 → 강세·약세 갈리는 종목 부각(군중심리 방지)
-- [x] **배포 완료** — Vercel 라이브 확인, 매일 KST 08:00 자동 수집에 텔레그램 포함
+- **URL**: https://naver-blog-dashboard.vercel.app
+- **자동화**: GitHub Actions 매일 KST 08:00 (`.github/workflows/collect.yml`) → 수집→분석→push→Vercel 자동배포
+- **소스 18개**: 블로그 10 (`config/blogs.json`) + 텔레그램 8 (`config/telegram-channels.json`)
+- **모델 배분(의도된 설계, 바꾸지 말 것)**: 개별 글 분석 = `claude-haiku-4-5-20251001` / 종합 리포트 = `claude-opus-4-8` (하루 1회)
 
-### 세션 9 신규/수정 파일
-- `config/telegram-channels.json` (신규, 5채널)
-- `scripts/collect-rss.js` — 텔레그램 수집·파싱, headline, source, 버그수정
-- `src/components/MarketPulse.jsx` (신규), `src/components/TodayStocks.jsx` (신규)
-- `src/components/FilterBar.jsx` (소스 필터), `PostCard.jsx` (배지·리스크), `DailyBrief.jsx`/`WeeklyTrend.jsx` (라벨)
-- `src/App.jsx`, `src/App.css`
+## 2. 대시보드 구성 (위→아래)
 
-### 세션 9 후반 추가 작업 (검토 → 3건 개선)
-- [x] **종합의견 Opus 업그레이드** — generateDailyBrief만 Haiku→Opus (하루 1회), max_tokens 3000. 개별분석은 Haiku 유지
-- [x] **소수·역발상 의견(minority)** — 브리핑에 필드+렌더링 추가. 다수 강세론에 묻힐 역발상 관점 부각
-- [x] **시장심리·핵심종목 기간 통일** — '오늘'만→'최근 2일'(브리핑과 동일). 아침에 카드 빈약하던 문제 해결
-- [x] **인물(person) 단위 중복집계 제거** — config에 person 태그. 같은 사람 블로그+텔레그램 1명으로(너쟁이/잠실개미). TodayStocks/SpikeAlert/MarketPulse + 브리핑 digest 반영
-- [x] **종목명 정규화** — stock-aliases 확장(해외 티커) + 프롬프트에 한글 정식명 통일 지시
-- [x] **PRD.md 신규** (현행 SSOT), SKILL.md 텔레그램 절차, cowork-prompt.md는 `../archive/`로 이동(구버전)
-- [x] **검증 완료** — 재수집 오류 없음, person 13/13, 종목명 깨끗, 컴포넌트 로직 스모크테스트 통과, 라이브 배포 확인
+| 섹션 | 컴포넌트 | 내용 |
+|---|---|---|
+| 🌃 시황 스트립 | `MarketStrip.jsx` | 코스피/코스닥 지수(1일/5일) + 개인/외인/기관 순매수(억원) |
+| 📊 종합 리포트 | `DailyBrief.jsx` | 결론→요약→📈강세/📉약세 논거→🔍소수·역발상→⚖️말vs가격→🎯관전포인트→종목 |
+| 🔎 종목 관심 추이 | `AttentionTrends.jsx` | 7일 언급 인원 + 최근2일vs이전2일 변화(🆕신규/▲급증/▼둔화) + 주가 1일/5일 + 🔀의견갈림 + 시각전환. **행 클릭→종목 리포트** |
+| 📄 종목 리포트(모달) | `StockReport.jsx` | 현재가+등락, 종목별 모든 소스의 강세/약세 시각·수치·리스크·원문링크 |
+| 개별 글 | `PostCard/FilterBar/PostModal/StatsBar` | 날짜/소스/섹터/블로그 필터 + 카드(리스크 노출) |
 
-### 세션 9 최종 추가
-- [x] **종합의견 = 증권사 리포트 형식** — bull_case/bear_case/minority/watch_points(관전 포인트), 결론 헤드라인, 리포트 톤 CSS
-- [x] **UI 리포트 톤 재설계** — 무지개 좌측테두리 제거, 통일 hairline 패널, 라이트 헤더, '개별 글' 구분선, 여백·위계 강화
-- [x] **견고한 JSON 파서(parseJSONLoose)** — 개별 분석 매 실행 1건 실패 → 0건
-- [x] **텔레그램 채널 6개** — 투자콤/잠실개미(텔레)/IT는 SK/캬오의 공부방/너쟁이(텔레)/펭미업 (총 소스 16개)
-- [x] **관점 변화 추적(Revisions)** — 최근 2일 vs 이전 2일: 신규 진입/관심 이탈/시각 전환/강세비중 변화 (src/components/Revisions.jsx)
-
-### 로드맵 (애널리스트 관점 논의, 우선순위순)
-1. ✅ 관점 변화 추적 (완료)
-2. [ ] 개별 종목 리포트 — 종목 클릭 → 그 종목 종합 뷰(모든 소스 시각/수치/목표가)
-3. [ ] 쏠림 지수 — 컨센서스 집중도(과열/역발상 경고)
-4. [ ] 목표가·밸류에이션 수집 — 소스 언급 목표가 종목별 집계
-5. [ ] 촉매 캘린더 — 관전 포인트를 날짜순 이벤트로
-6. [ ] 수급 연동(외국인/기관 순매수) — "말 vs 돈" 괴리 검증. **외부 데이터=중형**. StockEasy 사이트 스크래핑은 비추천(불안정), KRX/네이버금융 등 안정 소스 권장
-7. [ ] 소스 적중률(예측 vs 실제 주가) — 주가 API 필요=대형
-8. [ ] UI: 요약↔전체 토글 + 긴모드 목차, 보조패널 접기(progressive disclosure), 다크모드
-
-### 소스 적정선 메모 (사용자와 논의)
-- 현재 총 15개 소스 (블로그 10 + 텔레그램 5). 적정 범위 15~20개.
-- 25개 초과 시 `generateDailyBrief` max_tokens(1000) 상향 + SpikeAlert/WeeklyTrend 임계값 튜닝 필요.
-
-### 텔레그램 수집 주의사항
-- 공개 채널만 가능 (`t.me/s/채널명` 접속됨). 비공개면 수집 불가.
-- 채널 추가: `config/telegram-channels.json`에 `{ "id": "채널핸들", "name": "표시이름" }`
-- 채널 표시이름은 `t.me/s/{id}` 페이지 `og:title`에서 확인 가능
-
----
-
-## 현재 상태 (세션 8): 전체 완성 ✅ — GitHub Actions #41 실제 실행 성공 확인
-
-### 세션 8에서 완료된 것
-
-- [x] **전체 점검 완료** — Fable 9개 개선사항 코드 전부 확인 (collect-rss.js, App.jsx, SpikeAlert.jsx, WeeklyTrend.jsx, collect.yml)
-- [x] **Vercel 라이브 배포 확인** — DailyBrief, WeeklyTrend 정상 표시 (블로그 카드 37개)
-- [x] **GitHub Actions 수동 실행 (#41) 성공** — 1분 49초, 커밋 c6d7b8f 기준, 전체 파이프라인 정상
-- [x] **텔레그램 알림 미등록 결정** — 대시보드로 충분, 코드는 유지 (나중에 원하면 Secrets만 등록하면 됨)
-
-### 세션 7에서 완료된 것
-
-- [x] **KST 날짜 버그 수정** — `kstDate()` 함수로 UTC 오류 해결
-  - collect-rss.js: `TODAY_KST`, `YESTERDAY_KST`, `WEEK_AGO_KST` 모두 KST 기준
-  - App.jsx: `getKSTDate(0)` 캐시버스터 (UTC→KST)
-- [x] **텔레그램 HTML parse_mode** — 마크다운 대신 HTML, `esc()` 이스케이프, 4000자 제한
-- [x] **블로거 Set 기반 카운트** — SpikeAlert: 포스트 수 대신 고유 블로거 수 (Set)
-- [x] **종목 별칭 정규화** — `config/stock-aliases.json` 추가 (하이닉스→SK하이닉스 등)
-- [x] **RSS fetch 타임아웃** — 15초 AbortController + `!response.ok` 체크
-- [x] **AI 응답 스키마 검증** — `normalizeArr()` 함수
-- [x] **0결과 처리** — 기존 briefs 유지, 전체 실패 시 `process.exit(1)`
-- [x] **종목 클릭 검색** — SpikeAlert/WeeklyTrend 클릭 → SearchQuery 연동 (`onStockClick`)
-- [x] **collect.yml 충돌 방지** — `git pull --rebase origin main` 추가
-- [x] **GitHub push 완료** — 커밋 c6d7b8f (세션 내 git index 부패 복구 포함)
-
-### 텔레그램 알림 — 코드 완성, 등록 보류 (의도적 결정)
-
-대시보드에서 직접 확인하는 방식으로 운영하기로 결정. 코드는 그대로 유지됨.
-나중에 필요하면 GitHub Secrets만 등록하면 즉시 활성화:
-- `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` = `88580301`
-- URL: https://github.com/Dremandream/naver-blog-dashboard/settings/secrets/actions/new
-
----
-
-## 현재 아키텍처
+## 3. 데이터 파이프라인 (`scripts/collect-rss.js` 단일 파일)
 
 ```
-매일 KST 08:00 GitHub Actions 자동 실행
-  → collect-rss.js 실행
-  → 10개 블로그 RSS fetch (KST 오늘 + 어제, 15초 타임아웃)
-  → Claude Haiku AI 분석 + 스키마 검증
-  → 종목 별칭 정규화 (stock-aliases.json)
-  → daily_briefs 배열 업데이트 (최대 7일치)
-  → 7일 히스토리 병합 저장 → posts.json
-  → 텔레그램 브리핑 발송 (Secrets 등록 후 활성화)
-  → git pull --rebase + git push (충돌 방지)
-  → Vercel 자동 배포
+블로그 RSS + 텔레그램(t.me/s/ 스크래핑) 수집 (오늘+어제 2일)
+→ Haiku 개별 분석 (headline/summary/stocks/sector/stance/reasoning/risks/numbers)
+→ 종목 별칭 정규화 (config/stock-aliases.json)
+→ 주가 수집: 7일 내 2명+ 언급 종목(상한 25) — 네이버 자동완성(이름→코드, config/stock-codes.json 캐시)
+   + 국내 siseJson / 해외 api.stock.naver.com → d1/d5/d20 등락률
+→ 시황 수집: KOSPI/KOSDAQ 지수 + finance.naver.com investorDealTrendDay 수급(개인/외인/기관, 외인5일 누적)
+→ Opus 종합 리포트 (여론+주가+시황 전부 주입 → 말vs가격 괴리 분석 포함)
+→ public/data/posts.json 저장 { date, daily_briefs[7], market, prices, posts[7일치] }
+→ git push → Vercel
 ```
 
----
+핵심 구현 디테일 (다음 세션이 알아야 할 것):
+- **person 태그**: 같은 사람이 블로그+텔레그램 양쪽에 있음(너쟁이, 잠실개미) → 모든 인원 집계는 `person` 기준 중복 제거
+- **parseJSONLoose()**: 모델이 JSON 뒤에 텍스트 붙여도 파싱 (분석실패 0건 유지 장치)
+- **브리핑 캐시**: daily_briefs[0].date == 오늘이면 재생성 안 함. 브리핑 재생성 테스트 시 오늘 브리핑을 배열에서 제거 후 실행
+- 시세/시황 실패해도 여론 파이프라인은 무손상 (try/catch 분리)
 
-## 현재 대시보드 기능
+## 4. 판정 시스템 스펙 (문서만, 미구현)
 
-- 📰 **DailyBrief** — 오늘 브리핑 + 합의/이견/공통종목 + 생성시각
-- ⚡ **SpikeAlert** — 급증 종목 (고유 블로거 수 기준, 오늘 ≥2명 + 전일 대비 2배)
-- 📊 **WeeklyTrend** — 7일 종목 언급 빈도 막대 그래프 (클릭→검색)
-- 섹터/블로그/날짜 필터, 종목 태그 검색, 카드 모달
+- `specs/judge_verdict.md`: 시그널→buy/watch/pass/needs_review + confidence(0.10~0.50, step 0.10) 완전 결정표. 착시(여론방향 vs 5일가격방향 역행)=True → needs_review 강제
+- `specs/critic.md`: 발송 전 2차 심사 5항목 결정표 + 출력 스키마
+- **구현 전 사용자 승인 필요** (CLAUDE.md: 매수/매도 추천 금지 원칙과의 경계선 논의 완료 — "규칙 기반+기권 있는 판정"으로 허용 합의)
 
----
+## 5. 로컬 실행 방법
 
-## 핵심 파일 위치
-
+```bash
+cd naver-blog-dashboard
+# API 키는 .env의 CLAUDE_API_KEY (dotenv 미사용 — 수동 주입 필요)
+export CLAUDE_API_KEY="$(grep '^CLAUDE_API_KEY=' .env | cut -d= -f2- | tr -d '\r\"')"
+node scripts/collect-rss.js   # 전체 파이프라인 (~3-5분)
+npm run build                  # 빌드 확인
 ```
-naver-blog-dashboard/
-├── config/blogs.json
-├── config/stock-aliases.json      ← 세션 7 신규 (종목 별칭)
-├── scripts/collect-rss.js        # RSS + AI + daily_briefs + 텔레그램
-├── public/data/posts.json        # 7일치 누적 데이터
-├── src/App.jsx                   # KST 캐시버스터
-├── src/App.css                   # hover 스타일
-├── src/components/DailyBrief.jsx
-├── src/components/WeeklyTrend.jsx  # onStockClick
-├── src/components/SpikeAlert.jsx   # 블로거 Set 카운트 + onStockClick
-├── src/components/PostCard.jsx
-├── src/components/PostModal.jsx
-├── src/components/FilterBar.jsx
-├── src/components/StatsBar.jsx
-├── fix_and_push.bat              # 빌드+커밋+push (lock 자동 제거)
-├── unlock_and_commit.bat         # ← 세션 7 신규: 재귀 lock 제거 + 커밋
-├── pull_push.bat                 # ← 세션 7 신규: pull --rebase + push
-└── .github/workflows/collect.yml # git pull --rebase 추가
-```
+배포 = git add/commit → `git pull --rebase origin main` → push (Vercel 자동)
 
----
+## 6. 소스 추가 방법
 
-## 알려진 이슈 / 주의사항
+- 텔레그램: `https://t.me/s/{핸들}` 접속되면 공개=수집가능. `config/telegram-channels.json`에 `{id, name, person}` 추가
+- 블로그: `config/blogs.json`에 `{id, name, person}` (RSS: rss.blog.naver.com/{id}.xml 확인)
+- **적정선 15~20개 (현재 18)**. 추가 시 기존 소스와 중복도·반대시각·타섹터 여부 검증할 것. 25개 초과 시 브리핑 max_tokens 상향 필요
 
-- `HEAD.lock` / `index.lock` 충돌 → `unlock_and_commit.bat` 사용 (재귀 삭제 포함)
-- `refs/heads/main.lock` 도 생길 수 있음 → `unlock_and_commit.bat`이 처리
-- git push 전 `git pull --rebase` 필요 (GitHub Actions가 매일 posts.json 커밋)
-- SpikeAlert은 데이터가 2일 이상 쌓여야 표시됨 (정상)
-- WeeklyTrend는 2일 이상 연속 언급 종목만 표시됨 (정상)
-- Cowork에서 파일 수정 → Claude Code에서 push → 충돌 가능 → "로컬 유지" 선택 시 Cowork 수정본 유실
+## 7. 알려진 이슈 / 주의
 
----
+- git `index.lock` 충돌 잦음 → `del .git\index.lock` 후 재시도 (`unlock_and_commit.bat`)
+- Actions 워크플로우는 `posts.json` + `config/stock-codes.json` 두 파일을 커밋함 (stock-codes 누락 시 rebase 실패 — 2026-07-12 수정됨)
+- 터미널에서 python 한글 출력 시 cp949 인코딩 깨짐 → 파일로 저장 후 Read로 확인
+- 네이버 API들은 비공식 — 구조 변경 시 파싱 수정 필요 (시세: siseJson 정규식, 수급: `class="date2"` 정규식)
 
-## 다음 세션 시작 방법
-1. 이 파일 첨부
-2. "이어서 진행해줘" 입력
+## 8. 다음 로드맵 (우선순위, 구현 전 필요성 재확인)
 
-## 다음 개선 아이디어 (세션 8에서 논의, 구현 전 확인 필요)
+1. [ ] **판정 시스템 구현** — specs 승인 후 (judge_verdict + critic)
+2. [ ] **지난 리포트 열람** — daily_briefs 7일치 이미 저장됨, UI만 (소형)
+3. [ ] **촉매 캘린더** — watch_points를 날짜순 이벤트로 (소형)
+4. [ ] **소스 적중률** — 강세 외친 종목의 실제 5일 수익률 → 소스별 신뢰점수 (prices 데이터 축적 필요, 대형)
+5. [ ] UI: 요약↔전체 토글, 다크모드 (선택)
 
-기존 posts.json 데이터만으로 구현 가능한 것:
-- **섹터 분포 도넛 차트** — 오늘 posts[].sector 집계, 어떤 테마가 뜨거운지 시각화
-- **스탠스 비율 막대** — 강세/약세/중립 블로거 수 (posts[].stance), 시장 심리 요약
-- **종목 히트맵** — 7일 × 상위 10종목 격자, 언급 많을수록 진한 색
-- **블로거 성향 점수** — 블로거별 평균 강세/약세 성향 점수화
+## 9. 히스토리 요약 (세션 9~10에서 한 일)
 
-외부 API 필요한 것:
-- 주가 크로스체크 — 블로거 예측 vs 실제 주가 등락 비교
-- 뉴스 크로스체크
-
-추천 구현 순서: 섹터 도넛 + 스탠스 비율 → 히트맵 → 블로거 성향
+텔레그램 8채널 통합 → 종합의견을 Opus 증권사 리포트 형식으로(강세/약세/소수의견/관전포인트) → person 중복제거·종목 정규화·JSON파서 등 신뢰도 → UI 리포트 톤 정리 + 중복 패널 통합(스파이크/주간트렌드/핵심종목→관심추이 1개) → **Phase 1: 주가 병기(말vs가격)** → **Phase 2: 시황 레이어(지수+수급)** → 판정 시스템 스펙 작성. 문서: PRD.md(SSOT), specs/, 구버전 cowork-prompt.md는 ../archive/로.
