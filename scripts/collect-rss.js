@@ -305,6 +305,52 @@ async function fetchPrices(stockNames) {
   return prices;
 }
 
+// ─── 시황 수집 (지수 + 투자자별 수급) ────────────────────────────────────────
+async function fetchIndexCloses(symbol) {
+  const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${symbol}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
+  const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
+  return rows.map(r => Number(r[5]));
+}
+
+// 투자자별 매매동향 (억원): sosok 01=코스피, 02=코스닥. 최신일 + 외국인 5일 누적.
+async function fetchInvestorFlows(sosok) {
+  const raw = await fetchJSON(`https://finance.naver.com/sise/investorDealTrendDay.naver?bizdate=${yyyymmdd(0)}&sosok=${sosok}`);
+  // 행 구조: <td class="date2">26.07.10</td> 이후 숫자 셀들 [개인, 외국인, 기관계, ...] (단위: 억원)
+  const days = [];
+  const re = /class="date2">(\d{2}\.\d{2}\.\d{2})<\/td>((?:\s*<td[^>]*>-?[\d,]+<\/td>){3,})/g;
+  let m;
+  while ((m = re.exec(raw)) !== null) {
+    const nums = [...m[2].matchAll(/<td[^>]*>(-?[\d,]+)<\/td>/g)].map(x => Number(x[1].replace(/,/g, '')));
+    if (nums.length >= 3) days.push({ date: m[1], individual: nums[0], foreign: nums[1], institution: nums[2] });
+  }
+  if (days.length === 0) return null;
+  const latest = days[0];
+  latest.foreign5d = days.slice(0, 5).reduce((s, d) => s + d.foreign, 0);
+  return latest;
+}
+
+async function fetchMarketData() {
+  const market = {};
+  for (const [key, symbol, sosok] of [['kospi', 'KOSPI', '01'], ['kosdaq', 'KOSDAQ', '02']]) {
+    try {
+      const closes = await fetchIndexCloses(symbol);
+      const flows = await fetchInvestorFlows(sosok);
+      market[key] = {
+        index: closes[closes.length - 1],
+        d1: pctChange(closes, 1),
+        d5: pctChange(closes, 5),
+        d20: pctChange(closes, 20),
+        flows, // { date, individual, foreign, institution, foreign5d } 단위: 억원
+      };
+      console.log(`  📈 ${symbol}: ${market[key].index?.toLocaleString()} (1일 ${market[key].d1}%, 5일 ${market[key].d5}%) | 외인 ${flows?.foreign?.toLocaleString()}억 기관 ${flows?.institution?.toLocaleString()}억`);
+      await new Promise(r => setTimeout(r, 300));
+    } catch (e) {
+      console.warn(`  ⚠️  ${symbol} 시황 실패: ${e.message}`);
+    }
+  }
+  return market;
+}
+
 // ─── Claude AI 투자 요약 ──────────────────────────────────────────────────────
 async function analyzePost(title, content, blogName) {
   const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래 블로그 글을 읽고, 독자가 원글을 열지 않아도 판단할 수 있게 정보를 최대한 구체적으로 추출하세요.
@@ -367,7 +413,7 @@ async function analyzePost(title, content, blogName) {
 }
 
 // ─── 일별 종합 브리핑 ─────────────────────────────────────────────────────────
-async function generateDailyBrief(posts, prices = {}) {
+async function generateDailyBrief(posts, prices = {}, market = {}) {
   const digest = posts.map(p => ({
     blog: p.blog_name,
     person: p.person || p.blog_name,
@@ -391,6 +437,12 @@ ${JSON.stringify(digest, null, 2)}
 [실제 주가 데이터 — 여론과 대조할 것]
 ${priceLines || '(주가 데이터 없음)'}
 
+[시황 데이터 — 지수·수급 (단위: 억원)]
+${Object.entries(market).map(([k, v]) =>
+    `${k.toUpperCase()}: ${v.index?.toLocaleString()} | 1일 ${v.d1}% 5일 ${v.d5}% 20일 ${v.d20}%` +
+    (v.flows ? ` | 최근일 수급: 개인 ${v.flows.individual?.toLocaleString()} 외국인 ${v.flows.foreign?.toLocaleString()} 기관 ${v.flows.institution?.toLocaleString()} (외인 5일 누적 ${v.flows.foreign5d?.toLocaleString()})` : '')
+  ).join('\n') || '(시황 데이터 없음)'}
+
 [작성 원칙 — 매우 중요]
 1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 필자들의 시각을 비교·정리만 합니다.
 2. 핵심은 비교: 누가 어떤 근거로 무엇을 주장하는지, 어디서 겹치고 어디서 갈리는지.
@@ -401,7 +453,7 @@ ${priceLines || '(주가 데이터 없음)'}
 7. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
 
 8. **관전 포인트(watch_points)**: 앞으로 시장 방향을 가를 확인 변수·촉매·일정을 짚으세요(예: '7/20 빅테크 CAPEX 발표', 'HBM 가격 협상', '외국인 순매수 전환 여부'). 독자가 스스로 판단하도록 돕는 체크리스트입니다.
-9. **말 vs 가격 대조(divergence 분석) — 매우 중요**: 위 주가 데이터와 여론을 반드시 대조하세요. 여론이 강세인데 주가가 하락 중이면(또는 반대) 그 괴리를 headline과 price_check에 명시하고, 가능한 해석(선반영 소화 vs 수급 이탈 vs 매수 기회)을 병기하세요. 여론과 가격이 같은 방향이면 "추세 확인"으로 서술하세요. 가격은 여론보다 정직한 신호일 수 있습니다.
+9. **말 vs 가격 대조(divergence 분석) — 매우 중요**: 위 주가·시황 데이터와 여론을 반드시 대조하세요. 지수 흐름과 외국인/기관 수급도 여론 평가의 배경으로 활용하세요(예: 여론 강세인데 외인 5일 연속 순매도면 명시). 여론이 강세인데 주가가 하락 중이면(또는 반대) 그 괴리를 headline과 price_check에 명시하고, 가능한 해석(선반영 소화 vs 수급 이탈 vs 매수 기회)을 병기하세요. 여론과 가격이 같은 방향이면 "추세 확인"으로 서술하세요. 가격은 여론보다 정직한 신호일 수 있습니다.
 10. 이것은 증권사 리포트처럼 읽혀야 합니다. 각 논거는 "누가 — 무엇을 — 어떤 수치·근거로" 완결된 문장으로.
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
@@ -617,6 +669,15 @@ async function main() {
     console.warn('⚠️  주가 수집 실패(여론 데이터는 정상 저장):', e.message);
   }
 
+  // ── 시황 수집 (지수 + 수급) ────────────────────────────────────────────────
+  console.log('\n📈 시황 수집 중...');
+  let market = {};
+  try {
+    market = await fetchMarketData();
+  } catch (e) {
+    console.warn('⚠️  시황 수집 실패:', e.message);
+  }
+
   // ── 일별 종합 브리핑 (주가 데이터 포함 → 말 vs 가격 괴리 분석) ──────────────
   let todayBrief = null;
   if (process.env.CLAUDE_API_KEY && results.length > 0) {
@@ -625,7 +686,7 @@ async function main() {
     const isCached = cachedBrief && cachedBrief.date === TODAY_KST;
     const brief = isCached
       ? (console.log('[DailyBrief] 캐시 사용:', cachedBrief.generatedAt) || cachedBrief)
-      : await generateDailyBrief(results, prices);
+      : await generateDailyBrief(results, prices, market);
     if (brief) {
       todayBrief = { ...brief, date: TODAY_KST, post_count: results.length };
       console.log(`  → ${brief.headline}`);
@@ -642,7 +703,7 @@ async function main() {
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify(
-      { date: TODAY_KST, daily_briefs: updatedBriefs, prices, posts: merged },
+      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, posts: merged },
       null, 2
     ),
     'utf-8'

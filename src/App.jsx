@@ -4,6 +4,7 @@ import PostModal from "./components/PostModal";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
+import MarketStrip from "./components/MarketStrip";
 import AttentionTrends from "./components/AttentionTrends";
 import StockReport from "./components/StockReport";
 import "./App.css";
@@ -115,6 +116,7 @@ export default function App() {
       </header>
 
       <main className="main">
+        <MarketStrip market={data?.market} />
         <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSelectedStock} />
         <AttentionTrends posts={posts} prices={data?.prices} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
