@@ -117,7 +117,7 @@ export default function App() {
 
       <main className="main">
         <MarketStrip market={data?.market} />
-        <DailyBrief brief={data?.daily_briefs?.[0] ?? data?.daily_brief} onStockClick={setSelectedStock} />
+        <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
         <AttentionTrends posts={posts} prices={data?.prices} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 

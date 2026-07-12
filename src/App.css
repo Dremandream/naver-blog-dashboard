@@ -104,7 +104,13 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 /* ===== 종합 리포트 (증권사 리포트 톤) ===== */
 .daily-brief.report { padding: 28px 30px; gap: 18px; }
 .report-head { border-bottom: 2px solid #0f172a; padding-bottom: 14px; }
-.report-kicker { font-size: 11px; font-weight: 800; letter-spacing: .12em; color: #6366f1; text-transform: uppercase; margin-bottom: 6px; }
+.report-kicker-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.report-kicker { font-size: 11px; font-weight: 800; letter-spacing: .12em; color: #6366f1; text-transform: uppercase; }
+.report-dates { display: flex; gap: 4px; flex-wrap: wrap; }
+.report-date-chip { border: 1px solid #e5e7eb; background: #fff; color: #64748b; border-radius: 6px; padding: 2px 9px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all .12s; }
+.report-date-chip:hover { border-color: #cbd5e1; }
+.report-date-chip.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+.report-past { color: #f59e0b; font-weight: 700; }
 .report-headline { font-size: 21px; font-weight: 800; color: #0f172a; line-height: 1.4; letter-spacing: -.01em; }
 .report-meta { font-size: 12px; color: #94a3b8; margin-top: 8px; }
 .report-summary { font-size: 14.5px; color: #1e293b; line-height: 1.9; }

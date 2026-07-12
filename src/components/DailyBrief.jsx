@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // 종합의견 리포트 — 증권사 리포트 톤(결론 → 요약 → 강세/약세 논거 → 소수 → 관전포인트 → 종목)
 function ReportBlock({ variant, title, items }) {
   if (!items?.length) return null;
@@ -11,8 +13,14 @@ function ReportBlock({ variant, title, items }) {
   );
 }
 
-export default function DailyBrief({ brief, onStockClick }) {
-  if (!brief || !brief.brief) return null;
+export default function DailyBrief({ briefs, onStockClick }) {
+  // briefs: daily_briefs 배열(최신순). 단일 객체가 와도 배열로 정규화(하위호환).
+  const list = (Array.isArray(briefs) ? briefs : briefs ? [briefs] : []).filter((b) => b && b.brief);
+  const [idx, setIdx] = useState(0);
+  if (list.length === 0) return null;
+
+  const sel = Math.min(idx, list.length - 1);
+  const brief = list[sel];
 
   // 신규 스키마(bull_case/bear_case) 우선, 없으면 구 스키마(consensus/divergence) 폴백
   const bull = brief.bull_case ?? brief.consensus;
@@ -24,10 +32,26 @@ export default function DailyBrief({ brief, onStockClick }) {
   return (
     <section className="daily-brief report">
       <div className="report-head">
-        <div className="report-kicker">종합 리포트</div>
+        <div className="report-kicker-row">
+          <span className="report-kicker">종합 리포트</span>
+          {list.length > 1 && (
+            <div className="report-dates">
+              {list.map((b, i) => (
+                <button
+                  key={b.date + i}
+                  className={`report-date-chip ${i === sel ? "active" : ""}`}
+                  onClick={() => setIdx(i)}
+                >
+                  {i === 0 ? "최신" : b.date.slice(5)}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <h2 className="report-headline">{brief.headline}</h2>
         <div className="report-meta">
           {brief.date} · 글 {brief.post_count}개 종합{gen && ` · ${gen} 기준`}
+          {sel > 0 && <span className="report-past"> · 지난 리포트</span>}
         </div>
       </div>
 
