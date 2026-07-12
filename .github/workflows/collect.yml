@@ -33,13 +33,17 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/collect-rss.js
 
-      - name: posts.json 커밋 & 푸시
+      - name: 데이터 커밋 & 푸시
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # 수집기가 만드는 모든 산출물 스테이징 (누락 시 rebase 실패 방지)
           git add public/data/posts.json config/stock-codes.json
-          git diff --staged --quiet && echo "변경 없음" || (
-            git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M') 이웃새글 업데이트"
-            git pull --rebase origin main
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M') 수집 업데이트"
+            # 원격 최신 반영 후 push (충돌 시 원격 우선으로 재시도)
+            git pull --rebase -X theirs origin main || git rebase --abort
             git push
-          )
+          fi
