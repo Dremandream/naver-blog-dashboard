@@ -426,6 +426,22 @@ async function generateDailyBrief(posts, prices = {}, market = {}) {
     numbers: p.numbers,
   }));
 
+  // 쏠림 지표: 섹터 집중도 + 스탠스 편향 (인물 단위) — 프롬프트에 근거로 제공
+  const sectorCnt = {};
+  const personStance = {};
+  for (const p of posts) {
+    sectorCnt[p.sector] = (sectorCnt[p.sector] || 0) + 1;
+    const per = p.person || p.blog_name;
+    const st = p.stance === '강세' ? '강세' : p.stance === '약세' ? '약세' : '중립';
+    if (!personStance[per] || (personStance[per] === '중립' && st !== '중립')) personStance[per] = st;
+  }
+  const topSector = Object.entries(sectorCnt).sort((a, b) => b[1] - a[1])[0] || ['-', 0];
+  const sectorPct = Math.round((topSector[1] / (posts.length || 1)) * 100);
+  const stances = Object.values(personStance);
+  const bullN = stances.filter(s => s === '강세').length;
+  const bearN = stances.filter(s => s === '약세').length;
+  const concentration = `섹터 집중: ${topSector[0]} ${sectorPct}% (${topSector[1]}/${posts.length}글) | 스탠스: 강세 ${bullN}명 vs 약세 ${bearN}명`;
+
   const priceLines = Object.entries(prices)
     .map(([name, v]) => `${name}: 현재 ${v.price.toLocaleString()}${v.market === 'KR' ? '원' : '$'} | 1일 ${v.d1 ?? '?'}% | 5일 ${v.d5 ?? '?'}% | 20일 ${v.d20 ?? '?'}%`)
     .join('\n');
@@ -436,6 +452,9 @@ ${JSON.stringify(digest, null, 2)}
 
 [실제 주가 데이터 — 여론과 대조할 것]
 ${priceLines || '(주가 데이터 없음)'}
+
+[쏠림 지표 — 오늘 소스들의 편향]
+${concentration}
 
 [시황 데이터 — 지수·수급 (단위: 억원)]
 ${Object.entries(market).map(([k, v]) =>
@@ -454,7 +473,9 @@ ${Object.entries(market).map(([k, v]) =>
 
 8. **관전 포인트(watch_points)**: 앞으로 시장 방향을 가를 확인 변수·촉매·일정을 짚으세요(예: '7/20 빅테크 CAPEX 발표', 'HBM 가격 협상', '외국인 순매수 전환 여부'). 독자가 스스로 판단하도록 돕는 체크리스트입니다.
 9. **말 vs 가격 대조(divergence 분석) — 매우 중요**: 위 주가·시황 데이터와 여론을 반드시 대조하세요. 지수 흐름과 외국인/기관 수급도 여론 평가의 배경으로 활용하세요(예: 여론 강세인데 외인 5일 연속 순매도면 명시). 여론이 강세인데 주가가 하락 중이면(또는 반대) 그 괴리를 headline과 price_check에 명시하고, 가능한 해석(선반영 소화 vs 수급 이탈 vs 매수 기회)을 병기하세요. 여론과 가격이 같은 방향이면 "추세 확인"으로 서술하세요. 가격은 여론보다 정직한 신호일 수 있습니다.
-10. 이것은 증권사 리포트처럼 읽혀야 합니다. 각 논거는 "누가 — 무엇을 — 어떤 수치·근거로" 완결된 문장으로.
+10. **쏠림 경고(crowding)**: 위 쏠림 지표를 근거로, 오늘 소스들이 한 섹터/한 방향에 몰렸으면 경고하세요. 다수 합의는 이미 반영됐을 위험이 크고, 쏠림이 심할수록 역발상 가치가 커집니다. crowding 필드에 "무엇에 얼마나 쏠렸는지 + 그래서 무엇을 경계할지"를 담으세요.
+11. **소외된 시각(neglected)**: 다수(반도체·주도 섹터)에 묻힌 다른 섹터·다른 자산·반대 방향 의견을 반드시 발굴하세요. 단 1명이 말했더라도 남들과 다른 섹터(예: 금융·2차전지·바이오·소비)나 반대 포지션이면 여기에 담으세요. 없으면 빈 배열.
+12. 이것은 증권사 리포트처럼 읽혀야 합니다. 각 논거는 "누가 — 무엇을 — 어떤 수치·근거로" 완결된 문장으로.
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
@@ -463,6 +484,8 @@ ${Object.entries(market).map(([k, v]) =>
   "bull_case": ["강세 논거 — '누가: 근거+수치' 완결 문장 2~4개 (없으면 빈 배열)"],
   "bear_case": ["약세·신중 논거 — '누가: 근거+수치' 완결 문장 2~4개 (없으면 빈 배열)"],
   "minority": ["소수·역발상 관점 — 다수와 다른 근거 있는 시각이나 남들이 놓친 관점. 누가 왜 그렇게 보는지 근거까지 (진짜 없으면 빈 배열)"],
+  "crowding": "쏠림 경고 한 문장 — 무엇에 얼마나 몰렸고 무엇을 경계할지 (쏠림 약하면 빈 문자열)",
+  "neglected": ["다수에 묻힌 다른 섹터·다른 자산·반대 방향 의견 — 누가/무엇을 (없으면 빈 배열)"],
   "price_check": ["말 vs 가격 대조 — 여론과 주가가 역행/동행하는 종목과 그 해석. 예: 'SK하이닉스: 여론 강세 7명 vs 5일 -10% 역행 — 선반영 소화 vs 수급 이탈 쟁점' (주가 데이터 없으면 빈 배열)"],
   "watch_points": ["앞으로 확인할 핵심 변수·촉매·일정 2~4개 (없으면 빈 배열)"],
   "hot_stocks": ["2명 이상(person 기준) 언급 종목 (없으면 빈 배열)"]

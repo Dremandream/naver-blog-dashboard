@@ -55,6 +55,10 @@ export default function DailyBrief({ briefs, onStockClick }) {
         </div>
       </div>
 
+      {brief.crowding && (
+        <div className="report-crowding">⚠️ 쏠림 경고 — {brief.crowding}</div>
+      )}
+
       <p className="report-summary">{brief.brief}</p>
 
       <div className="report-grid">
@@ -63,6 +67,7 @@ export default function DailyBrief({ briefs, onStockClick }) {
       </div>
 
       <ReportBlock variant="minority" title="🔍 소수·역발상 의견" items={brief.minority} />
+      <ReportBlock variant="neglected" title="🧭 소외된 시각 (다른 섹터·반대 포지션)" items={brief.neglected} />
       <ReportBlock variant="price" title="⚖️ 말 vs 가격" items={brief.price_check} />
       <ReportBlock variant="watch" title="🎯 관전 포인트" items={brief.watch_points} />
 

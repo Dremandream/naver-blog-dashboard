@@ -130,6 +130,10 @@ h1 { font-size: 17px; font-weight: 800; letter-spacing: -.01em; color: #0f172a; 
 .report-minority { background: #faf8ff; border-color: #e7ddfb; }
 .report-minority .report-block-title { color: #7c3aed; }
 .report-minority .report-list li::before { background: #8b5cf6; }
+.report-crowding { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 600; line-height: 1.5; }
+.report-neglected { background: #f5f9ff; border-color: #d6e4fb; }
+.report-neglected .report-block-title { color: #1d4ed8; }
+.report-neglected .report-list li::before { background: #3b82f6; }
 .report-price { background: #f6fbf7; border-color: #d3ecd9; }
 .report-price .report-block-title { color: #15803d; }
 .report-price .report-list li::before { background: #22c55e; }
