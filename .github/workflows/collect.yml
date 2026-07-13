@@ -2,7 +2,8 @@ name: 네이버 블로그 이웃새글 수집
 
 on:
   schedule:
-    - cron: '0 23 * * *'   # 매일 오전 8시 KST (UTC 23:00)
+    - cron: '0 23 * * *'   # 매일 오전 8시 KST (UTC 23:00) — 아침 브리핑
+    - cron: '30 7 * * 1-5' # 평일 오후 4시반 KST (UTC 07:30) — 장마감 후 갱신
   workflow_dispatch:          # 수동 실행 버튼
 
 permissions:
@@ -25,6 +26,9 @@ jobs:
 
       - name: 의존성 설치
         run: npm ci
+
+      - name: 회귀 테스트 (파싱 골든 케이스)
+        run: npm test
 
       - name: 이웃새글 수집 및 요약 (RSS)
         env:

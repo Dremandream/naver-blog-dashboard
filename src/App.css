@@ -182,6 +182,9 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 /* 카드 리스크(약세 논거) 노출 — 확증편향 방지 */
 .card-risk { font-size: 12px; color: #b45309; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 8px 10px; line-height: 1.5; margin: 0; }
 
+/* 신선도 경고 (무인 운영 실패 감지) */
+.stale-warning { background: #fdf2f2; border: 1px solid #f5c6c6; border-left: 3px solid var(--accent); color: #7f1d1d; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; font-weight: 600; }
+
 /* ===== 시황 스트립 (인쇄물 헤더 데이터 밴드) ===== */
 .market-strip { display: flex; flex-direction: column; gap: 6px; background: none; color: var(--ink); border-top: 1px solid var(--rule-thin); border-bottom: 1px solid var(--rule-thin); padding: 10px 0; margin-bottom: 22px; font-size: 13px; }
 .ms-block { display: grid; grid-template-columns: 48px 92px 150px 1fr; align-items: baseline; gap: 12px; }

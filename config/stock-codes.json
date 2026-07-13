@@ -59,5 +59,11 @@
     "code": "INTC.O",
     "market": "US",
     "matched": "인텔"
-  }
+  },
+  "대한항공": {
+    "code": "003490",
+    "market": "KR",
+    "matched": "대한항공"
+  },
+  "OpenAI": null
 }

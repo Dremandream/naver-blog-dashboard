@@ -115,6 +115,16 @@ export default function App() {
       </header>
 
       <main className="main">
+        {(() => {
+          // 신선도 경고: 최신 리포트 생성 후 26시간 초과 시 표시 (무인 운영의 조용한 실패 감지)
+          const gen = data?.daily_briefs?.[0]?.generatedAt;
+          const hrs = gen ? Math.floor((Date.now() - new Date(gen).getTime()) / 3600000) : null;
+          return hrs != null && hrs > 26 ? (
+            <div className="stale-warning">
+              ⚠️ 데이터가 {hrs}시간 전 기준입니다 — 자동 수집이 지연됐을 수 있어요 (GitHub Actions 확인 필요)
+            </div>
+          ) : null;
+        })()}
         <MarketStrip market={data?.market} />
         <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
         <AttentionTrends posts={posts} prices={data?.prices} onStockClick={setSelectedStock} />

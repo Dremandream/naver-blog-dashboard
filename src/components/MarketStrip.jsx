@@ -33,11 +33,13 @@ function IndexBlock({ name, m }) {
 
 export default function MarketStrip({ market }) {
   if (!market || (!market.kospi && !market.kosdaq)) return null;
+  const asOf = market.kospi?.asOf || market.kosdaq?.asOf;
+  const asOfFmt = asOf ? `${asOf.slice(4, 6)}.${asOf.slice(6, 8)}` : null;
   return (
     <div className="market-strip">
       <IndexBlock name="코스피" m={market.kospi} />
       <IndexBlock name="코스닥" m={market.kosdaq} />
-      <span className="ms-note">수급: 최근 거래일 순매수</span>
+      <span className="ms-note">{asOfFmt ? `${asOfFmt} 종가 기준 · 수급 순매수` : "수급: 최근 거래일 순매수"}</span>
     </div>
   );
 }

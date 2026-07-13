@@ -41,7 +41,7 @@ const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
 
 // ─── 견고한 JSON 파서 ────────────────────────────────────────────────────────
 // 모델이 JSON 앞뒤에 설명/코드펜스를 붙여도 안전하게 첫 번째 {...} 블록만 추출.
-function parseJSONLoose(raw) {
+export function parseJSONLoose(raw) {
   let t = String(raw).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
   // 첫 '{' 부터 괄호 균형이 맞는 지점까지 스캔 (문자열 내 중괄호 무시)
   const start = t.indexOf('{');
@@ -176,7 +176,7 @@ async function fetchTelegramChannel(channelId) {
 }
 
 // HTML 엔티티 디코드 + 태그 제거
-function stripHtml(s) {
+export function stripHtml(s) {
   return s
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/<[^>]+>/g, '')
@@ -189,7 +189,7 @@ function stripHtml(s) {
 }
 
 // 채널 HTML → 메시지 배열 [{ text, postDate, url }]
-function parseTelegramMessages(html, channelId) {
+export function parseTelegramMessages(html, channelId) {
   const messages = [];
   // 메시지 텍스트 블록
   const textRe = /<div class="tgme_widget_message_text[^"]*"[^>]*>([\s\S]*?)<\/div>/g;
@@ -270,7 +270,7 @@ async function fetchCloses(info) {
   return JSON.parse(raw).map(c => Number(c.closePrice));
 }
 
-function pctChange(closes, n) {
+export function pctChange(closes, n) {
   if (closes.length < n + 1) return null;
   const last = closes[closes.length - 1], prev = closes[closes.length - 1 - n];
   return prev ? Math.round(((last - prev) / prev) * 1000) / 10 : null;
@@ -309,7 +309,9 @@ async function fetchPrices(stockNames) {
 async function fetchIndexCloses(symbol) {
   const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${symbol}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
   const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
-  return rows.map(r => Number(r[5]));
+  const closes = rows.map(r => Number(r[5]));
+  closes.lastDate = rows.length ? rows[rows.length - 1][1] : null; // YYYYMMDD
+  return closes;
 }
 
 // 투자자별 매매동향 (억원): sosok 01=코스피, 02=코스닥. 최신일 + 외국인 5일 누적.
@@ -337,6 +339,7 @@ async function fetchMarketData() {
       const flows = await fetchInvestorFlows(sosok);
       market[key] = {
         index: closes[closes.length - 1],
+        asOf: closes.lastDate, // 지수 기준일 YYYYMMDD
         d1: pctChange(closes, 1),
         d5: pctChange(closes, 5),
         d20: pctChange(closes, 20),
@@ -491,16 +494,20 @@ ${Object.entries(market).map(([k, v]) =>
   "hot_stocks": ["2명 이상(person 기준) 언급 종목 (없으면 빈 배열)"]
 }`;
 
-  try {
-    const res = await client.messages.create({
-      model: 'claude-opus-4-8',
-      max_tokens: 3000,
-      messages: [{ role: 'user', content: prompt }],
-    });
-    const _r = parseJSONLoose(res.content[0].text); _r.generatedAt=new Date().toISOString(); return _r;
-  } catch (e) {
-    console.warn('  브리핑 생성 실패:', e.message);
-    return null;
+  // 글 수가 많은 날 출력 잘림 방지: 넉넉한 토큰 + 실패 시 1회 재시도
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const res = await client.messages.create({
+        model: 'claude-opus-4-8',
+        max_tokens: 5000,
+        messages: [{ role: 'user', content: prompt }],
+      });
+      const _r = parseJSONLoose(res.content[0].text); _r.generatedAt = new Date().toISOString(); return _r;
+    } catch (e) {
+      console.warn(`  브리핑 생성 실패(${attempt}/2):`, e.message);
+      if (attempt === 2) return null;
+      await new Promise(r => setTimeout(r, 2000));
+    }
   }
 }
 
@@ -787,7 +794,11 @@ async function sendTelegram(brief, postCount) {
   }
 }
 
-main().catch(err => {
-  console.error('\n🔥 오류:', err);
-  process.exit(1);
-});
+// 직접 실행일 때만 수집 시작 (테스트에서 import 시 실행 안 됨)
+import { pathToFileURL } from 'url';
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch(err => {
+    console.error('\n🔥 오류:', err);
+    process.exit(1);
+  });
+}
