@@ -502,7 +502,16 @@ ${Object.entries(market).map(([k, v]) =>
         max_tokens: 5000,
         messages: [{ role: 'user', content: prompt }],
       });
-      const _r = parseJSONLoose(res.content[0].text); _r.generatedAt = new Date().toISOString(); return _r;
+      const _r = parseJSONLoose(res.content[0].text);
+      // 스키마 정규화: 필드 누락/타입 오류가 UI까지 전파되지 않게 (명세-코드 일치 원칙)
+      const arr = v => Array.isArray(v) ? v : [];
+      const str = v => typeof v === 'string' ? v : '';
+      _r.headline = str(_r.headline); _r.brief = str(_r.brief); _r.crowding = str(_r.crowding);
+      _r.bull_case = arr(_r.bull_case); _r.bear_case = arr(_r.bear_case);
+      _r.minority = arr(_r.minority); _r.neglected = arr(_r.neglected);
+      _r.price_check = arr(_r.price_check); _r.watch_points = arr(_r.watch_points);
+      _r.hot_stocks = arr(_r.hot_stocks);
+      _r.generatedAt = new Date().toISOString(); return _r;
     } catch (e) {
       console.warn(`  브리핑 생성 실패(${attempt}/2):`, e.message);
       if (attempt === 2) return null;
