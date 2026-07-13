@@ -2,6 +2,7 @@
 // 실행: npm test  (외부 네트워크 불필요, <1초)
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
 import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange } from '../scripts/collect-rss.js';
+import { judgeOne, runCritic } from '../scripts/judge.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -51,6 +52,25 @@ const m = re.exec(flowHtml);
 const nums = m ? [...m[2].matchAll(/<td[^>]*>(-?[\d,]+)<\/td>/g)].map(x => Number(x[1].replace(/,/g, ''))) : [];
 eq('F1 날짜', m?.[1], '26.07.10');
 eq('F2 개인/외인/기관', nums.slice(0, 3), [-7805, -3228, 11314]);
+
+console.log('── judge_verdict 스펙 골든 케이스 (specs/judge_verdict.md §3) ──');
+const j = (sig) => { const r = judgeOne(sig); return [r.verdict, r.confidence]; };
+eq('J-G1 상한 걸림', j({ N: 5, B: 5, R: 0, P5: 3.1, FRESH_H: 2 }), ['buy', 0.50]);
+eq('J-G2 감점 직후(P5=1.9 flat)', j({ N: 5, B: 5, R: 0, P5: 1.9, FRESH_H: 2 }), ['watch', 0.40]);
+eq('J-G3 착시 True 강제(P5=-2.0 경계)', j({ N: 5, B: 5, R: 0, P5: -2.0, FRESH_H: 2 }), ['needs_review', 0.10]);
+eq('J-G4 상한 안 걸림(D2 감점)', j({ N: 4, B: 3, R: 1, P5: 2.0, FRESH_H: 2 }), ['buy', 0.30]);
+eq('J-G5 인원 부족→watch', j({ N: 2, B: 2, R: 0, P5: 8.0, FRESH_H: 2 }), ['watch', 0.20]);
+eq('J-G6 bear+D1 신선도 감점', j({ N: 6, B: 0, R: 5, P5: -8.0, FRESH_H: 30 }), ['pass', 0.40]);
+eq('J-G6b D1+D2 중첩(스펙모순 검출 케이스)', j({ N: 6, B: 1, R: 5, P5: -8.0, FRESH_H: 30 }), ['pass', 0.30]);
+
+console.log('── critic 골든 케이스 (specs/critic.md §3) ──');
+const ok = { ticker: 'A', verdict: 'watch', confidence: 0.30, ILLUSION: '미확인', FRESH_H: 1 };
+eq('C-K1 전 건 정상', runCritic([ok]).pass, true);
+eq('C-K3 stale 차단(48.1h)', runCritic([{ ...ok, FRESH_H: 48.1 }]).blocked[0].rule, 'stale');
+eq('C-K4 착시 위반 차단', runCritic([{ ...ok, ILLUSION: 'True', verdict: 'buy' }]).blocked[0].rule, 'illusion-violation');
+eq('C-K5 conf-cap 차단', runCritic([{ ...ok, confidence: 0.55 }]).blocked[0].rule, 'conf-cap');
+eq('C-K5b conf-step 차단', runCritic([{ ...ok, confidence: 0.35 }]).blocked[0].rule, 'conf-step');
+eq('C-K6 중복 티커(2번째부터 차단)', runCritic([ok, { ...ok }]).blocked.length, 1);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

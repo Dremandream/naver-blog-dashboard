@@ -2793,5 +2793,139 @@
       "reasoning": "클린룸 부족으로 인한 공급 제약이 최소 4Q27까지 지속되면서 메모리 판가 상승이 연말까지 이어질 것으로 예상되며, 컨센서스에 반영되지 않은 충당금까지 포함해도 실적이 시장 기대를 크게 초과하기 때문.",
       "risks": []
     }
+  ],
+  "verdicts": {
+    "date": "2026-07-13",
+    "generatedAt": "2026-07-13T15:16:50.085Z",
+    "items": [
+      {
+        "ticker": "SK하이닉스",
+        "N": 8,
+        "B": 3,
+        "R": 2,
+        "P5": -21.3,
+        "FRESH_H": 0,
+        "DIR": "mixed",
+        "PDIR": "down",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.2
+      },
+      {
+        "ticker": "삼성전자",
+        "N": 8,
+        "B": 2,
+        "R": 3,
+        "P5": -20,
+        "FRESH_H": 0,
+        "DIR": "mixed",
+        "PDIR": "down",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.2
+      },
+      {
+        "ticker": "메타",
+        "N": 4,
+        "B": 2,
+        "R": 1,
+        "P5": 10.5,
+        "FRESH_H": 0,
+        "DIR": "mixed",
+        "PDIR": "up",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.2
+      },
+      {
+        "ticker": "마이크론",
+        "N": 4,
+        "B": 3,
+        "R": 1,
+        "P5": -5.5,
+        "FRESH_H": 0,
+        "DIR": "bull",
+        "PDIR": "down",
+        "ILLUSION": "True",
+        "verdict": "needs_review",
+        "confidence": 0.1
+      },
+      {
+        "ticker": "애플",
+        "N": 3,
+        "B": 2,
+        "R": 0,
+        "P5": 1.9,
+        "FRESH_H": 0,
+        "DIR": "bull",
+        "PDIR": "flat",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.3
+      },
+      {
+        "ticker": "엔비디아",
+        "N": 3,
+        "B": 1,
+        "R": 1,
+        "P5": 5.7,
+        "FRESH_H": 0,
+        "DIR": "mixed",
+        "PDIR": "up",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.2
+      },
+      {
+        "ticker": "TSMC",
+        "N": 3,
+        "B": 2,
+        "R": 0,
+        "P5": -4.8,
+        "FRESH_H": 0,
+        "DIR": "bull",
+        "PDIR": "down",
+        "ILLUSION": "True",
+        "verdict": "needs_review",
+        "confidence": 0.1
+      },
+      {
+        "ticker": "난야테크",
+        "N": 2,
+        "B": 2,
+        "R": 0,
+        "P5": null,
+        "FRESH_H": 0,
+        "DIR": "bull",
+        "PDIR": "none",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.1
+      },
+      {
+        "ticker": "대한항공",
+        "N": 2,
+        "B": 0,
+        "R": 1,
+        "P5": -10.1,
+        "FRESH_H": 0,
+        "DIR": "mixed",
+        "PDIR": "down",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.2
+      }
+    ],
+    "critic": {
+      "pass": true,
+      "blocked": [],
+      "flagged": []
+    }
+  },
+  "verdict_history": [
+    {
+      "date": "2026-07-13",
+      "buy_pct": 0
+    }
   ]
 }

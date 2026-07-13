@@ -12,6 +12,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
+import { judgeBatch } from './judge.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
@@ -664,11 +665,13 @@ async function main() {
   // 기존 데이터 읽기 (daily_brief 단수 → daily_briefs 배열 하위 호환)
   let existingPosts = [];
   let existingBriefs = [];
+  let verdictHistory = [];
   if (fs.existsSync(OUTPUT_PATH)) {
     try {
       const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
       const parsed = JSON.parse(raw);
       existingPosts = parsed.posts ?? [];
+      verdictHistory = parsed.verdict_history ?? [];
       if (parsed.daily_briefs) {
         existingBriefs = parsed.daily_briefs;
       } else if (parsed.daily_brief) {
@@ -717,6 +720,15 @@ async function main() {
     console.warn('⚠️  시황 수집 실패:', e.message);
   }
 
+  // ── 판정 배치 (specs/judge_verdict.md 결정표, AI 미사용·결정적) ─────────────
+  console.log('\n⚖️ 판정 계산 중...');
+  const judged = judgeBatch(merged, prices, verdictHistory);
+  const verdicts = { date: TODAY_KST, generatedAt: new Date().toISOString(), items: judged.items, critic: judged.critic };
+  // 히스토리: 날짜당 1건(최신 덮어쓰기), 최근 5회 유지 (critic C2용)
+  const newHistory = [{ date: TODAY_KST, buy_pct: judged.buy_pct }, ...verdictHistory.filter(h => h.date !== TODAY_KST)].slice(0, 5);
+  console.log(`  → ${judged.items.length}종목: ` + judged.items.slice(0, 6).map(i => `${i.ticker}=${i.verdict}(${i.confidence})`).join(', '));
+  if (!judged.critic.pass) console.warn('  ⚠️ critic 차단:', JSON.stringify(judged.critic.blocked));
+
   // ── 일별 종합 브리핑 (주가 데이터 포함 → 말 vs 가격 괴리 분석) ──────────────
   let todayBrief = null;
   if (process.env.CLAUDE_API_KEY && results.length > 0) {
@@ -742,7 +754,7 @@ async function main() {
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify(
-      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, posts: merged },
+      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, verdicts, verdict_history: newHistory, posts: merged },
       null, 2
     ),
     'utf-8'

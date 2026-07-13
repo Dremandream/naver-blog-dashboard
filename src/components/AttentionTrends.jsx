@@ -42,7 +42,17 @@ function Pct({ v }) {
   return <span className={cls}>{v > 0 ? "+" : ""}{v}%</span>;
 }
 
-export default function AttentionTrends({ posts, prices = {}, onStockClick }) {
+// 판정 배지 (결정표 자동 산출 — 매매 추천 아님)
+const VERDICT_BADGE = {
+  buy: { label: "조건충족", cls: "vd-buy" },
+  watch: { label: "관망", cls: "vd-watch" },
+  pass: { label: "회피", cls: "vd-pass" },
+  needs_review: { label: "재검토", cls: "vd-review" },
+};
+
+export default function AttentionTrends({ posts, prices = {}, verdicts, onStockClick }) {
+  const vmap = {};
+  for (const it of verdicts?.items ?? []) vmap[it.ticker] = it;
   if (!posts || posts.length === 0) return null;
 
   const dates = [...new Set(posts.map((p) => p.date))].sort().reverse();
@@ -106,10 +116,12 @@ export default function AttentionTrends({ posts, prices = {}, onStockClick }) {
       <div className="at-list">
         <div className="at-row at-head" aria-hidden="true">
           <span>종목</span><span>7일 언급</span><span></span><span>변화</span><span>상태</span>
-          <span className="at-px-col">주가 1일</span><span className="at-px-col">5일</span>
+          <span className="at-px-col">주가 1일</span><span className="at-px-col">5일</span><span className="at-vd-col">판정*</span>
         </div>
         {rows.map((x) => {
           const px = prices[x.stock];
+          const vd = vmap[x.stock];
+          const badge = vd && VERDICT_BADGE[vd.verdict];
           return (
             <button key={x.stock} className="at-row" onClick={() => onStockClick?.(x.stock)} title={`${x.stock} 리포트 열기`}>
               <span className="at-name">
@@ -124,6 +136,13 @@ export default function AttentionTrends({ posts, prices = {}, onStockClick }) {
               <span className={`at-status ${STATUS[x.status].cls}`}>{STATUS[x.status].label}</span>
               <span className="at-px-col"><Pct v={px?.d1} /></span>
               <span className="at-px-col"><Pct v={px?.d5} /></span>
+              <span className="at-vd-col">
+                {badge ? (
+                  <span className={`at-vd ${badge.cls}`} title={`여론방향 ${vd.DIR} · 가격 ${vd.PDIR} · 착시 ${vd.ILLUSION} · 확신도 ${vd.confidence}`}>
+                    {badge.label} <b>{vd.confidence.toFixed(2)}</b>
+                  </span>
+                ) : <span className="at-px-na">—</span>}
+              </span>
             </button>
           );
         })}
@@ -134,6 +153,12 @@ export default function AttentionTrends({ posts, prices = {}, onStockClick }) {
           <span className="at-flips-label">🔀 시각 전환</span>
           {flips.slice(0, 6).map((f, i) => <span key={i} className="at-flip">{f}</span>)}
         </div>
+      )}
+
+      {verdicts?.items?.length > 0 && (
+        <p className="at-disclaimer">
+          * 판정 = 사전 결정표(여론 인원·방향 × 5일 주가) 자동 산출, 확신도 상한 0.50 — <b>매매 추천이 아니며</b> 여론·가격이 역행하면 '재검토'로 판단을 사람에게 넘깁니다.
+        </p>
       )}
     </section>
   );
