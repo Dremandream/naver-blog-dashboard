@@ -99,10 +99,9 @@ export default function App() {
       <header className="header">
         <div className="header-inner">
           <div className="header-title">
-            <span className="logo">📈</span>
             <div>
-              <h1>네이버 블로그 투자 대시보드</h1>
-              <p className="date">수집일: {data?.date ?? "-"}</p>
+              <h1>데일리 투자 리포트</h1>
+              <p className="date">블로그·텔레그램 여론 종합 · 수집일 {data?.date ?? "-"}</p>
             </div>
           </div>
           <input
