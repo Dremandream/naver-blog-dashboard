@@ -65,5 +65,15 @@
     "market": "KR",
     "matched": "대한항공"
   },
-  "OpenAI": null
+  "OpenAI": null,
+  "IBM": {
+    "code": "IBM",
+    "market": "US",
+    "matched": "IBM(인터내셔널 비지니스 머신)"
+  },
+  "샌디스크": {
+    "code": "SNDK.O",
+    "market": "US",
+    "matched": "샌디스크"
+  }
 }
