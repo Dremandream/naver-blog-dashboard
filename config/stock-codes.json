@@ -75,5 +75,20 @@
     "code": "SNDK.O",
     "market": "US",
     "matched": "샌디스크"
+  },
+  "삼성전기": {
+    "code": "009150",
+    "market": "KR",
+    "matched": "삼성전기"
+  },
+  "ASML": {
+    "code": "ASML.O",
+    "market": "US",
+    "matched": "ASML 홀딩 ADR"
+  },
+  "AMD": {
+    "code": "AMD.O",
+    "market": "US",
+    "matched": "AMD(어드밴스드 마이크로 디바이시스)"
   }
 }
