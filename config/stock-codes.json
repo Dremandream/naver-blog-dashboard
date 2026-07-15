@@ -90,5 +90,10 @@
     "code": "AMD.O",
     "market": "US",
     "matched": "AMD(어드밴스드 마이크로 디바이시스)"
+  },
+  "알파벳": {
+    "code": "GOOGL.O",
+    "market": "US",
+    "matched": "알파벳 Class A"
   }
 }
