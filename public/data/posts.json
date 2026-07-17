@@ -735,17 +735,31 @@
     ],
     "sources": [
       {
-        "person": "잠실개미",
-        "opinions": 42,
+        "person": "에테르",
+        "opinions": 142,
         "w5": {
-          "hits": 19,
-          "total": 24,
-          "rate": 79.2
+          "hits": 29,
+          "total": 47,
+          "rate": 61.7
         },
         "w20": {
-          "hits": 11,
-          "total": 12,
-          "rate": 91.7
+          "hits": 24,
+          "total": 48,
+          "rate": 50
+        }
+      },
+      {
+        "person": "잠실개미",
+        "opinions": 266,
+        "w5": {
+          "hits": 93,
+          "total": 154,
+          "rate": 60.4
+        },
+        "w20": {
+          "hits": 93,
+          "total": 177,
+          "rate": 52.5
         }
       },
       {
@@ -763,17 +777,31 @@
         }
       },
       {
+        "person": "펭미업",
+        "opinions": 120,
+        "w5": {
+          "hits": 22,
+          "total": 37,
+          "rate": 59.5
+        },
+        "w20": {
+          "hits": 20,
+          "total": 48,
+          "rate": 41.7
+        }
+      },
+      {
         "person": "피터케이",
         "opinions": 61,
         "w5": {
-          "hits": 19,
-          "total": 34,
-          "rate": 55.9
+          "hits": 17,
+          "total": 29,
+          "rate": 58.6
         },
         "w20": {
-          "hits": 27,
+          "hits": 26,
           "total": 42,
-          "rate": 64.3
+          "rate": 61.9
         }
       },
       {
@@ -781,27 +809,27 @@
         "opinions": 240,
         "w5": {
           "hits": 80,
-          "total": 152,
-          "rate": 52.6
+          "total": 145,
+          "rate": 55.2
         },
         "w20": {
           "hits": 69,
-          "total": 156,
-          "rate": 44.2
+          "total": 154,
+          "rate": 44.8
         }
       },
       {
         "person": "콤디티",
         "opinions": 54,
         "w5": {
-          "hits": 17,
-          "total": 33,
-          "rate": 51.5
+          "hits": 16,
+          "total": 29,
+          "rate": 55.2
         },
         "w20": {
-          "hits": 11,
-          "total": 34,
-          "rate": 32.4
+          "hits": 9,
+          "total": 33,
+          "rate": 27.3
         }
       },
       {
@@ -819,31 +847,87 @@
         }
       },
       {
+        "person": "피카츄 아저씨",
+        "opinions": 163,
+        "w5": {
+          "hits": 44,
+          "total": 89,
+          "rate": 49.4
+        },
+        "w20": {
+          "hits": 41,
+          "total": 104,
+          "rate": 39.4
+        }
+      },
+      {
         "person": "의교창",
         "opinions": 254,
         "w5": {
           "hits": 59,
-          "total": 126,
-          "rate": 46.8
+          "total": 124,
+          "rate": 47.6
         },
         "w20": {
-          "hits": 71,
-          "total": 163,
-          "rate": 43.6
+          "hits": 69,
+          "total": 157,
+          "rate": 43.9
+        }
+      },
+      {
+        "person": "IT는 SK",
+        "opinions": 263,
+        "w5": {
+          "hits": 70,
+          "total": 148,
+          "rate": 47.3
+        },
+        "w20": {
+          "hits": 84,
+          "total": 151,
+          "rate": 55.6
+        }
+      },
+      {
+        "person": "캬오의 공부방",
+        "opinions": 120,
+        "w5": {
+          "hits": 28,
+          "total": 62,
+          "rate": 45.2
+        },
+        "w20": {
+          "hits": 26,
+          "total": 72,
+          "rate": 36.1
         }
       },
       {
         "person": "너쟁이",
-        "opinions": 66,
+        "opinions": 166,
         "w5": {
-          "hits": 14,
-          "total": 34,
-          "rate": 41.2
+          "hits": 43,
+          "total": 107,
+          "rate": 40.2
         },
         "w20": {
-          "hits": 18,
-          "total": 43,
-          "rate": 41.9
+          "hits": 37,
+          "total": 100,
+          "rate": 37
+        }
+      },
+      {
+        "person": "투자콤",
+        "opinions": 146,
+        "w5": {
+          "hits": 32,
+          "total": 80,
+          "rate": 40
+        },
+        "w20": {
+          "hits": 30,
+          "total": 112,
+          "rate": 26.8
         }
       },
       {
@@ -855,98 +939,14 @@
           "rate": 33.3
         },
         "w20": {
-          "hits": 7,
-          "total": 13,
-          "rate": 53.8
-        }
-      },
-      {
-        "person": "IT는 SK",
-        "opinions": 39,
-        "w5": {
-          "hits": 2,
-          "total": 7,
-          "rate": 28.6
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "캬오의 공부방",
-        "opinions": 12,
-        "w5": {
-          "hits": 1,
-          "total": 2,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "투자콤",
-        "opinions": 3,
-        "w5": {
-          "hits": 0,
-          "total": 1,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "에테르",
-        "opinions": 22,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "펭미업",
-        "opinions": 16,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
+          "hits": 5,
+          "total": 10,
+          "rate": 50
         }
       },
       {
         "person": "김찰저",
         "opinions": 5,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "피카츄 아저씨",
-        "opinions": 2,
         "w5": {
           "hits": 0,
           "total": 0,

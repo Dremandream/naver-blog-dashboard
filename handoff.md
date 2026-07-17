@@ -101,7 +101,11 @@ npm run build                  # 빌드 확인
 4. [x] **소스 적중률** — Phase 1·2·3 전부 완료(세션 12). **스펙**: 적중=지수 대비 초과수익(KR=코스피, US=나스닥), 5·20거래일. 파이프라인: `history.json`에 날짜별 종가·지수·의견 누적(`archiveHistory`, fetchClosesDated로 의견 8일 구간 자동 백필) → `hitrate.js`의 `computeSourceScores`가 person별 {hits,total,rate}×{5,20} 계산 → posts.json `source_scores` 저장 → UI `SourceScores.jsx`(AttentionTrends 아래). US 지수는 `fetchForeignIndexClosesDated`(.IXIC 나스닥·.INX S&P500) 신규 수집. Actions가 history.json 커밋. 회귀 38건(HR1~7 포함). **소급 백필 2단계 완료(세션 12)**:
 - ①git 백필 `scripts/backfill-history.js`: posts.json 커밋 이력에서 과거 의견 복원(방향성 stance는 07-06부터). person 정규화(config 기준, luy1978→피터케이 등).
 - ②**3개월 블로그 스크레이핑 `scripts/scrape-history.js`**: PostTitleListAsync 페이지네이션 → 모바일 PostView `se-text-paragraph` 본문 추출 → Haiku 재분석(stocks·stance) → history 병합 → 적중률 재계산. logNo 캐시(.scrape-cache.json, gitignore). 시세 함수에 daysBack 파라미터 추가.
-- 결과(라이브): 잠실개미 79.2%(19/24)·20일 91.7%, 너는무한 52.6%(80/152), 의교창 46.8%(59/126) 등 **통계적으로 의미있는 표본**. 블로그 9개는 3개월치, 텔레그램은 git(~1개월)만 → 순텔레그램 소스(에테르·펭미업 등)는 아직 결과대기. **텔레그램 과거 스크레이핑은 미구현(취약)** — 다음 확장 후보. 1년 확장도 scrape-history.js에 날짜 인자만 주면 가능.
+- ③**텔레그램 3개월 스크레이핑 `scripts/scrape-telegram-history.js`**: t.me/s/{채널}?before= 페이지네이션 → 채널×일자 병합 → Haiku 분석 → history 병합. 캐시 .tg-scrape-cache.json. MAX_PAGES=80.
+- 결과(라이브, 16소스 중 15명 5일 적중률): 에테르 61.7%(47)·잠실개미 60.4%(154)·IT는SK 47.3%(148)·의교창 47.6%(124)·너는무한 55.2%(145)·투자콤 40%(80) 등 **통계적으로 의미있는 표본**(93일, 2421 의견).
+- **검증 완료(세션 12, karpathy-guidelines)**: hitrate.js를 독립 재계산과 교차검증→0 불일치(로직 정확). 데이터 필드 결손 0, person 중복 0, 회귀 38/38, 빌드·UI 통과.
+- **알려진 커버리지 갭(silent cap 아님, 명시)**: ⓐ김찰저=t.me/s 302(웹프리뷰 비공개)라 과거 스크레이핑 불가→최근 데이터만. ⓑ고빈도 텔레(펭미업 06-01·에테르 05-20·캬오 04-28·너쟁이 04-30)는 MAX_PAGES=80에 걸려 04-16까지 못 감→부분 커버(표본은 충분). 전체 확보하려면 MAX_PAGES 상향 후 재실행.
+- 1년 확장: scrape-history.js/scrape-telegram-history.js에 날짜 인자(예 2025-07-17)만 주면 가능(분석량↑).
 - UI 문구 개선: 역행→'엇갈림', 소스적중률 평이한 문구+예시(세션 12). archiveHistory 덮어쓰기→병합. 상세 plan.md.
 5. [ ] UI: 요약↔전체 토글, 다크모드 (선택)
 

@@ -5,3 +5,4 @@ dist
 .DS_Store
 scripts/.backfill-cache.json
 scripts/.scrape-cache.json
+scripts/.tg-scrape-cache.json
