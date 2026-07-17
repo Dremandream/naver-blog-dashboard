@@ -735,12 +735,12 @@
     ],
     "sources": [
       {
-        "person": "캬오의 공부방",
-        "opinions": 9,
+        "person": "콤디티",
+        "opinions": 8,
         "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
+          "hits": 2,
+          "total": 5,
+          "rate": 40
         },
         "w20": {
           "hits": 0,
@@ -750,7 +750,63 @@
       },
       {
         "person": "의교창",
-        "opinions": 3,
+        "opinions": 15,
+        "w5": {
+          "hits": 2,
+          "total": 10,
+          "rate": 20
+        },
+        "w20": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      {
+        "person": "피터케이",
+        "opinions": 7,
+        "w5": {
+          "hits": 1,
+          "total": 4,
+          "rate": null
+        },
+        "w20": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      {
+        "person": "씹배",
+        "opinions": 11,
+        "w5": {
+          "hits": 1,
+          "total": 3,
+          "rate": null
+        },
+        "w20": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      {
+        "person": "너쟁이",
+        "opinions": 22,
+        "w5": {
+          "hits": 2,
+          "total": 2,
+          "rate": null
+        },
+        "w20": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      {
+        "person": "캬오의 공부방",
+        "opinions": 12,
         "w5": {
           "hits": 0,
           "total": 0,
@@ -778,7 +834,7 @@
       },
       {
         "person": "잠실개미",
-        "opinions": 21,
+        "opinions": 22,
         "w5": {
           "hits": 0,
           "total": 0,
@@ -792,7 +848,21 @@
       },
       {
         "person": "IT는 SK",
-        "opinions": 17,
+        "opinions": 39,
+        "w5": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        },
+        "w20": {
+          "hits": 0,
+          "total": 0,
+          "rate": null
+        }
+      },
+      {
+        "person": "잠실개미(텔레)",
+        "opinions": 7,
         "w5": {
           "hits": 0,
           "total": 0,
@@ -806,21 +876,7 @@
       },
       {
         "person": "에테르",
-        "opinions": 10,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "너쟁이",
-        "opinions": 15,
+        "opinions": 22,
         "w5": {
           "hits": 0,
           "total": 0,
@@ -834,35 +890,7 @@
       },
       {
         "person": "펭미업",
-        "opinions": 15,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "콤디티",
-        "opinions": 3,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "피터케이",
-        "opinions": 3,
+        "opinions": 16,
         "w5": {
           "hits": 0,
           "total": 0,
@@ -877,20 +905,6 @@
       {
         "person": "김찰저",
         "opinions": 5,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "씹배",
-        "opinions": 4,
         "w5": {
           "hits": 0,
           "total": 0,
@@ -918,7 +932,7 @@
       },
       {
         "person": "피카츄 아저씨",
-        "opinions": 1,
+        "opinions": 2,
         "w5": {
           "hits": 0,
           "total": 0,

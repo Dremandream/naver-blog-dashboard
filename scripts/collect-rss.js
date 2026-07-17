@@ -607,10 +607,18 @@ function archiveHistory(prices, market, posts) {
   if (earliest) {
     for (const date of Object.keys(priceByDate)) {
       if (date < earliest) continue; // 의견 구간 이전은 불필요
+      // 기존 레코드와 병합(덮어쓰기 금지) — 백필/과거 축적분이 일일 실행에 지워지지 않게
+      const prev = history[date] || {};
+      const ops = {};
+      for (const o of prev.opinions || []) ops[`${o.person}|${o.stock}`] = o;
+      for (const o of Object.values(opinionsByDate[date] || {})) {
+        const k = `${o.person}|${o.stock}`;
+        if (!ops[k] || rank(o.stance) > rank(ops[k].stance)) ops[k] = o;
+      }
       history[date] = {
-        prices: priceByDate[date],
-        indices: indexByDate[date] || {},
-        opinions: Object.values(opinionsByDate[date] || {}),
+        prices: { ...(prev.prices || {}), ...priceByDate[date] },
+        indices: { ...(prev.indices || {}), ...(indexByDate[date] || {}) },
+        opinions: Object.values(ops),
       };
       filled++;
     }

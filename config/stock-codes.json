@@ -130,5 +130,380 @@
     "code": "214150",
     "market": "KR",
     "matched": "클래시스"
-  }
+  },
+  "구글": {
+    "code": "GOOGL.O",
+    "market": "US",
+    "matched": "알파벳 Class A"
+  },
+  "000660.KS": null,
+  "Broadcom": {
+    "code": "AVGO.O",
+    "market": "US",
+    "matched": "Broadcom Inc"
+  },
+  "Nvidia": {
+    "code": "NVDA.O",
+    "market": "US",
+    "matched": "엔비디아"
+  },
+  "파두": {
+    "code": "440110",
+    "market": "KR",
+    "matched": "파두"
+  },
+  "EIKEI-KY": null,
+  "글로벌웨이퍼스": null,
+  "Meta": {
+    "code": "META.O",
+    "market": "US",
+    "matched": "메타"
+  },
+  "Microsoft": {
+    "code": "MSFT.O",
+    "market": "US",
+    "matched": "마이크로소프트"
+  },
+  "Amazon": {
+    "code": "AMZN.O",
+    "market": "US",
+    "matched": "아마존닷컴"
+  },
+  "Alphabet": {
+    "code": "GOOGL.O",
+    "market": "US",
+    "matched": "Alphabet Inc Class A"
+  },
+  "Nanya Technology": null,
+  "파두(A440110)": null,
+  "메타플랫폼": null,
+  "SKHY": {
+    "code": "SKHY.O",
+    "market": "US",
+    "matched": "SK하이닉스 ADR"
+  },
+  "Anthropic": null,
+  "KB금융": {
+    "code": "105560",
+    "market": "KR",
+    "matched": "KB금융"
+  },
+  "신한금융": {
+    "code": "SHG",
+    "market": "US",
+    "matched": "신한금융지주 ADR"
+  },
+  "하나금융": {
+    "code": "086790",
+    "market": "KR",
+    "matched": "하나금융지주"
+  },
+  "우리금융": {
+    "code": "316140",
+    "market": "KR",
+    "matched": "우리금융지주"
+  },
+  "한국콜마": {
+    "code": "161890",
+    "market": "KR",
+    "matched": "한국콜마"
+  },
+  "대상": {
+    "code": "001680",
+    "market": "KR",
+    "matched": "대상"
+  },
+  "GS리테일": {
+    "code": "007070",
+    "market": "KR",
+    "matched": "GS리테일"
+  },
+  "호텔신라": {
+    "code": "008770",
+    "market": "KR",
+    "matched": "호텔신라"
+  },
+  "한국전력": {
+    "code": "015760",
+    "market": "KR",
+    "matched": "한국전력"
+  },
+  "효성중공업": {
+    "code": "298040",
+    "market": "KR",
+    "matched": "효성중공업"
+  },
+  "산일전기": {
+    "code": "062040",
+    "market": "KR",
+    "matched": "산일전기"
+  },
+  "SK이터닉스": {
+    "code": "475150",
+    "market": "KR",
+    "matched": "SK이터닉스"
+  },
+  "HD현대에너지솔루션": {
+    "code": "322000",
+    "market": "KR",
+    "matched": "HD현대에너지솔루션"
+  },
+  "DL이앤씨": {
+    "code": "375500",
+    "market": "KR",
+    "matched": "DL이앤씨"
+  },
+  "GS건설": {
+    "code": "006360",
+    "market": "KR",
+    "matched": "GS건설"
+  },
+  "KCC": {
+    "code": "002380",
+    "market": "KR",
+    "matched": "KCC"
+  },
+  "두산밥캣": {
+    "code": "241560",
+    "market": "KR",
+    "matched": "두산밥캣"
+  },
+  "현대글로비스": {
+    "code": "086280",
+    "market": "KR",
+    "matched": "현대글로비스"
+  },
+  "나냐(난야테크)": null,
+  "GlobalWafers": null,
+  "코웨이": {
+    "code": "021240",
+    "market": "KR",
+    "matched": "코웨이"
+  },
+  "KB": {
+    "code": "KB",
+    "market": "US",
+    "matched": "KB금융지주 ADR"
+  },
+  "신한": {
+    "code": "055550",
+    "market": "KR",
+    "matched": "신한지주"
+  },
+  "하나": {
+    "code": "086790",
+    "market": "KR",
+    "matched": "하나금융지주"
+  },
+  "LG전자": {
+    "code": "066570",
+    "market": "KR",
+    "matched": "LG전자"
+  },
+  "LG에너지솔루션": {
+    "code": "373220",
+    "market": "KR",
+    "matched": "LG에너지솔루션"
+  },
+  "LG CNS": {
+    "code": "064400",
+    "market": "KR",
+    "matched": "LG씨엔에스"
+  },
+  "김찰저": null,
+  "UMC": {
+    "code": "UMC",
+    "market": "US",
+    "matched": "유나이티드 마이크로일렉트로닉 ADR"
+  },
+  "MediaTek": null,
+  "Realtek": null,
+  "테스": {
+    "code": "095610",
+    "market": "KR",
+    "matched": "테스"
+  },
+  "원익IPS": {
+    "code": "240810",
+    "market": "KR",
+    "matched": "원익IPS"
+  },
+  "전자닉스": null,
+  "전닉": null,
+  "혼다": {
+    "code": "HMC",
+    "market": "US",
+    "matched": "혼다자동차 ADR"
+  },
+  "DB하이텍": {
+    "code": "000990",
+    "market": "KR",
+    "matched": "DB하이텍"
+  },
+  "LX세미콘": {
+    "code": "108320",
+    "market": "KR",
+    "matched": "LX세미콘"
+  },
+  "예스티": {
+    "code": "122640",
+    "market": "KR",
+    "matched": "예스티"
+  },
+  "텐센트": {
+    "code": "0700.HK",
+    "market": "US",
+    "matched": "텐센트"
+  },
+  "알리바바": {
+    "code": "9988.HK",
+    "market": "US",
+    "matched": "알리바바"
+  },
+  "테슬라": {
+    "code": "TSLA.O",
+    "market": "US",
+    "matched": "테슬라"
+  },
+  "바이트댄스": null,
+  "Accenture": {
+    "code": "ACN",
+    "market": "US",
+    "matched": "Accenture PLC"
+  },
+  "퓨리오사AI": null,
+  "스미토모": {
+    "code": "SMFG.K",
+    "market": "US",
+    "matched": "스미토모 미쓰이 파이낸셜그룹 ADR"
+  },
+  "마이크론테크": {
+    "code": "MU.O",
+    "market": "US",
+    "matched": "마이크론 테크놀로지"
+  },
+  "스퀘어": {
+    "code": "9684.T",
+    "market": "US",
+    "matched": "스퀘어 에닉스 홀딩스"
+  },
+  "한국생명보험": null,
+  "한국물산": null,
+  "LG생명과학": null,
+  "물산": {
+    "code": "600704.SS",
+    "market": "US",
+    "matched": "물산중대그룹"
+  },
+  "생명": null,
+  "코오롱티슈진": {
+    "code": "950160",
+    "market": "KR",
+    "matched": "코오롱티슈진"
+  },
+  "CXMT": null,
+  "시스코": {
+    "code": "SYY",
+    "market": "US",
+    "matched": "시스코"
+  },
+  "크레도": {
+    "code": "CRDO.O",
+    "market": "US",
+    "matched": "크레도 테크놀로지 그룹 홀딩"
+  },
+  "델": {
+    "code": "DELL.K",
+    "market": "US",
+    "matched": "델테크놀로지"
+  },
+  "HPE": {
+    "code": "HPE",
+    "market": "US",
+    "matched": "휴렛패커드 엔터프라이즈"
+  },
+  "코닝": {
+    "code": "GLW",
+    "market": "US",
+    "matched": "코닝"
+  },
+  "퀄컴": {
+    "code": "QCOM.O",
+    "market": "US",
+    "matched": "퀄컴"
+  },
+  "앤트로픽": null,
+  "블룸에너지": {
+    "code": "BE",
+    "market": "US",
+    "matched": "블룸 에너지"
+  },
+  "네오클라우드": null,
+  "PSMC": null,
+  "CoreWeave": {
+    "code": "CRWV.O",
+    "market": "US",
+    "matched": "CoreWeave Inc"
+  },
+  "하만": null,
+  "엔켐": {
+    "code": "348370",
+    "market": "KR",
+    "matched": "엔켐"
+  },
+  "SAP": {
+    "code": "SAP",
+    "market": "US",
+    "matched": "SAP ADR"
+  },
+  "액센츄어": null,
+  "HP": {
+    "code": "HPQ",
+    "market": "US",
+    "matched": "HP"
+  },
+  "IonQ": {
+    "code": "IONQ.K",
+    "market": "US",
+    "matched": "아이온큐"
+  },
+  "마이크론 테크놀로지": {
+    "code": "MU.O",
+    "market": "US",
+    "matched": "마이크론 테크놀로지"
+  },
+  "GE 에어로스페이스": {
+    "code": "GE",
+    "market": "US",
+    "matched": "GE 에어로스페이스"
+  },
+  "General Electric": {
+    "code": "GE",
+    "market": "US",
+    "matched": "General Electric Co"
+  },
+  "Kioxia": {
+    "code": "285A.T",
+    "market": "US",
+    "matched": "Kioxia Holdings Corp"
+  },
+  "NanyaTech": null,
+  "지푸": null,
+  "미니맥스": {
+    "code": "0100.HK",
+    "market": "US",
+    "matched": "미니맥스 그룹"
+  },
+  "갈더마": null,
+  "普瑞股份": null,
+  "江波龙": null,
+  "德明利": null,
+  "SanDisk": {
+    "code": "SNDK.O",
+    "market": "US",
+    "matched": "Sandisk Corp"
+  },
+  "알파벳(구글)": null,
+  "딥시크": null,
+  "Zhipu": null
 }
