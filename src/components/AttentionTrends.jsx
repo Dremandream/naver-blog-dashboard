@@ -116,7 +116,7 @@ export default function AttentionTrends({ posts, prices = {}, verdicts, onStockC
       <div className="at-list">
         <div className="at-row at-head" aria-hidden="true">
           <span>종목</span><span>7일 언급</span><span></span><span>변화</span><span>상태</span>
-          <span className="at-px-col">주가 1일</span><span className="at-px-col">5일</span><span className="at-vd-col">괴리*</span>
+          <span className="at-px-col">주가 1일</span><span className="at-px-col">5일</span><span className="at-vd-col" title="필자 의견과 실제 주가가 반대로 간 종목">여론 vs 주가*</span>
         </div>
         {rows.map((x) => {
           const px = prices[x.stock];
@@ -143,7 +143,7 @@ export default function AttentionTrends({ posts, prices = {}, verdicts, onStockC
               <span className="at-px-col"><Pct v={px?.d5} /></span>
               <span className="at-vd-col">
                 {illusion.has(x.stock)
-                  ? <span className="at-ill" title="여론 방향과 5일 주가가 역행 — 선반영 소화인지 수급 이탈인지 확인 필요">⚠️ 역행</span>
+                  ? <span className="at-ill" title="필자 의견과 실제 주가가 반대로 감 — 왜 반대인지 살펴볼 지점">⚠️ 엇갈림</span>
                   : <span className="at-px-na">—</span>}
               </span>
             </button>
@@ -160,7 +160,7 @@ export default function AttentionTrends({ posts, prices = {}, verdicts, onStockC
 
       {verdicts?.items?.length > 0 && (
         <p className="at-disclaimer">
-          * 괴리 = 여론 방향(인원차 2명↑)과 5일 주가(±2%↑)가 서로 반대일 때 자동 표시 — 선반영 소화인지 수급 이탈인지 <b>사람이 확인해야 할 지점</b>입니다.
+          * <b>엇갈림</b> = 필자들의 의견과 실제 주가가 반대로 간 종목이에요. 예: 여러 필자가 ‘약세’라 봤는데 5일간 주가는 오른 경우. 왜 반대인지(악재가 이미 반영됐는지 등) <b>한번 살펴볼 지점</b>일 뿐, 사거나 팔라는 신호가 아닙니다.
         </p>
       )}
     </section>
