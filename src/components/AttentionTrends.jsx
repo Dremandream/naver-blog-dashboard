@@ -67,7 +67,8 @@ export default function AttentionTrends({ posts, prices = {}, verdicts, onStockC
       const vals = Object.values(P7[s]);
       const bull = vals.filter((x) => x === "강세").length;
       const bear = vals.filter((x) => x === "약세").length;
-      return { stock: s, week, r, p, status, split: bull > 0 && bear > 0 };
+      const neutral = vals.filter((x) => x === "중립").length;
+      return { stock: s, week, r, p, status, bull, bear, neutral, split: bull > 0 && bear > 0 };
     })
     .filter((x) => x.week >= 2)
     .sort((a, b) => b.week - a.week)
@@ -105,6 +106,13 @@ export default function AttentionTrends({ posts, prices = {}, verdicts, onStockC
         )}
       </div>
 
+      <div className="at-legend" aria-hidden="true">
+        <span className="at-lg ts-bull" /> 강세
+        <span className="at-lg ts-bear" /> 약세
+        <span className="at-lg ts-neutral" /> 중립
+        <span className="at-legend-note">— 막대 길이 = 언급 인원</span>
+      </div>
+
       <div className="at-list">
         <div className="at-row at-head" aria-hidden="true">
           <span>종목</span><span>7일 언급</span><span></span><span>변화</span><span>상태</span>
@@ -118,8 +126,15 @@ export default function AttentionTrends({ posts, prices = {}, verdicts, onStockC
                 {x.stock}
                 {x.split && <span className="at-split" title="강세·약세가 갈리는 종목">🔀</span>}
               </span>
-              <span className="at-bar-wrap">
-                <span className="at-bar" style={{ width: `${(x.week / maxWeek) * 100}%` }} />
+              <span
+                className="at-bar-wrap"
+                title={`언급 ${x.week}명 · 강세 ${x.bull} / 약세 ${x.bear} / 중립 ${x.neutral}`}
+              >
+                <span className="at-bar-fill" style={{ width: `${(x.week / maxWeek) * 100}%` }}>
+                  <span className="ts-seg ts-bull" style={{ width: `${(x.bull / x.week) * 100}%` }} />
+                  <span className="ts-seg ts-neutral" style={{ width: `${(x.neutral / x.week) * 100}%` }} />
+                  <span className="ts-seg ts-bear" style={{ width: `${(x.bear / x.week) * 100}%` }} />
+                </span>
               </span>
               <span className="at-week">{x.week}명</span>
               <span className="at-delta">{x.p}→{x.r}</span>
