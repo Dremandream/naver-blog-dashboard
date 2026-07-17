@@ -42,7 +42,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # 수집기가 만드는 모든 산출물 스테이징 (누락 시 rebase 실패 방지)
-          git add public/data/posts.json config/stock-codes.json
+          git add public/data/posts.json public/data/history.json config/stock-codes.json
           if git diff --staged --quiet; then
             echo "변경 없음"
           else

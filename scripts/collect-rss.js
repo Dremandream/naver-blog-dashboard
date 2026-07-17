@@ -18,6 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
 const TELEGRAM_PATH = path.join(__dirname, '../config/telegram-channels.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
+const HISTORY_PATH = path.join(__dirname, '../public/data/history.json');
 
 // KST 날짜 유틸 (YYYY-MM-DD)
 function kstDate(offsetDays = 0) {
@@ -529,6 +530,54 @@ ${Object.entries(market).map(([k, v]) =>
   }
 }
 
+// ─── 소스 적중률용 이력 축적 ───────────────────────────────────────────────────
+// posts.json은 8일치만 롤링 저장되고 prices는 오늘 스냅샷뿐이라, 적중률(의견 시점가 vs
+// N일 후가)을 계산하려면 날짜별 종가·지수·의견을 따로 누적해야 한다. 하루 1레코드 upsert.
+// 적중 판정(지수 대비 초과수익, 5·20일)은 데이터가 쌓인 뒤 별도 단계에서 계산한다. (plan.md)
+function archiveHistory(prices, market, posts) {
+  let history = {};
+  try {
+    history = JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf-8'));
+  } catch { /* 최초 실행: 빈 이력 */ }
+
+  // 오늘 의견: person+stock 중복 제거, 강세/약세를 중립보다 우선. 가격 있는 종목만(판정 가능해야 함).
+  const rank = s => (s === '강세' ? 2 : s === '약세' ? 2 : 1);
+  const opinionMap = {};
+  for (const p of posts) {
+    if (p.date !== TODAY_KST) continue;
+    const person = p.person || p.blog_name;
+    for (const stock of p.stocks ?? []) {
+      if (!prices[stock]) continue; // 그날 종가 없으면 훗날 판정 불가 → 제외
+      const key = `${person}|${stock}`;
+      const stance = p.stance === '강세' ? '강세' : p.stance === '약세' ? '약세' : '중립';
+      if (!opinionMap[key] || rank(stance) > rank(opinionMap[key].stance)) {
+        opinionMap[key] = { person, stock, stance, market: prices[stock].market };
+      }
+    }
+  }
+
+  const priceSnap = {};
+  for (const [name, v] of Object.entries(prices)) priceSnap[name] = v.price;
+  const indexSnap = {};
+  if (market?.kospi?.index) indexSnap.KOSPI = market.kospi.index;
+  if (market?.kosdaq?.index) indexSnap.KOSDAQ = market.kosdaq.index;
+
+  history[TODAY_KST] = {
+    prices: priceSnap,
+    indices: indexSnap,
+    opinions: Object.values(opinionMap),
+  };
+
+  // 파일 비대화 방지: 최근 120일치만 유지 (20일 평가창 + 넉넉한 축적분)
+  const days = Object.keys(history).sort().reverse().slice(0, 120);
+  const pruned = {};
+  for (const d of days.sort()) pruned[d] = history[d];
+
+  fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
+  const opCount = history[TODAY_KST].opinions.length;
+  console.log(`  📚 이력 축적: ${Object.keys(pruned).length}일치, 오늘 의견 ${opCount}건·종가 ${Object.keys(priceSnap).length}종목`);
+}
+
 // ─── 메인 ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\n📅 ${TODAY_KST} RSS 수집 시작`);
@@ -767,6 +816,13 @@ async function main() {
     ),
     'utf-8'
   );
+
+  // 적중률용 이력 축적 (실패해도 메인 파이프라인 무손상)
+  try {
+    archiveHistory(prices, market, merged);
+  } catch (e) {
+    console.warn('⚠️  이력 축적 실패(메인 데이터는 정상 저장):', e.message);
+  }
 
   console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장, 브리핑 ${updatedBriefs.length}일치 → ${OUTPUT_PATH}`);
 

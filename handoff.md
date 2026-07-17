@@ -98,7 +98,7 @@ npm run build                  # 빌드 확인
 1. [x] ~~판정 시스템 구현~~ — 완료 (§4 참조)
 2. [x] ~~지난 리포트 열람~~ — 완료 (날짜 칩, 세션 10)
 3. [x] ~~촉매 캘린더~~ — 완료 (세션 12): 브리핑 신 스키마에 `events[{date,label,stocks,source,approx}]` 추가(Opus가 날짜 명시된 미래 이벤트만 추출, 최대 6개) → `EventCalendar.jsx`가 7일치 병합·중복제거·오늘 이후만 표시, FactSidebar 하단 "📅 주요 일정" 섹션. 커밋 3b649bd
-4. [ ] **소스 적중률** — 강세 외친 종목의 실제 5일 수익률 → 소스별 신뢰점수 (prices 데이터 축적 필요, 대형)
+4. [~] **소스 적중률** — Phase 1(데이터 축적) 완료(세션 12), Phase 2·3 대기. **스펙 확정**: 적중=지수 대비 초과수익, 평가 5일·20일 둘 다. `public/data/history.json`에 날짜별 종가·지수·의견 하루 1레코드 누적(`archiveHistory()`), Actions가 커밋. 판정(`scripts/hitrate.js`)·UI는 데이터 5거래일+ 쌓인 뒤. **US 종목 벤치마크 지수(^GSPC/^IXIC) 수집이 Phase 2 선행 과제** — 현재 KOSPI/KOSDAQ만 있음. 상세 스펙 plan.md.
 5. [ ] UI: 요약↔전체 토글, 다크모드 (선택)
 
 ## 9. 히스토리 요약

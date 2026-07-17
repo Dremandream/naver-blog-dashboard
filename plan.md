@@ -1,36 +1,41 @@
-# plan.md — 촉매 캘린더 (로드맵 §8-3, 소형)
+# plan.md — 소스 적중률 (로드맵 §8-4, 대형)
 
-## 배경 / 검증 결과
-- 원래 아이디어: "watch_points를 날짜순 이벤트로"
-- **문제 확인**: 세션 11 신 스키마(7/17~)에서 `watch_points` 제거됨. 구 데이터의 watch_points도 날짜 없는 자유 문장이라 캘린더 불가.
-- → 이벤트 소스를 새로 만들어야 함.
+## 목표
+소스(필자)가 강세/약세 의견을 낸 종목의 실제 성과를 추적 → 소스별 신뢰 점수.
+"이 필자 말을 얼마나 믿을 수 있나"를 데이터로.
 
-## 설계
+## 확정 스펙 (2026-07-17 사용자 결정)
+- **적중 기준**: 지수 대비 초과수익 (benchmark-relative). 시장 전체가 오른 날의 운을 걸러 실력만 측정.
+  - 강세 의견 → (종목 수익률 − 지수 수익률) > 0 이면 적중
+  - 약세 의견 → (종목 수익률 − 지수 수익률) < 0 이면 적중
+  - 중립 의견은 적중률 집계 제외
+- **평가 기간**: 5일·20일 둘 다 (거래일 기준)
+- **벤치마크**: KR 종목 → KOSPI(코스닥주면 KOSDAQ). ⚠️ **US 종목은 현재 추적 지수 없음** → phase 2에서 ^GSPC/^IXIC 지수 수집 추가 필요. 그전까지 US 종목은 절대수익 폴백 또는 집계 제외(구현 시 결정).
 
-### 1. 데이터: Opus 브리핑에 `events` 필드 추가 (scripts/collect-rss.js)
-- 신 스키마에 추가: `events: [{ date: "YYYY-MM-DD", label: "SK하이닉스 2Q 컨콜", stocks: ["SK하이닉스"], source: "너쟁이" }]`
-- 프롬프트 지시: 글에서 **구체적 날짜/시기가 언급된 미래 이벤트만** 추출 (실적발표, 컨콜, FOMC, 계약협상 마감 등). 날짜 불명확("조만간")은 제외. 최대 6개. 없으면 빈 배열.
-- "7월 말"처럼 대략적 시기는 그 달 말일로 정규화하고 `approx: true`.
+## Phase 1 — 데이터 축적 (이번 세션 완료 ✅)
+- `scripts/collect-rss.js`에 `archiveHistory()` 추가 → `public/data/history.json`에 하루 1레코드 upsert:
+  ```
+  { "YYYY-MM-DD": {
+      "prices": { "종목명": 종가, ... },        // 2명+ 언급 종목만(fetchPrices 대상)
+      "indices": { "KOSPI": n, "KOSDAQ": n },
+      "opinions": [ { person, stock, stance, market } ]  // 그날 의견, person+stock 중복제거
+  } }
+  ```
+- 가격 없는 종목의 의견은 제외(훗날 판정 불가). 최근 120일치 유지.
+- `.github/workflows/collect.yml`에 history.json git add 추가 (매 실행 fresh checkout이라 커밋 안 하면 소실).
+- **판정/UI는 데이터가 5거래일+ 쌓인 뒤** (표본 부족 시 오도 위험).
 
-### 2. 집계: 프론트에서 7일치 daily_briefs의 events 병합
-- 별도 스크립트 없음. UI에서 `daily_briefs.flatMap(b=>b.events)` → 같은 (date+label 유사) 이벤트 중복 제거(먼저 나온 것 유지) → 오늘 이후만, 날짜 오름차순.
+## Phase 2 — 적중 판정 (데이터 ~1주 후, 미구현)
+- `scripts/hitrate.js` 신설 (judge.js처럼 순수 JS, AI 미사용, 결정적):
+  - 각 의견 (person, stock, stance, date T)에 대해 history에서 price(T), price(T+5td), price(T+20td), 같은 창의 index 수익률 조회
+  - 초과수익 계산 → 적중/미적중. 아직 T+Nd 데이터 없으면 pending.
+  - person별 집계: {hits, total, rate} × {5일, 20일}. **min 표본(예: 5건) 미만은 "표본부족"으로 rate 숨김.**
+- posts.json에 `source_scores` 저장. 골든 케이스 회귀테스트 추가(tests/regression.mjs).
 
-### 3. UI: `EventCalendar.jsx` 신설 → FactSidebar 하단에 배치
-- 증권사 리포트 문법 유지: "주요 일정" 소제목 + 괘선 리스트. 한 줄 = `날짜 | 이벤트 | 관련종목 칩`.
-- 지난 이벤트·이벤트 0건이면 섹션 자체 숨김 (빈 박스 금지).
-- 시각 요소는 캘린더 그리드가 아니라 **날짜순 리스트** (모바일 대응 + 이벤트 수 적음).
+## Phase 3 — UI (미구현)
+- 소스별 신뢰 점수 패널. **매매추천 오해 방지**(판정 배지 뺐던 교훈) → "N일 적중 X/Y" 사실만, 점수 랭킹은 신중히.
+- 표본부족 소스는 명시적으로 "표본부족" 표기 (침묵 truncation 금지).
 
-### 4. 테스트/검증
-- 브리핑 캐시 주의: 오늘 브리핑을 배열에서 제거 후 로컬 재실행하여 events 생성 확인.
-- npm test 31/31 유지 (judge와 무관하지만 회귀 확인).
-- 완료 기준: Vercel 라이브에서 사이드바에 일정 리스트 표시 확인.
-
-## 범위 제외
-- 캘린더 그리드 뷰, 이벤트 알림, 과거 이벤트 적중 여부 — 이번엔 안 함.
-
-## 예상 변경 파일
-| 파일 | 변경 |
-|---|---|
-| scripts/collect-rss.js | 브리핑 프롬프트 + 스키마에 events 추가 |
-| src/components/EventCalendar.jsx | 신설 |
-| src/components/FactSidebar.jsx | EventCalendar 삽입 |
+## 범위/주의
+- Phase 1만 이번 세션. Phase 2·3은 데이터 축적 후 별도 세션 (스펙 → 골든케이스 → 코드 순).
+- US 벤치마크 지수 수집이 Phase 2 선행 과제.
