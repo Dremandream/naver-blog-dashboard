@@ -505,5 +505,47 @@
   },
   "알파벳(구글)": null,
   "딥시크": null,
-  "Zhipu": null
+  "Zhipu": null,
+  "현대자동차": null,
+  "Intel": {
+    "code": "INTC.O",
+    "market": "US",
+    "matched": "인텔"
+  },
+  "Sandisk": {
+    "code": "SNDK.O",
+    "market": "US",
+    "matched": "Sandisk Corp"
+  },
+  "아이티센글로벌": {
+    "code": "124500",
+    "market": "KR",
+    "matched": "아이티센글로벌"
+  },
+  "코어위브": {
+    "code": "CRWV.O",
+    "market": "US",
+    "matched": "코어위브"
+  },
+  "네비우스": {
+    "code": "NBIS.O",
+    "market": "US",
+    "matched": "네비우스 그룹"
+  },
+  "현대차": {
+    "code": "005380",
+    "market": "KR",
+    "matched": "현대차"
+  },
+  "노키아": {
+    "code": "NOK",
+    "market": "US",
+    "matched": "노키아 ADR"
+  },
+  "SpaceX": {
+    "code": "SPCX.O",
+    "market": "US",
+    "matched": "스페이스X"
+  },
+  "엔비dia": null
 }

@@ -387,7 +387,7 @@ async function fetchMarketData() {
 }
 
 // ─── Claude AI 투자 요약 ──────────────────────────────────────────────────────
-async function analyzePost(title, content, blogName) {
+export async function analyzePost(title, content, blogName) {
   const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래 블로그 글을 읽고, 독자가 원글을 열지 않아도 판단할 수 있게 정보를 최대한 구체적으로 추출하세요.
 
 블로그: ${blogName}
