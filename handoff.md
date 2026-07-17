@@ -120,3 +120,6 @@ npm run build                  # 빌드 확인
 - 프로젝트 폴더 정리: 구버전 handoff/plan/중복 Fable5 폴더 삭제 → handoff는 이 파일 하나만 유지
 - 판정 시스템 구현 완료 확인 (커밋 85954fc·5441f4f, 라이브 데이터에 verdicts 9종목 정상 작동, npm test 31/31 통과) → handoff §4·로드맵 현행화
 - **종합 리포트 간결화**: 스키마 교체 `{headline, positive[{sector,items[{name,point,mentions}]}], negative[...], minority(≤2)}` — 긍정/부정 2단 × 산업별 그룹 × 종목당 근거 1줄. brief 문단·말vs가격(관심추이와 중복)·관전포인트·쏠림·hot_stocks 제거. 구 스키마 리포트(7일치)는 DailyBrief.jsx에서 기존 레이아웃 폴백 렌더. 텔레그램 알림도 신 스키마로.
+- 소스 정리: 혀니루 삭제(6개월 휴면) → 17개. 전 소스 반도체 편중 확인 — 추가는 타섹터만 (커밋 2f09064 이전)
+- **증권사 리포트 디자인 이식** (D:\산업스터디 PDF들 — NH·메리츠·삼성·DAOL 구조 학습): ①크림슨 아이덴티티 밴드+Daily Note 라벨 ②`FactSidebar.jsx` 신설 — 본문(주장) 좌 2/3 + 시황·역행감지(데이터) 우 1/3, MarketStrip 대체(파일은 남아있으나 미사용) ③소수의견 → headline 아래 Summary 음영박스 ④모바일 `.main min-width:0` + 관심추이 자체 스크롤. 라이브 확인 완료. 커밋 2f09064
+- 참고: 디자인 기준 PDF는 D:\산업스터디\ 아래 (design/ 폴더 복사는 사용자 미결정)
