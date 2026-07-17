@@ -30,17 +30,20 @@
 - `.github/workflows/collect.yml`에 history.json git add 추가 (fresh checkout 소실 방지).
 - 최근 120일치 유지.
 
-## Phase 2 — 적중 판정 (백필로 앞당겨짐: 07-13 코호트가 07-20(월)부터 판정 가능, 미구현)
-- `scripts/hitrate.js` 신설 (judge.js처럼 순수 JS, AI 미사용, 결정적):
-  - 각 의견 (person, stock, stance, date T)에 대해 history에서 price(T), price(T+5td), price(T+20td), 같은 창의 index 수익률 조회
-  - 초과수익 계산 → 적중/미적중. 아직 T+Nd 데이터 없으면 pending.
-  - person별 집계: {hits, total, rate} × {5일, 20일}. **min 표본(예: 5건) 미만은 "표본부족"으로 rate 숨김.**
-- posts.json에 `source_scores` 저장. 골든 케이스 회귀테스트 추가(tests/regression.mjs).
+## Phase 2 — 적중 판정 (이번 세션 완료 ✅)
+- `scripts/hitrate.js` (judge.js처럼 순수 JS, AI 미사용, 결정적):
+  - 각 의견 (person, stock, stance, date T)에 history의 정렬 거래일 리스트에서 T+5·T+20칸 뒤 조회
+  - 초과수익 = 종목수익률 − 벤치마크(KR=KOSPI, US=NASDAQ)수익률. 강세는 >0, 약세는 <0 이면 적중.
+  - T 또는 T+N 종가/지수 결손 시 pending(집계 제외). person별 {hits,total,rate}×{5,20}.
+  - MIN_SAMPLE=5 미만은 rate=null(UI 표본부족). 중립 제외.
+- **US 벤치마크 지수 수집 추가**: fetchForeignIndexClosesDated로 나스닥(.IXIC)·S&P500(.INX) → market·history.indices에 NASDAQ/SP500 저장.
+- posts.json에 `source_scores` 저장. 골든 케이스 7건 회귀테스트 추가(HR1~HR7, 총 38건 통과).
 
-## Phase 3 — UI (미구현)
-- 소스별 신뢰 점수 패널. **매매추천 오해 방지**(판정 배지 뺐던 교훈) → "N일 적중 X/Y" 사실만, 점수 랭킹은 신중히.
-- 표본부족 소스는 명시적으로 "표본부족" 표기 (침묵 truncation 금지).
+## Phase 3 — UI (이번 세션 완료 ✅)
+- `src/components/SourceScores.jsx` — AttentionTrends 아래 배치. 소스별 의견수·5일·20일 적중.
+- 적중률(표본충족)순 정렬. total<min은 "표본부족", 미성숙은 "판정중" 표기(침묵 절삭 금지).
+- 전 소스 미성숙(오늘)이면 상단에 추적 시작 안내 배너. **"매매추천 아님, 사후 성과 기록" 명시.**
 
-## 범위/주의
-- Phase 1만 이번 세션. Phase 2·3은 데이터 축적 후 별도 세션 (스펙 → 골든케이스 → 코드 순).
-- US 벤치마크 지수 수집이 Phase 2 선행 과제.
+## 상태
+- 오늘(07-17)은 5거래일 경과분이 없어 전부 "판정중". **07-13 코호트가 07-20(월)부터 실제 적중률 표시 시작.**
+- 로직은 골든 케이스로 검증 완료(실데이터 성숙 전이라 라이브 수치는 월요일부터).

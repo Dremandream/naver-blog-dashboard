@@ -13,6 +13,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
 import { judgeBatch } from './judge.js';
+import { computeSourceScores } from './hitrate.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
@@ -279,6 +280,12 @@ export async function fetchIndexClosesDated(symbol) {
   return rows.map(r => ({ date: ymd8ToDash(r[1]), close: Number(r[5]) }));
 }
 
+// 해외 지수 일봉 [{date, close}] — api.stock.naver.com (.INX=S&P500, .IXIC=나스닥, .DJI=다우)
+export async function fetchForeignIndexClosesDated(symbol) {
+  const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/index/${encodeURIComponent(symbol)}/day?startDateTime=${yyyymmdd(45)}0000&endDateTime=${yyyymmdd(0)}2359`);
+  return JSON.parse(raw).map(c => ({ date: ymd8ToDash(String(c.localDate)), close: Number(c.closePrice) }));
+}
+
 export function pctChange(closes, n) {
   if (closes.length < n + 1) return null;
   const last = closes[closes.length - 1], prev = closes[closes.length - 1 - n];
@@ -354,6 +361,26 @@ async function fetchMarketData() {
       await new Promise(r => setTimeout(r, 300));
     } catch (e) {
       console.warn(`  ⚠️  ${symbol} 시황 실패: ${e.message}`);
+    }
+  }
+
+  // 해외 지수 (US 종목 적중률 벤치마크용): 나스닥=US 종목 기준, S&P500 병기 저장
+  for (const [key, symbol, label] of [['nasdaq', '.IXIC', '나스닥'], ['sp500', '.INX', 'S&P500']]) {
+    try {
+      const closesD = await fetchForeignIndexClosesDated(symbol);
+      const closes = closesD.map(c => c.close);
+      if (!closes.length) continue;
+      market[key] = {
+        index: closes[closes.length - 1],
+        asOf: closesD[closesD.length - 1].date.replace(/-/g, ''),
+        d1: pctChange(closes, 1),
+        d5: pctChange(closes, 5),
+        _closes: closesD,
+      };
+      console.log(`  📈 ${label}: ${market[key].index?.toLocaleString()} (1일 ${market[key].d1}%)`);
+      await new Promise(r => setTimeout(r, 300));
+    } catch (e) {
+      console.warn(`  ⚠️  ${label} 지수 실패: ${e.message}`);
     }
   }
   return market;
@@ -552,9 +579,9 @@ function archiveHistory(prices, market, posts) {
     marketOf[name] = v.market;
     for (const c of v._closes ?? []) (priceByDate[c.date] = priceByDate[c.date] || {})[name] = c.close;
   }
-  // 날짜별 지수 맵: indexByDate[date] = { KOSPI, KOSDAQ }
+  // 날짜별 지수 맵: indexByDate[date] = { KOSPI, KOSDAQ, NASDAQ, SP500 }
   const indexByDate = {};
-  for (const [key, label] of [['kospi', 'KOSPI'], ['kosdaq', 'KOSDAQ']]) {
+  for (const [key, label] of [['kospi', 'KOSPI'], ['kosdaq', 'KOSDAQ'], ['nasdaq', 'NASDAQ'], ['sp500', 'SP500']]) {
     for (const c of market?.[key]?._closes ?? []) (indexByDate[c.date] = indexByDate[c.date] || {})[label] = c.close;
   }
 
@@ -597,6 +624,7 @@ function archiveHistory(prices, market, posts) {
   fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
   const opTotal = Object.values(opinionsByDate).reduce((s, m) => s + Object.keys(m).length, 0);
   console.log(`  📚 이력 축적: ${Object.keys(pruned).length}일치 (이번 갱신 ${filled}일), 의견 ${opTotal}건`);
+  return pruned;
 }
 
 // ─── 메인 ────────────────────────────────────────────────────────────────────
@@ -829,11 +857,15 @@ async function main() {
   }
   updatedBriefs = updatedBriefs.slice(0, 7); // 최대 7일치 유지
 
-  // 적중률용 이력 축적 (posts.json 저장 전 — _closes 시리즈 필요). 실패해도 메인 무손상.
+  // 적중률용 이력 축적 + 소스 점수 계산 (posts.json 저장 전 — _closes 시리즈 필요). 실패해도 메인 무손상.
+  let sourceScores = null;
   try {
-    archiveHistory(prices, market, merged);
+    const history = archiveHistory(prices, market, merged);
+    sourceScores = computeSourceScores(history);
+    const judgedN = sourceScores.sources.filter(s => s.w5.total > 0).length;
+    console.log(`  🎯 소스 점수: ${sourceScores.sources.length}명 집계, 5일 판정 시작된 소스 ${judgedN}명`);
   } catch (e) {
-    console.warn('⚠️  이력 축적 실패(메인 데이터는 정상 저장):', e.message);
+    console.warn('⚠️  이력/점수 계산 실패(메인 데이터는 정상 저장):', e.message);
   }
 
   // posts.json에는 날짜별 종가 시리즈(_closes)를 담지 않는다 (이력 파일 전용)
@@ -843,7 +875,7 @@ async function main() {
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify(
-      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, verdicts, verdict_history: newHistory, posts: merged },
+      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, verdicts, verdict_history: newHistory, source_scores: sourceScores, posts: merged },
       null, 2
     ),
     'utf-8'

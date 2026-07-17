@@ -6,6 +6,7 @@ import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
 import FactSidebar from "./components/FactSidebar";
 import AttentionTrends from "./components/AttentionTrends";
+import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
 import "./App.css";
 
@@ -131,6 +132,7 @@ export default function App() {
           <FactSidebar market={data?.market} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
         </div>
         <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
+        <SourceScores scores={data?.source_scores} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 
         <div className="section-divider">

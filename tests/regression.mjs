@@ -3,6 +3,7 @@
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
 import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
+import { computeSourceScores } from '../scripts/hitrate.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -71,6 +72,49 @@ eq('C-K4 착시 위반 차단', runCritic([{ ...ok, ILLUSION: 'True', verdict: '
 eq('C-K5 conf-cap 차단', runCritic([{ ...ok, confidence: 0.55 }]).blocked[0].rule, 'conf-cap');
 eq('C-K5b conf-step 차단', runCritic([{ ...ok, confidence: 0.35 }]).blocked[0].rule, 'conf-step');
 eq('C-K6 중복 티커(2번째부터 차단)', runCritic([ok, { ...ok }]).blocked.length, 1);
+
+console.log('── 소스 적중률 골든 케이스 (hitrate.js, 지수 대비 초과수익) ──');
+// 6거래일 D0..D5. D0 의견만 5일창(=D5) 판정됨. D0 전 종목·지수 100, D5에서 변동.
+const D = ['2026-01-02', '2026-01-03', '2026-01-06', '2026-01-07', '2026-01-08', '2026-01-09'];
+const p100 = {};
+['S1','S2','S3','S4','S5','U1','U2','U3','U4','U5','V1','V2','V3','V4','V5','W1','W2'].forEach(s => (p100[s] = 100));
+const op = (person, stock, stance, market) => ({ person, stock, stance, market });
+const hist = {
+  [D[0]]: {
+    prices: p100,
+    indices: { KOSPI: 100, NASDAQ: 100 },
+    opinions: [
+      ...['S1','S2','S3','S4','S5'].map(s => op('테스터', s, '강세', 'KR')),      // KR 강세, KOSPI 기준
+      ...['U1','U2','U3','U4','U5'].map(s => op('미국러', s, '강세', 'US')),      // US 강세, NASDAQ 기준
+      ...['V1','V2','V3','V4','V5'].map(s => op('약세러', s, '약세', 'KR')),      // KR 약세
+      op('약세러', 'S1', '중립', 'KR'),                                          // 중립 → 집계 제외
+      op('소수러', 'W1', '강세', 'KR'), op('소수러', 'W2', '강세', 'KR'),        // 표본 2건 → rate null
+    ],
+  },
+  [D[1]]: { prices: {}, indices: {}, opinions: [] },
+  [D[2]]: { prices: {}, indices: {}, opinions: [] },
+  [D[3]]: { prices: {}, indices: {}, opinions: [] },
+  [D[4]]: { prices: {}, indices: {}, opinions: [] },
+  [D[5]]: {
+    prices: {
+      S1: 130, S2: 130, S3: 130, S4: 105, S5: 90,   // KOSPI +10% 대비: S1~3 적중, S4·S5 미적중 → 3/5
+      U1: 150, U2: 150, U3: 150, U4: 115, U5: 130,   // NASDAQ +20% 대비: U1~3·U5 적중, U4 미적중 → 4/5
+      V1: 90, V2: 90, V3: 90, V4: 130, V5: 130,      // 약세: V1~3 적중(하락), V4·V5 미적중(상승) → 3/5
+      W1: 130, W2: 130,
+    },
+    indices: { KOSPI: 110, NASDAQ: 120 },            // U4(+15%)는 KOSPI(+10)면 적중, NASDAQ(+20)면 미적중 → 벤치마크 판별
+    opinions: [op('펜딩', 'S1', '강세', 'KR')],       // 최신일 의견 → +5 없음 → pending
+  },
+};
+const scores = computeSourceScores(hist);
+const S = (name) => scores.sources.find((x) => x.person === name);
+eq('HR1 KR 강세 적중률(3/5=60)', [S('테스터').w5.hits, S('테스터').w5.total, S('테스터').w5.rate], [3, 5, 60]);
+eq('HR2 US 나스닥 벤치마크(4/5=80)', [S('미국러').w5.hits, S('미국러').w5.total, S('미국러').w5.rate], [4, 5, 80]);
+eq('HR3 KR 약세 적중률(3/5=60)', [S('약세러').w5.hits, S('약세러').w5.total, S('약세러').w5.rate], [3, 5, 60]);
+eq('HR4 중립 제외(약세 5건만 집계, 중립은 opinions·total 모두 제외)', [S('약세러').w5.total, S('약세러').opinions], [5, 5]);
+eq('HR5 표본부족 rate=null(2건)', [S('소수러').w5.total, S('소수러').w5.rate], [2, null]);
+eq('HR6 최신일 의견 pending(total 0)', [S('펜딩').w5.total, S('펜딩').w5.rate], [0, null]);
+eq('HR7 20일창 아직 없음(pending)', S('테스터').w20.total, 0);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

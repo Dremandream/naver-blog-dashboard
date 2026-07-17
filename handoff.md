@@ -98,7 +98,7 @@ npm run build                  # 빌드 확인
 1. [x] ~~판정 시스템 구현~~ — 완료 (§4 참조)
 2. [x] ~~지난 리포트 열람~~ — 완료 (날짜 칩, 세션 10)
 3. [x] ~~촉매 캘린더~~ — 완료 (세션 12): 브리핑 신 스키마에 `events[{date,label,stocks,source,approx}]` 추가(Opus가 날짜 명시된 미래 이벤트만 추출, 최대 6개) → `EventCalendar.jsx`가 7일치 병합·중복제거·오늘 이후만 표시, FactSidebar 하단 "📅 주요 일정" 섹션. 커밋 3b649bd
-4. [~] **소스 적중률** — Phase 1(데이터 축적+소급 백필) 완료(세션 12), Phase 2·3 대기. **스펙 확정**: 적중=지수 대비 초과수익, 평가 5일·20일 둘 다. `public/data/history.json`에 날짜별 종가·지수·의견 누적(`archiveHistory()`). **핵심: fetchClosesDated로 posts.json 의견 구간(8일)을 날짜 정확하게 자동 백필** — 매 실행 반복, 별도 스크립트 없음. 이미 07-10~07-16 5거래일 확보됨. Actions가 history.json 커밋. 판정(`scripts/hitrate.js`)·UI 미구현 → 07-13 코호트가 07-20(월)부터 5일 판정 가능. **US 종목 벤치마크 지수(^GSPC/^IXIC) 수집이 Phase 2 선행 과제** — 현재 KOSPI/KOSDAQ만. 상세 plan.md.
+4. [x] **소스 적중률** — Phase 1·2·3 전부 완료(세션 12). **스펙**: 적중=지수 대비 초과수익(KR=코스피, US=나스닥), 5·20거래일. 파이프라인: `history.json`에 날짜별 종가·지수·의견 누적(`archiveHistory`, fetchClosesDated로 의견 8일 구간 자동 백필) → `hitrate.js`의 `computeSourceScores`가 person별 {hits,total,rate}×{5,20} 계산 → posts.json `source_scores` 저장 → UI `SourceScores.jsx`(AttentionTrends 아래). US 지수는 `fetchForeignIndexClosesDated`(.IXIC 나스닥·.INX S&P500) 신규 수집. Actions가 history.json 커밋. 회귀 38건(HR1~7 포함). **오늘은 전부 "판정중"(5거래일 미경과) → 07-20(월)부터 실제 적중률 표시.** 실데이터 수치 검증은 월요일 이후 필요. 상세 plan.md.
 5. [ ] UI: 요약↔전체 토글, 다크모드 (선택)
 
 ## 9. 히스토리 요약
