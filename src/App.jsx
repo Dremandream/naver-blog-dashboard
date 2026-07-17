@@ -4,7 +4,7 @@ import PostModal from "./components/PostModal";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
 import DailyBrief from "./components/DailyBrief";
-import MarketStrip from "./components/MarketStrip";
+import FactSidebar from "./components/FactSidebar";
 import AttentionTrends from "./components/AttentionTrends";
 import StockReport from "./components/StockReport";
 import "./App.css";
@@ -100,8 +100,9 @@ export default function App() {
         <div className="header-inner">
           <div className="header-title">
             <div>
+              <div className="masthead-label">Daily Note · {data?.date ?? "-"}</div>
               <h1>데일리 투자 리포트</h1>
-              <p className="date">블로그·텔레그램 여론 종합 · 수집일 {data?.date ?? "-"}</p>
+              <p className="date">블로그·텔레그램 여론 종합</p>
             </div>
           </div>
           <input
@@ -125,8 +126,10 @@ export default function App() {
             </div>
           ) : null;
         })()}
-        <MarketStrip market={data?.market} />
-        <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
+        <div className="report-layout">
+          <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
+          <FactSidebar market={data?.market} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
+        </div>
         <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 

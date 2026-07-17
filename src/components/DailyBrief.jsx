@@ -84,15 +84,15 @@ export default function DailyBrief({ briefs, onStockClick }) {
 
       {isNew ? (
         <>
-          <div className="report-grid">
-            <PnColumn variant="bull" title="📈 긍정" groups={brief.positive} onStockClick={onStockClick} />
-            <PnColumn variant="bear" title="📉 부정" groups={brief.negative} onStockClick={onStockClick} />
-          </div>
           {brief.minority?.length > 0 && (
             <div className="pn-minority">
               🔍 <b>다른 생각</b> — {brief.minority.join(" / ")}
             </div>
           )}
+          <div className="report-grid">
+            <PnColumn variant="bull" title="📈 긍정" groups={brief.positive} onStockClick={onStockClick} />
+            <PnColumn variant="bear" title="📉 부정" groups={brief.negative} onStockClick={onStockClick} />
+          </div>
         </>
       ) : (
         /* ── 구 스키마 폴백 (지난 리포트 열람용) ── */
