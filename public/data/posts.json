@@ -736,58 +736,128 @@
     "sources": [
       {
         "person": "잠실개미",
-        "opinions": 29,
+        "opinions": 42,
         "w5": {
-          "hits": 11,
-          "total": 11,
-          "rate": 100
+          "hits": 19,
+          "total": 24,
+          "rate": 79.2
         },
         "w20": {
-          "hits": 3,
-          "total": 3,
-          "rate": null
+          "hits": 11,
+          "total": 12,
+          "rate": 91.7
         }
       },
       {
-        "person": "콤디티",
-        "opinions": 15,
+        "person": "금싸",
+        "opinions": 10,
         "w5": {
-          "hits": 5,
-          "total": 6,
-          "rate": 83.3
+          "hits": 6,
+          "total": 10,
+          "rate": 60
         },
         "w20": {
-          "hits": 0,
-          "total": 5,
-          "rate": 0
+          "hits": 4,
+          "total": 8,
+          "rate": 50
         }
       },
       {
         "person": "피터케이",
-        "opinions": 14,
+        "opinions": 61,
         "w5": {
-          "hits": 5,
-          "total": 8,
-          "rate": 62.5
+          "hits": 19,
+          "total": 34,
+          "rate": 55.9
         },
         "w20": {
-          "hits": 4,
-          "total": 6,
-          "rate": 66.7
+          "hits": 27,
+          "total": 42,
+          "rate": 64.3
+        }
+      },
+      {
+        "person": "너는 무한하지 않느냐",
+        "opinions": 240,
+        "w5": {
+          "hits": 80,
+          "total": 152,
+          "rate": 52.6
+        },
+        "w20": {
+          "hits": 69,
+          "total": 156,
+          "rate": 44.2
+        }
+      },
+      {
+        "person": "콤디티",
+        "opinions": 54,
+        "w5": {
+          "hits": 17,
+          "total": 33,
+          "rate": 51.5
+        },
+        "w20": {
+          "hits": 11,
+          "total": 34,
+          "rate": 32.4
         }
       },
       {
         "person": "씹배",
-        "opinions": 18,
+        "opinions": 41,
         "w5": {
-          "hits": 5,
-          "total": 10,
+          "hits": 9,
+          "total": 18,
           "rate": 50
         },
         "w20": {
-          "hits": 0,
-          "total": 3,
-          "rate": null
+          "hits": 8,
+          "total": 15,
+          "rate": 53.3
+        }
+      },
+      {
+        "person": "의교창",
+        "opinions": 254,
+        "w5": {
+          "hits": 59,
+          "total": 126,
+          "rate": 46.8
+        },
+        "w20": {
+          "hits": 71,
+          "total": 163,
+          "rate": 43.6
+        }
+      },
+      {
+        "person": "너쟁이",
+        "opinions": 66,
+        "w5": {
+          "hits": 14,
+          "total": 34,
+          "rate": 41.2
+        },
+        "w20": {
+          "hits": 18,
+          "total": 43,
+          "rate": 41.9
+        }
+      },
+      {
+        "person": "Teddy 미술관",
+        "opinions": 14,
+        "w5": {
+          "hits": 2,
+          "total": 6,
+          "rate": 33.3
+        },
+        "w20": {
+          "hits": 7,
+          "total": 13,
+          "rate": 53.8
         }
       },
       {
@@ -797,34 +867,6 @@
           "hits": 2,
           "total": 7,
           "rate": 28.6
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "의교창",
-        "opinions": 32,
-        "w5": {
-          "hits": 4,
-          "total": 18,
-          "rate": 22.2
-        },
-        "w20": {
-          "hits": 3,
-          "total": 7,
-          "rate": 42.9
-        }
-      },
-      {
-        "person": "금싸",
-        "opinions": 2,
-        "w5": {
-          "hits": 2,
-          "total": 2,
-          "rate": null
         },
         "w20": {
           "hits": 0,
@@ -847,39 +889,11 @@
         }
       },
       {
-        "person": "Teddy 미술관",
-        "opinions": 1,
-        "w5": {
-          "hits": 0,
-          "total": 1,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 1,
-          "rate": null
-        }
-      },
-      {
         "person": "투자콤",
         "opinions": 3,
         "w5": {
           "hits": 0,
           "total": 1,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "너쟁이",
-        "opinions": 22,
-        "w5": {
-          "hits": 0,
-          "total": 0,
           "rate": null
         },
         "w20": {
@@ -919,20 +933,6 @@
       {
         "person": "김찰저",
         "opinions": 5,
-        "w5": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        },
-        "w20": {
-          "hits": 0,
-          "total": 0,
-          "rate": null
-        }
-      },
-      {
-        "person": "너는 무한하지 않느냐",
-        "opinions": 2,
         "w5": {
           "hits": 0,
           "total": 0,

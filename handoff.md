@@ -98,7 +98,11 @@ npm run build                  # 빌드 확인
 1. [x] ~~판정 시스템 구현~~ — 완료 (§4 참조)
 2. [x] ~~지난 리포트 열람~~ — 완료 (날짜 칩, 세션 10)
 3. [x] ~~촉매 캘린더~~ — 완료 (세션 12): 브리핑 신 스키마에 `events[{date,label,stocks,source,approx}]` 추가(Opus가 날짜 명시된 미래 이벤트만 추출, 최대 6개) → `EventCalendar.jsx`가 7일치 병합·중복제거·오늘 이후만 표시, FactSidebar 하단 "📅 주요 일정" 섹션. 커밋 3b649bd
-4. [x] **소스 적중률** — Phase 1·2·3 전부 완료(세션 12). **스펙**: 적중=지수 대비 초과수익(KR=코스피, US=나스닥), 5·20거래일. 파이프라인: `history.json`에 날짜별 종가·지수·의견 누적(`archiveHistory`, fetchClosesDated로 의견 8일 구간 자동 백필) → `hitrate.js`의 `computeSourceScores`가 person별 {hits,total,rate}×{5,20} 계산 → posts.json `source_scores` 저장 → UI `SourceScores.jsx`(AttentionTrends 아래). US 지수는 `fetchForeignIndexClosesDated`(.IXIC 나스닥·.INX S&P500) 신규 수집. Actions가 history.json 커밋. 회귀 38건(HR1~7 포함). **소급 백필 완료(세션 12)**: `scripts/backfill-history.js`가 git 이력의 posts.json 스냅샷(72커밋)에서 과거 의견 복원 + 과거 종가/지수 수집 → history 병합 → 적중률 재계산. **방향성 stance는 07-06부터 존재**(그 전 분석기 미추출). 결과: 콤디티 40%(2/5)·의교창 20%(2/10) 등 실제 5일 적중률 표시, 나머지는 표본부족/판정중(5거래일 미경과·표본<5). 20일은 전부 판정중(창 미도래). archiveHistory는 덮어쓰기→병합으로 변경(백필분 보존). 상세 plan.md.
+4. [x] **소스 적중률** — Phase 1·2·3 전부 완료(세션 12). **스펙**: 적중=지수 대비 초과수익(KR=코스피, US=나스닥), 5·20거래일. 파이프라인: `history.json`에 날짜별 종가·지수·의견 누적(`archiveHistory`, fetchClosesDated로 의견 8일 구간 자동 백필) → `hitrate.js`의 `computeSourceScores`가 person별 {hits,total,rate}×{5,20} 계산 → posts.json `source_scores` 저장 → UI `SourceScores.jsx`(AttentionTrends 아래). US 지수는 `fetchForeignIndexClosesDated`(.IXIC 나스닥·.INX S&P500) 신규 수집. Actions가 history.json 커밋. 회귀 38건(HR1~7 포함). **소급 백필 2단계 완료(세션 12)**:
+- ①git 백필 `scripts/backfill-history.js`: posts.json 커밋 이력에서 과거 의견 복원(방향성 stance는 07-06부터). person 정규화(config 기준, luy1978→피터케이 등).
+- ②**3개월 블로그 스크레이핑 `scripts/scrape-history.js`**: PostTitleListAsync 페이지네이션 → 모바일 PostView `se-text-paragraph` 본문 추출 → Haiku 재분석(stocks·stance) → history 병합 → 적중률 재계산. logNo 캐시(.scrape-cache.json, gitignore). 시세 함수에 daysBack 파라미터 추가.
+- 결과(라이브): 잠실개미 79.2%(19/24)·20일 91.7%, 너는무한 52.6%(80/152), 의교창 46.8%(59/126) 등 **통계적으로 의미있는 표본**. 블로그 9개는 3개월치, 텔레그램은 git(~1개월)만 → 순텔레그램 소스(에테르·펭미업 등)는 아직 결과대기. **텔레그램 과거 스크레이핑은 미구현(취약)** — 다음 확장 후보. 1년 확장도 scrape-history.js에 날짜 인자만 주면 가능.
+- UI 문구 개선: 역행→'엇갈림', 소스적중률 평이한 문구+예시(세션 12). archiveHistory 덮어쓰기→병합. 상세 plan.md.
 5. [ ] UI: 요약↔전체 토글, 다크모드 (선택)
 
 ## 9. 히스토리 요약

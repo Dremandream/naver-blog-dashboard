@@ -263,26 +263,26 @@ function yyyymmdd(offsetDays = 0) {
 
 // 일봉 [{date:'YYYY-MM-DD', close}] (과거→최신) — 백필/이력 소급용. fetchCloses의 날짜 보존 버전.
 const ymd8ToDash = s => `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
-export async function fetchClosesDated(info) {
+export async function fetchClosesDated(info, daysBack = 45) {
   if (info.market === 'KR') {
-    const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${info.code}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
+    const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${info.code}&requestType=1&startTime=${yyyymmdd(daysBack)}&endTime=${yyyymmdd(0)}&timeframe=day`);
     const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
     return rows.map(r => ({ date: ymd8ToDash(r[1]), close: Number(r[5]) }));
   }
-  const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/item/${info.code}/day?startDateTime=${yyyymmdd(45)}0000&endDateTime=${yyyymmdd(0)}2359`);
+  const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/item/${info.code}/day?startDateTime=${yyyymmdd(daysBack)}0000&endDateTime=${yyyymmdd(0)}2359`);
   return JSON.parse(raw).map(c => ({ date: ymd8ToDash(String(c.localDate)), close: Number(c.closePrice) }));
 }
 
 // 지수 일봉 [{date, close}] — siseJson KR 포맷 (KOSPI/KOSDAQ)
-export async function fetchIndexClosesDated(symbol) {
-  const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${symbol}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
+export async function fetchIndexClosesDated(symbol, daysBack = 45) {
+  const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${symbol}&requestType=1&startTime=${yyyymmdd(daysBack)}&endTime=${yyyymmdd(0)}&timeframe=day`);
   const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
   return rows.map(r => ({ date: ymd8ToDash(r[1]), close: Number(r[5]) }));
 }
 
 // 해외 지수 일봉 [{date, close}] — api.stock.naver.com (.INX=S&P500, .IXIC=나스닥, .DJI=다우)
-export async function fetchForeignIndexClosesDated(symbol) {
-  const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/index/${encodeURIComponent(symbol)}/day?startDateTime=${yyyymmdd(45)}0000&endDateTime=${yyyymmdd(0)}2359`);
+export async function fetchForeignIndexClosesDated(symbol, daysBack = 45) {
+  const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/index/${encodeURIComponent(symbol)}/day?startDateTime=${yyyymmdd(daysBack)}0000&endDateTime=${yyyymmdd(0)}2359`);
   return JSON.parse(raw).map(c => ({ date: ymd8ToDash(String(c.localDate)), close: Number(c.closePrice) }));
 }
 
