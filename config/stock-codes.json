@@ -115,5 +115,15 @@
     "code": "SPCX.O",
     "market": "US",
     "matched": "스페이스X"
+  },
+  "ASE": {
+    "code": "ASX",
+    "market": "US",
+    "matched": "ASE 테크놀로지 홀딩 ADR"
+  },
+  "서진시스템": {
+    "code": "178320",
+    "market": "KR",
+    "matched": "서진시스템"
   }
 }

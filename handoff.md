@@ -12,7 +12,7 @@
 
 - **URL**: https://naver-blog-dashboard.vercel.app
 - **자동화**: GitHub Actions 매일 KST 08:00 (`.github/workflows/collect.yml`) → 수집→분석→push→Vercel 자동배포
-- **소스 17개**: 블로그 9 (`config/blogs.json`) + 텔레그램 8 (`config/telegram-channels.json`) — 2026-07-17 혀니루 삭제(6개월 휴면). 전 소스가 반도체·거시 편중 → 추가는 타섹터(2차전지·바이오·금융)만
+- **소스 19개**: 블로그 10 (`config/blogs.json`) + 텔레그램 9 (`config/telegram-channels.json`) — 2026-07-17 혀니루 삭제(6개월 휴면), 사용자 지명으로 '너는 무한하지 않느냐'(블로그 cybermw)·'피카츄 아저씨'(텔레 pikachu_aje) 추가. 반도체·거시 편중 여전 → 추가는 타섹터(2차전지·바이오·금융)만
 - **모델 배분(의도된 설계, 바꾸지 말 것)**: 개별 글 분석 = `claude-haiku-4-5-20251001` / 종합 리포트 = `claude-opus-4-8` (하루 1회)
 
 ## 2. 대시보드 구성 (위→아래)
