@@ -242,7 +242,7 @@ async function fetchJSON(url) {
 }
 
 // 이름 → { code, market } (네이버 자동완성, 캐시 우선). 비상장이면 null 캐시.
-async function resolveStockCode(name, cache) {
+export async function resolveStockCode(name, cache) {
   if (name in cache) return cache[name];
   try {
     const raw = await fetchJSON(`https://ac.stock.naver.com/ac?q=${encodeURIComponent(name)}&target=stock`);
@@ -260,16 +260,23 @@ function yyyymmdd(offsetDays = 0) {
   return new Date(Date.now() - offsetDays * 86400000).toISOString().slice(0, 10).replace(/-/g, '');
 }
 
-// 일봉 종가 배열 (과거→최신)
-async function fetchCloses(info) {
+// 일봉 [{date:'YYYY-MM-DD', close}] (과거→최신) — 백필/이력 소급용. fetchCloses의 날짜 보존 버전.
+const ymd8ToDash = s => `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+export async function fetchClosesDated(info) {
   if (info.market === 'KR') {
     const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${info.code}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
-    // 유사 JSON([['날짜',...],["20260601",시,고,저,종,...]) → 행 파싱
     const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
-    return rows.map(r => Number(r[5]));
+    return rows.map(r => ({ date: ymd8ToDash(r[1]), close: Number(r[5]) }));
   }
   const raw = await fetchJSON(`https://api.stock.naver.com/chart/foreign/item/${info.code}/day?startDateTime=${yyyymmdd(45)}0000&endDateTime=${yyyymmdd(0)}2359`);
-  return JSON.parse(raw).map(c => Number(c.closePrice));
+  return JSON.parse(raw).map(c => ({ date: ymd8ToDash(String(c.localDate)), close: Number(c.closePrice) }));
+}
+
+// 지수 일봉 [{date, close}] — siseJson KR 포맷 (KOSPI/KOSDAQ)
+export async function fetchIndexClosesDated(symbol) {
+  const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${symbol}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
+  const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
+  return rows.map(r => ({ date: ymd8ToDash(r[1]), close: Number(r[5]) }));
 }
 
 export function pctChange(closes, n) {
@@ -288,14 +295,16 @@ async function fetchPrices(stockNames) {
     try {
       const info = await resolveStockCode(name, cache);
       if (!info) { if (info === null) console.log(`  ⏭️  ${name}: 비상장/미매칭 스킵`); continue; }
-      const closes = await fetchCloses(info);
-      if (closes.length === 0) continue;
+      const closesD = await fetchClosesDated(info);
+      if (closesD.length === 0) continue;
+      const closes = closesD.map(c => c.close);
       prices[name] = {
         market: info.market,
         price: closes[closes.length - 1],
         d1: pctChange(closes, 1),
         d5: pctChange(closes, 5),
         d20: pctChange(closes, 20),
+        _closes: closesD, // 이력 축적용 날짜별 종가 (posts.json 저장 전 제거)
       };
       console.log(`  💹 ${name}(${info.market}): ${prices[name].price.toLocaleString()} | 1일 ${prices[name].d1}% 5일 ${prices[name].d5}%`);
       await new Promise(r => setTimeout(r, 250));
@@ -308,14 +317,6 @@ async function fetchPrices(stockNames) {
 }
 
 // ─── 시황 수집 (지수 + 투자자별 수급) ────────────────────────────────────────
-async function fetchIndexCloses(symbol) {
-  const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${symbol}&requestType=1&startTime=${yyyymmdd(45)}&endTime=${yyyymmdd(0)}&timeframe=day`);
-  const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
-  const closes = rows.map(r => Number(r[5]));
-  closes.lastDate = rows.length ? rows[rows.length - 1][1] : null; // YYYYMMDD
-  return closes;
-}
-
 // 투자자별 매매동향 (억원): sosok 01=코스피, 02=코스닥. 최신일 + 외국인 5일 누적.
 async function fetchInvestorFlows(sosok) {
   const raw = await fetchJSON(`https://finance.naver.com/sise/investorDealTrendDay.naver?bizdate=${yyyymmdd(0)}&sosok=${sosok}`);
@@ -337,15 +338,17 @@ async function fetchMarketData() {
   const market = {};
   for (const [key, symbol, sosok] of [['kospi', 'KOSPI', '01'], ['kosdaq', 'KOSDAQ', '02']]) {
     try {
-      const closes = await fetchIndexCloses(symbol);
+      const closesD = await fetchIndexClosesDated(symbol);
+      const closes = closesD.map(c => c.close);
       const flows = await fetchInvestorFlows(sosok);
       market[key] = {
         index: closes[closes.length - 1],
-        asOf: closes.lastDate, // 지수 기준일 YYYYMMDD
+        asOf: closesD.length ? closesD[closesD.length - 1].date.replace(/-/g, '') : null, // 지수 기준일 YYYYMMDD
         d1: pctChange(closes, 1),
         d5: pctChange(closes, 5),
         d20: pctChange(closes, 20),
         flows, // { date, individual, foreign, institution, foreign5d } 단위: 억원
+        _closes: closesD, // 이력 축적용 날짜별 종가 (posts.json 저장 전 제거)
       };
       console.log(`  📈 ${symbol}: ${market[key].index?.toLocaleString()} (1일 ${market[key].d1}%, 5일 ${market[key].d5}%) | 외인 ${flows?.foreign?.toLocaleString()}억 기관 ${flows?.institution?.toLocaleString()}억`);
       await new Promise(r => setTimeout(r, 300));
@@ -531,8 +534,10 @@ ${Object.entries(market).map(([k, v]) =>
 }
 
 // ─── 소스 적중률용 이력 축적 ───────────────────────────────────────────────────
-// posts.json은 8일치만 롤링 저장되고 prices는 오늘 스냅샷뿐이라, 적중률(의견 시점가 vs
-// N일 후가)을 계산하려면 날짜별 종가·지수·의견을 따로 누적해야 한다. 하루 1레코드 upsert.
+// posts.json은 8일치만 롤링 저장되므로, 적중률(의견 시점가 vs N일 후가)을 계산하려면
+// 날짜별 종가·지수·의견을 따로 누적해야 한다. prices/market의 _closes(날짜별 종가 시리즈)를
+// 써서 posts.json에 남아있는 의견 구간(약 8일)을 날짜 정확하게 채운다 → 매 실행 자동 백필.
+// 각 날짜 레코드는 그날 전체 종목 종가를 담아, 나중에 다른 의견의 'T+N일 종가' 조회에도 쓰인다.
 // 적중 판정(지수 대비 초과수익, 5·20일)은 데이터가 쌓인 뒤 별도 단계에서 계산한다. (plan.md)
 function archiveHistory(prices, market, posts) {
   let history = {};
@@ -540,33 +545,49 @@ function archiveHistory(prices, market, posts) {
     history = JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf-8'));
   } catch { /* 최초 실행: 빈 이력 */ }
 
-  // 오늘 의견: person+stock 중복 제거, 강세/약세를 중립보다 우선. 가격 있는 종목만(판정 가능해야 함).
+  // 날짜별 종가 맵: priceByDate[date][종목] = 종가
+  const priceByDate = {};
+  const marketOf = {};
+  for (const [name, v] of Object.entries(prices)) {
+    marketOf[name] = v.market;
+    for (const c of v._closes ?? []) (priceByDate[c.date] = priceByDate[c.date] || {})[name] = c.close;
+  }
+  // 날짜별 지수 맵: indexByDate[date] = { KOSPI, KOSDAQ }
+  const indexByDate = {};
+  for (const [key, label] of [['kospi', 'KOSPI'], ['kosdaq', 'KOSDAQ']]) {
+    for (const c of market?.[key]?._closes ?? []) (indexByDate[c.date] = indexByDate[c.date] || {})[label] = c.close;
+  }
+
+  // 의견을 날짜별로: person+stock 중복 제거(강세/약세를 중립보다 우선). 그날 종가 있는 종목만.
   const rank = s => (s === '강세' ? 2 : s === '약세' ? 2 : 1);
-  const opinionMap = {};
+  const opinionsByDate = {};
   for (const p of posts) {
-    if (p.date !== TODAY_KST) continue;
     const person = p.person || p.blog_name;
     for (const stock of p.stocks ?? []) {
-      if (!prices[stock]) continue; // 그날 종가 없으면 훗날 판정 불가 → 제외
+      if (!priceByDate[p.date]?.[stock]) continue; // 그날 종가 없으면 판정 불가 → 제외
+      const map = opinionsByDate[p.date] = opinionsByDate[p.date] || {};
       const key = `${person}|${stock}`;
       const stance = p.stance === '강세' ? '강세' : p.stance === '약세' ? '약세' : '중립';
-      if (!opinionMap[key] || rank(stance) > rank(opinionMap[key].stance)) {
-        opinionMap[key] = { person, stock, stance, market: prices[stock].market };
+      if (!map[key] || rank(stance) > rank(map[key].stance)) {
+        map[key] = { person, stock, stance, market: marketOf[stock] };
       }
     }
   }
 
-  const priceSnap = {};
-  for (const [name, v] of Object.entries(prices)) priceSnap[name] = v.price;
-  const indexSnap = {};
-  if (market?.kospi?.index) indexSnap.KOSPI = market.kospi.index;
-  if (market?.kosdaq?.index) indexSnap.KOSDAQ = market.kosdaq.index;
-
-  history[TODAY_KST] = {
-    prices: priceSnap,
-    indices: indexSnap,
-    opinions: Object.values(opinionMap),
-  };
+  // 축적 대상 날짜: 의견이 있는 날짜 (그 종가 시리즈는 미래 T+N 조회용으로 전 종목 저장)
+  const earliest = Object.keys(opinionsByDate).sort()[0];
+  let filled = 0;
+  if (earliest) {
+    for (const date of Object.keys(priceByDate)) {
+      if (date < earliest) continue; // 의견 구간 이전은 불필요
+      history[date] = {
+        prices: priceByDate[date],
+        indices: indexByDate[date] || {},
+        opinions: Object.values(opinionsByDate[date] || {}),
+      };
+      filled++;
+    }
+  }
 
   // 파일 비대화 방지: 최근 120일치만 유지 (20일 평가창 + 넉넉한 축적분)
   const days = Object.keys(history).sort().reverse().slice(0, 120);
@@ -574,8 +595,8 @@ function archiveHistory(prices, market, posts) {
   for (const d of days.sort()) pruned[d] = history[d];
 
   fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
-  const opCount = history[TODAY_KST].opinions.length;
-  console.log(`  📚 이력 축적: ${Object.keys(pruned).length}일치, 오늘 의견 ${opCount}건·종가 ${Object.keys(priceSnap).length}종목`);
+  const opTotal = Object.values(opinionsByDate).reduce((s, m) => s + Object.keys(m).length, 0);
+  console.log(`  📚 이력 축적: ${Object.keys(pruned).length}일치 (이번 갱신 ${filled}일), 의견 ${opTotal}건`);
 }
 
 // ─── 메인 ────────────────────────────────────────────────────────────────────
@@ -808,6 +829,17 @@ async function main() {
   }
   updatedBriefs = updatedBriefs.slice(0, 7); // 최대 7일치 유지
 
+  // 적중률용 이력 축적 (posts.json 저장 전 — _closes 시리즈 필요). 실패해도 메인 무손상.
+  try {
+    archiveHistory(prices, market, merged);
+  } catch (e) {
+    console.warn('⚠️  이력 축적 실패(메인 데이터는 정상 저장):', e.message);
+  }
+
+  // posts.json에는 날짜별 종가 시리즈(_closes)를 담지 않는다 (이력 파일 전용)
+  for (const v of Object.values(prices)) delete v._closes;
+  for (const v of Object.values(market)) delete v._closes;
+
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify(
@@ -816,13 +848,6 @@ async function main() {
     ),
     'utf-8'
   );
-
-  // 적중률용 이력 축적 (실패해도 메인 파이프라인 무손상)
-  try {
-    archiveHistory(prices, market, merged);
-  } catch (e) {
-    console.warn('⚠️  이력 축적 실패(메인 데이터는 정상 저장):', e.message);
-  }
 
   console.log(`\n✅ 완료: 신규 ${results.length}개 추가, 누적 ${merged.length}개 저장, 브리핑 ${updatedBriefs.length}일치 → ${OUTPUT_PATH}`);
 

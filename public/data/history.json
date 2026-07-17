@@ -1,5 +1,701 @@
 {
-  "2026-07-17": {
+  "2026-07-10": {
+    "prices": {
+      "삼성전자": 285000,
+      "SK하이닉스": 2180000,
+      "마이크론": 979.3,
+      "TSMC": 434.11,
+      "엔비디아": 210.96,
+      "ASML": 1797.32,
+      "알파벳": 357.18,
+      "메타": 669.21,
+      "키옥시아": 77000,
+      "아마존": 245.34,
+      "인텔": 109.84,
+      "IBM": 287.56,
+      "삼성전기": 1584000,
+      "대한항공": 26750,
+      "도쿄일렉트론": 72940,
+      "샌디스크": 1915.92,
+      "마이크로소프트": 385.1,
+      "닉스": 921,
+      "파마리서치": 319500,
+      "클래시스": 48500,
+      "삼양식품": 1139000,
+      "애플": 315.32,
+      "서진시스템": 47350
+    },
+    "indices": {
+      "KOSPI": 7475.94,
+      "KOSDAQ": 837.43
+    },
+    "opinions": [
+      {
+        "person": "캬오의 공부방",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "투자콤",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "메타",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "마이크로소프트",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "아마존",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "알파벳",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "애플",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      }
+    ]
+  },
+  "2026-07-13": {
+    "prices": {
+      "삼성전자": 254500,
+      "SK하이닉스": 1845000,
+      "마이크론": 937,
+      "TSMC": 421.58,
+      "엔비디아": 203.53,
+      "ASML": 1726.04,
+      "알파벳": 352.51,
+      "메타": 656.73,
+      "키옥시아": 67100,
+      "아마존": 247.31,
+      "인텔": 103.12,
+      "IBM": 290.23,
+      "삼성전기": 1289000,
+      "대한항공": 25850,
+      "도쿄일렉트론": 71300,
+      "샌디스크": 1673.97,
+      "마이크로소프트": 390.99,
+      "닉스": 921,
+      "파마리서치": 330500,
+      "클래시스": 47450,
+      "삼양식품": 1110000,
+      "애플": 317.31,
+      "서진시스템": 39250
+    },
+    "indices": {
+      "KOSPI": 6806.93,
+      "KOSDAQ": 799.36
+    },
+    "opinions": [
+      {
+        "person": "캬오의 공부방",
+        "stock": "애플",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "인텔",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "엔비디아",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "에테르",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "에테르",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "메타",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "투자콤",
+        "stock": "닉스",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "마이크론",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "엔비디아",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "애플",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "메타",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "서진시스템",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "대한항공",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "TSMC",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "김찰저",
+        "stock": "대한항공",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      }
+    ]
+  },
+  "2026-07-14": {
+    "prices": {
+      "삼성전자": 263000,
+      "SK하이닉스": 1913000,
+      "마이크론": 983.12,
+      "TSMC": 420.39,
+      "엔비디아": 211.8,
+      "ASML": 1775.64,
+      "알파벳": 359.51,
+      "메타": 661.04,
+      "키옥시아": 69100,
+      "아마존": 247.49,
+      "인텔": 107.76,
+      "IBM": 217.07,
+      "삼성전기": 1260000,
+      "대한항공": 26500,
+      "도쿄일렉트론": 71130,
+      "샌디스크": 1757.82,
+      "마이크로소프트": 384.93,
+      "닉스": 921,
+      "파마리서치": 318500,
+      "클래시스": 45550,
+      "삼양식품": 1072000,
+      "애플": 314.86,
+      "서진시스템": 37700
+    },
+    "indices": {
+      "KOSPI": 6856.83,
+      "KOSDAQ": 783.98
+    },
+    "opinions": [
+      {
+        "person": "잠실개미",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "IBM",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "펭미업",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "IBM",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "콤디티",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "콤디티",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "피터케이",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "피터케이",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "투자콤",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "투자콤",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "삼성전기",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "김찰저",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "김찰저",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      }
+    ]
+  },
+  "2026-07-15": {
+    "prices": {
+      "삼성전자": 279500,
+      "SK하이닉스": 2082000,
+      "마이크론": 904.28,
+      "TSMC": 419.48,
+      "엔비디아": 212.5,
+      "ASML": 1815.27,
+      "알파벳": 370.92,
+      "메타": 681.31,
+      "키옥시아": 73100,
+      "아마존": 254.96,
+      "인텔": 102.99,
+      "IBM": 211.2,
+      "삼성전기": 1413000,
+      "대한항공": 26650,
+      "도쿄일렉트론": 74240,
+      "샌디스크": 1615,
+      "마이크로소프트": 395.63,
+      "닉스": 955,
+      "파마리서치": 327500,
+      "클래시스": 45550,
+      "삼양식품": 1072000,
+      "애플": 327.5,
+      "서진시스템": 41950
+    },
+    "indices": {
+      "KOSPI": 7284.41,
+      "KOSDAQ": 829.43
+    },
+    "opinions": [
+      {
+        "person": "캬오의 공부방",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "샌디스크",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "IBM",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "ASML",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "삼성전기",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "ASML",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "에테르",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "ASML",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "마이크론",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "인텔",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "의교창",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "마이크론",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "씹배",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "씹배",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "씹배",
+        "stock": "삼성전기",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "씹배",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "투자콤",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "투자콤",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "에테르",
+        "stock": "알파벳",
+        "stance": "강세",
+        "market": "US"
+      }
+    ]
+  },
+  "2026-07-16": {
     "prices": {
       "삼성전자": 255000,
       "SK하이닉스": 1842000,
@@ -9,16 +705,19 @@
       "ASML": 1784.87,
       "알파벳": 354.46,
       "메타": 664.54,
-      "키옥시아": 52110,
+      "키옥시아": 62110,
+      "아마존": 249.89,
       "인텔": 96.98,
       "IBM": 219.05,
       "삼성전기": 1277000,
       "대한항공": 26500,
-      "도쿄일렉트론": 65100,
+      "도쿄일렉트론": 70890,
       "샌디스크": 1411.08,
-      "아마존": 249.89,
       "마이크로소프트": 401.1,
-      "닉스": 907,
+      "닉스": 949,
+      "파마리서치": 336500,
+      "클래시스": 44100,
+      "삼양식품": 1069000,
       "애플": 333.26,
       "서진시스템": 39300
     },
@@ -29,6 +728,30 @@
     "opinions": [
       {
         "person": "너쟁이",
+        "stock": "마이크론",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "ASML",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "TSMC",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "펭미업",
+        "stock": "알파벳",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
         "stock": "삼성전자",
         "stance": "약세",
         "market": "KR"
@@ -40,117 +763,265 @@
         "market": "KR"
       },
       {
-        "person": "너쟁이",
+        "person": "펭미업",
         "stock": "TSMC",
-        "stance": "약세",
+        "stance": "강세",
         "market": "US"
       },
       {
-        "person": "너쟁이",
-        "stock": "키옥시아",
-        "stance": "약세",
+        "person": "펭미업",
+        "stock": "마이크론",
+        "stance": "강세",
         "market": "US"
       },
       {
-        "person": "너쟁이",
-        "stock": "도쿄일렉트론",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "키옥시아",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "도쿄일렉트론",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "TSMC",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "샌디스크",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
+        "person": "펭미업",
         "stock": "SK하이닉스",
-        "stance": "약세",
+        "stance": "강세",
         "market": "KR"
       },
       {
-        "person": "에테르",
+        "person": "펭미업",
         "stock": "삼성전자",
-        "stance": "약세",
+        "stance": "강세",
         "market": "KR"
       },
       {
-        "person": "에테르",
+        "person": "펭미업",
         "stock": "엔비디아",
-        "stance": "약세",
+        "stance": "강세",
         "market": "US"
       },
       {
         "person": "에테르",
         "stock": "ASML",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "알파벳",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "아마존",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "메타",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "에테르",
-        "stock": "마이크로소프트",
-        "stance": "약세",
-        "market": "US"
-      },
-      {
-        "person": "콤디티",
-        "stock": "닉스",
         "stance": "중립",
         "market": "US"
       },
       {
-        "person": "펭미업",
-        "stock": "SK하이닉스",
-        "stance": "중립",
-        "market": "KR"
+        "person": "에테르",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
       },
       {
-        "person": "펭미업",
-        "stock": "키옥시아",
+        "person": "에테르",
+        "stock": "엔비디아",
         "stance": "중립",
         "market": "US"
       },
       {
         "person": "에테르",
         "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "알파벳",
         "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "엔비디아",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "인텔",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "피터케이",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너는 무한하지 않느냐",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "너는 무한하지 않느냐",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "투자콤",
+        "stock": "알파벳",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "투자콤",
+        "stock": "메타",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "투자콤",
+        "stock": "아마존",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "마이크론",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "TSMC",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "엔비디아",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "알파벳",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "메타",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "아마존",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "ASML",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "인텔",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "애플",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "피카츄 아저씨",
+        "stock": "서진시스템",
+        "stance": "강세",
+        "market": "KR"
+      }
+    ]
+  },
+  "2026-07-17": {
+    "prices": {
+      "키옥시아": 52110,
+      "도쿄일렉트론": 65100,
+      "닉스": 907
+    },
+    "indices": {},
+    "opinions": [
+      {
+        "person": "너쟁이",
+        "stock": "키옥시아",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "도쿄일렉트론",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "키옥시아",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "도쿄일렉트론",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "콤디티",
+        "stock": "닉스",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "펭미업",
+        "stock": "키옥시아",
+        "stance": "중립",
         "market": "US"
       }
     ]

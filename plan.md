@@ -12,20 +12,25 @@
 - **평가 기간**: 5일·20일 둘 다 (거래일 기준)
 - **벤치마크**: KR 종목 → KOSPI(코스닥주면 KOSDAQ). ⚠️ **US 종목은 현재 추적 지수 없음** → phase 2에서 ^GSPC/^IXIC 지수 수집 추가 필요. 그전까지 US 종목은 절대수익 폴백 또는 집계 제외(구현 시 결정).
 
-## Phase 1 — 데이터 축적 (이번 세션 완료 ✅)
-- `scripts/collect-rss.js`에 `archiveHistory()` 추가 → `public/data/history.json`에 하루 1레코드 upsert:
+## Phase 1 — 데이터 축적 + 소급 백필 (이번 세션 완료 ✅)
+- `fetchClosesDated()`/`fetchIndexClosesDated()` — 네이버 시세 API가 원래 45일치 일봉을
+  받아오는데 날짜를 버리고 등락률만 쓰던 걸, 날짜 보존 버전으로 추출. fetchPrices/fetchMarketData가
+  `_closes`(날짜별 종가 시리즈)를 실어 나름 → posts.json 저장 직전 제거(이력 파일 전용).
+- `archiveHistory()` → `public/data/history.json`에 **날짜 정확** upsert:
   ```
   { "YYYY-MM-DD": {
-      "prices": { "종목명": 종가, ... },        // 2명+ 언급 종목만(fetchPrices 대상)
+      "prices": { "종목명": 종가, ... },        // 그날 전 종목 종가(미래 T+N 조회용)
       "indices": { "KOSPI": n, "KOSDAQ": n },
       "opinions": [ { person, stock, stance, market } ]  // 그날 의견, person+stock 중복제거
   } }
   ```
-- 가격 없는 종목의 의견은 제외(훗날 판정 불가). 최근 120일치 유지.
-- `.github/workflows/collect.yml`에 history.json git add 추가 (매 실행 fresh checkout이라 커밋 안 하면 소실).
-- **판정/UI는 데이터가 5거래일+ 쌓인 뒤** (표본 부족 시 오도 위험).
+- **핵심**: `_closes` 시리즈로 posts.json에 남은 의견 구간(약 8일)을 날짜 정확하게 채움 →
+  **매 실행이 자동 백필**. 별도 백필 스크립트 불필요. 실행 즉시 07-10~07-16 5거래일 확보됨.
+- 가격 없는 종목의 의견은 제외(판정 불가). 오늘(장 마감 전)은 종가 미확정이라 다음 실행에 완성.
+- `.github/workflows/collect.yml`에 history.json git add 추가 (fresh checkout 소실 방지).
+- 최근 120일치 유지.
 
-## Phase 2 — 적중 판정 (데이터 ~1주 후, 미구현)
+## Phase 2 — 적중 판정 (백필로 앞당겨짐: 07-13 코호트가 07-20(월)부터 판정 가능, 미구현)
 - `scripts/hitrate.js` 신설 (judge.js처럼 순수 JS, AI 미사용, 결정적):
   - 각 의견 (person, stock, stance, date T)에 대해 history에서 price(T), price(T+5td), price(T+20td), 같은 창의 index 수익률 조회
   - 초과수익 계산 → 적중/미적중. 아직 T+Nd 데이터 없으면 pending.
