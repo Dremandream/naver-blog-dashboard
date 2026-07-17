@@ -95,5 +95,15 @@
     "code": "GOOGL.O",
     "market": "US",
     "matched": "알파벳 Class A"
+  },
+  "닉스": {
+    "code": "4243.T",
+    "market": "US",
+    "matched": "닉스"
+  },
+  "도쿄일렉트론": {
+    "code": "8035.T",
+    "market": "US",
+    "matched": "도쿄일렉트론"
   }
 }
