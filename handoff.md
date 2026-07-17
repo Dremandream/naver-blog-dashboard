@@ -91,10 +91,7 @@ npm run build                  # 빌드 확인
 
 ## 7-C. 자격증명 규칙
 - `.env`는 gitignore됨(확인 완료), 히스토리 유출 없음(스캔 완료). **키를 채팅/터미널에 출력 금지.**
-- ⚠️ **미해결**: 2026-07-11 세션에서 CLAUDE_API_KEY가 터미널에 노출된 이력 있음 → **로테이션 권장**:
-  1. console.anthropic.com → Settings → API Keys → 해당 키 Revoke → 새 키 발급
-  2. `.env`의 CLAUDE_API_KEY 교체
-  3. GitHub repo → Settings → Secrets → CLAUDE_API_KEY 교체
+- 2026-07-11 세션에서 CLAUDE_API_KEY가 로컬 터미널에 1회 출력된 이력 있음. 로테이션 권고했으나 **사용자 결정(2026-07-17): 기존 키 유지** — 로컬 노출 1회뿐이고 git 유출 없음. 더 이상 챙기지 말 것. 단, console.anthropic.com Usage에서 이상 사용량 발견 시 그때 Revoke→재발급(.env + GitHub Secrets 교체).
 
 ## 8. 다음 로드맵 (우선순위, 구현 전 필요성 재확인)
 
