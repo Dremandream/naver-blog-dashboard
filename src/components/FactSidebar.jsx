@@ -1,4 +1,5 @@
 // 팩트 사이드바 — 증권사 리포트 우측 데이터 컬럼 (본문=주장, 사이드바=검증 데이터)
+import EventCalendar, { mergeEvents } from "./EventCalendar";
 function Pct({ v }) {
   if (v == null) return null;
   const cls = v > 0 ? "at-px-up" : v < 0 ? "at-px-down" : "at-px-flat";
@@ -41,12 +42,13 @@ function IndexCard({ name, m }) {
   );
 }
 
-export default function FactSidebar({ market, verdicts, onStockClick }) {
+export default function FactSidebar({ market, verdicts, dailyBriefs, onStockClick }) {
   const review = (verdicts?.items ?? []).filter((it) => it.verdict === "needs_review");
   const asOf = market?.kospi?.asOf || market?.kosdaq?.asOf;
   const asOfFmt = asOf ? `${asOf.slice(4, 6)}.${asOf.slice(6, 8)} 종가` : null;
   const hasMarket = market && (market.kospi || market.kosdaq);
-  if (!hasMarket && review.length === 0) return null;
+  const hasEvents = mergeEvents(dailyBriefs).length > 0;
+  if (!hasMarket && review.length === 0 && !hasEvents) return null;
 
   return (
     <aside className="fact-sidebar">
@@ -76,6 +78,7 @@ export default function FactSidebar({ market, verdicts, onStockClick }) {
           <div className="fs-note">여론 방향과 주가가 반대인 종목 — 해석 주의</div>
         </div>
       )}
+      <EventCalendar dailyBriefs={dailyBriefs} onStockClick={onStockClick} />
     </aside>
   );
 }

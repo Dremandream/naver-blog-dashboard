@@ -105,5 +105,15 @@
     "code": "8035.T",
     "market": "US",
     "matched": "도쿄일렉트론"
+  },
+  "파마리서치": {
+    "code": "214450",
+    "market": "KR",
+    "matched": "파마리서치"
+  },
+  "스페이스X": {
+    "code": "SPCX.O",
+    "market": "US",
+    "matched": "스페이스X"
   }
 }

@@ -128,7 +128,7 @@ export default function App() {
         })()}
         <div className="report-layout">
           <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
-          <FactSidebar market={data?.market} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
+          <FactSidebar market={data?.market} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
         </div>
         <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />

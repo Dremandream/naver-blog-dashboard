@@ -176,6 +176,12 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .fs-val { font-variant-numeric: tabular-nums; text-align: right; }
 .fs-review { font-size: 11.5px; color: var(--ink-soft); }
 .fs-note { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.fs-event { display: flex; gap: 8px; padding: 3px 0; font-size: 12.5px; line-height: 1.45; border-bottom: 1px solid var(--rule-thin); }
+.fs-event:last-of-type { border-bottom: none; }
+.fs-event-date { flex: 0 0 44px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); }
+.fs-event-body { color: var(--ink); min-width: 0; }
+.fs-event-stock { display: inline-block; margin-left: 6px; font-size: 11px; color: var(--muted); cursor: pointer; }
+.fs-event-stock:hover { text-decoration: underline; }
 @media (max-width: 720px) {
   .report-layout { grid-template-columns: 1fr; }
   .fact-sidebar { border-left: none; padding-left: 0; position: static; border-top: 1px solid var(--rule-thin); padding-top: 14px; }

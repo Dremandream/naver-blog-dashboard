@@ -476,13 +476,15 @@ ${Object.entries(market).map(([k, v]) =>
 7. **minority(소수·역발상)**: 다수와 다르게 보는 근거 있는 시각 최대 2개, 각 한 문장. 억지로 만들지 말고 진짜 없으면 빈 배열.
 8. 여론과 주가가 뚜렷이 역행하는 종목은 point에 짧게 표시 (예: '여론 강세 vs 5일 -10%').
 9. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
+10. **events(촉매 일정)**: 글에서 구체적 날짜·시기가 언급된 **미래 이벤트만** 추출 (실적발표, 컨퍼런스콜, FOMC, 계약·협상 마감, 신제품 출시 등). 오늘은 ${TODAY_KST}. date는 YYYY-MM-DD. '7월 말'처럼 대략적 시기는 그 달 말일로 쓰고 approx를 true로. '조만간'·'하반기'처럼 날짜를 특정할 수 없으면 제외. 최대 6개, 없으면 빈 배열.
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
   "headline": "오늘의 결론 한 줄 — 시장 시각의 무게중심 서술(추천 아님). 예: '강세론 우세하나 기관은 사이클 피크 경고'",
   "positive": [ { "sector": "반도체", "items": [ { "name": "SK하이닉스", "point": "HBM 수요 강세, 목표가 30만", "mentions": 3 } ] } ],
   "negative": [ { "sector": "매크로", "items": [ { "name": "외인 수급", "point": "5일 연속 순매도 -1.2조", "mentions": 2 } ] } ],
-  "minority": ["소수·역발상 한 문장 — 누가 왜 다르게 보는지 (최대 2개, 없으면 빈 배열)"]
+  "minority": ["소수·역발상 한 문장 — 누가 왜 다르게 보는지 (최대 2개, 없으면 빈 배열)"],
+  "events": [ { "date": "2026-07-31", "label": "SK하이닉스 2Q 컨퍼런스콜", "stocks": ["SK하이닉스"], "source": "너쟁이", "approx": true } ]
 }`;
 
   // 글 수가 많은 날 출력 잘림 방지: 넉넉한 토큰 + 실패 시 1회 재시도
@@ -508,6 +510,16 @@ ${Object.entries(market).map(([k, v]) =>
       _r.headline = str(_r.headline);
       _r.positive = groups(_r.positive); _r.negative = groups(_r.negative);
       _r.minority = arr(_r.minority).filter(m => typeof m === 'string').slice(0, 2);
+      _r.events = arr(_r.events)
+        .map(ev => ({
+          date: str(ev?.date),
+          label: str(ev?.label),
+          stocks: arr(ev?.stocks).filter(s => typeof s === 'string'),
+          source: str(ev?.source),
+          approx: ev?.approx === true,
+        }))
+        .filter(ev => /^\d{4}-\d{2}-\d{2}$/.test(ev.date) && ev.label)
+        .slice(0, 6);
       _r.generatedAt = new Date().toISOString(); return _r;
     } catch (e) {
       console.warn(`  브리핑 생성 실패(${attempt}/2):`, e.message);
