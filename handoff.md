@@ -12,7 +12,7 @@
 
 - **URL**: https://naver-blog-dashboard.vercel.app
 - **자동화**: GitHub Actions 매일 KST 08:00 (`.github/workflows/collect.yml`) → 수집→분석→push→Vercel 자동배포
-- **소스 18개**: 블로그 10 (`config/blogs.json`) + 텔레그램 8 (`config/telegram-channels.json`)
+- **소스 17개**: 블로그 9 (`config/blogs.json`) + 텔레그램 8 (`config/telegram-channels.json`) — 2026-07-17 혀니루 삭제(6개월 휴면). 전 소스가 반도체·거시 편중 → 추가는 타섹터(2차전지·바이오·금융)만
 - **모델 배분(의도된 설계, 바꾸지 말 것)**: 개별 글 분석 = `claude-haiku-4-5-20251001` / 종합 리포트 = `claude-opus-4-8` (하루 1회)
 
 ## 2. 대시보드 구성 (위→아래)
@@ -119,3 +119,4 @@ npm run build                  # 빌드 확인
 **세션 11 (2026-07-17)**:
 - 프로젝트 폴더 정리: 구버전 handoff/plan/중복 Fable5 폴더 삭제 → handoff는 이 파일 하나만 유지
 - 판정 시스템 구현 완료 확인 (커밋 85954fc·5441f4f, 라이브 데이터에 verdicts 9종목 정상 작동, npm test 31/31 통과) → handoff §4·로드맵 현행화
+- **종합 리포트 간결화**: 스키마 교체 `{headline, positive[{sector,items[{name,point,mentions}]}], negative[...], minority(≤2)}` — 긍정/부정 2단 × 산업별 그룹 × 종목당 근거 1줄. brief 문단·말vs가격(관심추이와 중복)·관전포인트·쏠림·hot_stocks 제거. 구 스키마 리포트(7일치)는 DailyBrief.jsx에서 기존 레이아웃 폴백 렌더. 텔레그램 알림도 신 스키마로.

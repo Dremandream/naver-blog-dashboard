@@ -1,31 +1,23 @@
-# plan.md — Phase 1: 주가 병기 (말 vs 가격)
+# plan.md — 종합 리포트 간결화 (긍정/부정 × 산업별 재구조화)
 
-## 목표
-대시보드만 보고 시황·종목 판단이 가능하도록, 여론(언급/스탠스)에 **실제 주가 등락을 병기**한다.
+## 목표 (2026-07-17, 사용자 합의 완료)
+종합 리포트를 "결론 한 줄 + 긍정/부정 2단(산업별→종목별) + 소수의견"만으로 재구성.
+내용은 줄이고 가독성을 높인다.
 
-## 검증 완료 (2026-07-12)
-| 항목 | 소스 | 결과 |
-|---|---|---|
-| 이름→코드 | `ac.stock.naver.com/ac?q=...&target=stock` | ✅ 국내(000660)·해외(MU.O) 모두 |
-| 국내 일봉 | `api.finance.naver.com/siseJson.naver?symbol=&requestType=1&...` | ✅ 종가·거래량·외국인소진율 |
-| 해외 일봉 | `api.stock.naver.com/chart/foreign/item/{code}/day?startDateTime=&endDateTime=` | ✅ 28캔들 |
+## 확정 사항 (AskUserQuestion으로 합의)
+- 레이아웃: 긍정/부정 좌우 2단. 각 단 안에서 [산업] 그룹 → 종목 · 근거 1줄 (언급 N명)
+- 유지: headline, 소수·역발상(최대 2줄)
+- 제거: brief 요약문단, 말vs가격(관심추이 패널과 중복), 관전포인트(추후 촉매 캘린더로), 쏠림, hot_stocks 태그
 
-## 구조
-1. collect-rss.js 저장 단계에서:
-   - 최근 7일 글에서 **2명 이상 언급 종목** 추출 (상한 25개)
-   - `config/stock-codes.json` 캐시로 이름→코드 해석 (없으면 자동완성 API, 결과 캐시에 저장)
-   - 비상장(스페이스X, OpenAI 등) = 해석 실패 → 스킵
-   - 국내/해외 일봉 30일 fetch → 종가 기준 **d1/d5/d20 등락률** 계산
-   - posts.json 최상위에 `prices: { 종목명: { code, market, price, d1, d5, d20, asOf } }`
-2. 프론트:
-   - AttentionTrends: 행에 주가 컬럼 (당일 %, 5일 %) — "언급 급증 + 주가" 한눈 대조
-   - StockReport: 헤더에 현재가·등락 표시
-
-## 원칙
-- 매수/매도 신호 생성 금지. 데이터 대조만.
-- 시세 실패 시 여론 파이프라인은 영향 없이 동작 (prices만 비움)
+## 변경 파일
+1. `scripts/collect-rss.js` — generateDailyBrief 프롬프트/스키마 교체
+   - 신규 스키마: `{ headline, positive: [{sector, items:[{name, point, mentions}]}], negative: [...], minority: [] }`
+   - point = 25자 내외 한 구절 + 수치, mentions = person 기준 인원
+2. `src/components/DailyBrief.jsx` — 신규 스키마 렌더. 구 스키마(지난 리포트 7일치)는 기존 레이아웃 폴백 유지
+3. `src/App.css` — 산업 그룹/종목 행 스타일 (기존 report 토큰 재사용)
 
 ## 완료 기준
-1. 로컬 실행 → posts.json에 prices 채워짐 (국내+해외)
-2. 대시보드에서 관심 추이에 주가 표시
-3. Vercel 라이브 확인
+1. npm test 통과 + npm run build 성공
+2. 오늘 브리핑 재생성 → posts.json에 신규 스키마 확인
+3. 지난 날짜 칩 클릭 시 구 리포트 깨지지 않음
+4. push → Vercel 라이브에서 눈으로 확인

@@ -467,32 +467,22 @@ ${Object.entries(market).map(([k, v]) =>
   ).join('\n') || '(시황 데이터 없음)'}
 
 [작성 원칙 — 매우 중요]
-1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 필자들의 시각을 비교·정리만 합니다.
-2. 핵심은 비교: 누가 어떤 근거로 무엇을 주장하는지, 어디서 겹치고 어디서 갈리는지.
-3. 구체 수치를 반드시 포함 (목표가, 전망치, 증감률 등).
-4. 투자 무관 글은 무시하세요.
-5. **동일 인물 중복 주의**: 같은 person이 블로그와 텔레그램에 모두 쓸 수 있습니다(예: '너쟁이', '잠실개미'). "몇 명이 합의"를 셀 때 person 기준으로 세고, 같은 사람을 2명으로 세지 마세요.
-6. **소수의견(minority)이 가장 중요**: 다수와 다르게 보는 1~2명의 근거 있는 시각, 또는 남들이 놓친 관점을 반드시 찾아내세요. 다수 합의는 이미 시장에 반영됐을 가능성이 크고, 소수·역발상 의견이 오히려 리서치 가치가 높습니다. 억지로 만들지 말되, 실제로 있으면 놓치지 마세요.
-7. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
-
-8. **관전 포인트(watch_points)**: 앞으로 시장 방향을 가를 확인 변수·촉매·일정을 짚으세요(예: '7/20 빅테크 CAPEX 발표', 'HBM 가격 협상', '외국인 순매수 전환 여부'). 독자가 스스로 판단하도록 돕는 체크리스트입니다.
-9. **말 vs 가격 대조(divergence 분석) — 매우 중요**: 위 주가·시황 데이터와 여론을 반드시 대조하세요. 지수 흐름과 외국인/기관 수급도 여론 평가의 배경으로 활용하세요(예: 여론 강세인데 외인 5일 연속 순매도면 명시). 여론이 강세인데 주가가 하락 중이면(또는 반대) 그 괴리를 headline과 price_check에 명시하고, 가능한 해석(선반영 소화 vs 수급 이탈 vs 매수 기회)을 병기하세요. 여론과 가격이 같은 방향이면 "추세 확인"으로 서술하세요. 가격은 여론보다 정직한 신호일 수 있습니다.
-10. **쏠림 경고(crowding)**: 위 쏠림 지표를 근거로, 오늘 소스들이 한 섹터/한 방향에 몰렸으면 경고하세요. 다수 합의는 이미 반영됐을 위험이 크고, 쏠림이 심할수록 역발상 가치가 커집니다. crowding 필드에 "무엇에 얼마나 쏠렸는지 + 그래서 무엇을 경계할지"를 담으세요.
-11. **소외된 시각(neglected)**: 다수(반도체·주도 섹터)에 묻힌 다른 섹터·다른 자산·반대 방향 의견을 반드시 발굴하세요. 단 1명이 말했더라도 남들과 다른 섹터(예: 금융·2차전지·바이오·소비)나 반대 포지션이면 여기에 담으세요. 없으면 빈 배열.
-12. 이것은 증권사 리포트처럼 읽혀야 합니다. 각 논거는 "누가 — 무엇을 — 어떤 수치·근거로" 완결된 문장으로.
+1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 필자들의 시각을 정리만 합니다.
+2. **간결이 최우선**: 독자는 아침에 1~2분만 봅니다. 종목당 근거는 25자 내외 한 구절 + 핵심 수치 하나.
+3. 투자 무관 글은 무시하세요.
+4. **동일 인물 중복 주의**: 같은 person이 블로그와 텔레그램에 모두 쓸 수 있습니다(예: '너쟁이', '잠실개미'). mentions는 person 기준으로 세고, 같은 사람을 2명으로 세지 마세요.
+5. **positive/negative 분류**: 필자들의 시각이 긍정(강세)인 대상은 positive에, 부정(신중·약세)인 대상은 negative에. 같은 종목에 강세·약세가 갈리면 양쪽에 각각 넣되 point에 인원을 명시 (예: '강세 3명 vs 약세 2명 갈림').
+6. **sector 그룹**: 종목들을 산업별로 묶으세요 (예: 반도체, AI/빅테크, 2차전지, 금융, 매크로). 종목이 아닌 시장 전체 의견(지수·수급·금리)은 sector '매크로'에 name을 주제어로 (예: name '외인 수급').
+7. **minority(소수·역발상)**: 다수와 다르게 보는 근거 있는 시각 최대 2개, 각 한 문장. 억지로 만들지 말고 진짜 없으면 빈 배열.
+8. 여론과 주가가 뚜렷이 역행하는 종목은 point에 짧게 표시 (예: '여론 강세 vs 5일 -10%').
+9. 글이 1개뿐이면 비교 없이 핵심만 정리하고 나머지는 빈 배열.
 
 반드시 아래 JSON만 출력하세요 (마크다운 없이):
 {
   "headline": "오늘의 결론 한 줄 — 시장 시각의 무게중심 서술(추천 아님). 예: '강세론 우세하나 기관은 사이클 피크 경고'",
-  "brief": "리서치 리포트 서두처럼 정보 밀도 높은 종합 4~6문장. 누가 어떤 근거·수치로 무엇을 보는지.",
-  "bull_case": ["강세 논거 — '누가: 근거+수치' 완결 문장 2~4개 (없으면 빈 배열)"],
-  "bear_case": ["약세·신중 논거 — '누가: 근거+수치' 완결 문장 2~4개 (없으면 빈 배열)"],
-  "minority": ["소수·역발상 관점 — 다수와 다른 근거 있는 시각이나 남들이 놓친 관점. 누가 왜 그렇게 보는지 근거까지 (진짜 없으면 빈 배열)"],
-  "crowding": "쏠림 경고 한 문장 — 무엇에 얼마나 몰렸고 무엇을 경계할지 (쏠림 약하면 빈 문자열)",
-  "neglected": ["다수에 묻힌 다른 섹터·다른 자산·반대 방향 의견 — 누가/무엇을 (없으면 빈 배열)"],
-  "price_check": ["말 vs 가격 대조 — 여론과 주가가 역행/동행하는 종목과 그 해석. 예: 'SK하이닉스: 여론 강세 7명 vs 5일 -10% 역행 — 선반영 소화 vs 수급 이탈 쟁점' (주가 데이터 없으면 빈 배열)"],
-  "watch_points": ["앞으로 확인할 핵심 변수·촉매·일정 2~4개 (없으면 빈 배열)"],
-  "hot_stocks": ["2명 이상(person 기준) 언급 종목 (없으면 빈 배열)"]
+  "positive": [ { "sector": "반도체", "items": [ { "name": "SK하이닉스", "point": "HBM 수요 강세, 목표가 30만", "mentions": 3 } ] } ],
+  "negative": [ { "sector": "매크로", "items": [ { "name": "외인 수급", "point": "5일 연속 순매도 -1.2조", "mentions": 2 } ] } ],
+  "minority": ["소수·역발상 한 문장 — 누가 왜 다르게 보는지 (최대 2개, 없으면 빈 배열)"]
 }`;
 
   // 글 수가 많은 날 출력 잘림 방지: 넉넉한 토큰 + 실패 시 1회 재시도
@@ -507,11 +497,17 @@ ${Object.entries(market).map(([k, v]) =>
       // 스키마 정규화: 필드 누락/타입 오류가 UI까지 전파되지 않게 (명세-코드 일치 원칙)
       const arr = v => Array.isArray(v) ? v : [];
       const str = v => typeof v === 'string' ? v : '';
-      _r.headline = str(_r.headline); _r.brief = str(_r.brief); _r.crowding = str(_r.crowding);
-      _r.bull_case = arr(_r.bull_case); _r.bear_case = arr(_r.bear_case);
-      _r.minority = arr(_r.minority); _r.neglected = arr(_r.neglected);
-      _r.price_check = arr(_r.price_check); _r.watch_points = arr(_r.watch_points);
-      _r.hot_stocks = arr(_r.hot_stocks);
+      const groups = v => arr(v)
+        .map(g => ({
+          sector: str(g?.sector) || '기타',
+          items: arr(g?.items)
+            .map(it => ({ name: str(it?.name), point: str(it?.point), mentions: Number(it?.mentions) || 0 }))
+            .filter(it => it.name),
+        }))
+        .filter(g => g.items.length > 0);
+      _r.headline = str(_r.headline);
+      _r.positive = groups(_r.positive); _r.negative = groups(_r.negative);
+      _r.minority = arr(_r.minority).filter(m => typeof m === 'string').slice(0, 2);
       _r.generatedAt = new Date().toISOString(); return _r;
     } catch (e) {
       console.warn(`  브리핑 생성 실패(${attempt}/2):`, e.message);
@@ -775,26 +771,21 @@ async function sendTelegram(brief, postCount) {
   // HTML 특수문자 이스케이프 (parse_mode: HTML 안전성)
   const esc = (s = '') => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-  const stocks = brief.hot_stocks?.length
-    ? `\n📌 공통 언급: ${esc(brief.hot_stocks.join(', '))}`
-    : '';
-  const consensus = brief.consensus?.length
-    ? `\n✅ 합의: ${esc(brief.consensus[0])}`
-    : '';
-  const divergence = brief.divergence?.length
-    ? `\n⚡ 이견: ${esc(brief.divergence[0])}`
-    : '';
+  // 긍정/부정 그룹 → "종목(근거)" 나열, 산업별 한 줄
+  const lines = (groups = []) =>
+    groups.map(g => `· ${esc(g.sector)}: ${g.items.map(it => esc(it.name)).join(', ')}`).join('\n');
+  const pos = brief.positive?.length ? `\n📈 긍정\n${lines(brief.positive)}` : '';
+  const neg = brief.negative?.length ? `\n📉 부정\n${lines(brief.negative)}` : '';
+  const minority = brief.minority?.length ? `\n🔍 ${esc(brief.minority[0])}` : '';
 
   const text = [
     `📈 <b>네이버 블로그 투자 브리핑</b> (${esc(brief.date)})`,
     `글 ${postCount}개 종합`,
     ``,
     `<b>${esc(brief.headline)}</b>`,
-    ``,
-    esc(brief.brief),
-    stocks,
-    consensus,
-    divergence,
+    pos,
+    neg,
+    minority,
   ].filter(Boolean).join('\n').slice(0, 4000);
 
   try {

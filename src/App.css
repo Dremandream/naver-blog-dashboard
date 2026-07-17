@@ -145,6 +145,18 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .report-stocks { padding: 12px 0 0; border-top: 3px double var(--rule); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .report-stocks .report-block-title { margin-bottom: 0; padding-top: 0; border-top: none; color: var(--muted); }
 @media (max-width: 600px) { .report-grid { grid-template-columns: 1fr; } .daily-brief.report { padding: 20px 18px; } }
+/* 긍정/부정 2단 (신 스키마): [산업] 그룹 → 종목 · 근거 1줄 */
+.pn-sector { margin-bottom: 12px; }
+.pn-sector-name { font-size: 11.5px; font-weight: 700; color: var(--muted); letter-spacing: .04em; margin-bottom: 5px; }
+.pn-sector-name::before { content: "["; color: var(--faint); }
+.pn-sector-name::after { content: "]"; color: var(--faint); }
+.pn-item { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; font-size: 13px; line-height: 1.6; }
+.pn-name { font-weight: 700; color: var(--ink); white-space: nowrap; cursor: pointer; }
+.pn-name:hover { text-decoration: underline; }
+.pn-point { color: var(--ink-soft); }
+.pn-mentions { color: var(--muted); font-size: 12px; }
+.pn-empty { font-size: 13px; color: var(--muted); padding: 4px 0; }
+.pn-minority { padding: 11px 15px; background: #faf6ee; border: 1px solid var(--rule-thin); border-left: 3px solid var(--accent); font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
 .brief-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 2px solid var(--rule); }
 .brief-label { font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
 .brief-date { font-size: 11px; color: var(--muted); }
