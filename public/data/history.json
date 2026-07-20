@@ -53595,11 +53595,30 @@
       "대덕전자": 120700,
       "파두": 71600,
       "현대차": 399000,
-      "파마리서치": 327000
+      "파마리서치": 327000,
+      "엔비디아": 203.28,
+      "TSMC": 402.3,
+      "마이크론": 865.46,
+      "알파벳": 351.99,
+      "메타": 645.85,
+      "아마존": 249.99,
+      "ASML": 1739.02,
+      "마이크로소프트": 402.29,
+      "IBM": 213,
+      "오라클": 121.38,
+      "샌디스크": 1390.95,
+      "애플": 326.59,
+      "AMD": 503.57,
+      "퀄컴": 170.32,
+      "인텔": 97.06,
+      "코오롱티슈진": 61200,
+      "ASE": 36.9
     },
     "indices": {
       "KOSPI": 6516.27,
-      "KOSDAQ": 749.64
+      "KOSDAQ": 749.64,
+      "NASDAQ": 25508.072,
+      "SP500": 7443.28
     },
     "opinions": [
       {
@@ -53732,6 +53751,180 @@
         "person": "에테르",
         "stock": "현대차",
         "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "마이크로소프트",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "알파벳",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "메타",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "아마존",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "오라클",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "마이크로소프트",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "알파벳",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "아마존",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "메타",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "오라클",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "에테르",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "엔비디아",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "마이크론",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "샌디스크",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "메타",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "알파벳",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "아마존",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "애플",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "퀄컴",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "인텔",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "AMD",
+        "stance": "중립",
+        "market": "US"
+      },
+      {
+        "person": "펭미업",
+        "stock": "엔비디아",
+        "stance": "약세",
+        "market": "US"
+      },
+      {
+        "person": "펭미업",
+        "stock": "코오롱티슈진",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "대덕전자",
+        "stance": "약세",
         "market": "KR"
       }
     ]
