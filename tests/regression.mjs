@@ -106,15 +106,18 @@ const hist = {
     opinions: [op('펜딩', 'S1', '강세', 'KR')],       // 최신일 의견 → +5 없음 → pending
   },
 };
-const scores = computeSourceScores(hist);
+// 골든 데이터는 6거래일뿐이라 [5,20] 창으로 검증 (프로덕션 기본창 [21,63,252]은 이 데이터로 성숙 불가)
+const scores = computeSourceScores(hist, [5, 20]);
 const S = (name) => scores.sources.find((x) => x.person === name);
-eq('HR1 KR 강세 적중률(3/5=60)', [S('테스터').w5.hits, S('테스터').w5.total, S('테스터').w5.rate], [3, 5, 60]);
-eq('HR2 US 나스닥 벤치마크(4/5=80)', [S('미국러').w5.hits, S('미국러').w5.total, S('미국러').w5.rate], [4, 5, 80]);
-eq('HR3 KR 약세 적중률(3/5=60)', [S('약세러').w5.hits, S('약세러').w5.total, S('약세러').w5.rate], [3, 5, 60]);
-eq('HR4 중립 제외(약세 5건만 집계, 중립은 opinions·total 모두 제외)', [S('약세러').w5.total, S('약세러').opinions], [5, 5]);
-eq('HR5 표본부족 rate=null(2건)', [S('소수러').w5.total, S('소수러').w5.rate], [2, null]);
-eq('HR6 최신일 의견 pending(total 0)', [S('펜딩').w5.total, S('펜딩').w5.rate], [0, null]);
-eq('HR7 20일창 아직 없음(pending)', S('테스터').w20.total, 0);
+eq('HR1 KR 강세 적중률(3/5=60)', [S('테스터').w[5].hits, S('테스터').w[5].total, S('테스터').w[5].rate], [3, 5, 60]);
+eq('HR2 US 나스닥 벤치마크(4/5=80)', [S('미국러').w[5].hits, S('미국러').w[5].total, S('미국러').w[5].rate], [4, 5, 80]);
+eq('HR3 KR 약세 적중률(3/5=60)', [S('약세러').w[5].hits, S('약세러').w[5].total, S('약세러').w[5].rate], [3, 5, 60]);
+eq('HR4 중립 제외(약세 5건만 집계, 중립은 opinions·total 모두 제외)', [S('약세러').w[5].total, S('약세러').opinions], [5, 5]);
+eq('HR5 표본부족 rate=null(2건)', [S('소수러').w[5].total, S('소수러').w[5].rate], [2, null]);
+eq('HR6 최신일 의견 pending(total 0)', [S('펜딩').w[5].total, S('펜딩').w[5].rate], [0, null]);
+eq('HR7 20일창 아직 없음(pending)', S('테스터').w[20].total, 0);
+eq('HR8 windows 메타(라벨 포함)', scores.windows, [{ n: 5, label: '5일' }, { n: 20, label: '20일' }]);
+eq('HR9 기본창 프로덕션값 [21,63,252]', computeSourceScores(hist).windows.map((w) => w.n), [21, 63, 252]);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

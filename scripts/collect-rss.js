@@ -870,8 +870,9 @@ async function main() {
   try {
     const history = archiveHistory(prices, market, merged);
     sourceScores = computeSourceScores(history);
-    const judgedN = sourceScores.sources.filter(s => s.w5.total > 0).length;
-    console.log(`  🎯 소스 점수: ${sourceScores.sources.length}명 집계, 5일 판정 시작된 소스 ${judgedN}명`);
+    const firstWin = sourceScores.windows[0];
+    const judgedN = sourceScores.sources.filter(s => s.w[firstWin.n].total > 0).length;
+    console.log(`  🎯 소스 점수: ${sourceScores.sources.length}명 집계, ${firstWin.label} 판정 시작된 소스 ${judgedN}명`);
   } catch (e) {
     console.warn('⚠️  이력/점수 계산 실패(메인 데이터는 정상 저장):', e.message);
   }
