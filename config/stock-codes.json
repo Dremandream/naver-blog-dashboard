@@ -3438,5 +3438,10 @@
     "code": "GE",
     "market": "US",
     "matched": "GE 에어로스페이스"
+  },
+  "자이에스앤디": {
+    "code": "317400",
+    "market": "KR",
+    "matched": "자이에스앤디"
   }
 }
