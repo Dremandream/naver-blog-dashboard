@@ -172,11 +172,28 @@ async function fetchTelegramChannel(channelId) {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; blog-dashboard/1.0)' },
     });
     if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
-    return await response.text();
+    // 프리뷰(웹 미리보기)가 꺼진 채널은 t.me/s/{id} → t.me/{id} 로 리다이렉트되어 본문이 없다.
+    // 최종 URL 경로가 /s/ 를 잃었으면 "프리뷰 꺼짐"으로 판별한다.
+    let previewOff = false;
+    try {
+      previewOff = !new URL(response.url).pathname.startsWith('/s/');
+    } catch { /* response.url 파싱 실패 시 판별 생략 */ }
+    return { html: await response.text(), previewOff };
   } finally {
     clearTimeout(timer);
   }
 }
+
+// 텔레그램 채널 수집 상태 분류 (순수 함수 — 회귀테스트 대상)
+// preview-off: 프리뷰 꺼짐 → 수집 불가(경고) / parse-empty: 페이지에 메시지 0건 → 구조변경·차단 의심(경고)
+// no-recent: 파싱은 됐으나 대상 날짜에 글 없음 → 정상(저빈도 채널) / ok: 정상 수집
+export function classifyTelegramHealth({ previewOff, parsedCount, windowCount }) {
+  if (previewOff) return 'preview-off';
+  if (parsedCount === 0) return 'parse-empty';
+  if (windowCount === 0) return 'no-recent';
+  return 'ok';
+}
+export const TELEGRAM_PROBLEM_STATUSES = ['preview-off', 'parse-empty'];
 
 // HTML 엔티티 디코드 + 태그 제거
 export function stripHtml(s) {
@@ -674,16 +691,19 @@ async function main() {
     console.warn('⚠️  telegram-channels.json 로드 실패 — 텔레그램 수집 스킵');
   }
 
+  const telegramProblems = []; // 조용한 실패 감지: {name, id, status}
   if (channels.length > 0) {
     console.log(`\n📱 텔레그램 채널 ${channels.length}개: ${channels.map(c => c.name).join(', ')}`);
     for (const ch of channels) {
       try {
-        const html = await fetchTelegramChannel(ch.id);
+        const { html, previewOff } = await fetchTelegramChannel(ch.id);
         const msgs = parseTelegramMessages(html, ch.id);
+        let windowCount = 0;
         // 채널별로 하루치 메시지를 1개 글로 병합 (targetDates 범위만)
         for (const date of targetDates) {
           const dayMsgs = msgs.filter(m => m.postDate === date);
           if (dayMsgs.length === 0) continue;
+          windowCount += dayMsgs.length;
           const content = dayMsgs.map(m => m.text).join('\n\n---\n\n').slice(0, 8000);
           collected.push({
             blog_id: ch.id,
@@ -697,9 +717,22 @@ async function main() {
           });
           console.log(`✅ ${ch.name}: [${date}] ${dayMsgs.length}건 병합`);
         }
+        // 조용한 실패 감지 (0건이 "정상 저빈도"인지 "수집 불가"인지 구분)
+        const status = classifyTelegramHealth({ previewOff, parsedCount: msgs.length, windowCount });
+        if (status === 'preview-off') {
+          console.warn(`⚠️  ${ch.name} (${ch.id}): 프리뷰 꺼짐 — t.me/s 미리보기 비활성으로 수집 불가. 채널 주인이 Preview를 켜야 복구됨.`);
+        } else if (status === 'parse-empty') {
+          console.warn(`⚠️  ${ch.name} (${ch.id}): 페이지에서 메시지 0건 파싱 — 텔레그램 구조 변경 또는 차단 의심(파싱 정규식 점검 필요).`);
+        }
+        if (TELEGRAM_PROBLEM_STATUSES.includes(status)) telegramProblems.push({ name: ch.name, id: ch.id, status });
       } catch (e) {
         console.log(`❌ ${ch.name} (텔레그램): ${e.message}`);
+        telegramProblems.push({ name: ch.name, id: ch.id, status: `error: ${e.message}` });
       }
+    }
+    if (telegramProblems.length > 0) {
+      console.warn(`\n🚨 텔레그램 문제 채널 ${telegramProblems.length}개: ${telegramProblems.map(p => `${p.name}(${p.status})`).join(', ')}`);
+      await notifyTelegramAlert(telegramProblems);
     }
   }
 
@@ -895,6 +928,29 @@ async function main() {
   // ── 텔레그램 알림 ──────────────────────────────────────────────────────────────────────────
   if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID && todayBrief) {
     await sendTelegram(todayBrief, results.length);
+  }
+}
+
+// 텔레그램 소스 건강 이상 알림 (프리뷰 꺼짐/파싱 0건 등 조용한 실패를 아침에 알림)
+async function notifyTelegramAlert(problems) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return; // 시크릿 없으면 로그만 남기고 스킵
+  const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const label = { 'preview-off': '프리뷰 꺼짐(수집 불가)', 'parse-empty': '메시지 0건(구조변경·차단 의심)' };
+  const lines = problems.map(p => `· ${esc(p.name)} — ${esc(label[p.status] || p.status)}`).join('\n');
+  const text = [`⚠️ <b>텔레그램 소스 점검 필요</b> (${problems.length}개)`, ``, lines].join('\n').slice(0, 4000);
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML' }),
+    });
+    const json = await res.json();
+    if (json.ok) console.log('📲 텔레그램 소스 점검 알림 전송 완료');
+    else console.warn('⚠️  점검 알림 전송 실패:', json.description);
+  } catch (e) {
+    console.warn('⚠️  점검 알림 전송 오류:', e.message);
   }
 }
 

@@ -1,7 +1,7 @@
 // 회귀 테스트 — 수집기 순수 함수 골든 케이스
 // 실행: npm test  (외부 네트워크 불필요, <1초)
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
-import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange } from '../scripts/collect-rss.js';
+import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 
@@ -38,6 +38,13 @@ eq('T1 메시지 수', msgs.length, 2);
 eq('T2 KST 날짜 변환(UTC 23:30→익일)', msgs[0].postDate, '2026-07-11');
 eq('T3 텍스트+엔티티', msgs[0].text, '첫 번째 메시지 $100');
 eq('T4 URL', msgs[1].url, 'https://t.me/chan/101');
+
+console.log('── classifyTelegramHealth (조용한 실패 감지) ──');
+eq('TG-H1 프리뷰 꺼짐(수집 불가)', classifyTelegramHealth({ previewOff: true, parsedCount: 0, windowCount: 0 }), 'preview-off');
+eq('TG-H2 프리뷰 우선(파싱값 무관)', classifyTelegramHealth({ previewOff: true, parsedCount: 5, windowCount: 3 }), 'preview-off');
+eq('TG-H3 파싱 0건(구조변경·차단 의심)', classifyTelegramHealth({ previewOff: false, parsedCount: 0, windowCount: 0 }), 'parse-empty');
+eq('TG-H4 최근 글 없음=정상(저빈도)', classifyTelegramHealth({ previewOff: false, parsedCount: 20, windowCount: 0 }), 'no-recent');
+eq('TG-H5 정상 수집', classifyTelegramHealth({ previewOff: false, parsedCount: 20, windowCount: 4 }), 'ok');
 
 console.log('── pctChange ──');
 eq('P1 1일 등락', pctChange([100, 110], 1), 10);
