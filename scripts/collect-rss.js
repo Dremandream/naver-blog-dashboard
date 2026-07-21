@@ -641,8 +641,8 @@ function archiveHistory(prices, market, posts) {
     }
   }
 
-  // 파일 비대화 방지: 최근 120일치만 유지 (20일 평가창 + 넉넉한 축적분)
-  const days = Object.keys(history).sort().reverse().slice(0, 120);
+  // 파일 비대화 방지: 최근 400일치 유지 (1년=252거래일 평가창 + 여유. 2026-07-21 120→400 상향, 1년 적중률용)
+  const days = Object.keys(history).sort().reverse().slice(0, 400);
   const pruned = {};
   for (const d of days.sort()) pruned[d] = history[d];
 

@@ -22,7 +22,7 @@ const POSTS_PATH = path.join(__dirname, '../public/data/posts.json');
 const CODES_PATH = path.join(__dirname, '../config/stock-codes.json');
 const CACHE_PATH = path.join(__dirname, '.scrape-cache.json');
 const CUTOFF = process.argv[2] || (() => { const d = new Date(Date.now() - 92 * 86400000); return d.toISOString().slice(0, 10); })();
-const PRICE_DAYS = 110; // 시세 조회 범위(cutoff+평가창 커버)
+const PRICE_DAYS = 380; // 시세 조회 범위(1년 백필+평가창 커버. 네이버 siseJson은 단일 호출로 ~255거래일 반환 확인)
 const rank = (s) => (s === '강세' ? 2 : s === '약세' ? 2 : 1);
 
 // person 정규화 (config 기준)
@@ -160,7 +160,7 @@ for (const date of allDates) {
   };
   filled++;
 }
-const keep = Object.keys(history).sort().reverse().slice(0, 200).sort();
+const keep = Object.keys(history).sort().reverse().slice(0, 400).sort();
 const pruned = {}; for (const d of keep) pruned[d] = history[d];
 fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
 console.log(`📚 history 병합: ${Object.keys(pruned).length}일치 (갱신 ${filled}일)`);
@@ -170,7 +170,11 @@ const scores = computeSourceScores(pruned);
 const posts = JSON.parse(fs.readFileSync(POSTS_PATH, 'utf-8'));
 posts.source_scores = scores;
 fs.writeFileSync(POSTS_PATH, JSON.stringify(posts, null, 2), 'utf-8');
-const judged = scores.sources.filter((s) => s.w5.rate != null);
-console.log(`🎯 적중률: ${scores.sources.length}명 중 5일 비율표시 ${judged.length}명`);
-for (const s of scores.sources.filter((s) => s.w5.total > 0).slice(0, 20))
-  console.log(`  ${s.person}: 5일 ${s.w5.rate ?? '표본적음'}${s.w5.rate != null ? '%' : ''} (${s.w5.hits}/${s.w5.total}) · 20일 ${s.w20.rate ?? '—'}${s.w20.rate != null ? '%' : ''} (${s.w20.hits}/${s.w20.total})`);
+const wins = scores.windows; // [{n,label}] — 기본 [21,63,252] = 1개월·3개월·1년
+const first = wins[0].n;
+const judged = scores.sources.filter((s) => s.w[first].rate != null);
+console.log(`🎯 적중률: ${scores.sources.length}명 중 ${wins[0].label} 비율표시 ${judged.length}명`);
+for (const s of scores.sources.filter((s) => s.w[first].total > 0).slice(0, 20)) {
+  const cols = wins.map((w) => `${w.label} ${s.w[w.n].rate ?? '표본적음'}${s.w[w.n].rate != null ? '%' : ''} (${s.w[w.n].hits}/${s.w[w.n].total})`).join(' · ');
+  console.log(`  ${s.person}: ${cols}`);
+}
