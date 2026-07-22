@@ -88,8 +88,9 @@ await pool(missing, 5, async (g) => {
   const content = g.texts.join('\n\n---\n\n').slice(0, 8000);
   try {
     const r = await analyzePost(`${g.person} 텔레그램 (${g.date})`, content, g.person);
+    if (r._failed) return; // API 실패 → 캐시 안 함(다음 실행 재시도), 오염 방지
     cache[g.key] = { stocks: r.stocks, stance: r.stance };
-  } catch { cache[g.key] = { stocks: [], stance: '중립' }; }
+  } catch { /* 재시도 소진 실패 → 캐시 안 함 */ }
   if (++done % 25 === 0) { console.log(`  ...${done}/${missing.length}`); fs.writeFileSync(CACHE_PATH, JSON.stringify(cache)); }
 });
 fs.writeFileSync(CACHE_PATH, JSON.stringify(cache), 'utf-8');

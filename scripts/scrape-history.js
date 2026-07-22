@@ -88,8 +88,9 @@ await pool(missing, 5, async (it) => {
     const html = await get(`https://m.blog.naver.com/PostView.naver?blogId=${it.blogId}&logNo=${it.logNo}`);
     const body = extractBody(html);
     const r = await analyzePost(it.title, body || it.title, it.person);
+    if (r._failed) return; // API 실패 → 캐시 안 함(다음 실행 재시도), 오염 방지
     cache[it.logNo] = { stocks: r.stocks, stance: r.stance };
-  } catch (e) { cache[it.logNo] = { stocks: [], stance: '중립' }; }
+  } catch (e) { /* 재시도 소진 실패 → 캐시 안 함 */ }
   if (++done % 25 === 0) { console.log(`  ...${done}/${missing.length}`); fs.writeFileSync(CACHE_PATH, JSON.stringify(cache)); }
 });
 fs.writeFileSync(CACHE_PATH, JSON.stringify(cache), 'utf-8');

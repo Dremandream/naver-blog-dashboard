@@ -1206,81 +1206,60 @@
     ],
     "sources": [
       {
-        "person": "피터케이",
-        "opinions": 61,
+        "person": "IT는 SK",
+        "opinions": 931,
         "w": {
           "21": {
-            "hits": 28,
-            "total": 50,
+            "hits": 406,
+            "total": 725,
             "rate": 56
           },
           "63": {
-            "hits": 8,
-            "total": 8,
-            "rate": 100
+            "hits": 414,
+            "total": 618,
+            "rate": 67
           },
           "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
+            "hits": 98,
+            "total": 149,
+            "rate": 65.8
           }
         }
       },
       {
-        "person": "IT는 SK",
-        "opinions": 285,
+        "person": "너는 무한하지 않느냐",
+        "opinions": 701,
         "w": {
           "21": {
-            "hits": 98,
-            "total": 178,
-            "rate": 55.1
+            "hits": 311,
+            "total": 579,
+            "rate": 53.7
           },
           "63": {
-            "hits": 39,
-            "total": 69,
-            "rate": 56.5
+            "hits": 270,
+            "total": 479,
+            "rate": 56.4
           },
           "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
+            "hits": 11,
+            "total": 15,
+            "rate": 73.3
           }
         }
       },
       {
         "person": "잠실개미",
-        "opinions": 275,
+        "opinions": 373,
         "w": {
           "21": {
-            "hits": 110,
-            "total": 200,
-            "rate": 55
+            "hits": 157,
+            "total": 300,
+            "rate": 52.3
           },
           "63": {
-            "hits": 49,
-            "total": 81,
-            "rate": 60.5
-          },
-          "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
-          }
-        }
-      },
-      {
-        "person": "Teddy 미술관",
-        "opinions": 14,
-        "w": {
-          "21": {
-            "hits": 7,
-            "total": 13,
-            "rate": 53.8
-          },
-          "63": {
-            "hits": 3,
-            "total": 7,
-            "rate": 42.9
+            "hits": 114,
+            "total": 179,
+            "rate": 63.7
           },
           "252": {
             "hits": 0,
@@ -1291,22 +1270,43 @@
       },
       {
         "person": "금싸",
-        "opinions": 10,
+        "opinions": 75,
         "w": {
           "21": {
-            "hits": 4,
-            "total": 8,
-            "rate": 50
+            "hits": 32,
+            "total": 62,
+            "rate": 51.6
           },
           "63": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
+            "hits": 27,
+            "total": 56,
+            "rate": 48.2
           },
           "252": {
             "hits": 0,
             "total": 0,
             "rate": null
+          }
+        }
+      },
+      {
+        "person": "피터케이",
+        "opinions": 128,
+        "w": {
+          "21": {
+            "hits": 50,
+            "total": 102,
+            "rate": 49
+          },
+          "63": {
+            "hits": 41,
+            "total": 71,
+            "rate": 57.7
+          },
+          "252": {
+            "hits": 2,
+            "total": 12,
+            "rate": 16.7
           }
         }
       },
@@ -1315,56 +1315,14 @@
         "opinions": 153,
         "w": {
           "21": {
-            "hits": 28,
-            "total": 62,
-            "rate": 45.2
+            "hits": 35,
+            "total": 74,
+            "rate": 47.3
           },
           "63": {
             "hits": 0,
             "total": 0,
             "rate": null
-          },
-          "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
-          }
-        }
-      },
-      {
-        "person": "피카츄 아저씨",
-        "opinions": 163,
-        "w": {
-          "21": {
-            "hits": 47,
-            "total": 107,
-            "rate": 43.9
-          },
-          "63": {
-            "hits": 14,
-            "total": 37,
-            "rate": 37.8
-          },
-          "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
-          }
-        }
-      },
-      {
-        "person": "너는 무한하지 않느냐",
-        "opinions": 243,
-        "w": {
-          "21": {
-            "hits": 73,
-            "total": 169,
-            "rate": 43.2
-          },
-          "63": {
-            "hits": 17,
-            "total": 52,
-            "rate": 32.7
           },
           "252": {
             "hits": 0,
@@ -1375,38 +1333,17 @@
       },
       {
         "person": "의교창",
-        "opinions": 259,
+        "opinions": 357,
         "w": {
           "21": {
-            "hits": 91,
-            "total": 211,
-            "rate": 43.1
+            "hits": 141,
+            "total": 308,
+            "rate": 45.8
           },
           "63": {
-            "hits": 33,
-            "total": 96,
-            "rate": 34.4
-          },
-          "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
-          }
-        }
-      },
-      {
-        "person": "펭미업",
-        "opinions": 131,
-        "w": {
-          "21": {
-            "hits": 30,
-            "total": 80,
-            "rate": 37.5
-          },
-          "63": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
+            "hits": 95,
+            "total": 212,
+            "rate": 44.8
           },
           "252": {
             "hits": 0,
@@ -1417,59 +1354,122 @@
       },
       {
         "person": "씹배",
-        "opinions": 43,
+        "opinions": 205,
         "w": {
           "21": {
-            "hits": 9,
-            "total": 24,
-            "rate": 37.5
+            "hits": 67,
+            "total": 147,
+            "rate": 45.6
           },
           "63": {
-            "hits": 0,
-            "total": 1,
-            "rate": null
+            "hits": 58,
+            "total": 137,
+            "rate": 42.3
+          },
+          "252": {
+            "hits": 8,
+            "total": 26,
+            "rate": 30.8
+          }
+        }
+      },
+      {
+        "person": "피카츄 아저씨",
+        "opinions": 217,
+        "w": {
+          "21": {
+            "hits": 73,
+            "total": 161,
+            "rate": 45.3
+          },
+          "63": {
+            "hits": 35,
+            "total": 87,
+            "rate": 40.2
           },
           "252": {
             "hits": 0,
             "total": 0,
             "rate": null
+          }
+        }
+      },
+      {
+        "person": "Teddy 미술관",
+        "opinions": 130,
+        "w": {
+          "21": {
+            "hits": 47,
+            "total": 124,
+            "rate": 37.9
+          },
+          "63": {
+            "hits": 46,
+            "total": 117,
+            "rate": 39.3
+          },
+          "252": {
+            "hits": 0,
+            "total": 5,
+            "rate": 0
           }
         }
       },
       {
         "person": "너쟁이",
-        "opinions": 182,
+        "opinions": 305,
         "w": {
           "21": {
-            "hits": 35,
-            "total": 107,
-            "rate": 32.7
+            "hits": 81,
+            "total": 216,
+            "rate": 37.5
           },
           "63": {
-            "hits": 4,
-            "total": 22,
-            "rate": 18.2
+            "hits": 43,
+            "total": 113,
+            "rate": 38.1
           },
           "252": {
-            "hits": 0,
-            "total": 0,
-            "rate": null
+            "hits": 15,
+            "total": 23,
+            "rate": 65.2
           }
         }
       },
       {
-        "person": "캬오의 공부방",
-        "opinions": 139,
+        "person": "콤디티",
+        "opinions": 248,
         "w": {
           "21": {
-            "hits": 22,
-            "total": 77,
-            "rate": 28.6
+            "hits": 78,
+            "total": 212,
+            "rate": 36.8
           },
           "63": {
-            "hits": 11,
-            "total": 22,
-            "rate": 50
+            "hits": 74,
+            "total": 190,
+            "rate": 38.9
+          },
+          "252": {
+            "hits": 15,
+            "total": 50,
+            "rate": 30
+          }
+        }
+      },
+      {
+        "person": "펭미업",
+        "opinions": 130,
+        "w": {
+          "21": {
+            "hits": 30,
+            "total": 83,
+            "rate": 36.1
+          },
+          "63": {
+            "hits": 0,
+            "total": 0,
+            "rate": null
           },
           "252": {
             "hits": 0,
@@ -1480,17 +1480,17 @@
       },
       {
         "person": "투자콤",
-        "opinions": 146,
+        "opinions": 269,
         "w": {
           "21": {
-            "hits": 34,
-            "total": 130,
-            "rate": 26.2
+            "hits": 81,
+            "total": 242,
+            "rate": 33.5
           },
           "63": {
-            "hits": 1,
-            "total": 39,
-            "rate": 2.6
+            "hits": 48,
+            "total": 163,
+            "rate": 29.4
           },
           "252": {
             "hits": 0,
@@ -1500,18 +1500,18 @@
         }
       },
       {
-        "person": "콤디티",
-        "opinions": 54,
+        "person": "캬오의 공부방",
+        "opinions": 162,
         "w": {
           "21": {
-            "hits": 10,
-            "total": 44,
-            "rate": 22.7
+            "hits": 29,
+            "total": 89,
+            "rate": 32.6
           },
           "63": {
-            "hits": 5,
-            "total": 16,
-            "rate": 31.3
+            "hits": 13,
+            "total": 27,
+            "rate": 48.1
           },
           "252": {
             "hits": 0,

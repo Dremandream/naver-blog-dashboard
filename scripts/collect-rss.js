@@ -438,11 +438,29 @@ export async function analyzePost(title, content, blogName) {
 }`;
 
   try {
-    const res = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1800,
-      messages: [{ role: 'user', content: prompt }],
-    });
+    // 과부하(529)·타임아웃·연결오류는 일시적 → 지수 백오프로 재시도 (백필 대량 호출 시 오염 방지)
+    const isRetryable = (e) => {
+      const s = e?.status;
+      const m = String(e?.message || '');
+      return [408, 429, 500, 502, 503, 529].includes(s) ||
+        /overload|too many requests|connection error|timed out|timeout|ECONNRESET|ETIMEDOUT|socket hang up/i.test(m);
+    };
+    let res;
+    for (let attempt = 1; ; attempt++) {
+      try {
+        res = await client.messages.create({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1800,
+          messages: [{ role: 'user', content: prompt }],
+        });
+        break;
+      } catch (e) {
+        if (attempt >= 5 || !isRetryable(e)) throw e;
+        const wait = Math.min(1000 * 2 ** (attempt - 1), 16000); // 1s,2s,4s,8s,16s
+        console.warn(`  ⏳ AI 재시도 ${attempt}/4 (${e.message?.slice(0, 60)}) ${wait}ms 대기`);
+        await new Promise((r) => setTimeout(r, wait));
+      }
+    }
     const result = parseJSONLoose(res.content[0].text);
     // sector 단일화: 여러 개("반도체|거시경제")로 나오면 첫 번째만 사용 (필터 매칭 보장)
     if (typeof result.sector === 'string') result.sector = result.sector.split(/[|,/]/)[0].trim();
@@ -460,6 +478,7 @@ export async function analyzePost(title, content, blogName) {
     return {
       summary: title, stocks: [], sector: '기타', key_points: [],
       numbers: [], stance: '해당없음', reasoning: '', risks: [],
+      _failed: true, // 호출자가 실패를 구분해 캐시 오염을 피하도록 표식 (재시도 소진 후)
     };
   }
 }
