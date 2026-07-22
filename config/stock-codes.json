@@ -5575,5 +5575,3753 @@
     "code": "NVTS.O",
     "market": "US",
     "matched": "나비타스 세미컨덕터"
+  },
+  "삼아알미늄": {
+    "code": "006110",
+    "market": "KR",
+    "matched": "삼아알미늄"
+  },
+  "롯데렌탈": {
+    "code": "089860",
+    "market": "KR",
+    "matched": "롯데렌탈"
+  },
+  "버핏": null,
+  "사조산업": {
+    "code": "007160",
+    "market": "KR",
+    "matched": "사조산업"
+  },
+  "에코앤드림": {
+    "code": "101360",
+    "market": "KR",
+    "matched": "에코앤드림"
+  },
+  "백광산업": null,
+  "폭스바겐": null,
+  "얼티엄셀즈": null,
+  "케이앤솔": null,
+  "엠플러스": {
+    "code": "259630",
+    "market": "KR",
+    "matched": "엠플러스"
+  },
+  "코스모신소재": {
+    "code": "005070",
+    "market": "KR",
+    "matched": "코스모신소재"
+  },
+  "더블유씨피": {
+    "code": "393890",
+    "market": "KR",
+    "matched": "더블유씨피"
+  },
+  "TCC": {
+    "code": "002710",
+    "market": "KR",
+    "matched": "TCC스틸"
+  },
+  "동화기업": {
+    "code": "025900",
+    "market": "KR",
+    "matched": "동화기업"
+  },
+  "강원에너지": {
+    "code": "114190",
+    "market": "KR",
+    "matched": "강원에너지"
+  },
+  "미래나노텍": {
+    "code": "095500",
+    "market": "KR",
+    "matched": "미래나노텍"
+  },
+  "엘프뷰티": {
+    "code": "ELF",
+    "market": "US",
+    "matched": "엘프 뷰티"
+  },
+  "FF": {
+    "code": "FF",
+    "market": "US",
+    "matched": "퓨처퓨얼"
+  },
+  "조선미녀": null,
+  "코스알엑스": null,
+  "아누아": null,
+  "스킨천사": null,
+  "티르티르": null,
+  "LIG넥스원": null,
+  "한국로템": null,
+  "풍산": {
+    "code": "103140",
+    "market": "KR",
+    "matched": "풍산"
+  },
+  "라인메탈": null,
+  "티웨이항공": null,
+  "바이오다인": {
+    "code": "314930",
+    "market": "KR",
+    "matched": "바이오다인"
+  },
+  "이엠텍": {
+    "code": "091120",
+    "market": "KR",
+    "matched": "이엠텍"
+  },
+  "하나기술": {
+    "code": "299030",
+    "market": "KR",
+    "matched": "하나기술"
+  },
+  "덕산일렉테라": null,
+  "바이넥스": {
+    "code": "053030",
+    "market": "KR",
+    "matched": "바이넥스"
+  },
+  "노바티스": {
+    "code": "NVS",
+    "market": "US",
+    "matched": "노바티스 ADR"
+  },
+  "F&F": {
+    "code": "383220",
+    "market": "KR",
+    "matched": "F&F"
+  },
+  "중앙첨단소재": {
+    "code": "051980",
+    "market": "KR",
+    "matched": "중앙첨단소재"
+  },
+  "포스코그룹": null,
+  "포스코홀딩스": {
+    "code": "PKX",
+    "market": "US",
+    "matched": "포스코 홀딩스 ADR"
+  },
+  "SK이노": {
+    "code": "096770",
+    "market": "KR",
+    "matched": "SK이노베이션"
+  },
+  "삼아알루미늄": null,
+  "DI동일": {
+    "code": "001530",
+    "market": "KR",
+    "matched": "DI동일"
+  },
+  "롯데에너지머티": {
+    "code": "020150",
+    "market": "KR",
+    "matched": "롯데에너지머티리얼즈"
+  },
+  "VT": {
+    "code": "VT",
+    "market": "US",
+    "matched": "Vanguard Total World Stock Index Fund"
+  },
+  "HD현대미포": null,
+  "카페24": {
+    "code": "042000",
+    "market": "KR",
+    "matched": "카페24"
+  },
+  "LG생활건강": {
+    "code": "051900",
+    "market": "KR",
+    "matched": "LG생활건강"
+  },
+  "코스메카": {
+    "code": "241710",
+    "market": "KR",
+    "matched": "코스메카코리아"
+  },
+  "씨앤씨": {
+    "code": "352480",
+    "market": "KR",
+    "matched": "씨앤씨인터내셔널"
+  },
+  "아이패밀리": {
+    "code": "114840",
+    "market": "KR",
+    "matched": "아이패밀리에스씨"
+  },
+  "클리오": {
+    "code": "237880",
+    "market": "KR",
+    "matched": "클리오"
+  },
+  "토니모리": {
+    "code": "214420",
+    "market": "KR",
+    "matched": "토니모리"
+  },
+  "마녀공장": {
+    "code": "439090",
+    "market": "KR",
+    "matched": "마녀공장"
+  },
+  "수산인더스트리": {
+    "code": "126720",
+    "market": "KR",
+    "matched": "수산인더스트리"
+  },
+  "우양": {
+    "code": "103840",
+    "market": "KR",
+    "matched": "우양"
+  },
+  "얼타뷰티": null,
+  "덕산": {
+    "code": "213420",
+    "market": "KR",
+    "matched": "덕산네오룩스"
+  },
+  "솔브레아홀딩스": null,
+  "홀로직": null,
+  "BD(벡톤 디킨슨)": null,
+  "CJ올리브영": null,
+  "씨앤씨인터내셔널": {
+    "code": "352480",
+    "market": "KR",
+    "matched": "씨앤씨인터내셔널"
+  },
+  "콜마": {
+    "code": "024720",
+    "market": "KR",
+    "matched": "콜마홀딩스"
+  },
+  "길리어드": {
+    "code": "GILD.O",
+    "market": "US",
+    "matched": "길리어드 사이언시스"
+  },
+  "Britannia Industries Ltd": null,
+  "TATA Consumer Products": null,
+  "인터플렉스": {
+    "code": "051370",
+    "market": "KR",
+    "matched": "인터플렉스"
+  },
+  "티앤엘": {
+    "code": "340570",
+    "market": "KR",
+    "matched": "티앤엘"
+  },
+  "서부티앤디": null,
+  "대우조선해양": null,
+  "테이팩스": {
+    "code": "055490",
+    "market": "KR",
+    "matched": "테이팩스"
+  },
+  "디날리테라퓨틱스": {
+    "code": "DNLI.O",
+    "market": "US",
+    "matched": "디날리 테라퓨틱스"
+  },
+  "시스톤테라퓨틱스": null,
+  "지누스": {
+    "code": "013890",
+    "market": "KR",
+    "matched": "지누스"
+  },
+  "골든블루": null,
+  "리디": {
+    "code": "RDI.O",
+    "market": "US",
+    "matched": "리딩 인터내셔널 Class A"
+  },
+  "데이원컴퍼니": {
+    "code": "373160",
+    "market": "KR",
+    "matched": "데이원컴퍼니"
+  },
+  "패스트트랙아시아": null,
+  "천보": {
+    "code": "278280",
+    "market": "KR",
+    "matched": "천보"
+  },
+  "에스엠랩": null,
+  "마스텔리": null,
+  "렉비오": null,
+  "동아에스티": {
+    "code": "170900",
+    "market": "KR",
+    "matched": "동아에스티"
+  },
+  "SK넥실리스": null,
+  "VT(브이티)": null,
+  "PNT(피엔티)": null,
+  "에스트래픽": {
+    "code": "234300",
+    "market": "KR",
+    "matched": "에스트래픽"
+  },
+  "영풍정밀": null,
+  "KT G": null,
+  "나노텍에너지": null,
+  "BASF": null,
+  "아스트라제네카": {
+    "code": "AZN",
+    "market": "US",
+    "matched": "아스트라제네카"
+  },
+  "바이킹 테라퓨틱스": {
+    "code": "VKTX.O",
+    "market": "US",
+    "matched": "바이킹 테라퓨틱스"
+  },
+  "질랜드 파마": null,
+  "텐센트홀딩스": null,
+  "녹십자": {
+    "code": "006280",
+    "market": "KR",
+    "matched": "녹십자"
+  },
+  "펩트론": {
+    "code": "087010",
+    "market": "KR",
+    "matched": "펩트론"
+  },
+  "동원시스템즈": {
+    "code": "014820",
+    "market": "KR",
+    "matched": "동원시스템즈"
+  },
+  "바이킹 테라텍스": null,
+  "JB금융지주": {
+    "code": "175330",
+    "market": "KR",
+    "matched": "JB금융지주"
+  },
+  "이엠앤아이": {
+    "code": "083470",
+    "market": "KR",
+    "matched": "이엠앤아이"
+  },
+  "네이버웹툰": {
+    "code": "WBTN.O",
+    "market": "US",
+    "matched": "웹툰 엔터테인먼트"
+  },
+  "스킨1004": null,
+  "오스테오닉": {
+    "code": "226400",
+    "market": "KR",
+    "matched": "오스테오닉"
+  },
+  "제닉": {
+    "code": "123330",
+    "market": "KR",
+    "matched": "제닉"
+  },
+  "셀바이오휴먼텍": {
+    "code": "318160",
+    "market": "KR",
+    "matched": "셀바이오휴먼텍"
+  },
+  "HBM": {
+    "code": "HBM",
+    "market": "US",
+    "matched": "허드베이 미네랄"
+  },
+  "스타링크": {
+    "code": "OTAI.K",
+    "market": "US",
+    "matched": "스타링크 AI 애퀴지션"
+  },
+  "원웹": null,
+  "인텔리안": {
+    "code": "189300",
+    "market": "KR",
+    "matched": "인텔리안테크"
+  },
+  "센트럴글라스": null,
+  "업비트": null,
+  "LS그룹": null,
+  "LS이링크": null,
+  "KODEX코스닥레버리지": null,
+  "리버티 에너지": {
+    "code": "LBRT.K",
+    "market": "US",
+    "matched": "리버티 에너지"
+  },
+  "Oklo Inc.": null,
+  "Continental Resources": null,
+  "컴투스": {
+    "code": "078340",
+    "market": "KR",
+    "matched": "컴투스"
+  },
+  "RF시스템즈": {
+    "code": "474610",
+    "market": "KR",
+    "matched": "RF시스템즈"
+  },
+  "JC현시스템": null,
+  "휴온스바이오파마": null,
+  "씨메스": {
+    "code": "475400",
+    "market": "KR",
+    "matched": "씨메스로보틱스"
+  },
+  "동국씨엠": {
+    "code": "460850",
+    "market": "KR",
+    "matched": "동국씨엠"
+  },
+  "아르ista": null,
+  "버트로": null,
+  "슈퍼마이크로": {
+    "code": "SMCI.O",
+    "market": "US",
+    "matched": "슈퍼 마이크로 컴퓨터"
+  },
+  "베스타스": null,
+  "센트라스 에너지": null,
+  "PEG": {
+    "code": "PEG",
+    "market": "US",
+    "matched": "퍼블릭 서비스 엔터프라이즈"
+  },
+  "롤러": null,
+  "GEV": {
+    "code": "GEV",
+    "market": "US",
+    "matched": "GE 버노바"
+  },
+  "BWXT": {
+    "code": "BWXT.K",
+    "market": "US",
+    "matched": "BWX 테크놀로지스"
+  },
+  "뉴스케일": {
+    "code": "SMR",
+    "market": "US",
+    "matched": "뉴스케일 파워"
+  },
+  "팰란티어": null,
+  "가틀링 랩스": null,
+  "데이터독": {
+    "code": "DDOG.O",
+    "market": "US",
+    "matched": "데이터도그"
+  },
+  "몽고DB": {
+    "code": "MDB.O",
+    "market": "US",
+    "matched": "몽고DB"
+  },
+  "이노드": null,
+  "허브스팟": {
+    "code": "HUBS.K",
+    "market": "US",
+    "matched": "허브스팟"
+  },
+  "오로라": {
+    "code": "039830",
+    "market": "KR",
+    "matched": "오로라"
+  },
+  "인튜이티브 서지컬": {
+    "code": "ISRG.O",
+    "market": "US",
+    "matched": "인튜이티브 서지컬"
+  },
+  "네오바이오텍": null,
+  "웨스트포인트퍼퍼렐": null,
+  "타코벨": null,
+  "하이비젼시스템": {
+    "code": "126700",
+    "market": "KR",
+    "matched": "하이비젼시스템"
+  },
+  "큐브엔터": {
+    "code": "182360",
+    "market": "KR",
+    "matched": "큐브엔터"
+  },
+  "케이아이엔엑스": {
+    "code": "093320",
+    "market": "KR",
+    "matched": "케이아이엔엑스"
+  },
+  "디아이티": {
+    "code": "110990",
+    "market": "KR",
+    "matched": "디아이티"
+  },
+  "화승인더": {
+    "code": "006060",
+    "market": "KR",
+    "matched": "화승인더"
+  },
+  "현대미포": null,
+  "필립모리스인터내셔널(PMI)": null,
+  "브리티시 아메리칸 토바코(BAT)": null,
+  "JT그룹(JTI)": null,
+  "유티아이": {
+    "code": "179900",
+    "market": "KR",
+    "matched": "유티아이"
+  },
+  "BMW": null,
+  "ABL바이오": null,
+  "HK이노엔": {
+    "code": "195940",
+    "market": "KR",
+    "matched": "HK이노엔"
+  },
+  "리제네론": {
+    "code": "REGN.O",
+    "market": "US",
+    "matched": "리제네론 파마슈티컬스"
+  },
+  "현일렉": null,
+  "삼양라운드스퀘어": null,
+  "틴치": null,
+  "캡켐(얼티엄셀즈)": null,
+  "대주전자": {
+    "code": "078600",
+    "market": "KR",
+    "matched": "대주전자재료"
+  },
+  "유니더스": null,
+  "지오릿에너지": null,
+  "에이프로젠": {
+    "code": "007460",
+    "market": "KR",
+    "matched": "에이프로젠"
+  },
+  "슈넬생명과학": null,
+  "에이프로젠바이오로직스": {
+    "code": "003060",
+    "market": "KR",
+    "matched": "에이프로젠바이오로직스"
+  },
+  "HIBE": null,
+  "알테": {
+    "code": "196170",
+    "market": "KR",
+    "matched": "알테오젠"
+  },
+  "씨젠": {
+    "code": "096530",
+    "market": "KR",
+    "matched": "씨젠"
+  },
+  "엘론 머스크": null,
+  "퍼플렉시티": null,
+  "HD현代일렉트릭": null,
+  "에이직랜드": {
+    "code": "445090",
+    "market": "KR",
+    "matched": "에이직랜드"
+  },
+  "롯데바이오로직스": null,
+  "셀크리온": null,
+  "제주맥주": null,
+  "더본": {
+    "code": "475560",
+    "market": "KR",
+    "matched": "더본코리아"
+  },
+  "도요스식품": null,
+  "닛신": {
+    "code": "2897.T",
+    "market": "US",
+    "matched": "닛신식품 홀딩스"
+  },
+  "SOOP": {
+    "code": "067160",
+    "market": "KR",
+    "matched": "SOOP"
+  },
+  "도요타": {
+    "code": "TM",
+    "market": "US",
+    "matched": "토요타자동차 ADR"
+  },
+  "소니": {
+    "code": "SONY.K",
+    "market": "US",
+    "matched": "소니 그룹 ADR"
+  },
+  "숲(SOOP)": null,
+  "유일로보틱스": {
+    "code": "388720",
+    "market": "KR",
+    "matched": "유일로보틱스"
+  },
+  "엔솔": {
+    "code": "373220",
+    "market": "KR",
+    "matched": "LG에너지솔루션"
+  },
+  "비에이치아이": {
+    "code": "083650",
+    "market": "KR",
+    "matched": "비에이치아이"
+  },
+  "캡스톤파트너스": {
+    "code": "452300",
+    "market": "KR",
+    "matched": "캡스톤파트너스"
+  },
+  "국도화학": {
+    "code": "007690",
+    "market": "KR",
+    "matched": "국도화학"
+  },
+  "국도코퍼레이션": null,
+  "유니드": {
+    "code": "014830",
+    "market": "KR",
+    "matched": "유니드"
+  },
+  "원텍": {
+    "code": "336570",
+    "market": "KR",
+    "matched": "원텍"
+  },
+  "SMG홀딩스": null,
+  "미디어캐슬": null,
+  "바이오던스": null,
+  "한국철도기술": null,
+  "현대인프라코어": null,
+  "현대건설기계": null,
+  "삼부토건": {
+    "code": "001470",
+    "market": "KR",
+    "matched": "삼부토건"
+  },
+  "SG": {
+    "code": "255220",
+    "market": "KR",
+    "matched": "SG"
+  },
+  "다산네트웍스": {
+    "code": "039560",
+    "market": "KR",
+    "matched": "다산네트웍스"
+  },
+  "대동기어": {
+    "code": "008830",
+    "market": "KR",
+    "matched": "대동기어"
+  },
+  "전진건설기계": null,
+  "KCC글라스": {
+    "code": "344820",
+    "market": "KR",
+    "matched": "KCC글라스"
+  },
+  "LX글라스": null,
+  "아이톡시": {
+    "code": "052770",
+    "market": "KR",
+    "matched": "아이톡시"
+  },
+  "CJ": {
+    "code": "001040",
+    "market": "KR",
+    "matched": "CJ"
+  },
+  "코카콜라": {
+    "code": "KO",
+    "market": "US",
+    "matched": "코카콜라"
+  },
+  "아메리칸 익스프레스": {
+    "code": "AXP",
+    "market": "US",
+    "matched": "아메리칸 익스프레스"
+  },
+  "홈플러스": null,
+  "동화약품": {
+    "code": "000020",
+    "market": "KR",
+    "matched": "동화약품"
+  },
+  "넥스트바이오메디컬": {
+    "code": "389650",
+    "market": "KR",
+    "matched": "넥스트바이오메디컬"
+  },
+  "온코크로스": {
+    "code": "382150",
+    "market": "KR",
+    "matched": "온코크로스"
+  },
+  "환인제약": {
+    "code": "016580",
+    "market": "KR",
+    "matched": "환인제약"
+  },
+  "현대그린푸드": {
+    "code": "453340",
+    "market": "KR",
+    "matched": "현대그린푸드"
+  },
+  "NE능률": {
+    "code": "053290",
+    "market": "KR",
+    "matched": "NE능률"
+  },
+  "오리엔트정공": {
+    "code": "065500",
+    "market": "KR",
+    "matched": "오리엔트정공"
+  },
+  "대상홀딩스": {
+    "code": "084690",
+    "market": "KR",
+    "matched": "대상홀딩스"
+  },
+  "오파스넷": {
+    "code": "173130",
+    "market": "KR",
+    "matched": "오파스넷"
+  },
+  "경남스틸": {
+    "code": "039240",
+    "market": "KR",
+    "matched": "경남스틸"
+  },
+  "KNN": {
+    "code": "058400",
+    "market": "KR",
+    "matched": "KNN"
+  },
+  "평화홀딩스": {
+    "code": "010770",
+    "market": "KR",
+    "matched": "평화홀딩스"
+  },
+  "안랩": {
+    "code": "053800",
+    "market": "KR",
+    "matched": "안랩"
+  },
+  "써니전자": {
+    "code": "004770",
+    "market": "KR",
+    "matched": "써니전자"
+  },
+  "삼보산업": {
+    "code": "009620",
+    "market": "KR",
+    "matched": "삼보산업"
+  },
+  "삼화전자": {
+    "code": "011230",
+    "market": "KR",
+    "matched": "삼화전자"
+  },
+  "유니온": {
+    "code": "000910",
+    "market": "KR",
+    "matched": "유니온"
+  },
+  "유니온머티리얼": {
+    "code": "047400",
+    "market": "KR",
+    "matched": "유니온머티리얼"
+  },
+  "삼바.바이넥스": null,
+  "한쏘파마": null,
+  "KODEX 코스닥150레버리지": {
+    "code": "233740",
+    "market": "KR",
+    "matched": "KODEX 코스닥150레버리지"
+  },
+  "HJ중공업": {
+    "code": "097230",
+    "market": "KR",
+    "matched": "HJ중공업"
+  },
+  "한국카본": {
+    "code": "017960",
+    "market": "KR",
+    "matched": "한국카본"
+  },
+  "JTC": {
+    "code": "950170",
+    "market": "KR",
+    "matched": "JTC"
+  },
+  "카카오엔터테인먼트": null,
+  "Vistra": {
+    "code": "VST",
+    "market": "US",
+    "matched": "Vistra Corp"
+  },
+  "불닭": null,
+  "팬젠": {
+    "code": "222110",
+    "market": "KR",
+    "matched": "팬젠"
+  },
+  "리쥬란": null,
+  "엠앤씨솔루션": {
+    "code": "484870",
+    "market": "KR",
+    "matched": "엠앤씨솔루션"
+  },
+  "지앤씨에너지": null,
+  "휴온스랩": null,
+  "큐알티": {
+    "code": "405100",
+    "market": "KR",
+    "matched": "큐알티"
+  },
+  "한국조선해양": null,
+  "원전 관련주": null,
+  "편의점 주식": null,
+  "증권주": null,
+  "지엔씨에너지": {
+    "code": "119850",
+    "market": "KR",
+    "matched": "지엔씨에너지"
+  },
+  "휴온스": {
+    "code": "243070",
+    "market": "KR",
+    "matched": "휴온스"
+  },
+  "BTS": {
+    "code": "352820",
+    "market": "KR",
+    "matched": "하이브"
+  },
+  "세븐틴": null,
+  "스트레이키즈": null,
+  "트레저": {
+    "code": "TGL.O",
+    "market": "US",
+    "matched": "트레저 글로벌"
+  },
+  "엑소": {
+    "code": "AXTA.K",
+    "market": "US",
+    "matched": "엑솔타 코팅 시스템즈"
+  },
+  "(여자)아이들": null,
+  "BGF리테일": {
+    "code": "282330",
+    "market": "KR",
+    "matched": "BGF리테일"
+  },
+  "CU": {
+    "code": "CMI",
+    "market": "US",
+    "matched": "Cummins Inc"
+  },
+  "GKL": {
+    "code": "114090",
+    "market": "KR",
+    "matched": "GKL"
+  },
+  "인터로조": {
+    "code": "119610",
+    "market": "KR",
+    "matched": "인터로조"
+  },
+  "옥시덴탈": null,
+  "누트리엔": null,
+  "롯데관광개발": {
+    "code": "032350",
+    "market": "KR",
+    "matched": "롯데관광개발"
+  },
+  "메디큐브": null,
+  "키코망": null,
+  "원익QNC": {
+    "code": "074600",
+    "market": "KR",
+    "matched": "원익QnC"
+  },
+  "원익머티": null,
+  "블랙핑크": null,
+  "불닭볶음면": null,
+  "두산전자": null,
+  "SBS": {
+    "code": "034120",
+    "market": "KR",
+    "matched": "SBS"
+  },
+  "CJ ENM": {
+    "code": "035760",
+    "market": "KR",
+    "matched": "CJ ENM"
+  },
+  "다이이찌산쿄": {
+    "code": "4568.T",
+    "market": "US",
+    "matched": "다이이찌산쿄"
+  },
+  "트럼프 관련 기업": null,
+  "PHATHOM Pharmaceuticals": {
+    "code": "PHAT.O",
+    "market": "US",
+    "matched": "Phathom Pharmaceuticals Inc"
+  },
+  "산리오": {
+    "code": "8136.T",
+    "market": "US",
+    "matched": "산리오"
+  },
+  "하림": {
+    "code": "136480",
+    "market": "KR",
+    "matched": "하림"
+  },
+  "와이지엔터": {
+    "code": "122870",
+    "market": "KR",
+    "matched": "와이지엔터테인먼트"
+  },
+  "와이지플러스": {
+    "code": "037270",
+    "market": "KR",
+    "matched": "YG PLUS"
+  },
+  "아톤": {
+    "code": "158430",
+    "market": "KR",
+    "matched": "아톤"
+  },
+  "바이오포트": {
+    "code": "188040",
+    "market": "KR",
+    "matched": "바이오포트"
+  },
+  "인산엠티에스": null,
+  "펨트론": {
+    "code": "168360",
+    "market": "KR",
+    "matched": "펨트론"
+  },
+  "BNY멜론": null,
+  "삼성엔터테인먼트": null,
+  "에스엔디": null,
+  "동아쏘시오홀딩스": {
+    "code": "000640",
+    "market": "KR",
+    "matched": "동아쏘시오홀딩스"
+  },
+  "헥토이노베이션": {
+    "code": "214180",
+    "market": "KR",
+    "matched": "헥토이노베이션"
+  },
+  "호카": null,
+  "온런닝": null,
+  "아식스": {
+    "code": "7936.T",
+    "market": "US",
+    "matched": "아식스"
+  },
+  "아디다스": null,
+  "언더아머": {
+    "code": "UAA",
+    "market": "US",
+    "matched": "언더 아머 Class A"
+  },
+  "한진칼": {
+    "code": "180640",
+    "market": "KR",
+    "matched": "한진칼"
+  },
+  "에이유브랜즈": {
+    "code": "481070",
+    "market": "KR",
+    "matched": "에이유브랜즈"
+  },
+  "하이트진로": {
+    "code": "000080",
+    "market": "KR",
+    "matched": "하이트진로"
+  },
+  "CJ제일제당": {
+    "code": "097950",
+    "market": "KR",
+    "matched": "CJ제일제당"
+  },
+  "KB금융그룹": null,
+  "르노": null,
+  "명신산업": {
+    "code": "009900",
+    "market": "KR",
+    "matched": "명신산업"
+  },
+  "제우스": {
+    "code": "079370",
+    "market": "KR",
+    "matched": "제우스"
+  },
+  "뉴파워프라즈마": {
+    "code": "144960",
+    "market": "KR",
+    "matched": "뉴파워프라즈마"
+  },
+  "Constellation": {
+    "code": "CEG.O",
+    "market": "US",
+    "matched": "Constellation Energy Corp"
+  },
+  "EMCOR": {
+    "code": "EME",
+    "market": "US",
+    "matched": "EMCOR Group Inc"
+  },
+  "Trane Technologies": {
+    "code": "TT",
+    "market": "US",
+    "matched": "Trane Technologies PLC"
+  },
+  "Johnson Controls": {
+    "code": "JCI",
+    "market": "US",
+    "matched": "Johnson Controls International PLC"
+  },
+  "Pure Storage": null,
+  "Foxconn": {
+    "code": "601138.SS",
+    "market": "US",
+    "matched": "Foxconn Industrial Internet Co Ltd Class A"
+  },
+  "Asustek": null,
+  "Acer": null,
+  "Gigabyte": null,
+  "메가젠임플란트": null,
+  "Rheinmetall": null,
+  "메모리 3사": null,
+  "현대삼호": null,
+  "STX중공업": {
+    "code": "071970",
+    "market": "KR",
+    "matched": "HD현대마린엔진"
+  },
+  "Murata Manufacturing": {
+    "code": "6981.T",
+    "market": "US",
+    "matched": "Murata Manufacturing Co Ltd"
+  },
+  "LS에코에너지": {
+    "code": "229640",
+    "market": "KR",
+    "matched": "LS에코에너지"
+  },
+  "서진": {
+    "code": "178320",
+    "market": "KR",
+    "matched": "서진시스템"
+  },
+  "ASM": {
+    "code": "ASM",
+    "market": "US",
+    "matched": "아비노 실버 & 골드 마인스"
+  },
+  "코히어": null,
+  "SKIET": null,
+  "파트론": {
+    "code": "091700",
+    "market": "KR",
+    "matched": "파트론"
+  },
+  "디케이티": {
+    "code": "290550",
+    "market": "KR",
+    "matched": "디케이티"
+  },
+  "레이크머티리얼즈": {
+    "code": "281740",
+    "market": "KR",
+    "matched": "레이크머티리얼즈"
+  },
+  "Cheniere": {
+    "code": "LNG",
+    "market": "US",
+    "matched": "Cheniere Energy Inc"
+  },
+  "삼바": {
+    "code": "301293.SZ",
+    "market": "US",
+    "matched": "삼박뇌과"
+  },
+  "동국S&C": {
+    "code": "100130",
+    "market": "KR",
+    "matched": "동국S&C"
+  },
+  "현에솔": null,
+  "현대일렉트로": null,
+  "효중": null,
+  "코미팜": {
+    "code": "041960",
+    "market": "KR",
+    "matched": "코미팜"
+  },
+  "조선 업종": null,
+  "한국단자": {
+    "code": "025540",
+    "market": "KR",
+    "matched": "한국단자"
+  },
+  "미쓰비시 일렉트릭": null,
+  "비스트라에너지": {
+    "code": "VST",
+    "market": "US",
+    "matched": "비스트라 에너지"
+  },
+  "자일링스": null,
+  "슈퍼 마이크로": {
+    "code": "SMCI.O",
+    "market": "US",
+    "matched": "슈퍼 마이크로 컴퓨터"
+  },
+  "스틸 다이내믹스": {
+    "code": "STLD.O",
+    "market": "US",
+    "matched": "스틸 다이내믹스"
+  },
+  "누코어": null,
+  "US Steel": null,
+  "미포조선": null,
+  "마린솔루션": null,
+  "마린엔진": null,
+  "일본 NYK": null,
+  "풍산홀딩스": {
+    "code": "005810",
+    "market": "KR",
+    "matched": "풍산홀딩스"
+  },
+  "한전KPS": {
+    "code": "051600",
+    "market": "KR",
+    "matched": "한전KPS"
+  },
+  "미쓰비시중공업": {
+    "code": "7011.T",
+    "market": "US",
+    "matched": "미쓰비시중공업"
+  },
+  "램테크놀로지": null,
+  "슈퍼마이크로컴퓨터": {
+    "code": "SMCI.O",
+    "market": "US",
+    "matched": "슈퍼 마이크로 컴퓨터"
+  },
+  "인뎁스": null,
+  "이튼": {
+    "code": "ETN",
+    "market": "US",
+    "matched": "이튼"
+  },
+  "미쓰비시": {
+    "code": "MUFG.K",
+    "market": "US",
+    "matched": "미쓰비시 UFJ 파이낸셜 그룹 ADR"
+  },
+  "GE베르노바": null,
+  "CG파워": null,
+  "허벨": {
+    "code": "HUBB.K",
+    "market": "US",
+    "matched": "허벨"
+  },
+  "HD현대삼호": null,
+  "일렉트릭": null,
+  "조선": {
+    "code": "462520",
+    "market": "KR",
+    "matched": "조선내화"
+  },
+  "이턴": {
+    "code": "3193.T",
+    "market": "US",
+    "matched": "이터널 호스피탈리티 그룹"
+  },
+  "제룡": {
+    "code": "033100",
+    "market": "KR",
+    "matched": "제룡전기"
+  },
+  "대원전선": {
+    "code": "006340",
+    "market": "KR",
+    "matched": "대원전선"
+  },
+  "비상교육": {
+    "code": "100220",
+    "market": "KR",
+    "matched": "비상교육"
+  },
+  "에코프로에이치엔": {
+    "code": "383310",
+    "market": "KR",
+    "matched": "에코프로에이치엔"
+  },
+  "킨더모건(KMI)": null,
+  "현대미포 조선": null,
+  "Siemens Energy": null,
+  "로켓랩": {
+    "code": "RKLB.O",
+    "market": "US",
+    "matched": "로켓 랩"
+  },
+  "텔레다인 테크놀로지즈": null,
+  "엠씨넥스": {
+    "code": "097520",
+    "market": "KR",
+    "matched": "엠씨넥스"
+  },
+  "Gold Cup Electric": {
+    "code": "002533.SZ",
+    "market": "US",
+    "matched": "Gold Cup Electric Apparatus Co Ltd Class A"
+  },
+  "아이티엠반도체": {
+    "code": "084850",
+    "market": "KR",
+    "matched": "아이티엠반도체"
+  },
+  "Peabody Energy": {
+    "code": "BTU",
+    "market": "US",
+    "matched": "Peabody Energy Corp"
+  },
+  "Fluence": {
+    "code": "FLNC.O",
+    "market": "US",
+    "matched": "Fluence Energy Inc"
+  },
+  "RWE": {
+    "code": "RWEM.K",
+    "market": "US",
+    "matched": "Rayliant NxtGen Multifactor Emerging Mkts Eqty ETF"
+  },
+  "글로벌블루": null,
+  "전력기기": null,
+  "SK해운": null,
+  "IBK투자증권": null,
+  "사피온": null,
+  "두산중공업": null,
+  "오로스": {
+    "code": "322310",
+    "market": "KR",
+    "matched": "오로스테크놀로지"
+  },
+  "어스테오닉": null,
+  "대동": {
+    "code": "000490",
+    "market": "KR",
+    "matched": "대동"
+  },
+  "세진중공업": {
+    "code": "075580",
+    "market": "KR",
+    "matched": "세진중공업"
+  },
+  "테라파워": null,
+  "미국철강(U.S. Steel)": null,
+  "네카오": null,
+  "코스트코": {
+    "code": "COST.O",
+    "market": "US",
+    "matched": "코스트코 홀세일"
+  },
+  "온러닝": null,
+  "더치브로스": {
+    "code": "BROS.K",
+    "market": "US",
+    "matched": "더치 브로스"
+  },
+  "예스아시아": {
+    "code": "2209.HK",
+    "market": "US",
+    "matched": "예스아시아 홀딩스"
+  },
+  "더존비즈온": null,
+  "크라운제과": {
+    "code": "264900",
+    "market": "KR",
+    "matched": "크라운제과"
+  },
+  "웹케시": {
+    "code": "053580",
+    "market": "KR",
+    "matched": "웹케시"
+  },
+  "Takeaway.com": null,
+  "Meituan-Dianping": null,
+  "Oisix": {
+    "code": "3182.T",
+    "market": "US",
+    "matched": "Oisix Inc"
+  },
+  "Evolution Gaming": null,
+  "GAN": {
+    "code": "GANX.O",
+    "market": "US",
+    "matched": "게인 테라퓨틱스"
+  },
+  "KAMBI": null,
+  "지어소프트": {
+    "code": "051160",
+    "market": "KR",
+    "matched": "지어소프트"
+  },
+  "넥스트리밍(키네마스터)": null,
+  "Carnival": {
+    "code": "CCL",
+    "market": "US",
+    "matched": "Carnival Corporation Ltd"
+  },
+  "SM Entertainment": {
+    "code": "4772.T",
+    "market": "US",
+    "matched": "SM Entertainment Japan Co Ltd"
+  },
+  "덴티움": {
+    "code": "145720",
+    "market": "KR",
+    "matched": "덴티움"
+  },
+  "Aegean Airlines": null,
+  "Duolingo": {
+    "code": "DUOL.O",
+    "market": "US",
+    "matched": "Duolingo Inc"
+  },
+  "Bangkok Aviation Fuel Services": null,
+  "롯켐": null,
+  "롯쇼": null,
+  "US스틸": null,
+  "니폰스틸": null,
+  "HS아카데미": null,
+  "PAR": {
+    "code": "PAR",
+    "market": "US",
+    "matched": "파 테크놀로지"
+  },
+  "OLO": {
+    "code": "OLOX.O",
+    "market": "US",
+    "matched": "오레녹스 인더스트리스"
+  },
+  "모스트": null,
+  "폰드그룹": {
+    "code": "472850",
+    "market": "KR",
+    "matched": "폰드그룹"
+  },
+  "지멘스 에너지": null,
+  "MGX": {
+    "code": "MGX.O",
+    "market": "US",
+    "matched": "메타지노미 테라퓨틱스"
+  },
+  "KoAct 글로벌기후테크인프라액티브": null,
+  "뉴스케일 파워(NuScale Power)": null,
+  "옥로(Oklo)": null,
+  "성광밴드": null,
+  "SNT에너지": {
+    "code": "100840",
+    "market": "KR",
+    "matched": "SNT에너지"
+  },
+  "구글(웨이모)": null,
+  "Tapestry": {
+    "code": "TPR",
+    "market": "US",
+    "matched": "Tapestry Inc"
+  },
+  "Coach": {
+    "code": "9339.T",
+    "market": "US",
+    "matched": "Coach A Co Ltd"
+  },
+  "아바코": {
+    "code": "083930",
+    "market": "KR",
+    "matched": "아바코"
+  },
+  "한화에어로": {
+    "code": "012450",
+    "market": "KR",
+    "matched": "한화에어로스페이스"
+  },
+  "뉴스케일 파워": {
+    "code": "SMR",
+    "market": "US",
+    "matched": "뉴스케일 파워"
+  },
+  "당근마켓": null,
+  "비올": null,
+  "BAE 시스템": null,
+  "NRG 에너지": {
+    "code": "NRG",
+    "market": "US",
+    "matched": "NRG 에너지"
+  },
+  "알버말": {
+    "code": "ALB",
+    "market": "US",
+    "matched": "앨버말"
+  },
+  "Saab": null,
+  "BAE Systems": null,
+  "Dassault Aviation": null,
+  "Vistra Corp.": null,
+  "페라리": {
+    "code": "RACE.K",
+    "market": "US",
+    "matched": "페라리"
+  },
+  "아리스타 네트웍스": {
+    "code": "ANET.K",
+    "market": "US",
+    "matched": "아리스타 네트웍스"
+  },
+  "비자": {
+    "code": "V",
+    "market": "US",
+    "matched": "비자"
+  },
+  "자동데이터처리": null,
+  "포르티넷": null,
+  "현대라이프보트": null,
+  "조광페인트": {
+    "code": "004910",
+    "market": "KR",
+    "matched": "조광페인트"
+  },
+  "화천기공": {
+    "code": "000850",
+    "market": "KR",
+    "matched": "화천기공"
+  },
+  "파라텍": {
+    "code": "033540",
+    "market": "KR",
+    "matched": "파라텍"
+  },
+  "푸드나무": {
+    "code": "290720",
+    "market": "KR",
+    "matched": "푸드나무"
+  },
+  "엠젠솔루션": {
+    "code": "032790",
+    "market": "KR",
+    "matched": "엠젠솔루션"
+  },
+  "아레바": null,
+  "Schneider Electric": null,
+  "SWCC": {
+    "code": "5805.T",
+    "market": "US",
+    "matched": "SWCC"
+  },
+  "파월": {
+    "code": "047310",
+    "market": "KR",
+    "matched": "파워로직스"
+  },
+  "넥스트에라에너지": {
+    "code": "NEE",
+    "market": "US",
+    "matched": "넥스트에라 에너지"
+  },
+  "슈나이더일렉트릭": null,
+  "한화이글스": null,
+  "GTT": null,
+  "현대미포조선": null,
+  "BWX Technologies": {
+    "code": "BWXT.K",
+    "market": "US",
+    "matched": "BWX Technologies Inc"
+  },
+  "HD현대미포조선": null,
+  "내셔널 그리드": {
+    "code": "NGG",
+    "market": "US",
+    "matched": "내셔널 그리드 ADR"
+  },
+  "SK어드밴스드": null,
+  "애봇": null,
+  "마블": {
+    "code": "7844.T",
+    "market": "US",
+    "matched": "마블러스"
+  },
+  "에넬에치": null,
+  "현대기아차": null,
+  "메리츠금융지주": {
+    "code": "138040",
+    "market": "KR",
+    "matched": "메리츠금융지주"
+  },
+  "SK C&C": null,
+  "파워팀($POWL)": null,
+  "카인더모간($KMI)": null,
+  "KGS": {
+    "code": "KGS",
+    "market": "US",
+    "matched": "코디악 가스 서비시스"
+  },
+  "동방전기": {
+    "code": "600875.SS",
+    "market": "US",
+    "matched": "동방전기"
+  },
+  "중국국가핵전력": null,
+  "델타일렉트로닉스": null,
+  "베르티브": null,
+  "Tenaga Nasional": null,
+  "Gulf Energy": null,
+  "노스롭그루먼": null,
+  "록히드마틴": {
+    "code": "LMT",
+    "market": "US",
+    "matched": "록히드 마틴"
+  },
+  "L3Harris": {
+    "code": "LHX",
+    "market": "US",
+    "matched": "L3harris Technologies  Inc"
+  },
+  "GE Hitachi": null,
+  "Rolls-Royce": null,
+  "Uranium Energy Corp": {
+    "code": "UEC",
+    "market": "US",
+    "matched": "Uranium Energy Corp"
+  },
+  "Denison Mines": {
+    "code": "DNN",
+    "market": "US",
+    "matched": "Denison Mines Corp"
+  },
+  "Fluor": {
+    "code": "FLR",
+    "market": "US",
+    "matched": "Fluor Corp"
+  },
+  "Aecon Group": null,
+  "NANO Nuclear Energy": {
+    "code": "NNE.O",
+    "market": "US",
+    "matched": "Nano Nuclear Energy Inc"
+  },
+  "SNT홀딩스": {
+    "code": "036530",
+    "market": "KR",
+    "matched": "SNT홀딩스"
+  },
+  "SNT다이내믹스": {
+    "code": "003570",
+    "market": "KR",
+    "matched": "SNT다이내믹스"
+  },
+  "더핑크퐁컴퍼니": {
+    "code": "403850",
+    "market": "KR",
+    "matched": "더핑크퐁컴퍼니"
+  },
+  "한에스": null,
+  "Tempus AI": {
+    "code": "TEM.O",
+    "market": "US",
+    "matched": "Tempus AI Inc"
+  },
+  "화나에어로": null,
+  "코친 조선소": null,
+  "데이터 패턴스": null,
+  "힌두스탄 에어로노틱스": null,
+  "미드하니": null,
+  "롹스(Roblox)": null,
+  "서클(Circle)": null,
+  "룰루레몬": {
+    "code": "LULU.O",
+    "market": "US",
+    "matched": "룰루레몬 애슬레티카"
+  },
+  "PSK홀딩스": null,
+  "로템": null,
+  "에어로": {
+    "code": "AVAV.O",
+    "market": "US",
+    "matched": "에어로바이런먼트"
+  },
+  "Antofagasta": null,
+  "태웅": {
+    "code": "044490",
+    "market": "KR",
+    "matched": "태웅"
+  },
+  "성광벤드": {
+    "code": "014620",
+    "market": "KR",
+    "matched": "성광벤드"
+  },
+  "솔트룩스": {
+    "code": "304100",
+    "market": "KR",
+    "matched": "솔트룩스"
+  },
+  "코난테크놀로지": {
+    "code": "402030",
+    "market": "KR",
+    "matched": "코난테크놀로지"
+  },
+  "디스코": {
+    "code": "6146.T",
+    "market": "US",
+    "matched": "디스코"
+  },
+  "우리금융지주": {
+    "code": "316140",
+    "market": "KR",
+    "matched": "우리금융지주"
+  },
+  "NRG Energy": {
+    "code": "NRG",
+    "market": "US",
+    "matched": "NRG Energy Inc"
+  },
+  "LS Power": null,
+  "애보트": {
+    "code": "ABT",
+    "market": "US",
+    "matched": "애보트 래보라토리"
+  },
+  "딱스콤": null,
+  "J&J": {
+    "code": "JJSF.O",
+    "market": "US",
+    "matched": "J&J 스낵 푸즈"
+  },
+  "TIGER 모멘텀 ETF": null,
+  "LX홀딩스": {
+    "code": "383800",
+    "market": "KR",
+    "matched": "LX홀딩스"
+  },
+  "바이오포트코리아": null,
+  "Paxos": null,
+  "Circle": {
+    "code": "CRCL.K",
+    "market": "US",
+    "matched": "Circle Internet Group Inc"
+  },
+  "Tether": null,
+  "PayPal": {
+    "code": "PYPL.O",
+    "market": "US",
+    "matched": "Paypal Holdings Inc"
+  },
+  "Fiserv": {
+    "code": "FISV.O",
+    "market": "US",
+    "matched": "Fiserv Inc"
+  },
+  "Mastercard": {
+    "code": "MA",
+    "market": "US",
+    "matched": "Mastercard Inc"
+  },
+  "Deribit": null,
+  "Shopify": {
+    "code": "SHOP.O",
+    "market": "US",
+    "matched": "Shopify Inc"
+  },
+  "서클": {
+    "code": "CRCL.K",
+    "market": "US",
+    "matched": "써클 인터넷 그룹"
+  },
+  "Powell Industries": {
+    "code": "POWL.O",
+    "market": "US",
+    "matched": "Powell Industries Inc"
+  },
+  "파월 인더스트리": {
+    "code": "POWL.O",
+    "market": "US",
+    "matched": "파월 인더스트리스"
+  },
+  "카카오헬스케어": null,
+  "KB금융지주": {
+    "code": "KB",
+    "market": "US",
+    "matched": "KB금융지주 ADR"
+  },
+  "메타플래닛": {
+    "code": "3350.T",
+    "market": "US",
+    "matched": "메타플래닛"
+  },
+  "JYP Ent.": {
+    "code": "035900",
+    "market": "KR",
+    "matched": "JYP Ent."
+  },
+  "어도비": {
+    "code": "ADBE.O",
+    "market": "US",
+    "matched": "어도비"
+  },
+  "HD KSOE": null,
+  "아모레퍼시픽홀딩스": {
+    "code": "002790",
+    "market": "KR",
+    "matched": "아모레퍼시픽홀딩스"
+  },
+  "제일기획": {
+    "code": "030000",
+    "market": "KR",
+    "matched": "제일기획"
+  },
+  "HMM": {
+    "code": "011200",
+    "market": "KR",
+    "matched": "HMM"
+  },
+  "신영증권": {
+    "code": "001720",
+    "market": "KR",
+    "matched": "신영증권"
+  },
+  "롯데": {
+    "code": "023530",
+    "market": "KR",
+    "matched": "롯데쇼핑"
+  },
+  "한샘": {
+    "code": "009240",
+    "market": "KR",
+    "matched": "한샘"
+  },
+  "First Majestic Silver": {
+    "code": "AG",
+    "market": "US",
+    "matched": "First Majestic Silver Corp"
+  },
+  "Sandfire": null,
+  "Grupo Mexico": null,
+  "Pilbara Minerals": null,
+  "Luckin Coffee": null,
+  "UltraTech Cement": null,
+  "샘표": {
+    "code": "007540",
+    "market": "KR",
+    "matched": "샘표"
+  },
+  "넵튠": {
+    "code": "217270",
+    "market": "KR",
+    "matched": "넵튠"
+  },
+  "에이데이터": null,
+  "애니컬러": {
+    "code": "5032.T",
+    "market": "US",
+    "matched": "애니컬러"
+  },
+  "트럼프": {
+    "code": "DJT.O",
+    "market": "US",
+    "matched": "트럼프 미디어 & 테크놀로지 그룹"
+  },
+  "프리포트맥모란": {
+    "code": "FCX",
+    "market": "US",
+    "matched": "프리포트 맥모란"
+  },
+  "애보트(Abbott Laboratories, ABT)": null,
+  "다이킨": {
+    "code": "6367.T",
+    "market": "US",
+    "matched": "다이킨공업"
+  },
+  "캐리어": {
+    "code": "CARR.K",
+    "market": "US",
+    "matched": "캐리어 글로벌"
+  },
+  "생고뱅": null,
+  "프리포트 맥모란": {
+    "code": "FCX",
+    "market": "US",
+    "matched": "프리포트 맥모란"
+  },
+  "피그마": {
+    "code": "FIG",
+    "market": "US",
+    "matched": "피그마"
+  },
+  "메타바이오메드": {
+    "code": "059210",
+    "market": "KR",
+    "matched": "메타바이오메드"
+  },
+  "NextDecade": {
+    "code": "NEXT.O",
+    "market": "US",
+    "matched": "NextDecade Corp"
+  },
+  "Expand Energy": {
+    "code": "EXE.O",
+    "market": "US",
+    "matched": "Expand Energy Corp"
+  },
+  "Antero Resources": {
+    "code": "AR",
+    "market": "US",
+    "matched": "Antero Resources Corp"
+  },
+  "Range Resources": {
+    "code": "RRC",
+    "market": "US",
+    "matched": "Range Resources Corp"
+  },
+  "Comstock Resources": {
+    "code": "CRK",
+    "market": "US",
+    "matched": "Comstock Resources Inc"
+  },
+  "Coterra Energy": {
+    "code": "CTRA.K",
+    "market": "US",
+    "matched": "Coterra Energy Inc"
+  },
+  "Halliburton": {
+    "code": "HAL",
+    "market": "US",
+    "matched": "Halliburton Co"
+  },
+  "Schlumberger": null,
+  "Baker Hughes": {
+    "code": "BKR.O",
+    "market": "US",
+    "matched": "Baker Hughes Co"
+  },
+  "ExxonMobil": {
+    "code": "XOM",
+    "market": "US",
+    "matched": "Exxonmobil Holdings Corp"
+  },
+  "Chevron": {
+    "code": "CVX",
+    "market": "US",
+    "matched": "Chevron Corp"
+  },
+  "힘스앤허스": null,
+  "엑셀 에너지": {
+    "code": "XEL.O",
+    "market": "US",
+    "matched": "엑셀 에너지"
+  },
+  "아이다호 파워": null,
+  "LB세미콘": {
+    "code": "061970",
+    "market": "KR",
+    "matched": "LB세미콘"
+  },
+  "SK키파운드리": null,
+  "템퍼스AI": {
+    "code": "TEM.O",
+    "market": "US",
+    "matched": "템퍼스 AI"
+  },
+  "Recursion Pharma": {
+    "code": "RXRX.O",
+    "market": "US",
+    "matched": "Recursion Pharmaceuticals Inc"
+  },
+  "KAI": {
+    "code": "KAI",
+    "market": "US",
+    "matched": "카단트"
+  },
+  "갤럭시 엔터테인먼트": null,
+  "YG PLUS": {
+    "code": "037270",
+    "market": "KR",
+    "matched": "YG PLUS"
+  },
+  "YG": {
+    "code": "037270",
+    "market": "KR",
+    "matched": "YG PLUS"
+  },
+  "CRCL": {
+    "code": "CRCL.K",
+    "market": "US",
+    "matched": "써클 인터넷 그룹"
+  },
+  "POWL": {
+    "code": "POWL.O",
+    "market": "US",
+    "matched": "파월 인더스트리스"
+  },
+  "ABT": {
+    "code": "ABT",
+    "market": "US",
+    "matched": "애보트 래보라토리"
+  },
+  "보성파워텍": {
+    "code": "006910",
+    "market": "KR",
+    "matched": "보성파워텍"
+  },
+  "유나이티드헬스": {
+    "code": "UNH",
+    "market": "US",
+    "matched": "유나이티드헬스 그룹"
+  },
+  "콘스텔레이션 에너지": {
+    "code": "CEG.O",
+    "market": "US",
+    "matched": "콘스텔레이션 에너지"
+  },
+  "넥스테라 에너지": {
+    "code": "NEE_pu",
+    "market": "US",
+    "matched": "넥스테라 에너지 캐피털 홀딩스 후순위채권 6.5% 만기 85년 6월"
+  },
+  "볼타 스페이스": null,
+  "지에비 에너지": null,
+  "첫솔라": null,
+  "NNE": {
+    "code": "NNE.O",
+    "market": "US",
+    "matched": "나노 뉴클리어 에너지"
+  },
+  "SMR": {
+    "code": "SMR",
+    "market": "US",
+    "matched": "뉴스케일 파워"
+  },
+  "TLN": {
+    "code": "TLN.O",
+    "market": "US",
+    "matched": "탈렌 에너지"
+  },
+  "데브시스터즈": {
+    "code": "194480",
+    "market": "KR",
+    "matched": "데브시스터즈"
+  },
+  "ASPEED": null,
+  "Hon Hai": null,
+  "콘스텔레이션에너지": {
+    "code": "CEG.O",
+    "market": "US",
+    "matched": "콘스텔레이션 에너지"
+  },
+  "센트러스 에너지": {
+    "code": "LEU",
+    "market": "US",
+    "matched": "센트러스 에너지"
+  },
+  "MP 머티리얼즈": null,
+  "두산에너빌": {
+    "code": "034020",
+    "market": "KR",
+    "matched": "두산에너빌리티"
+  },
+  "한올바이오파마": {
+    "code": "009420",
+    "market": "KR",
+    "matched": "한올바이오파마"
+  },
+  "이뮤노반트": {
+    "code": "IMVT.O",
+    "market": "US",
+    "matched": "이뮤노반트"
+  },
+  "Enel": {
+    "code": "ENIC.K",
+    "market": "US",
+    "matched": "Enel Chile SA ADR"
+  },
+  "SSE": {
+    "code": "SSEAU.O",
+    "market": "US",
+    "matched": "Starry Sea Acquisition Units"
+  },
+  "EON": {
+    "code": "EONR.K",
+    "market": "US",
+    "matched": "EON 리소시스"
+  },
+  "Iberdrola": null,
+  "Elia": null,
+  "National Grid": {
+    "code": "NGG",
+    "market": "US",
+    "matched": "National Grid PLC ADR"
+  },
+  "EDPR": null,
+  "Engie": null,
+  "씨어스테크놀로지": null,
+  "메드트로닉": {
+    "code": "MDT",
+    "market": "US",
+    "matched": "메드트로닉"
+  },
+  "게임스탑": {
+    "code": "GME",
+    "market": "US",
+    "matched": "게임스탑"
+  },
+  "다올조선": null,
+  "SNT모티브": {
+    "code": "064960",
+    "market": "KR",
+    "matched": "SNT모티브"
+  },
+  "한국전력기술": {
+    "code": "052690",
+    "market": "KR",
+    "matched": "한전기술"
+  },
+  "영풍전자": null,
+  "이노와이어리스": null,
+  "유니테스트": {
+    "code": "086390",
+    "market": "KR",
+    "matched": "유니테스트"
+  },
+  "월트 디즈니 컴퍼니": null,
+  "피션": null,
+  "AVGO": {
+    "code": "AVGO.O",
+    "market": "US",
+    "matched": "브로드컴"
+  },
+  "EQIX": {
+    "code": "EQIX.O",
+    "market": "US",
+    "matched": "이퀴닉스"
+  },
+  "DLR": {
+    "code": "DLR",
+    "market": "US",
+    "matched": "디지털 리얼티 트러스트"
+  },
+  "NEE": {
+    "code": "NEE",
+    "market": "US",
+    "matched": "넥스트에라 에너지"
+  },
+  "DUK": {
+    "code": "DUK",
+    "market": "US",
+    "matched": "듀크 에너지"
+  },
+  "XEL": {
+    "code": "XEL.O",
+    "market": "US",
+    "matched": "엑셀 에너지"
+  },
+  "VERTIV": {
+    "code": "VRT",
+    "market": "US",
+    "matched": "Vertiv Holdings Co"
+  },
+  "멧세라": null,
+  "마드리갈파마": null,
+  "바이킹테라퓨틱스": {
+    "code": "VKTX.O",
+    "market": "US",
+    "matched": "바이킹 테라퓨틱스"
+  },
+  "오릭파마": {
+    "code": "ORIC.O",
+    "market": "US",
+    "matched": "오릭 파마슈티컬스"
+  },
+  "리커젼파마": {
+    "code": "RXRX.O",
+    "market": "US",
+    "matched": "리커젼 파마슈티컬스"
+  },
+  "뉴럴링크": null,
+  "Fadu": null,
+  "Longsys": null,
+  "SIMO": {
+    "code": "SIMO.O",
+    "market": "US",
+    "matched": "실리콘 모션 테크놀로지 ADR"
+  },
+  "Core Scientific": {
+    "code": "CORZ.O",
+    "market": "US",
+    "matched": "Core Scientific Inc"
+  },
+  "나비타스 반도체": null,
+  "티에프이": {
+    "code": "425420",
+    "market": "KR",
+    "matched": "티에프이"
+  },
+  "FRMI": {
+    "code": "FRMI.O",
+    "market": "US",
+    "matched": "페르미"
+  },
+  "Astera Labs": {
+    "code": "ALAB.O",
+    "market": "US",
+    "matched": "Astera Labs Inc"
+  },
+  "암바렐라": {
+    "code": "AMBA.O",
+    "market": "US",
+    "matched": "암바렐라"
+  },
+  "크라토스": {
+    "code": "KTOS.O",
+    "market": "US",
+    "matched": "크라토스 디펜스 & 시큐리티 솔"
+  },
+  "한화디펜스": null,
+  "Oklo": {
+    "code": "OKLO.K",
+    "market": "US",
+    "matched": "오클로"
+  },
+  "NANO Nuclear": {
+    "code": "NNE.O",
+    "market": "US",
+    "matched": "Nano Nuclear Energy Inc"
+  },
+  "ASP Isotopes": {
+    "code": "ASPI.O",
+    "market": "US",
+    "matched": "ASP Isotopes Inc"
+  },
+  "Lightbridge": {
+    "code": "LTBR.O",
+    "market": "US",
+    "matched": "Lightbridge Corp"
+  },
+  "Mirion Technologies": {
+    "code": "MIR",
+    "market": "US",
+    "matched": "Mirion Technologies Inc"
+  },
+  "Brookfield Renewables": null,
+  "Talen Energy": {
+    "code": "TLN.O",
+    "market": "US",
+    "matched": "Talen Energy Corp"
+  },
+  "Public Service Enterprise Group": {
+    "code": "PEG",
+    "market": "US",
+    "matched": "Public Service Enterprise Group Inc"
+  },
+  "Uranium Energy": {
+    "code": "UEC",
+    "market": "US",
+    "matched": "Uranium Energy Corp"
+  },
+  "BHP Group": {
+    "code": "BHP",
+    "market": "US",
+    "matched": "BHP Group Ltd ADR"
+  },
+  "Ur-Energy": {
+    "code": "URG",
+    "market": "US",
+    "matched": "Ur-Energy Inc"
+  },
+  "enCore Energy": {
+    "code": "EU.O",
+    "market": "US",
+    "matched": "enCore Energy Corp"
+  },
+  "Energy Fuels": {
+    "code": "UUUU.K",
+    "market": "US",
+    "matched": "Energy Fuels Inc"
+  },
+  "NextGen Energy": null,
+  "Snow Lake": null,
+  "Iso Energy": {
+    "code": "ISOU.K",
+    "market": "US",
+    "matched": "IsoEnergy Ltd."
+  },
+  "Lamamide Resources": null,
+  "Doosan Enerbility": null,
+  "TerraPower": null,
+  "Kehua": {
+    "code": "002335.SZ",
+    "market": "US",
+    "matched": "Kehua Data Co Ltd Class A"
+  },
+  "Bizlink": null,
+  "LITEON": null,
+  "엔트로픽": null,
+  "Beyond Meat": {
+    "code": "BYND.O",
+    "market": "US",
+    "matched": "Beyond Meat Inc"
+  },
+  "ServiceNow": {
+    "code": "NOW",
+    "market": "US",
+    "matched": "ServiceNow Inc"
+  },
+  "HubSpot": {
+    "code": "HUBS.K",
+    "market": "US",
+    "matched": "HubSpot Inc"
+  },
+  "Klaviyo": {
+    "code": "KVYO.K",
+    "market": "US",
+    "matched": "Klaviyo Inc"
+  },
+  "Wix": {
+    "code": "WIX.O",
+    "market": "US",
+    "matched": "윅스닷컴"
+  },
+  "ZoomInfo": {
+    "code": "GTM.O",
+    "market": "US",
+    "matched": "Zoominfo Technologies Inc"
+  },
+  "동원산업": {
+    "code": "006040",
+    "market": "KR",
+    "matched": "동원산업"
+  },
+  "NHN": {
+    "code": "181710",
+    "market": "KR",
+    "matched": "NHN"
+  },
+  "Applied Digital": {
+    "code": "APLD.O",
+    "market": "US",
+    "matched": "Applied Digital Corp"
+  },
+  "Caterpillar": {
+    "code": "CAT",
+    "market": "US",
+    "matched": "Caterpillar Inc"
+  },
+  "Wartsila": null,
+  "Cipher": {
+    "code": "CIFR.O",
+    "market": "US",
+    "matched": "Cipher Digital Inc"
+  },
+  "Riot Blockchain": null,
+  "Marathon Digital": null,
+  "미쓰비시전기": {
+    "code": "6503.T",
+    "market": "US",
+    "matched": "미쓰비시전기"
+  },
+  "후지쿠라": {
+    "code": "5803.T",
+    "market": "US",
+    "matched": "후지쿠라"
+  },
+  "소프트뱅크그룹": {
+    "code": "9984.T",
+    "market": "US",
+    "matched": "소프트뱅크 그룹"
+  },
+  "히타치제작소": null,
+  "도시바": {
+    "code": "6588.T",
+    "market": "US",
+    "matched": "도시바 텍"
+  },
+  "IHI": {
+    "code": "7013.T",
+    "market": "US",
+    "matched": "IHI"
+  },
+  "도요수산": {
+    "code": "2875.T",
+    "market": "US",
+    "matched": "도요 수산"
+  },
+  "알파벳(Google)": null,
+  "Digital Realty": {
+    "code": "DLR",
+    "market": "US",
+    "matched": "Digital Realty Trust Inc"
+  },
+  "Equinix": {
+    "code": "EQIX.O",
+    "market": "US",
+    "matched": "Equinix Inc"
+  },
+  "Ceres Power": null,
+  "Delta Electronics": null,
+  "Gaztransport & Technigaz SA": null,
+  "플렉스": {
+    "code": "FLEX.O",
+    "market": "US",
+    "matched": "플렉스"
+  },
+  "루멘테크놀로지": {
+    "code": "LUMN.K",
+    "market": "US",
+    "matched": "루멘 테크놀로지스"
+  },
+  "아카아미": null,
+  "Advantest": {
+    "code": "6857.T",
+    "market": "US",
+    "matched": "Advantest Corp"
+  },
+  "콜럼비아 금융": null,
+  "도미노스 피자": null,
+  "시리우스 XM": {
+    "code": "SIRI.O",
+    "market": "US",
+    "matched": "시리우스 XM 홀딩스"
+  },
+  "레너 홈스": null,
+  "DHI": {
+    "code": "DHI",
+    "market": "US",
+    "matched": "D.R. 호턴"
+  },
+  "레이시온": null,
+  "이항": {
+    "code": "EH.O",
+    "market": "US",
+    "matched": "이항 홀딩스 ADR"
+  },
+  "온다스": {
+    "code": "ONDS.O",
+    "market": "US",
+    "matched": "온다스"
+  },
+  "드론실드": null,
+  "엘사이트": null,
+  "레드캣": {
+    "code": "RCAT.O",
+    "market": "US",
+    "matched": "레드 캣 홀딩스"
+  },
+  "볼라투스 에어로스페이스": null,
+  "언유주얼머신스": {
+    "code": "UMAC.K",
+    "market": "US",
+    "matched": "언유주얼 머신스"
+  },
+  "HP엔터프라이즈": null,
+  "윌리엄스 컴퍼니": {
+    "code": "WMB",
+    "market": "US",
+    "matched": "윌리엄스 컴퍼니즈"
+  },
+  "AR": {
+    "code": "AR",
+    "market": "US",
+    "matched": "앤테로 리소스"
+  },
+  "EXE": {
+    "code": "EXE.O",
+    "market": "US",
+    "matched": "익스팬드 에너지"
+  },
+  "아스테라 랩스": {
+    "code": "ALAB.O",
+    "market": "US",
+    "matched": "아스테라 랩스"
+  },
+  "제이콥스 솔루션": {
+    "code": "J",
+    "market": "US",
+    "matched": "제이콥스 솔루션스"
+  },
+  "디지털 갤럭시": null,
+  "메모리 관련 기타 업체": null,
+  "파웰 인더스트리즈": null,
+  "팔로알토 네트웍스": {
+    "code": "PANW.O",
+    "market": "US",
+    "matched": "팔로 알토 네트웍스"
+  },
+  "슈퍼마이크로 컴퓨터": {
+    "code": "SMCI.O",
+    "market": "US",
+    "matched": "슈퍼 마이크로 컴퓨터"
+  },
+  "Eli Lilly": {
+    "code": "LLY",
+    "market": "US",
+    "matched": "Eli Lilly and Co"
+  },
+  "McKesson": {
+    "code": "MCK",
+    "market": "US",
+    "matched": "McKesson Corp"
+  },
+  "Casey's General Stores": null,
+  "Rockwell Automation": {
+    "code": "ROK",
+    "market": "US",
+    "matched": "Rockwell Automation Inc"
+  },
+  "Insulet": {
+    "code": "PODD.O",
+    "market": "US",
+    "matched": "Insulet Corp"
+  },
+  "Burlington Stores": {
+    "code": "BURL.K",
+    "market": "US",
+    "matched": "Burlington Stores Inc"
+  },
+  "Penumbra": {
+    "code": "PEN",
+    "market": "US",
+    "matched": "Penumbra Inc"
+  },
+  "Woodward": {
+    "code": "WWD.O",
+    "market": "US",
+    "matched": "Woodward Inc"
+  },
+  "Cardinal Health": {
+    "code": "CAH",
+    "market": "US",
+    "matched": "Cardinal Health  Inc"
+  },
+  "Welltower": {
+    "code": "WELL.K",
+    "market": "US",
+    "matched": "Welltower Inc"
+  },
+  "Ametek": {
+    "code": "AME",
+    "market": "US",
+    "matched": "AMETEK Inc"
+  },
+  "ITT": {
+    "code": "ITT",
+    "market": "US",
+    "matched": "ITT"
+  },
+  "AerCap": {
+    "code": "AER",
+    "market": "US",
+    "matched": "AerCap Holdings NV"
+  },
+  "Walmart": {
+    "code": "WMT.O",
+    "market": "US",
+    "matched": "Walmart Inc"
+  },
+  "O'Reilly Automotive": {
+    "code": "ORLY.O",
+    "market": "US",
+    "matched": "O'Reilly Automotive Inc"
+  },
+  "Boston Scientific": {
+    "code": "BSX",
+    "market": "US",
+    "matched": "Boston Scientific Corp"
+  },
+  "Somnigroup International": {
+    "code": "SGI",
+    "market": "US",
+    "matched": "Somnigroup International Inc"
+  },
+  "Viking Holdings": {
+    "code": "VIK",
+    "market": "US",
+    "matched": "Viking Holdings Ltd(Pembroke)"
+  },
+  "American Healthcare REIT": {
+    "code": "AHR",
+    "market": "US",
+    "matched": "American Healthcare REIT Inc"
+  },
+  "Enterprise Products Partners": {
+    "code": "EPD",
+    "market": "US",
+    "matched": "Enterprise Products Partners Units"
+  },
+  "에스오일": {
+    "code": "010950",
+    "market": "KR",
+    "matched": "S-Oil"
+  },
+  "인스퍼(IEIT Systems)": null,
+  "Williams Companies": {
+    "code": "WMB",
+    "market": "US",
+    "matched": "Williams Companies Inc"
+  },
+  "TC Energy": {
+    "code": "TRP",
+    "market": "US",
+    "matched": "TC Energy Corp"
+  },
+  "암홀딩스": {
+    "code": "ARM.O",
+    "market": "US",
+    "matched": "암 홀딩스 ADR"
+  },
+  "온토이노베이션": null,
+  "폼팩터": {
+    "code": "FORM.O",
+    "market": "US",
+    "matched": "폼팩터"
+  },
+  "아리스타네트웍스": {
+    "code": "ANET.K",
+    "market": "US",
+    "matched": "아리스타 네트웍스"
+  },
+  "크레도테크놀로지": {
+    "code": "CRDO.O",
+    "market": "US",
+    "matched": "크레도 테크놀로지 그룹 홀딩"
+  },
+  "버티브홀딩스": {
+    "code": "VRT",
+    "market": "US",
+    "matched": "버티브 홀딩스"
+  },
+  "엔벤트일렉트릭": {
+    "code": "NVT",
+    "market": "US",
+    "matched": "엔벤트 일렉트릭"
+  },
+  "모딘매뉴팩처링": {
+    "code": "MOD",
+    "market": "US",
+    "matched": "모딘 매뉴팩처링"
+  },
+  "퓨어스토리지": null,
+  "신에츠화학": {
+    "code": "4063.T",
+    "market": "US",
+    "matched": "신에츠화학"
+  },
+  "JSR": null,
+  "화홍반도체": null,
+  "셀레스티카": {
+    "code": "CLS",
+    "market": "US",
+    "matched": "셀레스티카"
+  },
+  "제네락": {
+    "code": "GNRC.K",
+    "market": "US",
+    "matched": "제네락 홀딩스"
+  },
+  "유아이패스": {
+    "code": "PATH.K",
+    "market": "US",
+    "matched": "유아이패스"
+  },
+  "에이로바이런먼트": null,
+  "온디스": null,
+  "언맨드 시스템즈": null,
+  "제너럴 다이내믹스": {
+    "code": "GD",
+    "market": "US",
+    "matched": "제너럴 다이내믹스"
+  },
+  "하니웰": null,
+  "로크웰 오토메이션": {
+    "code": "ROK",
+    "market": "US",
+    "matched": "로크웰 오토메이션"
+  },
+  "지브라 테크놀로지스": {
+    "code": "ZBRA.O",
+    "market": "US",
+    "matched": "지브라 테크놀로지스"
+  },
+  "모빌아이": {
+    "code": "MBLY.O",
+    "market": "US",
+    "matched": "모빌아이 글로벌"
+  },
+  "에이아이": {
+    "code": "LIDR.O",
+    "market": "US",
+    "matched": "에이아이"
+  },
+  "루미나": {
+    "code": "LAZR.O",
+    "market": "US",
+    "matched": "루미나 테크놀로지스"
+  },
+  "이노비즈": {
+    "code": "INVZ.O",
+    "market": "US",
+    "matched": "이노비즈 테크놀로지스"
+  },
+  "프로셉트 바이오로보틱스": {
+    "code": "PRCT.O",
+    "market": "US",
+    "matched": "프로셉트 바이오로보틱스"
+  },
+  "스트라이커": {
+    "code": "SYK",
+    "market": "US",
+    "matched": "스트라이커"
+  },
+  "롤스로이스": null,
+  "오셔니어링": {
+    "code": "OII",
+    "market": "US",
+    "matched": "오셔니어링 인터내셔널"
+  },
+  "파로": {
+    "code": "388870",
+    "market": "KR",
+    "matched": "파로스아이바이오"
+  },
+  "심보틱": {
+    "code": "SYM.O",
+    "market": "US",
+    "matched": "심보틱"
+  },
+  "서브 로보틱스": {
+    "code": "SERV.O",
+    "market": "US",
+    "matched": "서브 로보틱스"
+  },
+  "할로자임": {
+    "code": "HALO.O",
+    "market": "US",
+    "matched": "할로자임 테라퓨틱스"
+  },
+  "패브리넷": {
+    "code": "FN",
+    "market": "US",
+    "matched": "패브리넷"
+  },
+  "패브릭넷": null,
+  "TWICE": null,
+  "NSK": {
+    "code": "6471.T",
+    "market": "US",
+    "matched": "NSK"
+  },
+  "하모닉": {
+    "code": "HLIT.O",
+    "market": "US",
+    "matched": "하모닉"
+  },
+  "니덱": {
+    "code": "6594.T",
+    "market": "US",
+    "matched": "니덱"
+  },
+  "ST마이크로": {
+    "code": "STM",
+    "market": "US",
+    "matched": "ST 마이크로 일렉트로닉스 ADR"
+  },
+  "온세미": {
+    "code": "ON.O",
+    "market": "US",
+    "matched": "온 세미콘덕터"
+  },
+  "Anduril Industries": null,
+  "Plug Power": {
+    "code": "PLUG.O",
+    "market": "US",
+    "matched": "Plug Power Inc"
+  },
+  "Canadian Pacific Kansas City": {
+    "code": "CP",
+    "market": "US",
+    "matched": "Canadian Pacific Kansas City Ltd"
+  },
+  "Prologis": {
+    "code": "PLD",
+    "market": "US",
+    "matched": "Prologis Inc"
+  },
+  "Hesai": {
+    "code": "HSAI.O",
+    "market": "US",
+    "matched": "Hesai Group ADR"
+  },
+  "Baidu": {
+    "code": "BIDU.O",
+    "market": "US",
+    "matched": "Baidu Inc ADR"
+  },
+  "iFlytek": {
+    "code": "002230.SZ",
+    "market": "US",
+    "matched": "iFLYTEK Co Ltd Class A"
+  },
+  "Alibaba": {
+    "code": "9988.HK",
+    "market": "US",
+    "matched": "알리바바"
+  },
+  "신원종합개발": {
+    "code": "017000",
+    "market": "KR",
+    "matched": "신원종합개발"
+  },
+  "미츠비시": null,
+  "Freeport-McMoRan Inc": {
+    "code": "FCX",
+    "market": "US",
+    "matched": "Freeport-McMoRan Inc"
+  },
+  "퍼미": null,
+  "미드저니": null,
+  "지스케일러": {
+    "code": "ZS.O",
+    "market": "US",
+    "matched": "지스케일러"
+  },
+  "Rigetti": {
+    "code": "RGTI.O",
+    "market": "US",
+    "matched": "Rigetti Computing Inc"
+  },
+  "도어대시": {
+    "code": "DASH.O",
+    "market": "US",
+    "matched": "도어대시"
+  },
+  "틱톡": null,
+  "윅스": {
+    "code": "WIX.O",
+    "market": "US",
+    "matched": "윅스닷컴"
+  },
+  "WMB": {
+    "code": "WMB",
+    "market": "US",
+    "matched": "윌리엄스 컴퍼니즈"
+  },
+  "CEG": {
+    "code": "CEG.O",
+    "market": "US",
+    "matched": "콘스텔레이션 에너지"
+  },
+  "FLNC": {
+    "code": "FLNC.O",
+    "market": "US",
+    "matched": "플루언스 에너지"
+  },
+  "라이트웨이브": {
+    "code": "LWLG.O",
+    "market": "US",
+    "matched": "라이트웨이브 로직"
+  },
+  "시그나": {
+    "code": "CI",
+    "market": "US",
+    "matched": "시그나"
+  },
+  "달러 제너럴": {
+    "code": "DG",
+    "market": "US",
+    "matched": "달러 제너럴"
+  },
+  "스포티파이": {
+    "code": "SPOT.K",
+    "market": "US",
+    "matched": "스포티파이 테크놀러지"
+  },
+  "버텍스 파마슈티컬즈": null,
+  "렌라 코퍼레이션": null,
+  "오름테라퓨틱스": null,
+  "디앤디": {
+    "code": "377190",
+    "market": "KR",
+    "matched": "디앤디플랫폼리츠"
+  },
+  "형지그룹": null,
+  "나스닥 100": null,
+  "팔란티어 테크놀로지스": {
+    "code": "PLTR.O",
+    "market": "US",
+    "matched": "팔란티어 테크놀로지스"
+  },
+  "D웨이브 퀀텀": null,
+  "AST 스페이스모바일": {
+    "code": "ASTS.O",
+    "market": "US",
+    "matched": "AST 스페이스모바일"
+  },
+  "마이크로스트래티지": null,
+  "비트마인": {
+    "code": "BMNR.K",
+    "market": "US",
+    "matched": "비트마인 이머전 테크놀로지스"
+  },
+  "아이리스 에너지": null,
+  "미츠비시중공업": null,
+  "어드반테스트": {
+    "code": "6857.T",
+    "market": "US",
+    "matched": "어드반테스트"
+  },
+  "사브": {
+    "code": "SBRA.O",
+    "market": "US",
+    "matched": "사브라 헬스케어 리츠"
+  },
+  "BAE 시스템즈": null,
+  "에어버스": null,
+  "GSK": {
+    "code": "GSK",
+    "market": "US",
+    "matched": "GSK"
+  },
+  "LG유플러스": {
+    "code": "032640",
+    "market": "KR",
+    "matched": "LG유플러스"
+  },
+  "RTX": {
+    "code": "RTX",
+    "market": "US",
+    "matched": "RTX"
+  },
+  "아모센스": {
+    "code": "357580",
+    "market": "KR",
+    "matched": "아모센스"
+  },
+  "포스코엠텍": {
+    "code": "009520",
+    "market": "KR",
+    "matched": "포스코엠텍"
+  },
+  "뉴로핏": {
+    "code": "380550",
+    "market": "KR",
+    "matched": "뉴로핏"
+  },
+  "그래피": {
+    "code": "318060",
+    "market": "KR",
+    "matched": "그래피"
+  },
+  "네오팜": {
+    "code": "092730",
+    "market": "KR",
+    "matched": "네오팜"
+  },
+  "애경산업": {
+    "code": "018250",
+    "market": "KR",
+    "matched": "애경산업"
+  },
+  "오스코텍": {
+    "code": "039200",
+    "market": "KR",
+    "matched": "오스코텍"
+  },
+  "닥터멜락신": null,
+  "셀리맥스": null,
+  "도쿄일렉트릭": null,
+  "릴리": {
+    "code": "9827.T",
+    "market": "US",
+    "matched": "릴리컬러"
+  },
+  "Kaman": null,
+  "Joby Aviation": {
+    "code": "JOBY.K",
+    "market": "US",
+    "matched": "Joby Aviation Inc"
+  },
+  "Archer Aviation": {
+    "code": "ACHR.K",
+    "market": "US",
+    "matched": "Archer Aviation Inc"
+  },
+  "BloomEnergy": {
+    "code": "BE",
+    "market": "US",
+    "matched": "Bloom Energy Corp"
+  },
+  "지투파워": {
+    "code": "388050",
+    "market": "KR",
+    "matched": "지투파워"
+  },
+  "키옥시아 홀딩스": {
+    "code": "285A.T",
+    "market": "US",
+    "matched": "키옥시아 홀딩스"
+  },
+  "에피스홀딩스": null,
+  "GC녹십자": null,
+  "동국제약": {
+    "code": "086450",
+    "market": "KR",
+    "matched": "동국제약"
+  },
+  "엘릭스": null,
+  "마드리갈": null,
+  "Nordex": null,
+  "루멘 테크놀로지": {
+    "code": "LUMN.K",
+    "market": "US",
+    "matched": "루멘 테크놀로지스"
+  },
+  "케이엔더블유": {
+    "code": "105330",
+    "market": "KR",
+    "matched": "케이엔더블유"
+  },
+  "네오티스": {
+    "code": "085910",
+    "market": "KR",
+    "matched": "네오티스"
+  },
+  "한국철강": {
+    "code": "104700",
+    "market": "KR",
+    "matched": "한국철강"
+  },
+  "코드렉스": null,
+  "알바로": null,
+  "팹 마스터": null,
+  "코헤런트": null,
+  "마이크로칩": {
+    "code": "MCHP.O",
+    "market": "US",
+    "matched": "마이크로칩 테크놀러지"
+  },
+  "Chicony Power": null,
+  "Win Semi": null,
+  "Singtel": null,
+  "Telekom Malaysia": null,
+  "Telkom Indonesia": {
+    "code": "TLK",
+    "market": "US",
+    "matched": "Telkom Indonesia (Persero) Tbk PT ADR"
+  },
+  "Browave": null,
+  "LuxNet": null,
+  "Shiny Optical": null,
+  "Eoptolink": {
+    "code": "300502.SZ",
+    "market": "US",
+    "matched": "Eoptolink Technology Inc Ltd Class A"
+  },
+  "FOCI Fiber Optic": null,
+  "AmTRAN Technology": null,
+  "그록": null,
+  "미크로칩 테크놀로지": null,
+  "LITE": {
+    "code": "LITE.O",
+    "market": "US",
+    "matched": "루멘텀 홀딩스"
+  },
+  "COHR": {
+    "code": "COHR.K",
+    "market": "US",
+    "matched": "코히런트"
+  },
+  "Corsair Gaming": {
+    "code": "CRSR.O",
+    "market": "US",
+    "matched": "Corsair Gaming Inc"
+  },
+  "Applied Labs": null,
+  "GigaFoundries": null,
+  "익스피디아": {
+    "code": "EXPE.O",
+    "market": "US",
+    "matched": "익스피디아그룹"
+  },
+  "부킹닷컴": null,
+  "카트": null,
+  "CF인더스트리": {
+    "code": "CF",
+    "market": "US",
+    "matched": "CF 인더스트리스 홀딩스"
+  },
+  "MiniMax": {
+    "code": "0100.HK",
+    "market": "US",
+    "matched": "MiniMax Group Inc"
+  },
+  "智谱": null,
+  "그록(Groq)": null,
+  "코스텍시스": {
+    "code": "355150",
+    "market": "KR",
+    "matched": "코스텍시스"
+  },
+  "유비쿼스홀딩스": {
+    "code": "078070",
+    "market": "KR",
+    "matched": "유비쿼스홀딩스"
+  },
+  "대한광통신": {
+    "code": "010170",
+    "market": "KR",
+    "matched": "대한광통신"
+  },
+  "한국첨단소재": {
+    "code": "062970",
+    "market": "KR",
+    "matched": "한국첨단소재"
+  },
+  "옵티코어": {
+    "code": "380540",
+    "market": "KR",
+    "matched": "옵티코어"
+  },
+  "제이스텍": null,
+  "Besi": null,
+  "DISCO": {
+    "code": "6146.T",
+    "market": "US",
+    "matched": "Disco Corp"
+  },
+  "후뎬구펀": null,
+  "프로티나": {
+    "code": "468530",
+    "market": "KR",
+    "matched": "프로티나"
+  },
+  "일론 머스크": null,
+  "트위터(X)": null,
+  "DL(디엘)": null,
+  "DL": {
+    "code": "000210",
+    "market": "KR",
+    "matched": "DL"
+  },
+  "한텍": {
+    "code": "098070",
+    "market": "KR",
+    "matched": "한텍"
+  },
+  "도쿄해상홀딩스": null,
+  "한국항공우주산업(KAI)": null,
+  "Microsoft Azure": null,
+  "스타벅스": {
+    "code": "SBUX.O",
+    "market": "US",
+    "matched": "스타벅스"
+  },
+  "ConocoPhillips": {
+    "code": "COP",
+    "market": "US",
+    "matched": "ConocoPhillips"
+  },
+  "Cenovus Energy": {
+    "code": "CVE",
+    "market": "US",
+    "matched": "Cenovus Energy Incorporation"
+  },
+  "Devon Energy": {
+    "code": "DVN",
+    "market": "US",
+    "matched": "Devon Energy Corp"
+  },
+  "EOG Resources": {
+    "code": "EOG",
+    "market": "US",
+    "matched": "EOG Resources Inc"
+  },
+  "Energy Transfer": {
+    "code": "ET",
+    "market": "US",
+    "matched": "Energy Transfer Units"
+  },
+  "Diamondback Energy": {
+    "code": "FANG.O",
+    "market": "US",
+    "matched": "Diamondback Energy Inc"
+  },
+  "TechnipFMC": {
+    "code": "FTI",
+    "market": "US",
+    "matched": "TechnipFMC PLC"
+  },
+  "Marathon Petroleum": {
+    "code": "MPC",
+    "market": "US",
+    "matched": "Marathon Petroleum Corp"
+  },
+  "Occidental Petroleum": {
+    "code": "OXY",
+    "market": "US",
+    "matched": "Occidental Petroleum Corp"
+  },
+  "Petroleo Brasileiro": {
+    "code": "PBR",
+    "market": "US",
+    "matched": "Petroleo Brasileiro ADR Reptg 2"
+  },
+  "Phillips 66": {
+    "code": "PSX",
+    "market": "US",
+    "matched": "Phillips 66"
+  },
+  "SLB": {
+    "code": "SLB",
+    "market": "US",
+    "matched": "Slb NV"
+  },
+  "Suncor Energy": {
+    "code": "SU",
+    "market": "US",
+    "matched": "Suncor Energy Inc (Canada)"
+  },
+  "Targa Resources": {
+    "code": "TRGP.K",
+    "market": "US",
+    "matched": "Targa Resources Corp"
+  },
+  "Tenaris": {
+    "code": "TS",
+    "market": "US",
+    "matched": "Tenaris SA ADR"
+  },
+  "Valero Energy": {
+    "code": "VLO",
+    "market": "US",
+    "matched": "Valero Energy Corp"
+  },
+  "Dow": {
+    "code": "DOW",
+    "market": "US",
+    "matched": "다우"
+  },
+  "Corteva": {
+    "code": "CTVA.K",
+    "market": "US",
+    "matched": "Corteva Inc"
+  },
+  "Entergy": {
+    "code": "ETR",
+    "market": "US",
+    "matched": "Entergy Corp"
+  },
+  "SPDR Gold Trust": null,
+  "iShares Gold Trust": {
+    "code": "IAU",
+    "market": "US",
+    "matched": "iShares Gold Trust"
+  },
+  "지앤비스에스 에코": null,
+  "셀레믹스": {
+    "code": "331920",
+    "market": "KR",
+    "matched": "셀레믹스"
+  },
+  "알루코": {
+    "code": "001780",
+    "market": "KR",
+    "matched": "알루코"
+  },
+  "ST Pharm": null,
+  "가와사키중공업": {
+    "code": "7012.T",
+    "market": "US",
+    "matched": "가와사키중공업"
+  },
+  "일본제강소": {
+    "code": "5631.T",
+    "market": "US",
+    "matched": "일본제강소"
+  },
+  "SKY퍼펙트JSAT": null,
+  "AeroEdge": {
+    "code": "7409.T",
+    "market": "US",
+    "matched": "AeroEdge Co Ltd"
+  },
+  "SGC에너지": {
+    "code": "005090",
+    "market": "KR",
+    "matched": "SGC에너지"
+  },
+  "AAOI": {
+    "code": "AAOI.O",
+    "market": "US",
+    "matched": "어플라이드 옵토일렉트로닉스"
+  },
+  "GLW": {
+    "code": "GLW",
+    "market": "US",
+    "matched": "코닝"
+  },
+  "NextEra": {
+    "code": "NEE",
+    "market": "US",
+    "matched": "Nextera Energy Inc"
+  },
+  "쉘": {
+    "code": "SHEL.K",
+    "market": "US",
+    "matched": "쉘 ADR"
+  },
+  "토탈에너지즈": null,
+  "도쿄가스": {
+    "code": "9531.T",
+    "market": "US",
+    "matched": "도쿄가스"
+  },
+  "제라": null,
+  "오사카가스": {
+    "code": "9532.T",
+    "market": "US",
+    "matched": "오사카가스"
+  },
+  "미쓰이": {
+    "code": "8031.T",
+    "market": "US",
+    "matched": "미쓰이물산"
+  },
+  "파크시스템즈": null,
+  "한울소재과학": {
+    "code": "091440",
+    "market": "KR",
+    "matched": "한울소재과학"
+  },
+  "서울전자통신": {
+    "code": "027040",
+    "market": "KR",
+    "matched": "서울전자통신"
+  },
+  "아이크래프트": {
+    "code": "052460",
+    "market": "KR",
+    "matched": "아이크래프트"
+  },
+  "큐에스아이": {
+    "code": "066310",
+    "market": "KR",
+    "matched": "큐에스아이"
+  },
+  "웨이브일렉트로": {
+    "code": "095270",
+    "market": "KR",
+    "matched": "웨이브일렉트로"
+  },
+  "툴젠": {
+    "code": "199800",
+    "market": "KR",
+    "matched": "툴젠"
+  },
+  "에이프릴": {
+    "code": "397030",
+    "market": "KR",
+    "matched": "에이프릴바이오"
+  },
+  "야게오": null,
+  "현대위아": {
+    "code": "011210",
+    "market": "KR",
+    "matched": "현대위아"
+  },
+  "강봉리튬": {
+    "code": "1772.HK",
+    "market": "US",
+    "matched": "강봉리튬"
+  },
+  "롯데알미늄": null,
+  "셀비온": {
+    "code": "308430",
+    "market": "KR",
+    "matched": "셀비온"
+  },
+  "TFC Optical": null,
+  "Landmark": {
+    "code": "LARK.O",
+    "market": "US",
+    "matched": "Landmark Bancorp Inc"
+  },
+  "VPEC": null,
+  "Sumitomo": {
+    "code": "SMFG.K",
+    "market": "US",
+    "matched": "Sumitomo Mitsui Financial Group  Inc ADR"
+  },
+  "Mitsubishi": {
+    "code": "MUFG.K",
+    "market": "US",
+    "matched": "Mitsubishi UFJ Financial Group Inc ADR"
+  },
+  "Furukawa": {
+    "code": "5801.T",
+    "market": "US",
+    "matched": "Furukawa Electric Co Ltd"
+  },
+  "Victory Giant": {
+    "code": "300476.SZ",
+    "market": "US",
+    "matched": "Victory Giant Technology (HuiZhou) Co Ltd Class A"
+  },
+  "WUS": {
+    "code": "002463.SZ",
+    "market": "US",
+    "matched": "Wus Printed Circuit Kunshan Co Ltd Class A"
+  },
+  "Shengyi": {
+    "code": "600183.SS",
+    "market": "US",
+    "matched": "Shengyi Technology Co Ltd Class A"
+  },
+  "RoboTechnik": {
+    "code": "300757.SZ",
+    "market": "US",
+    "matched": "RoboTechnik Intelligent Technology Co Ltd Class A"
+  },
+  "YJ Semi": null,
+  "YOFC": null,
+  "필에너지": {
+    "code": "378340",
+    "market": "KR",
+    "matched": "필에너지"
+  },
+  "하이록코리아": {
+    "code": "013030",
+    "market": "KR",
+    "matched": "하이록코리아"
+  },
+  "비씨엔씨": {
+    "code": "146320",
+    "market": "KR",
+    "matched": "비씨엔씨"
+  },
+  "와이씨": {
+    "code": "232140",
+    "market": "KR",
+    "matched": "와이씨"
+  },
+  "어보브반도체": {
+    "code": "102120",
+    "market": "KR",
+    "matched": "어보브반도체"
+  },
+  "아이앤씨": {
+    "code": "052860",
+    "market": "KR",
+    "matched": "아이앤씨"
+  },
+  "비엠티": {
+    "code": "086670",
+    "market": "KR",
+    "matched": "비엠티"
+  },
+  "SIMPAC": {
+    "code": "009160",
+    "market": "KR",
+    "matched": "SIMPAC"
+  },
+  "나노신소재": {
+    "code": "121600",
+    "market": "KR",
+    "matched": "나노신소재"
+  },
+  "웨이비스": {
+    "code": "289930",
+    "market": "KR",
+    "matched": "웨이비스"
+  },
+  "아주ib투자": {
+    "code": "027360",
+    "market": "KR",
+    "matched": "아주IB투자"
+  },
+  "PS일렉트로닉스": {
+    "code": "332570",
+    "market": "KR",
+    "matched": "PS일렉트로닉스"
+  },
+  "사이파이브": null,
+  "나발 그룹": null,
+  "싱가포르 케펠 데이터센터": null,
+  "MOL": {
+    "code": "MOH",
+    "market": "US",
+    "matched": "Molina Healthcare Inc"
+  },
+  "에스엔시스": {
+    "code": "0008Z0",
+    "market": "KR",
+    "matched": "에스엔시스"
+  },
+  "메주": null,
+  "동아ST": null,
+  "휴이노": null,
+  "에코프로그룹": null,
+  "선도전기": {
+    "code": "007610",
+    "market": "KR",
+    "matched": "선도전기"
+  },
+  "제일일렉트릭": {
+    "code": "199820",
+    "market": "KR",
+    "matched": "제일일렉트릭"
+  },
+  "피앤씨테크": {
+    "code": "237750",
+    "market": "KR",
+    "matched": "피앤씨테크"
+  },
+  "LS네트웍스": {
+    "code": "000680",
+    "market": "KR",
+    "matched": "LS네트웍스"
+  },
+  "KBI메탈": {
+    "code": "024840",
+    "market": "KR",
+    "matched": "KBI메탈"
+  },
+  "제룡산업": {
+    "code": "147830",
+    "market": "KR",
+    "matched": "제룡산업"
+  },
+  "세명전기": {
+    "code": "017510",
+    "market": "KR",
+    "matched": "세명전기"
+  },
+  "HS효성첨단소재": {
+    "code": "298050",
+    "market": "KR",
+    "matched": "HS효성첨단소재"
+  },
+  "LS머트리얼즈": {
+    "code": "417200",
+    "market": "KR",
+    "matched": "LS머트리얼즈"
+  },
+  "지앤비에스에코": {
+    "code": "382800",
+    "market": "KR",
+    "matched": "지앤비에스 에코"
+  },
+  "퓨릿": {
+    "code": "445180",
+    "market": "KR",
+    "matched": "퓨릿"
+  },
+  "이엘씨": {
+    "code": "041520",
+    "market": "KR",
+    "matched": "이엘씨"
+  },
+  "성일하이텍": {
+    "code": "365340",
+    "market": "KR",
+    "matched": "성일하이텍"
+  },
+  "동국제강": {
+    "code": "460860",
+    "market": "KR",
+    "matched": "동국제강"
+  },
+  "휴스틸": {
+    "code": "005010",
+    "market": "KR",
+    "matched": "휴스틸"
+  },
+  "삼영": {
+    "code": "003720",
+    "market": "KR",
+    "matched": "삼영"
+  },
+  "에스티큐브": {
+    "code": "052020",
+    "market": "KR",
+    "matched": "에스티큐브"
+  },
+  "영화테크": {
+    "code": "265560",
+    "market": "KR",
+    "matched": "영화테크"
+  },
+  "폴라리스AI": {
+    "code": "039980",
+    "market": "KR",
+    "matched": "폴라리스AI"
+  },
+  "채비": {
+    "code": "0011T0",
+    "market": "KR",
+    "matched": "채비"
+  },
+  "삼성바이오": {
+    "code": "207940",
+    "market": "KR",
+    "matched": "삼성바이오로직스"
+  },
+  "산디스크": null,
+  "일리 릴리": null,
+  "NVDA": {
+    "code": "NVDA.O",
+    "market": "US",
+    "matched": "엔비디아"
+  },
+  "MRVL": {
+    "code": "MRVL.O",
+    "market": "US",
+    "matched": "마벨 테크놀로지 그룹"
+  },
+  "INTC": {
+    "code": "INTC.O",
+    "market": "US",
+    "matched": "인텔"
+  },
+  "STM": {
+    "code": "STM",
+    "market": "US",
+    "matched": "ST 마이크로 일렉트로닉스 ADR"
+  },
+  "TXN": {
+    "code": "TXN.O",
+    "market": "US",
+    "matched": "텍사스 인스트루먼트"
+  },
+  "MPWR": {
+    "code": "MPWR.O",
+    "market": "US",
+    "matched": "모놀리식 파워 시스템즈"
+  },
+  "MCHP": {
+    "code": "MCHP.O",
+    "market": "US",
+    "matched": "마이크로칩 테크놀러지"
+  },
+  "ON": {
+    "code": "ON.O",
+    "market": "US",
+    "matched": "온 세미콘덕터"
+  },
+  "앱솔릭스": null,
+  "씨메스로보틱스": {
+    "code": "475400",
+    "market": "KR",
+    "matched": "씨메스로보틱스"
+  },
+  "액트로": {
+    "code": "290740",
+    "market": "KR",
+    "matched": "액트로"
+  },
+  "메쎄이상": {
+    "code": "408920",
+    "market": "KR",
+    "matched": "메쎄이상"
+  },
+  "TYM": {
+    "code": "002900",
+    "market": "KR",
+    "matched": "TYM"
+  },
+  "에이엘티": {
+    "code": "172670",
+    "market": "KR",
+    "matched": "에이엘티"
+  },
+  "삼samsung증권": null,
+  "Zijin Mining": {
+    "code": "601899.SS",
+    "market": "US",
+    "matched": "Zijin Mining Group Co Ltd Class A"
+  },
+  "Tianqi Lithium": {
+    "code": "002466.SZ",
+    "market": "US",
+    "matched": "Tianqi Lithium Corp Class A"
+  },
+  "Ganfeng Lithium": {
+    "code": "002460.SZ",
+    "market": "US",
+    "matched": "Ganfeng Lithium Group Co.  Ltd Class A"
+  },
+  "Dynanonic": null,
+  "미네베아미쓰미": null,
+  "ST마이크로일렉트로닉스": {
+    "code": "STM",
+    "market": "US",
+    "matched": "ST 마이크로 일렉트로닉스 ADR"
+  },
+  "ARM홀딩스": null,
+  "삼성에스디에스": {
+    "code": "018260",
+    "market": "KR",
+    "matched": "삼성에스디에스"
+  },
+  "와이지원": {
+    "code": "019210",
+    "market": "KR",
+    "matched": "와이지-원"
+  },
+  "켄코아에어로스페이스": {
+    "code": "274090",
+    "market": "KR",
+    "matched": "켄코아에어로스페이스"
+  },
+  "이노스페이스": {
+    "code": "462350",
+    "market": "KR",
+    "matched": "이노스페이스"
+  },
+  "나라스페이스테크놀로지": {
+    "code": "478340",
+    "market": "KR",
+    "matched": "나라스페이스테크놀로지"
+  },
+  "루미르": {
+    "code": "474170",
+    "market": "KR",
+    "matched": "루미르"
+  },
+  "인튜이티브 머신스": {
+    "code": "LUNR.O",
+    "market": "US",
+    "matched": "인튜이티브 머신스"
+  },
+  "플래닛랩스": {
+    "code": "PL",
+    "market": "US",
+    "matched": "플래닛 랩스 PBC"
+  },
+  "하이라이트": null,
+  "리플로드 테크놀로지": null,
+  "넷앱": {
+    "code": "NTAP.O",
+    "market": "US",
+    "matched": "넷앱"
+  },
+  "삼웨어": null,
+  "엔바이디아": null,
+  "달(Dell)": null,
+  "큐엔씨": null,
+  "휴렛패커드": {
+    "code": "HPE",
+    "market": "US",
+    "matched": "휴렛패커드 엔터프라이즈"
+  },
+  "휴렛패커드 엔터프라이즈": {
+    "code": "HPE",
+    "market": "US",
+    "matched": "휴렛패커드 엔터프라이즈"
+  },
+  "레이저텍": null,
+  "무라타 제작소": {
+    "code": "6981.T",
+    "market": "US",
+    "matched": "무라타제작소"
+  },
+  "타이세이 건설": null,
+  "섬코": {
+    "code": "3436.T",
+    "market": "US",
+    "matched": "섬코"
+  },
+  "텔레칩스": {
+    "code": "054450",
+    "market": "KR",
+    "matched": "텔레칩스"
+  },
+  "윈팩": {
+    "code": "097800",
+    "market": "KR",
+    "matched": "윈팩"
+  },
+  "로보스타": {
+    "code": "090360",
+    "market": "KR",
+    "matched": "로보스타"
+  },
+  "Janus Henderson": {
+    "code": "JA",
+    "market": "US",
+    "matched": "Janus Henderson AA-A CLO ETF"
+  },
+  "마벨테크놀로지": {
+    "code": "MRVL.O",
+    "market": "US",
+    "matched": "마벨 테크놀로지 그룹"
+  },
+  "우리로": {
+    "code": "046970",
+    "market": "KR",
+    "matched": "우리로"
+  },
+  "우리넷": {
+    "code": "115440",
+    "market": "KR",
+    "matched": "우리넷"
+  },
+  "서울반도체": {
+    "code": "046890",
+    "market": "KR",
+    "matched": "서울반도체"
+  },
+  "광전자": {
+    "code": "017900",
+    "market": "KR",
+    "matched": "광전자"
+  },
+  "티엠씨": {
+    "code": "217590",
+    "market": "KR",
+    "matched": "티엠씨"
+  },
+  "쏠리드": {
+    "code": "050890",
+    "market": "KR",
+    "matched": "쏠리드"
+  },
+  "빛과전자": {
+    "code": "069540",
+    "market": "KR",
+    "matched": "빛과전자"
+  },
+  "빛샘전자": {
+    "code": "072950",
+    "market": "KR",
+    "matched": "빛샘전자"
+  },
+  "기가레인": {
+    "code": "049080",
+    "market": "KR",
+    "matched": "기가레인"
+  },
+  "이루온": {
+    "code": "065440",
+    "market": "KR",
+    "matched": "이루온"
   }
 }

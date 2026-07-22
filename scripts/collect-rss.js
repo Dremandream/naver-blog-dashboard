@@ -247,15 +247,24 @@ export function parseTelegramMessages(html, channelId) {
 // ─── 주가 수집 (네이버 금융, 무료 공개 API) ──────────────────────────────────
 const CODES_PATH = path.join(__dirname, '../config/stock-codes.json');
 
-async function fetchJSON(url) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 10000);
-  try {
-    const res = await fetch(url, { signal: controller.signal, headers: { 'User-Agent': 'Mozilla/5.0' } });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.text();
-  } finally {
-    clearTimeout(timer);
+async function fetchJSON(url, retries = 4) {
+  // 레이트리밋(429)·5xx·타임아웃·네트워크 오류는 일시적 → 지수 백오프 재시도.
+  // 백필처럼 수천 건 연타 시 조용한 실패(빈 시세/지수)를 막는다.
+  for (let attempt = 0; ; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    try {
+      const res = await fetch(url, { signal: controller.signal, headers: { 'User-Agent': 'Mozilla/5.0' } });
+      if (res.status === 429 || res.status >= 500) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.text();
+    } catch (e) {
+      const retryable = /HTTP (429|5\d\d)|abort|timeout|ECONNRESET|ETIMEDOUT|network|fetch failed/i.test(String(e.message));
+      if (attempt >= retries || !retryable) throw e;
+      await new Promise((r) => setTimeout(r, Math.min(800 * 2 ** attempt, 8000))); // 0.8,1.6,3.2,6.4s
+    } finally {
+      clearTimeout(timer);
+    }
   }
 }
 
@@ -660,12 +669,12 @@ function archiveHistory(prices, market, posts) {
     }
   }
 
-  // 파일 비대화 방지: 최근 400일치 유지 (1년=252거래일 평가창 + 여유. 2026-07-21 120→400 상향, 1년 적중률용)
-  const days = Object.keys(history).sort().reverse().slice(0, 400);
+  // 파일 비대화 방지: 최근 760일치 유지 (2년 백필의 거래일+주말 의견일 전부 보존. 2026-07-23 550→760)
+  const days = Object.keys(history).sort().reverse().slice(0, 760);
   const pruned = {};
   for (const d of days.sort()) pruned[d] = history[d];
 
-  fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
+  fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned), 'utf-8'); // minify — 프론트 미사용·기계전용 파일이라 무손실 용량절감(2026-07-23, 2년치로 커져서)
   const opTotal = Object.values(opinionsByDate).reduce((s, m) => s + Object.keys(m).length, 0);
   console.log(`  📚 이력 축적: ${Object.keys(pruned).length}일치 (이번 갱신 ${filled}일), 의견 ${opTotal}건`);
   return pruned;

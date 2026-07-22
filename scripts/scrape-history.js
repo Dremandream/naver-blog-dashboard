@@ -22,7 +22,7 @@ const POSTS_PATH = path.join(__dirname, '../public/data/posts.json');
 const CODES_PATH = path.join(__dirname, '../config/stock-codes.json');
 const CACHE_PATH = path.join(__dirname, '.scrape-cache.json');
 const CUTOFF = process.argv[2] || (() => { const d = new Date(Date.now() - 92 * 86400000); return d.toISOString().slice(0, 10); })();
-const PRICE_DAYS = 380; // 시세 조회 범위(1년 백필+평가창 커버. 네이버 siseJson은 단일 호출로 ~255거래일 반환 확인)
+const PRICE_DAYS = 760; // 시세 조회 범위(2년 백필+평가창 커버. siseJson 단일 호출로 ~506거래일 반환 실측 확인)
 const rank = (s) => (s === '강세' ? 2 : s === '약세' ? 2 : 1);
 
 // person 정규화 (config 기준)
@@ -114,29 +114,39 @@ console.log(`  ${dates.length}일 의견 구성 (${dates[0]}~${dates[dates.lengt
 // 4) 시세 (방향성 종목)
 const dirStocks = new Set();
 for (const d of dates) for (const o of Object.values(opByDate[d])) if (o.stance !== '중립') dirStocks.add(o.stock);
+
+// 지수 먼저 수집 (종목 연타로 레이트리밋 걸리기 전에 벤치마크부터 확보 — 지수 없으면 적중 계산 자체가 불가)
+const indexByDate = {};
+const addIdx = (label, arr) => { for (const c of arr) (indexByDate[c.date] = indexByDate[c.date] || {})[label] = c.close; };
+const idxFail = [];
+for (const [label, fn] of [['KOSPI', () => fetchIndexClosesDated('KOSPI', PRICE_DAYS)], ['KOSDAQ', () => fetchIndexClosesDated('KOSDAQ', PRICE_DAYS)], ['NASDAQ', () => fetchForeignIndexClosesDated('.IXIC', PRICE_DAYS)], ['SP500', () => fetchForeignIndexClosesDated('.INX', PRICE_DAYS)]]) {
+  try { addIdx(label, await fn()); } catch (e) { idxFail.push(label); }
+}
+const kospiDays = Object.values(indexByDate).filter((v) => v.KOSPI != null).length;
+if (idxFail.length || kospiDays === 0) console.warn(`  ⚠️ 지수 수집 실패: [${idxFail.join(',')}] (KOSPI 거래일 ${kospiDays}) — 적중 계산 불가 위험! 재실행 권장`);
+else console.log(`  📊 지수 수집: KOSPI ${kospiDays}거래일`);
+
 console.log(`📈 방향성 종목 ${dirStocks.size}개 시세 수집...`);
 let codes = {};
 try { codes = JSON.parse(fs.readFileSync(CODES_PATH, 'utf8')); } catch {}
-const priceByDate = {}; const marketOf = {}; let okc = 0;
+const priceByDate = {}; const marketOf = {}; let okc = 0, priceFail = 0, unresolved = 0, pdone = 0;
 for (const name of dirStocks) {
   try {
     const info = await resolveStockCode(name, codes);
-    if (!info) continue;
+    if (info === undefined) { priceFail++; continue; } // 자동완성 일시오류(재시도 소진) — 캐시 안 됨
+    if (!info) { unresolved++; continue; }             // 비상장/미매칭
     marketOf[name] = info.market;
-    for (const c of await fetchClosesDated(info, PRICE_DAYS)) (priceByDate[c.date] = priceByDate[c.date] || {})[name] = c.close;
+    const closes = await fetchClosesDated(info, PRICE_DAYS);
+    if (!closes.length) { priceFail++; continue; }
+    for (const c of closes) (priceByDate[c.date] = priceByDate[c.date] || {})[name] = c.close;
     okc++;
-    await new Promise((r) => setTimeout(r, 200));
-  } catch {}
+    await new Promise((r) => setTimeout(r, 250));
+  } catch { priceFail++; }
+  if (++pdone % 200 === 0) console.log(`  ...시세 ${pdone}/${dirStocks.size} (성공 ${okc}, 실패 ${priceFail})`);
 }
 fs.writeFileSync(CODES_PATH, JSON.stringify(codes, null, 2), 'utf-8');
-console.log(`  종가 수집 ${okc}종목`);
-
-const indexByDate = {};
-const addIdx = (label, arr) => { for (const c of arr) (indexByDate[c.date] = indexByDate[c.date] || {})[label] = c.close; };
-try { addIdx('KOSPI', await fetchIndexClosesDated('KOSPI', PRICE_DAYS)); } catch {}
-try { addIdx('KOSDAQ', await fetchIndexClosesDated('KOSDAQ', PRICE_DAYS)); } catch {}
-try { addIdx('NASDAQ', await fetchForeignIndexClosesDated('.IXIC', PRICE_DAYS)); } catch {}
-try { addIdx('SP500', await fetchForeignIndexClosesDated('.INX', PRICE_DAYS)); } catch {}
+console.log(`  종가 수집 ${okc}종목 (미상장 ${unresolved}, 실패 ${priceFail})`);
+if (priceFail > dirStocks.size * 0.1) console.warn(`  ⚠️ 시세 실패율 높음(${priceFail}/${dirStocks.size}) — 레이트리밋 의심, 재실행 시 캐시로 복구됨`);
 
 // 5) history 병합 (거래일 축 = KOSPI 거래일 ∪ 의견일, 기존 레코드 보존·person 정규화)
 let history = {};
@@ -161,9 +171,9 @@ for (const date of allDates) {
   };
   filled++;
 }
-const keep = Object.keys(history).sort().reverse().slice(0, 400).sort();
+const keep = Object.keys(history).sort().reverse().slice(0, 760).sort();
 const pruned = {}; for (const d of keep) pruned[d] = history[d];
-fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
+fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned), 'utf-8'); // minify (무손실 용량절감)
 console.log(`📚 history 병합: ${Object.keys(pruned).length}일치 (갱신 ${filled}일)`);
 
 // 6) 적중률 재계산

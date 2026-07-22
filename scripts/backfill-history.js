@@ -161,7 +161,7 @@ for (const date of allDates) {
 const keep = Object.keys(history).sort().reverse().slice(0, 120).sort();
 const pruned = {};
 for (const d of keep) pruned[d] = history[d];
-fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned, null, 2), 'utf-8');
+fs.writeFileSync(HISTORY_PATH, JSON.stringify(pruned), 'utf-8'); // minify (무손실 용량절감)
 console.log(`📚 history 병합: ${Object.keys(pruned).length}일치 (갱신 ${filled}일)`);
 
 // 6) 적중률 재계산 → posts.json에 반영
