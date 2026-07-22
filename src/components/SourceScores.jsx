@@ -20,13 +20,14 @@ export default function SourceScores({ scores }) {
   const min = scores.minSample;
   const winLabels = windows.map((w) => w.label).join("·");
   const first = windows[0];
+  const last = windows[windows.length - 1];
   const allPending = sources.every((s) => windows.every((w) => (s.w?.[w.n]?.total ?? 0) === 0));
 
   return (
     <section className="source-scores">
       <div className="brief-header">
         <span className="brief-label">
-          🎯 소스 적중률 <span className="at-sub">필자 의견이 지수보다 맞았는지 · {winLabels} 후</span>
+          🎯 소스 적중률 <span className="at-sub">필자 의견이 지수보다 맞았는지 · {winLabels} 후 · {last.label} 적중률순</span>
         </span>
         {scores.asOf && <span className="brief-date">{scores.asOf} 기준</span>}
       </div>

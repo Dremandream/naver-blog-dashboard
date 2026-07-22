@@ -68,14 +68,18 @@ export function computeSourceScores(history, windows = DEFAULT_WINDOWS) {
 
   const rate = (w) => (w.total >= MIN_SAMPLE ? Math.round((w.hits / w.total) * 1000) / 10 : null);
   const first = windows[0];
+  const last = windows[windows.length - 1]; // 가장 긴 창(1년) = 장기 신뢰성 평가 기준
   const sources = Object.entries(acc)
     .map(([person, a]) => {
       const w = {};
       for (const N of windows) w[N] = { hits: a.w[N].hits, total: a.w[N].total, rate: rate(a.w[N]) };
       return { person, opinions: a.opinions, w };
     })
-    // 정렬: 가장 짧은 창의 적중률(표본충족) 우선, 그다음 판정건수 → 표본부족은 뒤로
-    .sort((x, y) => (y.w[first].rate ?? -1) - (x.w[first].rate ?? -1) || y.w[first].total - x.w[first].total);
+    // 정렬: 최장 창(1년) 적중률(표본충족) 우선 → 그다음 최단 창(3개월) → 판정건수. 장기 표본부족(대기)은 하위로.
+    .sort((x, y) =>
+      (y.w[last].rate ?? -1) - (x.w[last].rate ?? -1) ||
+      (y.w[first].rate ?? -1) - (x.w[first].rate ?? -1) ||
+      y.w[last].total - x.w[last].total);
 
   return {
     asOf: dates[dates.length - 1] || null,
