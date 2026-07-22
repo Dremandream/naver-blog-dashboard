@@ -113,8 +113,9 @@ const hist = {
     opinions: [op('펜딩', 'S1', '강세', 'KR')],       // 최신일 의견 → +5 없음 → pending
   },
 };
-// 골든 데이터는 6거래일뿐이라 [5,20] 창으로 검증 (프로덕션 기본창 [21,63,252]은 이 데이터로 성숙 불가)
-const scores = computeSourceScores(hist, [5, 20]);
+// 골든 데이터는 6거래일뿐이라 [5,20] 창으로 검증 (프로덕션 기본창 [63,252]은 이 데이터로 성숙 불가)
+// minSample=5로 명시 (프로덕션 기본 20이라, 5건 골든 케이스가 rate=null이 되지 않도록)
+const scores = computeSourceScores(hist, [5, 20], 5);
 const S = (name) => scores.sources.find((x) => x.person === name);
 eq('HR1 KR 강세 적중률(3/5=60)', [S('테스터').w[5].hits, S('테스터').w[5].total, S('테스터').w[5].rate], [3, 5, 60]);
 eq('HR2 US 나스닥 벤치마크(4/5=80)', [S('미국러').w[5].hits, S('미국러').w[5].total, S('미국러').w[5].rate], [4, 5, 80]);
@@ -126,6 +127,7 @@ eq('HR7 20일창 아직 없음(pending)', S('테스터').w[20].total, 0);
 eq('HR8 windows 메타(라벨 포함)', scores.windows, [{ n: 5, label: '5일' }, { n: 20, label: '20일' }]);
 eq('HR9 기본창 프로덕션값 [63,252](3개월·1년)', computeSourceScores(hist).windows.map((w) => w.n), [63, 252]);
 eq('HR10 기본창 라벨(3개월·1년)', computeSourceScores(hist).windows.map((w) => w.label), ['3개월', '1년']);
+eq('HR11 기본 minSample=20(랭킹 신뢰용)', computeSourceScores(hist).minSample, 20);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

@@ -1189,7 +1189,7 @@
   ],
   "source_scores": {
     "asOf": "2026-07-23",
-    "minSample": 5,
+    "minSample": 20,
     "windows": [
       {
         "n": 63,
@@ -1214,22 +1214,6 @@
             "hits": 22,
             "total": 32,
             "rate": 68.8
-          }
-        }
-      },
-      {
-        "person": "금싸",
-        "opinions": 87,
-        "w": {
-          "63": {
-            "hits": 27,
-            "total": 56,
-            "rate": 48.2
-          },
-          "252": {
-            "hits": 8,
-            "total": 12,
-            "rate": 66.7
           }
         }
       },
@@ -1406,6 +1390,22 @@
             "hits": 41,
             "total": 207,
             "rate": 19.8
+          }
+        }
+      },
+      {
+        "person": "금싸",
+        "opinions": 87,
+        "w": {
+          "63": {
+            "hits": 27,
+            "total": 56,
+            "rate": 48.2
+          },
+          "252": {
+            "hits": 8,
+            "total": 12,
+            "rate": null
           }
         }
       },

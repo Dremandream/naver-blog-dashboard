@@ -16,7 +16,7 @@
 // 거래일 기준. 3개월≈63, 1년(12개월)≈252 (미국식 연 252거래일 관례)
 // 2026-07-22 사용자 결정: 1개월 제거, 3개월·1년 두 창만. 3개월=근거리 신뢰 랭킹, 1년=장기 성적표(축적되며 채워짐)
 const DEFAULT_WINDOWS = [63, 252];
-const MIN_SAMPLE = 5; // 이 미만이면 적중률(rate) 숨김
+const MIN_SAMPLE = 20; // 이 미만이면 적중률(rate) 숨김. 랭킹 신뢰용 상향(2026-07-23 5→20, n=12 우연 배제)
 const BENCH = { KR: 'KOSPI', US: 'NASDAQ' };
 const LABELS = { 5: '5일', 20: '20일', 21: '1개월', 63: '3개월', 252: '1년' };
 const labelOf = (n) => LABELS[n] || `${n}거래일`;
@@ -28,7 +28,7 @@ const ret = (a, b) => (a && b ? (b - a) / a : null); // a=시작가, b=종료가
  * @param {number[]} [windows]  평가 거래일 창 (기본 [21,63,252])
  * @returns {Object} { asOf, minSample, windows:[{n,label}], sources:[{person, opinions, w:{ [n]:{hits,total,rate} }}] }
  */
-export function computeSourceScores(history, windows = DEFAULT_WINDOWS) {
+export function computeSourceScores(history, windows = DEFAULT_WINDOWS, minSample = MIN_SAMPLE) {
   const dates = Object.keys(history || {}).sort(); // 과거→최신
   // person별 누적: acc[person] = { w:{ [N]:{hits,total} }, opinions }
   const acc = {};
@@ -66,7 +66,7 @@ export function computeSourceScores(history, windows = DEFAULT_WINDOWS) {
     }
   }
 
-  const rate = (w) => (w.total >= MIN_SAMPLE ? Math.round((w.hits / w.total) * 1000) / 10 : null);
+  const rate = (w) => (w.total >= minSample ? Math.round((w.hits / w.total) * 1000) / 10 : null);
   const first = windows[0];
   const last = windows[windows.length - 1]; // 가장 긴 창(1년) = 장기 신뢰성 평가 기준
   const sources = Object.entries(acc)
@@ -83,7 +83,7 @@ export function computeSourceScores(history, windows = DEFAULT_WINDOWS) {
 
   return {
     asOf: dates[dates.length - 1] || null,
-    minSample: MIN_SAMPLE,
+    minSample,
     windows: windows.map((n) => ({ n, label: labelOf(n) })),
     sources,
   };
