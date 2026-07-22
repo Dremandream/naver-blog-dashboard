@@ -54119,7 +54119,7 @@
       {
         "person": "잠실개미",
         "stock": "삼성전자",
-        "stance": "중립",
+        "stance": "강세",
         "market": "KR"
       },
       {
@@ -54211,6 +54211,133 @@
         "stock": "오라클",
         "stance": "중립",
         "market": "US"
+      },
+      {
+        "person": "너는 무한하지 않느냐",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "너는 무한하지 않느냐",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "샌디스크",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "엔비디아",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "마이크론",
+        "stance": "강세",
+        "market": "US"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "TSMC",
+        "stance": "강세",
+        "market": "US"
+      }
+    ]
+  },
+  "2026-07-22": {
+    "prices": {
+      "SK하이닉스": 1830000,
+      "삼성전자": 260500,
+      "키옥시아": 64270,
+      "대덕전자": 119000,
+      "도쿄일렉트론": 65960,
+      "삼천당제약": 152800,
+      "자이에스앤디": 6470,
+      "파두": 70400,
+      "코오롱티슈진": 30050
+    },
+    "indices": {
+      "KOSPI": 6797.7,
+      "KOSDAQ": 751.09
+    },
+    "opinions": [
+      {
+        "person": "캬오의 공부방",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "캬오의 공부방",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "의교창",
+        "stock": "SK하이닉스",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "잠실개미",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "SK하이닉스",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "IT는 SK",
+        "stock": "삼성전자",
+        "stance": "중립",
+        "market": "KR"
+      },
+      {
+        "person": "너쟁이",
+        "stock": "삼성전자",
+        "stance": "강세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "삼성전자",
+        "stance": "약세",
+        "market": "KR"
+      },
+      {
+        "person": "펭미업",
+        "stock": "SK하이닉스",
+        "stance": "약세",
+        "market": "KR"
       }
     ]
   }
