@@ -124,7 +124,8 @@ eq('HR5 표본부족 rate=null(2건)', [S('소수러').w[5].total, S('소수러'
 eq('HR6 최신일 의견 pending(total 0)', [S('펜딩').w[5].total, S('펜딩').w[5].rate], [0, null]);
 eq('HR7 20일창 아직 없음(pending)', S('테스터').w[20].total, 0);
 eq('HR8 windows 메타(라벨 포함)', scores.windows, [{ n: 5, label: '5일' }, { n: 20, label: '20일' }]);
-eq('HR9 기본창 프로덕션값 [21,63,252]', computeSourceScores(hist).windows.map((w) => w.n), [21, 63, 252]);
+eq('HR9 기본창 프로덕션값 [63,252](3개월·1년)', computeSourceScores(hist).windows.map((w) => w.n), [63, 252]);
+eq('HR10 기본창 라벨(3개월·1년)', computeSourceScores(hist).windows.map((w) => w.label), ['3개월', '1년']);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

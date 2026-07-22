@@ -284,7 +284,7 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .ss-lead { font-size: 12.5px; color: var(--ink); line-height: 1.6; margin: 8px 0 2px; }
 .ss-pending { font-size: 12.5px; color: var(--muted); line-height: 1.6; background: #f6f7ff; border-left: 3px solid var(--rule); padding: 9px 12px; margin: 12px 0; }
 .ss-list { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
-.ss-row { display: grid; grid-template-columns: 1fr 56px 158px 158px 158px; align-items: baseline; gap: 9px; padding: 6px 4px; border-bottom: 1px solid var(--rule-thin); }
+.ss-row { display: grid; grid-template-columns: 1fr 60px 180px 180px; align-items: baseline; gap: 9px; padding: 6px 4px; border-bottom: 1px solid var(--rule-thin); }
 .ss-row:last-child { border-bottom: none; }
 .ss-head { border-bottom: 2px solid var(--rule); padding-bottom: 6px; }
 .ss-head .ss-name, .ss-head .ss-col { font-size: 11px; font-weight: 700; color: var(--muted); }
@@ -296,7 +296,7 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .ss-hit-mid { color: var(--ink); font-weight: 600; }
 .ss-hit-low { color: #b4472e; font-weight: 600; }
 .ss-note { font-size: 11px; color: var(--muted); line-height: 1.6; margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--rule-thin); }
-@media (max-width: 600px) { .source-scores { overflow-x: auto; } .ss-list { min-width: 720px; } }
+@media (max-width: 600px) { .source-scores { overflow-x: auto; } .ss-list { min-width: 620px; } }
 
 /* StockReport 주가 헤더 */
 .sr-price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
