@@ -6,6 +6,7 @@ import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
+import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -36,6 +37,24 @@ eq('UI4 전체보다 큰 한도는 전체 표시', visibleItems([1, 2, 3], 24), 
 console.log('── 수집기 파서 모듈 경계 ──');
 eq('M1 JSON 파서 모듈 공개', parseJSONLooseModule('{"ok":true}').ok, true);
 eq('M2 HTML 파서 모듈 공개', stripHtmlModule('a<br>b'), 'a\nb');
+
+console.log('── 피터케이 Fear & Greed ──');
+const peterPosts = [
+  { id: 'p1', date: '2026-08-07', person: '피터케이', title: '시장 공포가 극심하다', market_view: true, market_sentiment: -2, market_reason: '투매와 공포 심리가 극심' },
+  { id: 'p2', date: '2026-08-06', person: '피터케이', title: '주도주 조정 구간', market_view: true, market_sentiment: -1, market_reason: '주도주 수급 약화' },
+  { id: 'x1', date: '2026-08-07', person: '다른 필자', title: '강세장', market_view: true, market_sentiment: 2 },
+  { id: 'p3', date: '2026-08-07', person: '피터케이', title: '개별 기업 실적', market_view: false, market_sentiment: 2 },
+];
+const peterFear = buildPeterFearGreed(peterPosts, { referenceDate: '2026-08-07' });
+eq('PFG1 피터케이 시장 글만 집계', [peterFear.postCount, peterFear.dayCount], [2, 2]);
+eq('PFG2 최근 부정 시각은 극단적 공포', [peterFear.score, peterFear.label], [12, '극단적 공포']);
+eq('PFG3 최신 근거 우선', peterFear.evidence.map(x => x.id), ['p1', 'p2']);
+const peterFallback = buildPeterFearGreed([
+  { id: 'old', date: '2026-08-07', person: '피터케이', title: '시장 주도주 회복', sector: '거시경제', stance: '강세' },
+], { referenceDate: '2026-08-07' });
+eq('PFG4 과거 스키마 제한적 폴백', [peterFallback.score, peterFallback.confidence], [75, '매우 낮음']);
+const noPeter = buildPeterFearGreed([], { referenceDate: '2026-08-07' });
+eq('PFG5 표본 없음', [noPeter.score, noPeter.label, noPeter.postCount], [null, '데이터 부족', 0]);
 
 console.log('── parseTelegramMessages (t.me/s 구조 골든) ──');
 const tgHtml = `

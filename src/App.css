@@ -178,6 +178,21 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .fs-val { font-variant-numeric: tabular-nums; text-align: right; }
 .fs-review { font-size: 11.5px; color: var(--ink-soft); }
 .fs-note { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.pfg-beta { margin-left: 4px; color: var(--crimson); font-family: var(--sans); font-size: 9px; letter-spacing: .08em; }
+.pfg-score-row { display: flex; align-items: center; gap: 10px; margin: 2px 0 6px; }
+.pfg-score { font-family: var(--serif); font-size: 38px; line-height: 1; font-variant-numeric: tabular-nums; }
+.pfg-label { font-size: 14px; font-weight: 800; color: var(--ink); }
+.pfg-asof { margin-top: 2px; color: var(--muted); font-size: 10.5px; }
+.pfg-gauge { position: relative; height: 8px; margin-top: 2px; border-radius: 99px; background: linear-gradient(90deg, #2563eb 0%, #94a3b8 50%, #dc2626 100%); }
+.pfg-marker { position: absolute; top: 50%; width: 3px; height: 16px; border-radius: 2px; background: #111827; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px #fff; }
+.pfg-scale { display: flex; justify-content: space-between; margin-top: 3px; color: var(--muted); font-size: 9.5px; }
+.pfg-interpretation { margin: 8px 0 3px; color: var(--ink-soft); font-size: 11.5px; font-weight: 600; line-height: 1.45; }
+.pfg-meta { color: var(--muted); font-size: 10.5px; }
+.pfg-evidence { display: flex; flex-direction: column; gap: 4px; margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--rule-thin); }
+.pfg-evidence-item { display: grid; grid-template-columns: 12px 1fr; gap: 4px; color: var(--ink-soft); font-size: 10.5px; line-height: 1.35; }
+.pfg-bear { color: #2563eb; }
+.pfg-bull { color: #dc2626; }
+.pfg-empty { padding: 10px 0; color: var(--muted); font-size: 12px; }
 .fs-event { display: flex; gap: 8px; padding: 3px 0; font-size: 12.5px; line-height: 1.45; border-bottom: 1px solid var(--rule-thin); }
 .fs-event:last-of-type { border-bottom: none; }
 .fs-event-date { flex: 0 0 44px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); }

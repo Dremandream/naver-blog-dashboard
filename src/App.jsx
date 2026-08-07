@@ -9,6 +9,7 @@ import AttentionTrends from "./components/AttentionTrends";
 import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
 import { INITIAL_VISIBLE_POSTS, visibleItems } from "./utils/post-list";
+import { buildPeterFearGreed } from "../shared/peter-fear-greed";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -57,6 +58,7 @@ export default function App() {
   const posts   = data?.posts ?? [];
   const sectors = ["전체", ...new Set(posts.map((p) => p.sector))];
   const blogs   = ["전체", ...new Set(posts.map((p) => p.blog_name))];
+  const peterFearGreed = data?.peter_fear_greed ?? buildPeterFearGreed(posts, { referenceDate: data?.date });
 
   // ── 날짜 필터 범위 계산
   const todayKST     = getKSTDate(0);
@@ -134,7 +136,7 @@ export default function App() {
         })()}
         <div className="report-layout">
           <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
-          <FactSidebar market={data?.market} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
+          <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
         </div>
         <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
         <SourceScores scores={data?.source_scores} />
