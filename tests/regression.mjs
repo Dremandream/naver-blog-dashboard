@@ -7,6 +7,7 @@ import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
 import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
+import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -159,6 +160,36 @@ eq('HR8 windows 메타(라벨 포함)', scores.windows, [{ n: 5, label: '5일' }
 eq('HR9 기본창 프로덕션값 [63,252](3개월·1년)', computeSourceScores(hist).windows.map((w) => w.n), [63, 252]);
 eq('HR10 기본창 라벨(3개월·1년)', computeSourceScores(hist).windows.map((w) => w.label), ['3개월', '1년']);
 eq('HR11 기본 minSample=20(랭킹 신뢰용)', computeSourceScores(hist).minSample, 20);
+
+console.log('── 소스 신뢰 순위·관련글 ──');
+eq('SR1 윌슨 보정은 작은 표본 과대평가 방지',
+  wilsonLowerBound(12, 20) < wilsonLowerBound(58, 100), true);
+
+const rankingFixture = {
+  minSample: 20,
+  windows: [{ n: 63, label: '3개월' }, { n: 252, label: '1년' }],
+  sources: [
+    { person: '작은표본', opinions: 30, w: { 63: { hits: 12, total: 20, rate: 60 }, 252: { hits: 12, total: 20, rate: 60 } } },
+    { person: '큰표본', opinions: 200, w: { 63: { hits: 61, total: 100, rate: 61 }, 252: { hits: 116, total: 200, rate: 58 } } },
+    { person: '중간표본', opinions: 100, w: { 63: { hits: 32, total: 50, rate: 64 }, 252: { hits: 55, total: 100, rate: 55 } } },
+  ],
+};
+const ranked = rankSources(rankingFixture, 'combined');
+eq('SR2 종합 신뢰도는 표본 보정 후 정렬', ranked.map((s) => s.person), ['큰표본', '중간표본', '작은표본']);
+eq('SR3 기간별 정렬도 표본 보정 적용', rankSources(rankingFixture, '1y')[0].person, '큰표본');
+
+const relatedFixture = [
+  { id: 'a1', person: '큰표본', blog_name: '큰표본', date: '2026-08-07', title: 'A 최신', stance: '강세', stocks: ['A'] },
+  { id: 'a2', person: '큰표본', blog_name: '큰표본', date: '2026-08-06', title: 'A 중복', stance: '강세', stocks: ['A'] },
+  { id: 'b1', person: '큰표본', blog_name: '큰표본', date: '2026-08-05', title: 'B 글', stance: '약세', stocks: ['B'] },
+  { id: 'c1', person: '큰표본', blog_name: '큰표본', date: '2026-08-04', title: '세 번째', stance: '강세', stocks: ['C'] },
+  { id: 'm1', person: '중간표본', blog_name: '중간표본', date: '2026-08-07', title: '중간 글', stance: '중립', stocks: [] },
+  { id: 'old', person: '작은표본', blog_name: '작은표본', date: '2026-07-20', title: '오래된 글', stance: '강세', stocks: ['D'] },
+];
+const related = selectRelatedPosts(ranked, relatedFixture, { referenceDate: '2026-08-07', days: 7, topSources: 3, perSource: 2 });
+eq('SR4 소스별 관련글 최대 2개', related.find((g) => g.person === '큰표본').posts.map((p) => p.id), ['a1', 'b1']);
+eq('SR5 최근 7일 밖 글 제외', related.some((g) => g.person === '작은표본'), false);
+eq('SR6 상위 소스 순서 유지', related.map((g) => g.person), ['큰표본', '중간표본']);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

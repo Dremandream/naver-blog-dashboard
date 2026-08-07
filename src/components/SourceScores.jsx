@@ -1,75 +1,139 @@
-// 소스 적중률 — 필자별 의견의 사후 성과(지수 대비 초과수익) 기록
-// 매매 추천이 아니라 "이 소스의 과거 강세/약세 의견이 지수 대비 맞았는가"의 누적 집계.
-// 데이터는 scripts/hitrate.js가 계산해 posts.json의 source_scores에 저장. 창은 windows 메타로 동적 렌더.
+import { useMemo, useState } from 'react';
+import { rankSources, selectRelatedPosts } from '../utils/source-ranking';
+
+const MODES = [
+  { value: 'combined', label: '종합 신뢰도' },
+  { value: '1y', label: '1년 적중률' },
+  { value: '3m', label: '3개월 적중률' },
+];
 
 function Cell({ w }) {
   if (!w) return <span className="ss-thin">—</span>;
   if (w.rate != null) {
-    const cls = w.rate >= 60 ? "ss-hit-good" : w.rate >= 40 ? "ss-hit-mid" : "ss-hit-low";
-    return <span className={cls}>{w.rate}% <span className="ss-frac">· {w.total}건 중 {w.hits}건 적중</span></span>;
+    const cls = w.rate >= 60 ? 'ss-hit-good' : w.rate >= 40 ? 'ss-hit-mid' : 'ss-hit-low';
+    return <span className={cls}>{w.rate}% <span className="ss-frac">· {w.total}건</span></span>;
   }
   if (w.total > 0) return <span className="ss-thin">표본 적음 ({w.total}건)</span>;
   return <span className="ss-thin">결과 대기</span>;
 }
 
-export default function SourceScores({ scores }) {
+function RawRate({ source, window }) {
+  const result = source.w?.[window?.n];
+  return (
+    <span>
+      <b>{window?.label}</b> {result?.rate != null ? `${result.rate}% · ${result.total}건` : `표본 ${result?.total ?? 0}건`}
+    </span>
+  );
+}
+
+export default function SourceScores({ scores, posts = [], onSourceClick, onPostClick }) {
+  const [mode, setMode] = useState('combined');
   const sources = scores?.sources ?? [];
   const windows = scores?.windows ?? [];
+  const ranked = useMemo(() => rankSources(scores, mode), [scores, mode]);
+  const topSources = ranked.filter((source) => source.rankingScore != null).slice(0, 5);
+  const related = useMemo(
+    () => selectRelatedPosts(ranked, posts, { referenceDate: scores?.asOf, topSources: 5, perSource: 2, days: 7 }),
+    [ranked, posts, scores?.asOf],
+  );
+
   if (sources.length === 0 || windows.length === 0) return null;
 
   const min = scores.minSample;
-  const winLabels = windows.map((w) => w.label).join("·");
   const first = windows[0];
   const last = windows[windows.length - 1];
-  const allPending = sources.every((s) => windows.every((w) => (s.w?.[w.n]?.total ?? 0) === 0));
+  const allPending = sources.every((source) => windows.every((window) => (source.w?.[window.n]?.total ?? 0) === 0));
 
   return (
-    <section className="source-scores">
-      <div className="brief-header">
-        <span className="brief-label">
-          🎯 소스 적중률 <span className="at-sub">필자 의견이 지수보다 맞았는지 · {winLabels} 후 · {last.label} 적중률순</span>
+    <section className="source-scores" aria-labelledby="source-scores-title">
+      <div className="brief-header ss-header">
+        <span className="brief-label" id="source-scores-title">
+          🎯 소스 적중률 <span className="at-sub">표본을 보정한 과거 성적 순위</span>
         </span>
         {scores.asOf && <span className="brief-date">{scores.asOf} 기준</span>}
       </div>
 
       <div className="ss-lead">
-        각 필자가 <b>‘강세/약세’</b>라고 밝힌 종목이, 이후 지수(국내 코스피·해외 나스닥)보다
-        더 잘 맞았는지를 기간별 비율로 보여줍니다.
+        필자가 밝힌 강세·약세 의견이 이후 지수보다 맞았는지를 비교합니다.
+        <b> 현재 글의 성공을 보장하는 점수나 매매 추천은 아닙니다.</b>
       </div>
 
-      {allPending && (
-        <div className="ss-pending">
-          아직 판정된 의견이 없습니다. 의견을 낸 지 <b>{first.label}</b>이 지나면 하나씩 결과가 채워집니다.
-        </div>
-      )}
-
-      <div className="ss-list">
-        <div className="ss-row ss-head" aria-hidden="true">
-          <span className="ss-name">소스</span>
-          <span className="ss-col" title="강세·약세로 방향을 밝힌 종목 수 (중립 제외)">밝힌 의견</span>
-          {windows.map((w) => (
-            <span className="ss-col" key={w.n} title={`의견을 낸 지 ${w.label} 후 지수 대비 결과`}>
-              {w.label} 후 적중
-            </span>
-          ))}
-        </div>
-        {sources.map((s) => (
-          <div className="ss-row" key={s.person}>
-            <span className="ss-name">{s.person}</span>
-            <span className="ss-col ss-thin">{s.opinions}건</span>
-            {windows.map((w) => (
-              <span className="ss-col" key={w.n}><Cell w={s.w?.[w.n]} /></span>
-            ))}
-          </div>
+      <div className="ss-mode-tabs" aria-label="소스 순위 기준">
+        {MODES.map((item) => (
+          <button
+            className={`ss-mode ${mode === item.value ? 'active' : ''}`}
+            key={item.value}
+            type="button"
+            onClick={() => setMode(item.value)}
+          >
+            {item.label}
+          </button>
         ))}
       </div>
 
+      {allPending ? (
+        <div className="ss-pending">
+          아직 판정된 의견이 없습니다. 의견을 낸 지 <b>{first.label}</b>이 지나면 결과가 채워집니다.
+        </div>
+      ) : (
+        <div className="ss-top-grid">
+          {topSources.map((source, index) => (
+            <button className="ss-source-card" type="button" key={source.person} onClick={() => onSourceClick?.(source.person)}>
+              <span className="ss-rank">{index + 1}</span>
+              <span className="ss-card-person">{source.person}</span>
+              <span className="ss-card-score">{source.rankingScore}<small> 보정점수</small></span>
+              <span className="ss-card-rates">
+                <RawRate source={source} window={first} />
+                <RawRate source={source} window={last} />
+              </span>
+              <span className="ss-filter-hint">이 필자의 글만 보기 →</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {related.length > 0 && (
+        <div className="ss-related">
+          <div className="ss-related-title">상위 소스 최신 관련글 <span>최근 7일 · 소스별 최대 2개</span></div>
+          {related.map((group) => (
+            <div className="ss-related-group" key={group.person}>
+              <button className="ss-related-person" type="button" onClick={() => onSourceClick?.(group.person)}>
+                {group.person}
+              </button>
+              <div className="ss-related-posts">
+                {group.posts.map((post) => (
+                  <button className="ss-related-post" type="button" key={post.id} onClick={() => onPostClick?.(post)}>
+                    <span>{post.title}</span>
+                    <small>{post.date}{post.stocks?.[0] ? ` · ${post.stocks[0]}` : ''}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <details className="ss-all">
+        <summary>전체 소스 성적표 보기</summary>
+        <div className="ss-list">
+          <div className="ss-row ss-head" aria-hidden="true">
+            <span className="ss-name">소스</span>
+            <span className="ss-col">의견</span>
+            {windows.map((window) => <span className="ss-col" key={window.n}>{window.label} 후 적중</span>)}
+          </div>
+          {ranked.map((source) => (
+            <button className="ss-row ss-row-button" type="button" key={source.person} onClick={() => onSourceClick?.(source.person)}>
+              <span className="ss-name">{source.person}</span>
+              <span className="ss-col ss-thin">{source.opinions}건</span>
+              {windows.map((window) => <span className="ss-col" key={window.n}><Cell w={source.w?.[window.n]} /></span>)}
+            </button>
+          ))}
+        </div>
+      </details>
+
       <div className="ss-note">
-        <b>적중</b> = 강세라던 종목이 지수보다 <b>더 오르거나</b>, 약세라던 종목이 지수보다
-        <b> 덜 오르거나 하락</b>하면 ‘맞음’. (기준 지수: 국내 코스피, 해외 나스닥)<br />
-        예: ‘<b>52.6% · 152건 중 80건 적중</b>’이면 방향을 밝힌 판정 152건 중 80건이 지수 대비 맞았다는 뜻.
-        판정 건수가 {min}건보다 적으면 ‘표본 적음’으로 비율을 숨깁니다. <b>1년</b>처럼 아직 그만큼
-        기간이 안 지난 창은 ‘결과 대기’로 두고, 데이터가 쌓이면 채워집니다. <b>매매 추천이 아니라 과거 성적표</b>입니다.
+        <b>보정점수</b>는 적중률과 표본 수를 함께 반영한 윌슨 하한입니다. 종합은 {first.label} 40%와 {last.label} 60%를 합산하며,
+        표본 {min}건 미만은 순위 계산에서 제외합니다. 원래 적중률과 판정 건수는 카드와 전체 성적표에서 함께 확인할 수 있습니다.
       </div>
     </section>
   );
