@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { uniqueStrings } from "../utils/post-list";
 
 export default function PostModal({ post, onClose }) {
   useEffect(() => {
@@ -69,7 +70,7 @@ export default function PostModal({ post, onClose }) {
         )}
 
         <div className="card-stocks modal-stocks">
-          {(post.stocks || []).map((s) => (
+          {uniqueStrings(post.stocks).map((s) => (
             <span key={s} className="stock-tag">{s}</span>
           ))}
           <span className="sector-badge">{post.sector}</span>

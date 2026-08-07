@@ -4,6 +4,8 @@
 import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
+import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
+import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -24,6 +26,16 @@ console.log('── stripHtml ──');
 eq('H1 태그 제거+개행', stripHtml('a<br/>b<b>c</b>'), 'a\nbc');
 eq('H2 숫자 엔티티($)', stripHtml('수출액 &#036;4,461mn'), '수출액 $4,461mn');
 eq('H3 기본 엔티티', stripHtml('A &amp; B &lt;C&gt;'), 'A & B <C>');
+
+console.log('── 글 목록 표시 규칙 ──');
+eq('UI1 중복 종목 제거', uniqueStrings(['알파벳', '삼성전자', '알파벳']), ['알파벳', '삼성전자']);
+eq('UI2 빈 값 제거', uniqueStrings(['', null, 'SK하이닉스', undefined]), ['SK하이닉스']);
+eq('UI3 최초 24건만 표시', visibleItems(Array.from({ length: 30 }, (_, i) => i), 24).length, 24);
+eq('UI4 전체보다 큰 한도는 전체 표시', visibleItems([1, 2, 3], 24), [1, 2, 3]);
+
+console.log('── 수집기 파서 모듈 경계 ──');
+eq('M1 JSON 파서 모듈 공개', parseJSONLooseModule('{"ok":true}').ok, true);
+eq('M2 HTML 파서 모듈 공개', stripHtmlModule('a<br>b'), 'a\nb');
 
 console.log('── parseTelegramMessages (t.me/s 구조 골든) ──');
 const tgHtml = `

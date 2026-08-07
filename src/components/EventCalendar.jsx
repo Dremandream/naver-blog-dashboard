@@ -1,3 +1,5 @@
+import { uniqueStrings } from "../utils/post-list";
+
 // 촉매 캘린더 — 7일치 브리핑의 events를 병합해 다가오는 일정을 날짜순 리스트로
 function todayKST() {
   return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
@@ -41,7 +43,7 @@ export default function EventCalendar({ dailyBriefs, onStockClick }) {
           <span className="fs-event-date">{fmtDate(ev.date, ev.approx)}</span>
           <span className="fs-event-body">
             {ev.label}
-            {ev.stocks?.map((s) => (
+            {uniqueStrings(ev.stocks).map((s) => (
               <span
                 key={s}
                 className="fs-event-stock stock-tag-clickable"

@@ -3,6 +3,8 @@ const STANCE_STYLE = {
   '약세': 'stance-bear',
 };
 
+import { uniqueStrings } from "../utils/post-list";
+
 export default function PostCard({ post, onCardClick, onStockClick }) {
   const stanceClass = STANCE_STYLE[post.stance];
 
@@ -43,7 +45,7 @@ export default function PostCard({ post, onCardClick, onStockClick }) {
       )}
 
       <div className="card-stocks">
-        {(post.stocks || []).map((s) => (
+        {uniqueStrings(post.stocks).map((s) => (
           <span
             key={s}
             className="stock-tag stock-tag-clickable"

@@ -14,6 +14,9 @@ import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
 import { judgeBatch } from './judge.js';
 import { computeSourceScores } from './hitrate.js';
+import { parseJSONLoose, stripHtml } from './lib/parsers.js';
+
+export { parseJSONLoose, stripHtml } from './lib/parsers.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
@@ -41,27 +44,6 @@ try {
 }
 
 const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
-
-// ─── 견고한 JSON 파서 ────────────────────────────────────────────────────────
-// 모델이 JSON 앞뒤에 설명/코드펜스를 붙여도 안전하게 첫 번째 {...} 블록만 추출.
-export function parseJSONLoose(raw) {
-  let t = String(raw).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
-  // 첫 '{' 부터 괄호 균형이 맞는 지점까지 스캔 (문자열 내 중괄호 무시)
-  const start = t.indexOf('{');
-  if (start === -1) return JSON.parse(t); // 실패 시 원래대로 throw
-  let depth = 0, inStr = false, esc = false;
-  for (let i = start; i < t.length; i++) {
-    const c = t[i];
-    if (inStr) {
-      if (esc) esc = false;
-      else if (c === '\\') esc = true;
-      else if (c === '"') inStr = false;
-    } else if (c === '"') inStr = true;
-    else if (c === '{') depth++;
-    else if (c === '}') { depth--; if (depth === 0) return JSON.parse(t.slice(start, i + 1)); }
-  }
-  return JSON.parse(t.slice(start)); // 닫힘 못 찾으면 원래 오류 전파
-}
 
 // ─── RSS fetch (15초 타임아웃 + 상태코드 체크) ───────────────────────────────
 async function fetchRSS(blogId) {
@@ -194,19 +176,6 @@ export function classifyTelegramHealth({ previewOff, parsedCount, windowCount })
   return 'ok';
 }
 export const TELEGRAM_PROBLEM_STATUSES = ['preview-off', 'parse-empty'];
-
-// HTML 엔티티 디코드 + 태그 제거
-export function stripHtml(s) {
-  return s
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(parseInt(d, 10)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
-    .trim();
-}
 
 // 채널 HTML → 메시지 배열 [{ text, postDate, url }]
 export function parseTelegramMessages(html, channelId) {

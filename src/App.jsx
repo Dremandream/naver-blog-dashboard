@@ -8,6 +8,7 @@ import FactSidebar from "./components/FactSidebar";
 import AttentionTrends from "./components/AttentionTrends";
 import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
+import { INITIAL_VISIBLE_POSTS, visibleItems } from "./utils/post-list";
 import "./App.css";
 
 // KST 기준 날짜 문자열 (YYYY-MM-DD)
@@ -35,6 +36,9 @@ export default function App() {
   const [selectedDate,   setSelectedDate]   = useState("전체");
   const [sortBy,         setSortBy]         = useState("최신순");
   const [searchQuery,    setSearchQuery]    = useState("");
+  const [visibleCount,   setVisibleCount]   = useState(INITIAL_VISIBLE_POSTS);
+
+  const resetVisible = () => setVisibleCount(INITIAL_VISIBLE_POSTS);
 
   useEffect(() => {
     const today = getKSTDate(0);
@@ -88,6 +92,7 @@ export default function App() {
     if (sortBy === "블로그별") return a.blog_name.localeCompare(b.blog_name, "ko");
     return b.date.localeCompare(a.date); // 최신순 (기본)
   });
+  const visiblePosts = visibleItems(sorted, visibleCount);
 
   // 섹터별 글 수 (StatsBar용)
   const sectorCounts = posts.reduce((acc, p) => {
@@ -111,7 +116,7 @@ export default function App() {
             type="text"
             placeholder="종목·블로그·제목 검색..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => { setSearchQuery(e.target.value); resetVisible(); }}
           />
         </div>
       </header>
@@ -137,7 +142,7 @@ export default function App() {
 
         <div className="section-divider">
           <h2>개별 글</h2>
-          <span className="sd-count">{sorted.length}건</span>
+          <span className="sd-count">{visiblePosts.length}/{sorted.length}건</span>
         </div>
 
         <FilterBar
@@ -151,25 +156,34 @@ export default function App() {
           selectedSource={selectedSource}
           selectedDate={selectedDate}
           sortBy={sortBy}
-          onSectorChange={setSelectedSector}
-          onBlogChange={setSelectedBlog}
-          onSourceChange={setSelectedSource}
-          onDateChange={setSelectedDate}
-          onSortChange={setSortBy}
+          onSectorChange={(value) => { setSelectedSector(value); resetVisible(); }}
+          onBlogChange={(value) => { setSelectedBlog(value); resetVisible(); }}
+          onSourceChange={(value) => { setSelectedSource(value); resetVisible(); }}
+          onDateChange={(value) => { setSelectedDate(value); resetVisible(); }}
+          onSortChange={(value) => { setSortBy(value); resetVisible(); }}
         />
         {sorted.length === 0 ? (
           <div className="empty">해당 조건의 글이 없습니다.</div>
         ) : (
           <div className="card-grid">
-            {sorted.map((post) => (
+            {visiblePosts.map((post) => (
               <PostCard
                 key={post.id}
                 post={post}
                 onCardClick={setSelectedPost}
-                onStockClick={(stock) => setSearchQuery(stock)}
+                onStockClick={(stock) => { setSearchQuery(stock); resetVisible(); }}
               />
             ))}
           </div>
+        )}
+        {visiblePosts.length < sorted.length && (
+          <button
+            className="load-more"
+            type="button"
+            onClick={() => setVisibleCount((count) => count + INITIAL_VISIBLE_POSTS)}
+          >
+            글 더 보기 ({sorted.length - visiblePosts.length}건 남음)
+          </button>
         )}
       </main>
 
