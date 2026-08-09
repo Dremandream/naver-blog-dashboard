@@ -8,6 +8,7 @@ import FactSidebar from "./components/FactSidebar";
 import AttentionTrends from "./components/AttentionTrends";
 import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
+import DecisionCockpit from "./components/DecisionCockpit";
 import { INITIAL_VISIBLE_POSTS, visibleItems } from "./utils/post-list";
 import { buildPeterFearGreed } from "../shared/peter-fear-greed";
 import "./App.css";
@@ -141,6 +142,12 @@ export default function App() {
             </div>
           ) : null;
         })()}
+        <DecisionCockpit
+          posts={posts}
+          scores={data?.source_scores}
+          referenceDate={data?.date}
+          onStockClick={setSelectedStock}
+        />
         <SourceScores
           scores={data?.source_scores}
           posts={posts}

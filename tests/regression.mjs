@@ -8,6 +8,7 @@ import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
 import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
 import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
+import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../src/utils/decision-dashboard.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -190,6 +191,34 @@ const related = selectRelatedPosts(ranked, relatedFixture, { referenceDate: '202
 eq('SR4 소스별 관련글 최대 2개', related.find((g) => g.person === '큰표본').posts.map((p) => p.id), ['a1', 'b1']);
 eq('SR5 최근 7일 밖 글 제외', related.some((g) => g.person === '작은표본'), false);
 eq('SR6 상위 소스 순서 유지', related.map((g) => g.person), ['큰표본', '중간표본']);
+
+console.log('── 30초 원문 선별 대시보드 ──');
+const decisionScores = {
+  minSample: 2,
+  windows: [{ n: 63, label: '3개월' }, { n: 252, label: '1년' }],
+  sources: [
+    { person: '신뢰A', opinions: 20, w: { 63: { hits: 2, total: 2, rate: 100 }, 252: { hits: 8, total: 10, rate: 80 } } },
+    { person: '신뢰B', opinions: 20, w: { 63: { hits: 2, total: 2, rate: 100 }, 252: { hits: 6, total: 10, rate: 60 } } },
+    { person: '신뢰C', opinions: 20, w: { 63: { hits: 2, total: 2, rate: 100 }, 252: { hits: 4, total: 10, rate: 40 } } },
+  ],
+};
+const decisionPosts = [
+  { id: 'idea-a', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '알파 신규 수주', url: 'https://example.com/a', summary: '수주가 늘었다.', stocks: ['알파'], sector: '반도체', stance: '강세', reasoning: '수주 증가로 실적 상향 가능성이 높다.' },
+  { id: 'idea-a-dup', date: '2026-08-08', person: '신뢰B', blog_name: '신뢰B', title: '알파 후속 글', url: 'https://example.com/a2', summary: '알파 재언급', stocks: ['알파'], sector: '반도체', stance: '강세', reasoning: '같은 아이디어다.' },
+  { id: 'watch', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '삼성전자 전망', url: 'https://example.com/samsung', summary: '관심 종목', stocks: ['삼성전자'], sector: '반도체', stance: '강세', reasoning: 'HBM 공급 확대' },
+  { id: 'idea-b-bull', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '베타 상승 근거', url: 'https://example.com/bull', summary: '베타 강세', stocks: ['베타'], sector: '바이오', stance: '강세', reasoning: '임상 데이터가 개선됐다.' },
+  { id: 'idea-b-bear', date: '2026-08-08', person: '신뢰C', blog_name: '신뢰C', title: '베타 하락 근거', url: 'https://example.com/bear', summary: '베타 약세', stocks: ['베타'], sector: '바이오', stance: '약세', reasoning: '현금 소진 속도가 빠르다.' },
+  { id: 'irrelevant', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '일상', url: 'https://example.com/x', summary: '투자 관련 내용 없음', stocks: [], sector: '기타', stance: '중립' },
+];
+const ideas = selectNewIdeas(decisionPosts, decisionScores, { referenceDate: '2026-08-09', watchlist: ['삼성전자'], limit: 3, days: 2 });
+eq('DD1 투자 무관·관심종목 제외 및 아이디어 중복 제거', ideas.map((idea) => idea.idea), ['알파', '베타']);
+eq('DD2 1년 신뢰도가 높은 소스 원문 우선', ideas[0].post.id, 'idea-a');
+const watchlistBrief = buildWatchlistBrief(decisionPosts, decisionScores, ['삼성전자'], { referenceDate: '2026-08-09', days: 7 });
+eq('DD3 관심종목 최신 강세 근거 연결', watchlistBrief[0].bull.post.id, 'watch');
+const conflicts = buildOpinionConflicts(decisionPosts, decisionScores, { referenceDate: '2026-08-09', days: 7, limit: 3 });
+eq('DD4 강세·약세가 모두 있는 종목만 비교', conflicts.map((item) => item.stock), ['베타']);
+eq('DD5 양쪽 최강 근거와 신뢰도 연결', [conflicts[0].bull.post.id, conflicts[0].bear.post.id], ['idea-b-bull', 'idea-b-bear']);
+eq('DD6 이용 시간대 라벨', [getSessionLabel(8, 30), getSessionLabel(12, 0), getSessionLabel(16, 0)], ['장 시작 전', '장중 참고', '장 마감 후']);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

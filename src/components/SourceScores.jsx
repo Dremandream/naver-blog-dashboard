@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 import { rankSources, selectRelatedPosts } from '../utils/source-ranking';
 
 const MODES = [
-  { value: 'combined', label: '종합 신뢰도' },
   { value: '1y', label: '1년 적중률' },
+  { value: 'combined', label: '종합 신뢰도' },
   { value: '3m', label: '3개월 적중률' },
 ];
 
@@ -27,7 +27,7 @@ function RawRate({ source, window }) {
 }
 
 export default function SourceScores({ scores, posts = [], onSourceClick, onPostClick }) {
-  const [mode, setMode] = useState('combined');
+  const [mode, setMode] = useState('1y');
   const sources = scores?.sources ?? [];
   const windows = scores?.windows ?? [];
   const ranked = useMemo(() => rankSources(scores, mode), [scores, mode]);
