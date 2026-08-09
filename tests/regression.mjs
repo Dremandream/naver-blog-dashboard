@@ -11,6 +11,7 @@ import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../src/utils/decision-dashboard.js';
 import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
 import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
+import { selectBriefSources } from '../src/utils/brief-sources.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -278,6 +279,28 @@ eq('DISC7 최근 30일 미언급 종목만 완전 신규', todayDiscovery.newIde
 eq('DISC8 과거 언급+새 촉매는 재부상', todayDiscovery.resurfaced.map((item) => item.stock), ['알파']);
 eq('DISC9 반복 언급이지만 촉매 없으면 재부상 제외', todayDiscovery.items.some((item) => item.post.id === 'repeat-no-catalyst'), false);
 eq('DISC10 조건 미달이면 1+2+1을 억지로 채우지 않음', todayDiscovery.items.length, 3);
+
+console.log('── 종합의견 근거 원문 선별 ──');
+const briefFixture = {
+  date: '2026-08-09',
+  positive: [{ sector: '반도체', items: [{ name: '알파', point: '신규 수주로 실적 상향', mentions: 2 }] }],
+  negative: [{ sector: '바이오', items: [{ name: '베타', point: '임상 일정 지연', mentions: 1 }] }],
+  minority: ['역발상가: 시장 우려와 달리 감산 효과가 시작됐다는 시각.'],
+};
+const briefPosts = [
+  { id: 'minority', date: '2026-08-09', person: '역발상가', blog_name: '역발상가', title: '감산 효과 시작', summary: '시장 우려와 달리 감산 효과가 나타난다.', reasoning: '공급 감소', stocks: ['감마'], stance: '강세', url: 'https://example.com/minority' },
+  { id: 'alpha-weak', date: '2026-08-09', person: '미검증', blog_name: '미검증', title: '알파 신규 수주', summary: '알파 실적 상향', stocks: ['알파'], stance: '강세', url: 'https://example.com/alpha-weak' },
+  { id: 'alpha-trusted', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '알파 신규 수주', summary: '알파 실적 상향', stocks: ['알파'], stance: '강세', url: 'https://example.com/alpha' },
+  { id: 'beta', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '베타 임상 일정 지연', summary: '허가 일정도 늦어진다.', stocks: ['베타'], stance: '약세', url: 'https://example.com/beta' },
+  { id: 'unrelated', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '무관한 글', summary: '다른 내용', stocks: ['델타'], stance: '강세', url: 'https://example.com/unrelated' },
+];
+const briefSources = selectBriefSources(briefFixture, briefPosts, decisionScores, { limit: 4 });
+eq('BR1 소수·역발상 원문을 가장 먼저 연결', [briefSources[0].type, briefSources[0].post.id], ['minority', 'minority']);
+eq('BR2 긍정·부정 핵심 원문을 균형 있게 연결', briefSources.map((item) => item.type), ['minority', 'positive', 'negative']);
+eq('BR3 같은 주제면 검증된 1년 소스를 우선', briefSources.find((item) => item.type === 'positive').post.id, 'alpha-trusted');
+eq('BR4 종합의견과 무관한 원문은 제외', briefSources.some((item) => item.post.id === 'unrelated'), false);
+eq('BR5 같은 원문을 중복 연결하지 않음', new Set(briefSources.map((item) => item.post.url)).size, briefSources.length);
+eq('BR6 리포트 기준 2일보다 오래된 원문은 제외', briefSources.every((item) => item.post.date >= '2026-08-08'), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

@@ -1,4 +1,47 @@
 import { useState } from "react";
+import { selectBriefSources } from "../utils/brief-sources";
+
+const SOURCE_TYPE_LABEL = {
+  minority: "소수·역발상",
+  positive: "긍정 핵심",
+  negative: "부정 핵심",
+};
+
+function sourceTrustLabel(trust) {
+  if (trust?.rate == null) return "1년 검증 중";
+  return `1년 ${trust.rate}% · ${trust.total}건`;
+}
+
+function BriefSources({ items }) {
+  if (!items.length) return null;
+  return (
+    <div className="brief-sources">
+      <div className="brief-sources-head">
+        <b>중요·특이 의견 원문</b>
+        <span>종합의견과 직접 연결된 글만 표시</span>
+      </div>
+      <div className="brief-source-list">
+        {items.map((item) => (
+          <a
+            className={`brief-source-link brief-source-${item.type}`}
+            href={item.post.url}
+            target="_blank"
+            rel="noreferrer"
+            key={`${item.type}-${item.post.id}`}
+          >
+            <span className="brief-source-type">{SOURCE_TYPE_LABEL[item.type]}</span>
+            <span className="brief-source-body">
+              <b>{item.topic}</b>
+              <span>{item.point}</span>
+              <small>{item.source} · {sourceTrustLabel(item.trust)} · {item.post.date}</small>
+            </span>
+            <span className="brief-source-arrow">원문 →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // 구 스키마(2026-07-17 이전) 폴백 렌더용 블록
 function ReportBlock({ variant, title, items }) {
@@ -42,7 +85,7 @@ function PnColumn({ variant, title, groups, onStockClick }) {
   );
 }
 
-export default function DailyBrief({ briefs, onStockClick }) {
+export default function DailyBrief({ briefs, posts = [], scores, onStockClick }) {
   // briefs: daily_briefs 배열(최신순). 단일 객체가 와도 배열로 정규화(하위호환).
   const list = (Array.isArray(briefs) ? briefs : briefs ? [briefs] : [])
     .filter((b) => b && (b.brief || b.positive || b.negative));
@@ -55,6 +98,7 @@ export default function DailyBrief({ briefs, onStockClick }) {
   const gen = brief.generatedAt
     ? new Date(brief.generatedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
     : null;
+  const sourceLinks = selectBriefSources(brief, posts, scores, { limit: 4 });
 
   return (
     <section className="daily-brief report">
@@ -81,6 +125,8 @@ export default function DailyBrief({ briefs, onStockClick }) {
           {sel > 0 && <span className="report-past"> · 지난 리포트</span>}
         </div>
       </div>
+
+      <BriefSources items={sourceLinks} />
 
       {isNew ? (
         <>

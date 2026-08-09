@@ -160,6 +160,33 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .pn-mentions { color: var(--muted); font-size: 12px; }
 .pn-empty { font-size: 13px; color: var(--muted); padding: 4px 0; }
 .pn-minority { padding: 11px 15px; background: #faf6ee; border: 1px solid var(--rule-thin); border-left: 3px solid var(--accent); font-size: 13px; line-height: 1.7; color: var(--ink-soft); }
+/* 종합의견에서 바로 읽을 가치가 있는 근거 원문 */
+.brief-sources { padding: 13px 0 15px; border-top: 1px solid var(--rule-thin); border-bottom: 1px solid var(--rule-thin); }
+.brief-sources-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+.brief-sources-head b { font-family: var(--serif); color: var(--ink); font-size: 13px; }
+.brief-sources-head span { color: var(--muted); font-size: 10px; }
+.brief-source-list { display: flex; flex-direction: column; gap: 4px; }
+.brief-source-link { display: grid; grid-template-columns: 62px minmax(0, 1fr) 48px; align-items: center; gap: 9px; padding: 8px 9px; border: 1px solid #e4e2dc; border-left: 3px solid #777; background: #fff; color: var(--ink); text-decoration: none; transition: border-color .12s, background .12s; }
+.brief-source-link:hover { border-color: #a7a29a; background: #faf9f5; }
+.brief-source-minority { border-left-color: #986c22; }
+.brief-source-positive { border-left-color: var(--up); }
+.brief-source-negative { border-left-color: var(--down); }
+.brief-source-type { font-size: 9.5px; font-weight: 800; color: var(--muted); }
+.brief-source-minority .brief-source-type { color: #986c22; }
+.brief-source-positive .brief-source-type { color: var(--up); }
+.brief-source-negative .brief-source-type { color: var(--down); }
+.brief-source-body { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 3px 8px; min-width: 0; }
+.brief-source-body b { font-size: 12px; white-space: nowrap; }
+.brief-source-body > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-soft); font-size: 11.5px; }
+.brief-source-body small { grid-column: 1 / -1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 9.5px; }
+.brief-source-arrow { color: var(--ink); font-size: 10.5px; font-weight: 800; text-align: right; }
+@media (max-width: 600px) {
+  .brief-sources-head { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .brief-source-link { grid-template-columns: 54px minmax(0, 1fr); }
+  .brief-source-arrow { display: none; }
+  .brief-source-body { display: flex; flex-direction: column; gap: 2px; }
+  .brief-source-body > span { width: 100%; }
+}
 /* 리포트 2단: 본문(주장) 좌 + 팩트 사이드바(데이터) 우 — 증권사 리포트 문법 */
 .report-layout { display: grid; grid-template-columns: 1fr 250px; gap: 26px; align-items: start; margin-bottom: 26px; }
 .report-layout .daily-brief { margin-bottom: 0; }

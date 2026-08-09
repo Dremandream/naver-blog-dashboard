@@ -142,6 +142,15 @@ export default function App() {
             </div>
           ) : null;
         })()}
+        <div className="report-layout">
+          <DailyBrief
+            briefs={data?.daily_briefs ?? data?.daily_brief}
+            posts={posts}
+            scores={data?.source_scores}
+            onStockClick={setSelectedStock}
+          />
+          <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
+        </div>
         <DecisionCockpit
           posts={posts}
           scores={data?.source_scores}
@@ -156,10 +165,6 @@ export default function App() {
           onSourceClick={showSourcePosts}
           onPostClick={setSelectedPost}
         />
-        <div className="report-layout">
-          <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} onStockClick={setSelectedStock} />
-          <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
-        </div>
         <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
         <StatsBar total={posts.length} sectors={sectorCounts} />
 
