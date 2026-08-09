@@ -12,7 +12,7 @@
 
 - **URL**: https://naver-blog-dashboard.vercel.app
 - **자동화**: GitHub Actions 매일 KST 08:00 (`.github/workflows/collect.yml`) → 수집→분석→push→Vercel 자동배포
-- **소스 18개**: 블로그 10 (`config/blogs.json`) + 텔레그램 8 (`config/telegram-channels.json`) — 2026-07-17 혀니루 삭제(6개월 휴면), 사용자 지명으로 '너는 무한하지 않느냐'(블로그 cybermw)·'피카츄 아저씨'(텔레 pikachu_aje) 추가. **2026-07-21 김찰저(kimcharger) 제거**: 채널 주인이 t.me/s 웹프리뷰를 꺼 스크레이핑 불가(HTTP 200이지만 메시지 0개 → 조용히 미수집). config·stock-codes 오염항목·history 의견·posts 정리 완료. 반도체·거시 편중 여전 → 추가는 타섹터(2차전지·바이오·금융)만
+- **소스 18개**: 블로그 11 (`config/blogs.json`) + 텔레그램 7 (`config/telegram-channels.json`). 2026-08-09 Teddy 미술관과 너쟁이 텔레그램 제거, 너쟁이 블로그 유지, 따봉(freechip)·우용용(deskhunter) 블로그 추가. 과거 데이터와 적중 기록은 보존.
 - **모델 배분(의도된 설계, 바꾸지 말 것)**: 개별 글 분석 = `claude-haiku-4-5-20251001` / 종합 리포트 = `claude-opus-4-8` (하루 1회)
 
 ## 2. 대시보드 구성 (위→아래)
@@ -41,7 +41,7 @@
 ```
 
 핵심 구현 디테일 (다음 세션이 알아야 할 것):
-- **person 태그**: 같은 사람이 블로그+텔레그램 양쪽에 있음(너쟁이, 잠실개미) → 모든 인원 집계는 `person` 기준 중복 제거
+- **person 태그**: 같은 사람이 블로그+텔레그램 양쪽에 있을 수 있음(현재 잠실개미) → 모든 인원 집계는 `person` 기준 중복 제거
 - **parseJSONLoose()**: 모델이 JSON 뒤에 텍스트 붙여도 파싱 (분석실패 0건 유지 장치)
 - **브리핑 캐시**: daily_briefs[0].date == 오늘이면 재생성 안 함. 브리핑 재생성 테스트 시 오늘 브리핑을 배열에서 제거 후 실행
 - 시세/시황 실패해도 여론 파이프라인은 무손상 (try/catch 분리)
