@@ -145,6 +145,8 @@ export default function App() {
         <DecisionCockpit
           posts={posts}
           scores={data?.source_scores}
+          mentionHistory={data?.mention_history}
+          verdicts={data?.verdicts}
           referenceDate={data?.date}
           onStockClick={setSelectedStock}
         />

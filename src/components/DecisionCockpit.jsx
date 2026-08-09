@@ -1,17 +1,34 @@
-import { useMemo, useState } from 'react';
-import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../utils/decision-dashboard';
+import { useEffect, useMemo, useState } from 'react';
+import { buildOpinionConflicts, buildTodayDiscovery, buildWatchlistBrief, getSessionLabel } from '../utils/decision-dashboard';
 
 const WATCHLIST = ['삼성전자', 'SK하이닉스'];
+const USAGE_KEY = 'dashboard:usage:v1';
+const TYPE_LABEL = { critical: '중대 변화', new: '완전 신규', resurfaced: '재부상' };
 
 function kstTimeParts() {
   const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Seoul',
-    hour: '2-digit',
-    minute: '2-digit',
-    hourCycle: 'h23',
+    timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
   }).formatToParts(new Date());
   const value = (type) => Number(parts.find((part) => part.type === type)?.value ?? 0);
   return { hour: value('hour'), minute: value('minute') };
+}
+function dateOffset(date, days) {
+  const value = new Date(`${date}T00:00:00Z`);
+  value.setUTCDate(value.getUTCDate() + days);
+  return value.toISOString().slice(0, 10);
+}
+
+function readUsage(referenceDate) {
+  try {
+    const usage = JSON.parse(localStorage.getItem(USAGE_KEY) ?? '{}');
+    const legacy = JSON.parse(localStorage.getItem(`dashboard:opened:${referenceDate}`) ?? '[]');
+    if (legacy.length && !usage[referenceDate]?.opened?.length) {
+      usage[referenceDate] = { ...(usage[referenceDate] ?? {}), opened: legacy };
+    }
+    return usage;
+  } catch {
+    return {};
+  }
 }
 
 function trustLabel(trust) {
@@ -37,12 +54,38 @@ function Evidence({ item, stance }) {
   );
 }
 
-export default function DecisionCockpit({ posts = [], scores, referenceDate, onStockClick }) {
+function DiscoveryRow({ item, opened, onOpen }) {
+  const directional = item.post.stance === '강세' || item.post.stance === '약세';
+  return (
+    <article className={`dc-discovery-row dc-type-${item.type} ${opened ? 'dc-row-opened' : ''}`}>
+      <div className="dc-row-main">
+        <div className="dc-row-labels">
+          <span className="dc-type-label">{TYPE_LABEL[item.type]}</span>
+          {directional && <span className={`dc-row-stance ${item.post.stance === '강세' ? 'bull' : 'bear'}`}>{item.post.stance}</span>}
+        </div>
+        <h3>{item.stock}</h3>
+        <p className="dc-row-reason">{item.reason}</p>
+        {item.catalyst && <p className="dc-row-catalyst"><b>촉매</b> {item.catalyst}</p>}
+        <div className="dc-row-meta">
+          {item.source} · {trustLabel(item.trust)} · {item.post.date}
+          {item.sector && <span> · {item.sector}</span>}
+        </div>
+      </div>
+      <a className="dc-row-link" href={item.post.url} target="_blank" rel="noreferrer" onClick={() => onOpen(item.post.id)}>
+        {opened ? '✓ 다시 보기' : '원문 보기'} <span>→</span>
+      </a>
+    </article>
+  );
+}
+
+export default function DecisionCockpit({ posts = [], scores, mentionHistory, verdicts, referenceDate, onStockClick }) {
   const time = kstTimeParts();
   const session = getSessionLabel(time.hour, time.minute);
-  const ideas = useMemo(
-    () => selectNewIdeas(posts, scores, { referenceDate, watchlist: WATCHLIST, limit: 3, days: 2 }),
-    [posts, scores, referenceDate],
+  const discovery = useMemo(
+    () => buildTodayDiscovery(posts, scores, mentionHistory, verdicts, {
+      referenceDate, watchlist: WATCHLIST, newLimit: 2, resurfacedLimit: 1,
+    }),
+    [posts, scores, mentionHistory, verdicts, referenceDate],
   );
   const watchlist = useMemo(
     () => buildWatchlistBrief(posts, scores, WATCHLIST, { referenceDate, days: 7 }),
@@ -52,97 +95,95 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
     () => buildOpinionConflicts(posts, scores, { referenceDate, days: 7, limit: 3, excludeStocks: WATCHLIST }),
     [posts, scores, referenceDate],
   );
-  const storageKey = `dashboard:opened:${referenceDate ?? 'unknown'}`;
-  const [openedIds, setOpenedIds] = useState(() => {
-    try {
-      return new Set(JSON.parse(localStorage.getItem(storageKey) ?? '[]'));
-    } catch {
-      return new Set();
-    }
-  });
-  const openedCount = ideas.filter((item) => openedIds.has(item.post.id)).length;
+  const [usage, setUsage] = useState(() => readUsage(referenceDate));
+
+  useEffect(() => {
+    setUsage((current) => {
+      const next = { ...current, [referenceDate]: { ...(current[referenceDate] ?? {}), visited: true, opened: current[referenceDate]?.opened ?? [] } };
+      try { localStorage.setItem(USAGE_KEY, JSON.stringify(next)); } catch { /* 기기 내 표시만 유지 */ }
+      return next;
+    });
+  }, [referenceDate]);
+
+  const openedIds = new Set(usage[referenceDate]?.opened ?? []);
+  const openedCount = discovery.items.filter((item) => openedIds.has(item.post.id)).length;
+  const weekCutoff = dateOffset(referenceDate, -6);
+  const weekEntries = Object.entries(usage).filter(([date]) => date >= weekCutoff && date <= referenceDate);
+  const visitDays = weekEntries.filter(([, value]) => value.visited).length;
+  const weekClicks = weekEntries.reduce((sum, [, value]) => sum + new Set(value.opened ?? []).size, 0);
+  const selectionRatio = posts.length ? ((discovery.items.length / posts.length) * 100).toFixed(1) : '0.0';
+
   const markOpened = (postId) => {
-    setOpenedIds((current) => {
-      const next = new Set(current).add(postId);
-      try {
-        localStorage.setItem(storageKey, JSON.stringify([...next]));
-      } catch {
-        // 저장이 제한된 브라우저에서도 현재 화면의 확인 표시는 유지한다.
-      }
+    setUsage((current) => {
+      const opened = new Set(current[referenceDate]?.opened ?? []);
+      opened.add(postId);
+      const next = { ...current, [referenceDate]: { ...(current[referenceDate] ?? {}), visited: true, opened: [...opened] } };
+      try { localStorage.setItem(USAGE_KEY, JSON.stringify(next)); } catch { /* 기기 내 표시만 유지 */ }
       return next;
     });
   };
 
   return (
     <section className="decision-cockpit" aria-labelledby="decision-title">
-      <div className="dc-header">
+      <div className="dc-app-header">
         <div>
-          <span className="dc-kicker">Decision Cockpit · {session}</span>
-          <h2 id="decision-title">오늘의 원문 선별</h2>
-          <p>
-            전체 {posts.length}개 글에서 지금 먼저 볼 투자 아이디어 {ideas.length}개
-            <strong className="dc-progress">원문 {openedCount}/{ideas.length} 확인</strong>
-          </p>
+          <span className="dc-kicker">Today · {session}</span>
+          <h2 id="decision-title">오늘 새로 볼 것</h2>
+          <p>중요한 변화만 최대 1+2+1로 선별합니다.</p>
         </div>
-        <span className="dc-time">{referenceDate} 기준</span>
+        <div className="dc-open-progress">원문 <b>{openedCount}/{discovery.items.length}</b> 확인</div>
       </div>
 
-      <div className="dc-ideas" aria-label="우선 확인할 투자 아이디어">
-        {ideas.length === 0 && <div className="dc-empty">최근 2일 내 선별할 신규 투자 아이디어가 없습니다.</div>}
-        {ideas.map((item, index) => (
-          <article className={`dc-idea ${openedIds.has(item.post.id) ? 'dc-idea-opened' : ''}`} key={item.post.id}>
-            <div className="dc-idea-top">
-              <span className="dc-rank">0{index + 1}</span>
-              <span className={`dc-stance dc-stance-${item.post.stance === '강세' ? 'bull' : item.post.stance === '약세' ? 'bear' : 'neutral'}`}>
-                {item.post.stance || '중립'}
-              </span>
-            </div>
-            <h3>{item.idea}</h3>
-            <div className="dc-source">{item.source} · {trustLabel(item.trust)}</div>
-            <p>{evidenceText(item)}</p>
-            <a className="dc-original" href={item.post.url} target="_blank" rel="noreferrer" onClick={() => markOpened(item.post.id)}>
-              {openedIds.has(item.post.id) ? '✓ 열어본 원문 다시 보기 →' : '원문 열기 →'}
-            </a>
-          </article>
+      <div className="dc-usage-strip" aria-label="대시보드 이용 현황">
+        <span><b>{discovery.items.length}</b>/{posts.length}개 선별 <small>{selectionRatio}%</small></span>
+        <span>최근 7일 <b>{visitDays}</b>일 이용</span>
+        <span>원문 <b>{weekClicks}</b>회 열람</span>
+      </div>
+
+      <div className="dc-discovery-list">
+        {discovery.items.length === 0 && (
+          <div className="dc-empty">오늘은 기준을 충족한 중대 변화·신규·재부상 아이디어가 없습니다.</div>
+        )}
+        {discovery.items.map((item) => (
+          <DiscoveryRow key={`${item.type}-${item.post.id}`} item={item} opened={openedIds.has(item.post.id)} onOpen={markOpened} />
         ))}
       </div>
 
       <div className="dc-lower-grid">
         <div className="dc-panel">
-          <div className="dc-panel-title">
-            <span>관심 종목</span>
-            <small>최근 7일 근거</small>
-          </div>
+          <div className="dc-panel-title"><span>관심 종목</span><small>터치해 근거 펼치기</small></div>
           {watchlist.map((item) => (
-            <div className="dc-watch" key={item.stock}>
-              <button type="button" className="dc-stock-button" onClick={() => onStockClick?.(item.stock)}>
-                {item.stock} <span>{item.count}건 · 종목 리포트 →</span>
-              </button>
-              <Evidence item={item.bull} stance="강세" />
-              <Evidence item={item.bear} stance="약세" />
-            </div>
+            <details className="dc-watch" key={item.stock}>
+              <summary className="dc-watch-summary">
+                <b>{item.stock}</b><span>{item.count}건 · 강세·약세 근거 보기</span>
+              </summary>
+              <div className="dc-watch-body">
+                <Evidence item={item.bull} stance="강세" />
+                <Evidence item={item.bear} stance="약세" />
+                <button type="button" className="dc-stock-report" onClick={() => onStockClick?.(item.stock)}>종목 리포트 열기 →</button>
+              </div>
+            </details>
           ))}
         </div>
 
         <div className="dc-panel">
-          <div className="dc-panel-title">
-            <span>의견 충돌</span>
-            <small>양쪽의 가장 강한 근거</small>
-          </div>
+          <div className="dc-panel-title"><span>의견 충돌</span><small>서로 다른 필자의 최강 근거</small></div>
           {conflicts.length === 0 && <div className="dc-empty">최근 7일 뚜렷한 강세·약세 충돌이 없습니다.</div>}
           {conflicts.map((item) => (
             <div className="dc-conflict" key={item.stock}>
               <button type="button" className="dc-stock-button" onClick={() => onStockClick?.(item.stock)}>
-                {item.stock} <span>{item.sourceCount}개 소스 비교 →</span>
+                {item.stock} <span>{item.sourceCount}개 방향성 소스 →</span>
               </button>
-              <Evidence item={item.bull} stance="강세" />
-              <Evidence item={item.bear} stance="약세" />
+              <div className="dc-conflict-evidence">
+                <Evidence item={item.bull} stance="강세" />
+                <Evidence item={item.bear} stance="약세" />
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <p className="dc-disclaimer">선별 순서는 종목 의견의 1년 적중 기록을 표본 수로 보정해 적용합니다. 매매 추천이 아니라 읽을 원문의 우선순위입니다.</p>
+      <p className="dc-disclaimer">1년 적중률과 표본 수를 보정해 원문 우선순위를 정합니다. 매매 추천이 아니며, 클릭·이용 기록은 이 기기에만 저장됩니다.</p>
     </section>
   );
 }

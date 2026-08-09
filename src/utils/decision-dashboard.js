@@ -1,4 +1,5 @@
 import { rankSources } from './source-ranking.js';
+import { extractCatalyst, previousOpinion, wasMentioned } from '../../shared/discovery.js';
 
 const DIRECTIONAL = new Set(['강세', '약세']);
 
@@ -191,4 +192,111 @@ export function getSessionLabel(hour, minute = 0) {
   if (minutes < 9 * 60) return '장 시작 전';
   if (minutes >= 15 * 60 + 30) return '장 마감 후';
   return '장중 참고';
+}
+
+function selectDiverse(items, limit) {
+  const sorted = items.slice().sort(compareEvidence);
+  const selected = [];
+  const seenStocks = new Set();
+  const seenSources = new Set();
+  const append = (item, requireNewSource) => {
+    if (selected.length >= limit || seenStocks.has(item.stock)) return;
+    if (requireNewSource && seenSources.has(item.source)) return;
+    selected.push(item);
+    seenStocks.add(item.stock);
+    seenSources.add(item.source);
+  };
+  const validated = sorted.filter((item) => item.trust.adjustedScore != null);
+  validated.forEach((item) => append(item, true));
+  if (selected.length < limit) validated.forEach((item) => append(item, false));
+  if (selected.length < limit) sorted.forEach((item) => append(item, true));
+  if (selected.length < limit) sorted.forEach((item) => append(item, false));
+  return selected;
+}
+
+function primaryCandidateStock(post, excluded) {
+  const candidates = (post.stocks ?? []).filter((stock) => !excluded.has(stock));
+  return candidates.find((stock) => mentionsStock(post, stock)) ?? candidates[0] ?? null;
+}
+
+export function buildTodayDiscovery(posts, scores, mentionHistory = {}, verdicts = {}, options = {}) {
+  const {
+    referenceDate = posts.reduce((latest, post) => post.date > latest ? post.date : latest, ''),
+    watchlist = [],
+    recentDays = 2,
+    lookbackDays = 30,
+    newLimit = 2,
+    resurfacedLimit = 1,
+  } = options;
+  if (!referenceDate) return { critical: null, newIdeas: [], resurfaced: [], items: [] };
+
+  const watchlistSet = new Set(watchlist);
+  const trustMap = buildTrustMap(scores);
+  const recent = posts.filter((post) => (
+    inDateRange(post, referenceDate, recentDays) && isInvestmentPost(post) && post.url
+  ));
+
+  const criticalCandidates = watchlist.flatMap((stock) => {
+    const related = recent.filter((post) => post.stocks?.includes(stock));
+    if (related.length === 0) return [];
+    const enriched = related.map((post) => ({
+      ...enrichPost(post, trustMap),
+      stock,
+      catalyst: extractCatalyst(post),
+    })).sort((a, b) => compareEvidence(a, b, stock));
+    const directionalValidated = enriched.filter((item) => (
+      DIRECTIONAL.has(item.post.stance) && item.trust.adjustedScore != null
+    ));
+    const flip = directionalValidated.find((item) => {
+      const prior = previousOpinion(mentionHistory, item.source, stock, item.post.date, lookbackDays);
+      return prior && DIRECTIONAL.has(prior.stance) && prior.stance !== item.post.stance;
+    });
+    const aligned = ['강세', '약세'].some((stance) => (
+      new Set(directionalValidated.filter((item) => item.post.stance === stance).map((item) => item.source)).size >= 2
+    ));
+    const divergence = (verdicts?.items ?? []).some((item) => item.ticker === stock && item.ILLUSION === 'True');
+    const catalystItem = enriched.find((item) => item.catalyst);
+    const conditions = [];
+    if (flip) conditions.push('시각 전환');
+    if (catalystItem) conditions.push('새 촉매');
+    if (aligned) conditions.push('검증 소스 방향 합치');
+    if (divergence) conditions.push('의견·주가 엇갈림');
+    if (conditions.length < 2 && !flip) return [];
+    const evidence = flip ?? catalystItem ?? enriched[0];
+    return [{
+      ...evidence,
+      type: 'critical',
+      stock,
+      catalyst: catalystItem?.catalyst ?? '',
+      conditions,
+      reason: conditions.join(' · '),
+      priority: conditions.length * 100 + (evidence.trust.adjustedScore ?? 0),
+    }];
+  }).sort((a, b) => b.priority - a.priority);
+
+  const ideaCandidates = recent.flatMap((post) => {
+    const stock = primaryCandidateStock(post, watchlistSet);
+    if (!stock) return [];
+    const catalyst = extractCatalyst(post);
+    if (!catalyst) return [];
+    return [{
+      ...enrichPost(post, trustMap),
+      stock,
+      catalyst,
+      sector: post.sector,
+      reason: post.reasoning || post.summary || post.title,
+      mentionedBefore: wasMentioned(mentionHistory, stock, post.date, lookbackDays),
+    }];
+  });
+  const newIdeas = selectDiverse(
+    ideaCandidates.filter((item) => !item.mentionedBefore).map((item) => ({ ...item, type: 'new' })),
+    newLimit,
+  );
+  const newStocks = new Set(newIdeas.map((item) => item.stock));
+  const resurfaced = selectDiverse(
+    ideaCandidates.filter((item) => item.mentionedBefore && !newStocks.has(item.stock)).map((item) => ({ ...item, type: 'resurfaced' })),
+    resurfacedLimit,
+  );
+  const critical = criticalCandidates[0] ?? null;
+  return { critical, newIdeas, resurfaced, items: [critical, ...newIdeas, ...resurfaced].filter(Boolean) };
 }

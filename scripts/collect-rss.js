@@ -16,6 +16,7 @@ import { judgeBatch } from './judge.js';
 import { computeSourceScores } from './hitrate.js';
 import { parseJSONLoose, stripHtml } from './lib/parsers.js';
 import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
+import { buildMentionHistory } from '../shared/discovery.js';
 
 export { parseJSONLoose, stripHtml } from './lib/parsers.js';
 
@@ -413,6 +414,7 @@ export async function analyzePost(title, content, blogName) {
   "numbers": ["글에 나온 핵심 수치 최대 4개, 맥락 포함 (예: 'SK하이닉스 목표가 320만원 (UBS)') — 없으면 빈 배열"],
   "stance": "강세|약세|중립|해당없음 (글쓴이의 시각 톤. 추천이 아니라 글의 논조)",
   "reasoning": "글쓴이 주장의 가장 중요한 근거 1문장 — 없으면 빈 문자열",
+  "catalyst": "이 글에서 새롭게 발생한 투자 촉매 1문장. 실적·수주·계약·정책·제품·가격·목표가 변화 등이 명시된 경우만 작성하고, 기존 견해 반복이면 빈 문자열",
   "risks": ["글쓴이가 직접 언급한 리스크·유보 조건만 (없으면 빈 배열)"],
   "market_view": true 또는 false (시장 전체·주도주·지수·수급·유동성에 대한 글쓴이 본인의 시각이면 true. 단순 기업 뉴스·실적 전달이면 false),
   "market_sentiment": -2|-1|0|1|2 (시장 관점의 강도. -2 매우 비관, -1 비관, 0 중립/해당없음, 1 낙관, 2 매우 낙관),
@@ -453,6 +455,7 @@ export async function analyzePost(title, content, blogName) {
     result.numbers    = normalizeArr(result.numbers);
     result.risks      = normalizeArr(result.risks);
     result.headline   = typeof result.headline === 'string' ? result.headline.trim() : '';
+    result.catalyst   = typeof result.catalyst === 'string' ? result.catalyst.trim() : '';
     result.market_view = result.market_view === true;
     result.market_sentiment = Number.isFinite(Number(result.market_sentiment))
       ? Math.max(-2, Math.min(2, Number(result.market_sentiment))) : 0;
@@ -463,7 +466,7 @@ export async function analyzePost(title, content, blogName) {
     console.warn('  AI 분석 실패:', e.message);
     return {
       summary: title, stocks: [], sector: '기타', key_points: [],
-      numbers: [], stance: '해당없음', reasoning: '', risks: [],
+      numbers: [], stance: '해당없음', reasoning: '', catalyst: '', risks: [],
       market_view: false, market_sentiment: 0, market_reason: '',
       _failed: true, // 호출자가 실패를 구분해 캐시 오염을 피하도록 표식 (재시도 소진 후)
     };
@@ -780,7 +783,7 @@ async function main() {
 
     let analysis = {
       summary: post.title, stocks: [], sector: '기타', key_points: [],
-      numbers: [], stance: '해당없음', reasoning: '', risks: [],
+      numbers: [], stance: '해당없음', reasoning: '', catalyst: '', risks: [],
     };
 
     if (process.env.CLAUDE_API_KEY) {
@@ -806,6 +809,7 @@ async function main() {
       numbers: analysis.numbers ?? [],
       stance: analysis.stance ?? '해당없음',
       reasoning: analysis.reasoning ?? '',
+      catalyst: analysis.catalyst ?? '',
       risks: analysis.risks ?? [],
       market_view: analysis.market_view ?? false,
       market_sentiment: analysis.market_sentiment ?? 0,
@@ -822,12 +826,14 @@ async function main() {
   let existingPosts = [];
   let existingBriefs = [];
   let verdictHistory = [];
+  let existingMentionHistory = {};
   if (fs.existsSync(OUTPUT_PATH)) {
     try {
       const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
       const parsed = JSON.parse(raw);
       existingPosts = parsed.posts ?? [];
       verdictHistory = parsed.verdict_history ?? [];
+      existingMentionHistory = parsed.mention_history ?? {};
       if (parsed.daily_briefs) {
         existingBriefs = parsed.daily_briefs;
       } else if (parsed.daily_brief) {
@@ -910,9 +916,10 @@ async function main() {
 
   // 적중률용 이력 축적 + 소스 점수 계산 (posts.json 저장 전 — _closes 시리즈 필요). 실패해도 메인 무손상.
   let sourceScores = null;
+  let archivedHistory = {};
   try {
-    const history = archiveHistory(prices, market, merged);
-    sourceScores = computeSourceScores(history);
+    archivedHistory = archiveHistory(prices, market, merged);
+    sourceScores = computeSourceScores(archivedHistory);
     const firstWin = sourceScores.windows[0];
     const judgedN = sourceScores.sources.filter(s => s.w[firstWin.n].total > 0).length;
     console.log(`  🎯 소스 점수: ${sourceScores.sources.length}명 집계, ${firstWin.label} 판정 시작된 소스 ${judgedN}명`);
@@ -923,11 +930,12 @@ async function main() {
   // posts.json에는 날짜별 종가 시리즈(_closes)를 담지 않는다 (이력 파일 전용)
   for (const v of Object.values(prices)) delete v._closes;
   for (const v of Object.values(market)) delete v._closes;
+  const mentionHistory = buildMentionHistory(existingMentionHistory, merged, archivedHistory, TODAY_KST, 45);
 
   fs.writeFileSync(
     OUTPUT_PATH,
     JSON.stringify(
-      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, verdicts, verdict_history: newHistory, source_scores: sourceScores, peter_fear_greed: peterFearGreed, posts: merged },
+      { date: TODAY_KST, daily_briefs: updatedBriefs, market, prices, verdicts, verdict_history: newHistory, source_scores: sourceScores, mention_history: mentionHistory, peter_fear_greed: peterFearGreed, posts: merged },
       null, 2
     ),
     'utf-8'

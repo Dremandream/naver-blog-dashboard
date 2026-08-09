@@ -9,6 +9,8 @@ import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } 
 import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
 import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../src/utils/decision-dashboard.js';
+import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
+import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -236,6 +238,46 @@ eq('DD5 양쪽 최강 근거와 신뢰도 연결', [conflicts[0].bull.post.id, c
 eq('DD5b 같은 필자의 시각 변화는 소스 간 충돌에서 제외', conflicts.some((item) => item.stock === '오메가'), false);
 eq('DD5c 비교 소스 수는 방향성 의견만 집계', conflicts[0].sourceCount, 2);
 eq('DD6 이용 시간대 라벨', [getSessionLabel(8, 30), getSessionLabel(12, 0), getSessionLabel(16, 0)], ['장 시작 전', '장중 참고', '장 마감 후']);
+
+console.log('── 오늘 새로 볼 것 1+2+1 ──');
+const mentionHistory = buildMentionHistory(
+  {
+    '2026-08-01': { stocks: ['알파'], sectors: ['반도체'], opinions: [{ person: '신뢰B', stock: '알파', stance: '강세' }] },
+    '2026-06-01': { stocks: ['삭제대상'], sectors: ['기타'], opinions: [] },
+  },
+  [
+    { date: '2026-08-09', person: '신뢰A', stocks: ['삼성전자'], sector: '반도체', stance: '약세' },
+  ],
+  {
+    '2026-07-20': { opinions: [{ person: '신뢰A', stock: '삼성전자', stance: '강세' }] },
+  },
+  '2026-08-09',
+  45,
+);
+eq('DISC1 이전 이력·가격 이력·최신 글을 경량 언급 이력으로 병합', mentionHistory['2026-07-20'].stocks, ['삼성전자']);
+eq('DISC2 최신 글의 방향성까지 저장', mentionHistory['2026-08-09'].opinions, [{ person: '신뢰A', stock: '삼성전자', stance: '약세' }]);
+eq('DISC3 보관 기간 밖 이력 제거', Object.hasOwn(mentionHistory, '2026-06-01'), false);
+eq('DISC4 촉매 필드 우선', extractCatalyst({ catalyst: '신규 수주 1조원', reasoning: '일반 설명' }), '신규 수주 1조원');
+eq('DISC5 기존 글은 핵심 포인트에서 촉매 폴백', extractCatalyst({ key_points: ['신규 공장 증설로 생산능력 20% 증가'] }), '신규 공장 증설로 생산능력 20% 증가');
+
+const discoveryPosts = [
+  { id: 'critical', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '삼성전자 HBM 가격 하락', url: 'https://example.com/critical', summary: '삼성전자 전망 하향', stocks: ['삼성전자'], sector: '반도체', stance: '약세', reasoning: '삼성전자 HBM 가격 하락', catalyst: 'HBM 계약가격 하락' },
+  { id: 'new-1', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '뉴코 신규 수주', url: 'https://example.com/new', summary: '뉴코 첫 수주', stocks: ['뉴코'], sector: '방산', stance: '강세', reasoning: '뉴코 수주 확대', catalyst: '첫 해외 수주' },
+  { id: 'resurface', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '알파 목표가 상향', url: 'https://example.com/resurface', summary: '알파 재평가', stocks: ['알파'], sector: '반도체', stance: '강세', reasoning: '알파 실적 상향', catalyst: '목표가 20% 상향' },
+  { id: 'repeat-no-catalyst', date: '2026-08-09', person: '신뢰C', blog_name: '신뢰C', title: '베타 반복', url: 'https://example.com/repeat', summary: '기존 견해 반복', stocks: ['베타'], sector: '바이오', stance: '중립', reasoning: '기존 견해 유지', catalyst: '' },
+];
+const discoveryHistory = buildMentionHistory({
+  '2026-07-20': { stocks: ['삼성전자'], sectors: ['반도체'], opinions: [{ person: '신뢰A', stock: '삼성전자', stance: '강세' }] },
+  '2026-08-01': { stocks: ['알파', '베타'], sectors: ['반도체', '바이오'], opinions: [] },
+}, discoveryPosts, {}, '2026-08-09', 45);
+const todayDiscovery = buildTodayDiscovery(discoveryPosts, decisionScores, discoveryHistory, { items: [] }, {
+  referenceDate: '2026-08-09', watchlist: ['삼성전자', 'SK하이닉스'], newLimit: 2, resurfacedLimit: 1,
+});
+eq('DISC6 검증 소스의 시각 전환+촉매는 관심 종목 중대 변화', [todayDiscovery.critical?.stock, todayDiscovery.critical?.conditions], ['삼성전자', ['시각 전환', '새 촉매']]);
+eq('DISC7 최근 30일 미언급 종목만 완전 신규', todayDiscovery.newIdeas.map((item) => item.stock), ['뉴코']);
+eq('DISC8 과거 언급+새 촉매는 재부상', todayDiscovery.resurfaced.map((item) => item.stock), ['알파']);
+eq('DISC9 반복 언급이지만 촉매 없으면 재부상 제외', todayDiscovery.items.some((item) => item.post.id === 'repeat-no-catalyst'), false);
+eq('DISC10 조건 미달이면 1+2+1을 억지로 채우지 않음', todayDiscovery.items.length, 3);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);
