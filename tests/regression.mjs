@@ -204,20 +204,37 @@ const decisionScores = {
 };
 const decisionPosts = [
   { id: 'idea-a', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '알파 신규 수주', url: 'https://example.com/a', summary: '수주가 늘었다.', stocks: ['알파'], sector: '반도체', stance: '강세', reasoning: '수주 증가로 실적 상향 가능성이 높다.' },
+  { id: 'idea-gamma', date: '2026-08-08', person: '신뢰A', blog_name: '신뢰A', title: '감마 신규 공장', url: 'https://example.com/gamma', summary: '설비가 늘었다.', stocks: ['감마'], sector: '반도체', stance: '강세', reasoning: '생산능력 확대' },
   { id: 'idea-a-dup', date: '2026-08-08', person: '신뢰B', blog_name: '신뢰B', title: '알파 후속 글', url: 'https://example.com/a2', summary: '알파 재언급', stocks: ['알파'], sector: '반도체', stance: '강세', reasoning: '같은 아이디어다.' },
   { id: 'watch', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '삼성전자 전망', url: 'https://example.com/samsung', summary: '관심 종목', stocks: ['삼성전자'], sector: '반도체', stance: '강세', reasoning: 'HBM 공급 확대' },
+  { id: 'watch-bear-generic', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: 'IT 가격 인상', url: 'https://example.com/generic-bear', summary: '부품 가격 상승', stocks: ['삼성전자'], sector: '반도체', stance: '약세', reasoning: '소비자 수요 위축 우려' },
+  { id: 'watch-bear-direct', date: '2026-08-08', person: '신뢰C', blog_name: '신뢰C', title: '삼성전자 수요 둔화', url: 'https://example.com/direct-bear', summary: '삼성전자 출하량 감소', stocks: ['삼성전자'], sector: '반도체', stance: '약세', reasoning: '삼성전자 재고 증가' },
   { id: 'idea-b-bull', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '베타 상승 근거', url: 'https://example.com/bull', summary: '베타 강세', stocks: ['베타'], sector: '바이오', stance: '강세', reasoning: '임상 데이터가 개선됐다.' },
   { id: 'idea-b-bear', date: '2026-08-08', person: '신뢰C', blog_name: '신뢰C', title: '베타 하락 근거', url: 'https://example.com/bear', summary: '베타 약세', stocks: ['베타'], sector: '바이오', stance: '약세', reasoning: '현금 소진 속도가 빠르다.' },
+  { id: 'idea-b-neutral', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '베타 동향', url: 'https://example.com/neutral', summary: '베타 관찰', stocks: ['베타'], sector: '바이오', stance: '중립', reasoning: '추가 확인 필요' },
+  { id: 'idea-delta', date: '2026-08-09', person: '신뢰C', blog_name: '신뢰C', title: '델타 신제품', url: 'https://example.com/delta', summary: '델타 신제품 출시', stocks: ['델타'], sector: '자동차·로봇', stance: '강세', reasoning: '신규 시장 진입' },
+  { id: 'same-bull', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '오메가 강세', url: 'https://example.com/omega-bull', summary: '오메가 긍정', stocks: ['오메가'], sector: '금융', stance: '강세', reasoning: '이익 증가' },
+  { id: 'same-bear', date: '2026-08-08', person: '신뢰A', blog_name: '신뢰A', title: '오메가 약세', url: 'https://example.com/omega-bear', summary: '오메가 부정', stocks: ['오메가'], sector: '금융', stance: '약세', reasoning: '비용 증가' },
   { id: 'irrelevant', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '일상', url: 'https://example.com/x', summary: '투자 관련 내용 없음', stocks: [], sector: '기타', stance: '중립' },
 ];
 const ideas = selectNewIdeas(decisionPosts, decisionScores, { referenceDate: '2026-08-09', watchlist: ['삼성전자'], limit: 3, days: 2 });
-eq('DD1 투자 무관·관심종목 제외 및 아이디어 중복 제거', ideas.map((idea) => idea.idea), ['알파', '베타']);
+eq('DD1 투자 무관·관심종목 제외 및 아이디어 중복 제거', ideas.map((idea) => idea.idea), ['알파', '베타', '델타']);
 eq('DD2 1년 신뢰도가 높은 소스 원문 우선', ideas[0].post.id, 'idea-a');
+eq('DD2b 가능한 경우 서로 다른 소스에서 아이디어 선별', ideas.map((idea) => idea.source), ['신뢰A', '신뢰B', '신뢰C']);
+const sparseTrustIdeas = selectNewIdeas([
+  { id: 'trusted-1', date: '2026-08-09', person: '신뢰A', title: '알파', url: 'https://example.com/t1', summary: '알파 투자', stocks: ['알파'], sector: '반도체', stance: '강세' },
+  { id: 'trusted-2', date: '2026-08-09', person: '신뢰A', title: '감마', url: 'https://example.com/t2', summary: '감마 투자', stocks: ['감마'], sector: '반도체', stance: '강세' },
+  { id: 'unverified', date: '2026-08-09', person: '미검증', title: '오메가', url: 'https://example.com/u', summary: '오메가 투자', stocks: ['오메가'], sector: '금융', stance: '강세' },
+], decisionScores, { referenceDate: '2026-08-09', limit: 2, days: 2 });
+eq('DD2c 다양성보다 검증된 1년 신뢰도를 우선', sparseTrustIdeas.map((idea) => idea.post.id), ['trusted-1', 'trusted-2']);
 const watchlistBrief = buildWatchlistBrief(decisionPosts, decisionScores, ['삼성전자'], { referenceDate: '2026-08-09', days: 7 });
 eq('DD3 관심종목 최신 강세 근거 연결', watchlistBrief[0].bull.post.id, 'watch');
-const conflicts = buildOpinionConflicts(decisionPosts, decisionScores, { referenceDate: '2026-08-09', days: 7, limit: 3 });
+eq('DD3b 신뢰도보다 종목 직접 언급 근거 우선', watchlistBrief[0].bear.post.id, 'watch-bear-direct');
+const conflicts = buildOpinionConflicts(decisionPosts, decisionScores, { referenceDate: '2026-08-09', days: 7, limit: 3, excludeStocks: ['삼성전자'] });
 eq('DD4 강세·약세가 모두 있는 종목만 비교', conflicts.map((item) => item.stock), ['베타']);
 eq('DD5 양쪽 최강 근거와 신뢰도 연결', [conflicts[0].bull.post.id, conflicts[0].bear.post.id], ['idea-b-bull', 'idea-b-bear']);
+eq('DD5b 같은 필자의 시각 변화는 소스 간 충돌에서 제외', conflicts.some((item) => item.stock === '오메가'), false);
+eq('DD5c 비교 소스 수는 방향성 의견만 집계', conflicts[0].sourceCount, 2);
 eq('DD6 이용 시간대 라벨', [getSessionLabel(8, 30), getSessionLabel(12, 0), getSessionLabel(16, 0)], ['장 시작 전', '장중 참고', '장 마감 후']);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);

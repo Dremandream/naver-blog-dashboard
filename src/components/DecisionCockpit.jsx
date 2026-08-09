@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../utils/decision-dashboard';
 
 const WATCHLIST = ['삼성전자', 'SK하이닉스'];
@@ -29,7 +29,10 @@ function Evidence({ item, stance }) {
     <a className={`dc-evidence dc-${stance === '강세' ? 'bull' : 'bear'}`} href={item.post.url} target="_blank" rel="noreferrer">
       <span className="dc-evidence-side">{stance === '강세' ? '▲ 강세' : '▼ 약세'}</span>
       <span className="dc-evidence-copy">{evidenceText(item)}</span>
-      <span className="dc-evidence-meta">{item.source} · {trustLabel(item.trust)}</span>
+      <span className="dc-evidence-meta">
+        {item.source} · {trustLabel(item.trust)}
+        {item.direct === false && ' · 함께 언급(맥락 확인)'}
+      </span>
     </a>
   );
 }
@@ -49,6 +52,26 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
     () => buildOpinionConflicts(posts, scores, { referenceDate, days: 7, limit: 3, excludeStocks: WATCHLIST }),
     [posts, scores, referenceDate],
   );
+  const storageKey = `dashboard:opened:${referenceDate ?? 'unknown'}`;
+  const [openedIds, setOpenedIds] = useState(() => {
+    try {
+      return new Set(JSON.parse(localStorage.getItem(storageKey) ?? '[]'));
+    } catch {
+      return new Set();
+    }
+  });
+  const openedCount = ideas.filter((item) => openedIds.has(item.post.id)).length;
+  const markOpened = (postId) => {
+    setOpenedIds((current) => {
+      const next = new Set(current).add(postId);
+      try {
+        localStorage.setItem(storageKey, JSON.stringify([...next]));
+      } catch {
+        // 저장이 제한된 브라우저에서도 현재 화면의 확인 표시는 유지한다.
+      }
+      return next;
+    });
+  };
 
   return (
     <section className="decision-cockpit" aria-labelledby="decision-title">
@@ -56,7 +79,10 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
         <div>
           <span className="dc-kicker">Decision Cockpit · {session}</span>
           <h2 id="decision-title">오늘의 원문 선별</h2>
-          <p>전체 {posts.length}개 글에서 지금 먼저 볼 투자 아이디어 {ideas.length}개</p>
+          <p>
+            전체 {posts.length}개 글에서 지금 먼저 볼 투자 아이디어 {ideas.length}개
+            <strong className="dc-progress">원문 {openedCount}/{ideas.length} 확인</strong>
+          </p>
         </div>
         <span className="dc-time">{referenceDate} 기준</span>
       </div>
@@ -64,7 +90,7 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
       <div className="dc-ideas" aria-label="우선 확인할 투자 아이디어">
         {ideas.length === 0 && <div className="dc-empty">최근 2일 내 선별할 신규 투자 아이디어가 없습니다.</div>}
         {ideas.map((item, index) => (
-          <article className="dc-idea" key={item.post.id}>
+          <article className={`dc-idea ${openedIds.has(item.post.id) ? 'dc-idea-opened' : ''}`} key={item.post.id}>
             <div className="dc-idea-top">
               <span className="dc-rank">0{index + 1}</span>
               <span className={`dc-stance dc-stance-${item.post.stance === '강세' ? 'bull' : item.post.stance === '약세' ? 'bear' : 'neutral'}`}>
@@ -74,8 +100,8 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
             <h3>{item.idea}</h3>
             <div className="dc-source">{item.source} · {trustLabel(item.trust)}</div>
             <p>{evidenceText(item)}</p>
-            <a className="dc-original" href={item.post.url} target="_blank" rel="noreferrer">
-              원문 선별 이유 확인 →
+            <a className="dc-original" href={item.post.url} target="_blank" rel="noreferrer" onClick={() => markOpened(item.post.id)}>
+              {openedIds.has(item.post.id) ? '✓ 열어본 원문 다시 보기 →' : '원문 열기 →'}
             </a>
           </article>
         ))}
@@ -120,4 +146,3 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
     </section>
   );
 }
-

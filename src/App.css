@@ -302,9 +302,12 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .dc-kicker { display: block; margin-bottom: 4px; color: var(--accent); font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .dc-header h2 { font-family: var(--serif); font-size: 25px; line-height: 1.25; letter-spacing: -.025em; }
 .dc-header p { margin-top: 5px; color: var(--muted); font-size: 12.5px; }
+.dc-progress { display: inline-block; margin-left: 9px; padding-left: 9px; border-left: 1px solid var(--rule-thin); color: var(--accent); font-size: 11px; }
 .dc-time { flex: none; color: var(--muted); font-size: 11px; }
 .dc-ideas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
 .dc-idea { min-width: 0; padding: 14px; border: 1px solid var(--rule-thin); border-top: 4px solid var(--ink); background: #fcfbf7; }
+.dc-idea-opened { border-top-color: #85857e; background: #f7f7f4; }
+.dc-idea-opened h3, .dc-idea-opened p { color: var(--muted); }
 .dc-idea-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .dc-rank { font-family: var(--serif); color: var(--accent); font-size: 12px; font-weight: 900; }
 .dc-stance { padding: 2px 7px; border-radius: 999px; font-size: 10px; font-weight: 800; }
@@ -345,6 +348,7 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
   .dc-header { align-items: flex-start; flex-direction: column; gap: 6px; }
   .dc-header h2 { font-size: 22px; }
   .dc-time { align-self: flex-end; }
+  .dc-progress { display: block; width: fit-content; margin: 5px 0 0; padding-left: 0; border-left: 0; }
 }
 
 /* 소스 적중률 */
