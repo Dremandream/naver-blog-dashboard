@@ -17,6 +17,7 @@ import { analysisDepthLabel, selectMustReadPosts } from '../src/utils/must-read.
 import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
 import { buildHomeBrief } from '../src/utils/personal-home.js';
 import { feedbackKey, updateFeedback, feedbackCounts, savedForLater } from '../src/utils/feedback.js';
+import { readFileSync } from 'node:fs';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -468,6 +469,18 @@ eq('FB4 7일 글 목록에서 사라져도 나중에 원문 유지', savedForLat
 }]);
 eq('FB5 잘못된 상태는 저장하지 않음', updateFeedback({}, feedbackPost, 'buy'), {});
 eq('FB6 실행마다 글 id가 바뀌어도 URL을 안정 키로 사용', feedbackKey({ ...feedbackPost, id: 'regenerated-id' }), 'https://example.com/feedback-1');
+
+console.log('── 오늘 중심 2화면 정보 구조 ──');
+const appSource = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
+const homeSource = readFileSync(new URL('../src/components/PersonalHome.jsx', import.meta.url), 'utf8');
+const sourceScoreSource = readFileSync(new URL('../src/components/SourceScores.jsx', import.meta.url), 'utf8');
+eq('IA1 메인 메뉴는 오늘과 전체 글만 유지', [...appSource.matchAll(/\{ id: "([^"]+)", label:/g)].map((match) => match[1]), ['home', 'posts']);
+eq('IA2 아이디어·소스 독립 화면 제거', ['ideas', 'sources'].some((view) => appSource.includes(`activeView === "${view}"`)), false);
+eq('IA3 Peter K 지수를 홈에 직접 배치', homeSource.includes('<PeterFearGreed data={peterFearGreed} />'), true);
+eq('IA4 홈에서 Peter K 지수가 독특한 글보다 먼저 표시', homeSource.includes('<PeterFearGreed') && homeSource.indexOf('<PeterFearGreed') < homeSource.indexOf('<DecisionCockpit'), true);
+eq('IA5 소스 적중률 상위 목록을 홈에 통합', homeSource.includes('<SourceScores') && homeSource.includes('compact'), true);
+eq('IA6 상세 분석은 기본 접힘 영역으로 보존', homeSource.includes('<details className="home-market-details">'), true);
+eq('IA7 전체 소스 성적표 접근은 접힘 영역으로 보존', sourceScoreSource.includes('<summary>전체 소스 성적표 보기</summary>'), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

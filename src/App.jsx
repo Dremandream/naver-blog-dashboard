@@ -3,12 +3,7 @@ import PostCard from "./components/PostCard";
 import PostModal from "./components/PostModal";
 import FilterBar from "./components/FilterBar";
 import StatsBar from "./components/StatsBar";
-import DailyBrief from "./components/DailyBrief";
-import FactSidebar from "./components/FactSidebar";
-import AttentionTrends from "./components/AttentionTrends";
-import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
-import DecisionCockpit from "./components/DecisionCockpit";
 import PersonalHome from "./components/PersonalHome";
 import { INITIAL_VISIBLE_POSTS, visibleItems } from "./utils/post-list";
 import { buildPeterFearGreed } from "../shared/peter-fear-greed";
@@ -25,9 +20,7 @@ const DATES    = ["전체", "오늘", "어제", "최근 7일"];
 const SORT_OPT = ["최신순", "블로그별"];
 const SOURCES  = ["전체", "블로그", "텔레그램"];
 const NAV_ITEMS = [
-  { id: "home", label: "홈", icon: "⌂" },
-  { id: "ideas", label: "아이디어", icon: "◇" },
-  { id: "sources", label: "소스", icon: "◎" },
+  { id: "home", label: "오늘", icon: "⌂" },
   { id: "posts", label: "전체 글", icon: "▤" },
 ];
 
@@ -161,26 +154,14 @@ export default function App() {
           ) : null;
         })()}
         {activeView === "home" && (
-          <PersonalHome data={data} posts={posts} onStockClick={setSelectedStock} onOpenAnalysis={() => setActiveView("ideas")} />
-        )}
-
-        {activeView === "ideas" && (
-          <>
-            <div className="view-heading"><span>DEEP DIVE</span><h2>아이디어와 상세 분석</h2><p>종합 논거와 반대 의견, 관심 종목 변화를 깊게 확인합니다.</p></div>
-            <div className="report-layout">
-              <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} posts={posts} scores={data?.source_scores} onStockClick={setSelectedStock} />
-              <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
-            </div>
-            <DecisionCockpit posts={posts} scores={data?.source_scores} referenceDate={data?.date} onStockClick={setSelectedStock} />
-            <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
-          </>
-        )}
-
-        {activeView === "sources" && (
-          <>
-            <div className="view-heading"><span>TRACK RECORD</span><h2>누구의 글을 먼저 볼까</h2><p>1년 적중률과 표본을 함께 보고 소스별 관련 글을 확인합니다.</p></div>
-            <SourceScores scores={data?.source_scores} posts={posts} onSourceClick={showSourcePosts} onPostClick={setSelectedPost} />
-          </>
+          <PersonalHome
+            data={data}
+            posts={posts}
+            peterFearGreed={peterFearGreed}
+            onStockClick={setSelectedStock}
+            onSourceClick={showSourcePosts}
+            onPostClick={setSelectedPost}
+          />
         )}
 
         {activeView === "posts" && (

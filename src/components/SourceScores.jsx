@@ -26,15 +26,15 @@ function RawRate({ source, window }) {
   );
 }
 
-export default function SourceScores({ scores, posts = [], onSourceClick, onPostClick }) {
+export default function SourceScores({ scores, posts = [], onSourceClick, onPostClick, compact = false }) {
   const [mode, setMode] = useState('1y');
   const sources = scores?.sources ?? [];
   const windows = scores?.windows ?? [];
   const ranked = useMemo(() => rankSources(scores, mode), [scores, mode]);
   const topSources = ranked.filter((source) => source.rankingScore != null).slice(0, 5);
   const related = useMemo(
-    () => selectRelatedPosts(ranked, posts, { referenceDate: scores?.asOf, topSources: 5, perSource: 2, days: 7 }),
-    [ranked, posts, scores?.asOf],
+    () => compact ? [] : selectRelatedPosts(ranked, posts, { referenceDate: scores?.asOf, topSources: 5, perSource: 2, days: 7 }),
+    [compact, ranked, posts, scores?.asOf],
   );
 
   if (sources.length === 0 || windows.length === 0) return null;
@@ -45,7 +45,7 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
   const allPending = sources.every((source) => windows.every((window) => (source.w?.[window.n]?.total ?? 0) === 0));
 
   return (
-    <section className="source-scores" aria-labelledby="source-scores-title">
+    <section className={`source-scores ${compact ? 'source-scores-compact' : ''}`} aria-labelledby="source-scores-title">
       <div className="brief-header ss-header">
         <span className="brief-label" id="source-scores-title">
           🎯 소스 적중률 <span className="at-sub">표본을 보정한 과거 성적 순위</span>
@@ -53,23 +53,27 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
         {scores.asOf && <span className="brief-date">{scores.asOf} 기준</span>}
       </div>
 
-      <div className="ss-lead">
-        필자가 밝힌 강세·약세 의견이 이후 지수보다 맞았는지를 비교합니다.
-        <b> 현재 글의 성공을 보장하는 점수나 매매 추천은 아닙니다.</b>
-      </div>
+      {!compact && (
+        <div className="ss-lead">
+          필자가 밝힌 강세·약세 의견이 이후 지수보다 맞았는지를 비교합니다.
+          <b> 현재 글의 성공을 보장하는 점수나 매매 추천은 아닙니다.</b>
+        </div>
+      )}
 
-      <div className="ss-mode-tabs" aria-label="소스 순위 기준">
-        {MODES.map((item) => (
-          <button
-            className={`ss-mode ${mode === item.value ? 'active' : ''}`}
-            key={item.value}
-            type="button"
-            onClick={() => setMode(item.value)}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
+      {!compact && (
+        <div className="ss-mode-tabs" aria-label="소스 순위 기준">
+          {MODES.map((item) => (
+            <button
+              className={`ss-mode ${mode === item.value ? 'active' : ''}`}
+              key={item.value}
+              type="button"
+              onClick={() => setMode(item.value)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {allPending ? (
         <div className="ss-pending">
@@ -92,7 +96,7 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
         </div>
       )}
 
-      {related.length > 0 && (
+      {!compact && related.length > 0 && (
         <div className="ss-related">
           <div className="ss-related-title">상위 소스 최신 관련글 <span>최근 7일 · 소스별 최대 2개</span></div>
           {related.map((group) => (
@@ -131,10 +135,14 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
         </div>
       </details>
 
-      <div className="ss-note">
-        <b>보정점수</b>는 적중률과 표본 수를 함께 반영한 윌슨 하한입니다. 종합은 {first.label} 40%와 {last.label} 60%를 합산하며,
-        표본 {min}건 미만은 순위 계산에서 제외합니다. 원래 적중률과 판정 건수는 카드와 전체 성적표에서 함께 확인할 수 있습니다.
-      </div>
+      {compact ? (
+        <div className="ss-note">1년 적중률과 표본 수를 함께 확인하세요. 소스를 누르면 해당 필자의 글만 볼 수 있습니다.</div>
+      ) : (
+        <div className="ss-note">
+          <b>보정점수</b>는 적중률과 표본 수를 함께 반영한 윌슨 하한입니다. 종합은 {first.label} 40%와 {last.label} 60%를 합산하며,
+          표본 {min}건 미만은 순위 계산에서 제외합니다. 원래 적중률과 판정 건수는 카드와 전체 성적표에서 함께 확인할 수 있습니다.
+        </div>
+      )}
     </section>
   );
 }

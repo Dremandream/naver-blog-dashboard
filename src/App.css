@@ -55,6 +55,8 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .view-heading p { margin-top: 4px; color: var(--muted); font-size: 11.5px; }
 
 /* 개인화 홈 — 프리폭스의 앱형 정보 위계를 이 프로젝트 목적에 맞게 축약 */
+.home-primary-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(250px, .8fr); gap: 14px; margin-bottom: 14px; align-items: stretch; }
+.home-primary-grid .home-hero { height: 100%; margin-bottom: 0; }
 .home-hero { margin-bottom: 14px; padding: 24px; border: 1px solid #dce2dd; border-radius: 18px; background: linear-gradient(135deg, #f0f8f3 0%, #fff 58%); box-shadow: 0 10px 32px rgba(31, 61, 45, .07); }
 .home-hero-head, .home-section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .home-kicker { display: block; margin-bottom: 4px; color: #176a4b; font-size: 9.5px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
@@ -82,6 +84,17 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .home-change-list p { margin-top: 2px; color: var(--ink-soft); font-size: 10.5px; line-height: 1.45; }
 .home-change-list small { display: block; margin-top: 5px; color: var(--muted); font-size: 9px; }
 .home-no-change { margin-top: 12px; padding: 13px; border-radius: 9px; background: #f6f5f1; color: var(--muted); font-size: 11px; }
+.home-pfg-panel { padding: 19px 17px; border: 1px solid #e1d9c9; border-radius: 18px; background: linear-gradient(145deg, #fffaf0, #fff 68%); box-shadow: 0 10px 32px rgba(83, 60, 22, .06); }
+.home-pfg-panel .fs-title { font-size: 14px; }
+.home-pfg-panel .pfg-score { font-size: 44px; }
+.home-market-details { margin-top: 18px; border: 1px solid #dfe3df; border-radius: 14px; background: #fbfcfa; }
+.home-market-details > summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; color: var(--ink); font-size: 13px; font-weight: 850; cursor: pointer; list-style: none; }
+.home-market-details > summary::-webkit-details-marker { display: none; }
+.home-market-details > summary::after { content: "+"; flex: none; color: #176a4b; font-size: 17px; }
+.home-market-details[open] > summary::after { content: "−"; }
+.home-market-details > summary small { margin-left: auto; color: var(--muted); font-size: 9.5px; font-weight: 500; }
+.home-market-details-body { padding: 4px 16px 18px; border-top: 1px solid #e4e7e3; }
+.home-market-details-body .daily-brief { margin-top: 16px; }
 .decision-cockpit-compact { margin-bottom: 0; }
 
 /* ===== StatsBar ===== */
@@ -534,6 +547,9 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 
 /* 소스 적중률 */
 .source-scores { margin-bottom: 34px; padding-bottom: 26px; border-bottom: 3px double var(--rule); }
+.source-scores-compact { margin-top: 18px; margin-bottom: 0; padding: 18px; border: 1px solid #e1e4e0; border-radius: 14px; background: #fbfcfa; }
+.source-scores-compact .ss-header { border-bottom-width: 2px; }
+.source-scores-compact .ss-top-grid { margin-top: 12px; }
 .ss-header { border-bottom-width: 3px; }
 .ss-lead { font-size: 12.5px; color: var(--ink); line-height: 1.6; margin: 8px 0 2px; }
 .ss-pending { font-size: 12.5px; color: var(--muted); line-height: 1.6; background: #f6f7ff; border-left: 3px solid var(--rule); padding: 9px 12px; margin: 12px 0; }
@@ -604,13 +620,19 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 
 @media (max-width: 640px) {
   .top-navigation { display: none; }
-  .bottom-navigation { position: fixed; z-index: 900; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px max(8px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); border-top: 1px solid #dfe3df; background: rgba(255,255,255,.96); box-shadow: 0 -7px 24px rgba(24,36,29,.09); backdrop-filter: blur(12px); }
+  .bottom-navigation { position: fixed; z-index: 900; right: 0; bottom: 0; left: 0; display: grid; grid-template-columns: repeat(2, 1fr); padding: 6px max(8px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); border-top: 1px solid #dfe3df; background: rgba(255,255,255,.96); box-shadow: 0 -7px 24px rgba(24,36,29,.09); backdrop-filter: blur(12px); }
   .bottom-navigation button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 5px 2px; border: 0; border-radius: 8px; background: none; color: #858b87; font: inherit; cursor: pointer; }
   .bottom-navigation button.active { background: #edf5f0; color: #176a4b; }
   .bottom-navigation button > span { font-size: 18px; line-height: 1; }
   .bottom-navigation small { font-size: 9.5px; font-weight: 800; }
   .footer { padding-bottom: 82px; }
+  .home-primary-grid { grid-template-columns: 1fr; gap: 10px; margin: -8px -6px 12px; }
+  .home-primary-grid .home-hero { margin: 0; }
   .home-hero { margin: -8px -6px 12px; padding: 18px 15px; border-radius: 15px; }
+  .home-pfg-panel { padding: 16px 15px; border-radius: 15px; }
+  .home-market-details > summary { align-items: flex-start; flex-wrap: wrap; padding: 12px 13px; }
+  .home-market-details > summary small { order: 3; width: 100%; margin-left: 0; }
+  .home-market-details-body { padding: 2px 12px 14px; }
   .home-headline { font-size: 20px; line-height: 1.43; }
   .home-signal-grid { grid-template-columns: 1fr; margin-top: 14px; }
   .home-signal-minority { grid-column: auto; }

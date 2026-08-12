@@ -163,8 +163,8 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
       <div className="dc-app-header">
         <div>
           <span className="dc-kicker">Today · {session}</span>
-          <h2 id="decision-title">오늘 꼭 읽을 글</h2>
-          <p>반도체 시황·관심 종목·새 촉매·근거 수준을 함께 평가한 3개입니다.</p>
+          <h2 id="decision-title">{compact ? '오늘의 독특한 글' : '오늘 꼭 읽을 글'}</h2>
+          <p>{compact ? '시장 전체와 다른 관점·새 촉매·관심 종목 변화를 중심으로 선별했습니다.' : '반도체 시황·관심 종목·새 촉매·근거 수준을 함께 평가한 3개입니다.'}</p>
         </div>
         <div className="dc-open-progress">원문 <b>{openedCount}/{mustReads.length}</b> · 피드백 <b>{feedbackSummary.total}</b></div>
       </div>
