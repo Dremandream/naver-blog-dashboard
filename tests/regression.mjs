@@ -12,7 +12,7 @@ import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewI
 import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
 import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
 import { selectBriefSources } from '../src/utils/brief-sources.js';
-import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from '../scripts/lib/market-data.js';
+import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory, parseNaverStockFacts } from '../scripts/lib/market-data.js';
 import { analysisDepthLabel, resolveReadAction, selectMustReadPosts } from '../src/utils/must-read.js';
 import { normalizeInvestorAnalysis } from '../scripts/lib/investor-analysis.js';
 import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
@@ -504,7 +504,71 @@ const marketFacts = buildMarketFacts({
 eq('MF1 국내 지수의 1·5·20일 팩트를 보존', marketFacts.indices.map((item) => [item.label, item.d1, item.d5, item.d20]), [['KOSPI', 3.7, -0.3, -4.1], ['KOSDAQ', 0.1, 7.4, 9.6]]);
 eq('MF2 외국인 당일·5일 수급 합산', [marketFacts.foreignToday, marketFacts.foreign5d], [26735, -36721]);
 eq('MF3 코스피·코스닥 5일 방향 차이를 사실로 감지', marketFacts.divergent, true);
-eq('MF4 시장 데이터 없음은 과장 없이 빈 상태', buildMarketFacts({}), { asOf: '', indices: [], foreignToday: null, foreign5d: null, divergent: false });
+eq('MF4 시장 데이터 없음은 과장 없이 빈 상태', buildMarketFacts({}), {
+  asOf: '', indices: [], globalIndices: [], foreignToday: null, foreign5d: null, divergent: false, watchlist: [],
+});
+
+const expandedMarketFacts = buildMarketFacts({
+  kospi: { index: 6500, d1: 1, d5: 2, d20: 4, asOf: '20260812' },
+  nasdaq: { index: 26600, d1: 0.6, d5: 0.9, asOf: '20260812' },
+  sp500: { index: 7748, d1: 0.3, d5: 0.3, asOf: '20260812' },
+}, {
+  삼성전자: {
+    price: 239500, d1: 4.1, d5: -0.2, d20: -5.9, asOf: '20260812',
+    investor: { asOf: '20260812', foreignToday: 5802466, institutionToday: 776871, foreign5d: -1200000, institution5d: 900000 },
+  },
+}, [
+  { person: 'A', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion' },
+  { person: 'A', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion' },
+  { person: 'B', stocks: ['삼성전자'], stance: '강세' },
+  { person: '전달채널', stocks: ['삼성전자'], stance: '강세', source_role: 'fact' },
+], { referenceDate: '2026-08-13' });
+eq('MF5 이미 수집 중인 미국 지수를 시장 환경에 노출', expandedMarketFacts.globalIndices.map((item) => item.label), ['NASDAQ', 'S&P 500']);
+eq('MF6 관심 종목의 KOSPI 대비 상대강도 계산', [
+  expandedMarketFacts.watchlist[0].relative5d, expandedMarketFacts.watchlist[0].relative20d,
+], [-2.2, -9.9]);
+eq('MF7 사실 전달 제외·동일 필자 중복 제거 후 의견 수 집계', expandedMarketFacts.watchlist[0].opinions, { bull: 2, bear: 0 });
+eq('MF8 강세 의견과 가격·외국인 수급 역행은 추가 확인으로 표시', expandedMarketFacts.watchlist[0].alerts, [
+  '강세 의견과 20일 가격 흐름이 엇갈림', '강세 의견과 외국인 5일 수급이 엇갈림',
+]);
+eq('MF9 최신 데이터는 지연으로 오인하지 않음', expandedMarketFacts.watchlist[0].stale, false);
+const staleMarketFacts = buildMarketFacts({ kospi: { index: 6500, d5: 0, d20: 0, asOf: '20260801' } }, {
+  삼성전자: { price: 200000, d5: 0, d20: 0, asOf: '20260801' },
+}, [], { referenceDate: '2026-08-13' });
+eq('MF10 4일 초과 데이터는 지연 표시', staleMarketFacts.watchlist[0].stale, true);
+
+const naverStockFacts = parseNaverStockFacts({
+  totalInfos: [
+    { code: 'cnsPer', value: '18.25' }, { code: 'pbr', value: '2.10' },
+  ],
+  dealTrendInfos: [
+    { bizdate: '20260812', foreignerPureBuyQuant: '+5,802,466', organPureBuyQuant: '776,871', foreignerHoldRatio: '51.20', accumulatedTradingVolume: '24,000,000' },
+    { bizdate: '20260811', foreignerPureBuyQuant: '-1,000,000', organPureBuyQuant: '100,000' },
+    { bizdate: '20260810', foreignerPureBuyQuant: '-500,000', organPureBuyQuant: '-200,000' },
+    { bizdate: '20260807', foreignerPureBuyQuant: '-2,000,000', organPureBuyQuant: '50,000' },
+    { bizdate: '20260806', foreignerPureBuyQuant: '-3,000,000', organPureBuyQuant: '25,000' },
+  ],
+});
+eq('NAVER-STOCK1 종목별 당일·5일 외국인/기관 수급 변환', naverStockFacts, {
+  asOf: '20260812', foreignToday: 5802466, institutionToday: 776871,
+  foreign5d: -697534, institution5d: 751871, foreignRate: 51.2, volume: 24000000,
+  forwardPer: 18.25, pbr: 2.1, source: 'naver',
+});
+try {
+  parseNaverStockFacts({ totalInfos: [], dealTrendInfos: [] });
+  eq('NAVER-STOCK2 수급 행 없는 응답 거부', 'no-throw', 'throw');
+} catch { eq('NAVER-STOCK2 수급 행 없는 응답 거부', 'throw', 'throw'); }
+
+const marketFactsComponentSource = readFileSync(new URL('../src/components/MarketFacts.jsx', import.meta.url), 'utf8');
+const personalHomeSource = readFileSync(new URL('../src/components/PersonalHome.jsx', import.meta.url), 'utf8');
+eq('MF11 팩트 보드가 가격·글·기준일을 함께 받음',
+  marketFactsComponentSource.includes('prices, posts, referenceDate'), true);
+eq('MF12 팩트 보드를 의사결정 영역보다 먼저 전면 배치',
+  personalHomeSource.indexOf('<MarketFacts') < personalHomeSource.indexOf('<DecisionCockpit'), true);
+eq('MF13 관심 종목은 언급 수와 무관하게 수집 대상',
+  collectorSource.includes('WATCHLIST_STOCKS') && collectorSource.includes('...WATCHLIST_STOCKS'), true);
+eq('MF14 종목별 네이버 수급 응답을 수집',
+  collectorSource.includes('/integration') && collectorSource.includes('parseNaverStockFacts'), true);
 
 console.log('── 반도체 데일리 펄스 ──');
 const semiconductorPosts = [
@@ -591,7 +655,8 @@ eq('IA8 추천 카드에 행동 분류 표시', decisionCockpitSource.includes('
 eq('IA9 추천 카드에 가장 강한 반대 근거 표시', decisionCockpitSource.includes('must-read-counter') && decisionCockpitSource.includes('counter_argument'), true);
 eq('IA10 추천 카드에 관심 종목 영향 표시', decisionCockpitSource.includes('must-read-watch-impact') && decisionCockpitSource.includes('watchlist_impact'), true);
 eq('IA11 좁은 추천 카드에서 라벨이 다음 줄로 자연스럽게 배치', appCssSource.includes('.must-read-labels { display: flex; align-items: center; flex-wrap: wrap;'), true);
-eq('IA12 상세 시황에 의견과 분리된 시장 팩트 보드 배치', homeSource.includes('<MarketFacts market={data?.market} />') && marketFactsSource.includes('정량 사실'), true);
+eq('IA12 첫 화면에 의견과 분리된 시장 팩트 보드 배치',
+  homeSource.indexOf('<MarketFacts') < homeSource.indexOf('<DecisionCockpit') && marketFactsSource.includes('객관 데이터'), true);
 eq('IA13 시장 수급은 원본 억원 단위를 다시 나누지 않음', marketFactsSource.includes('Math.round(value).toLocaleString') && !marketFactsSource.includes('100_000_000'), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);

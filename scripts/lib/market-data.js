@@ -24,6 +24,43 @@ function assertFresh(asOf, now, staleAfterDays = 8) {
   if (ageDays >= staleAfterDays) throw new Error(`지연 데이터: ${asOf} (${ageDays}일 전)`);
 }
 
+function numeric(value) {
+  if (value == null || value === '') return null;
+  const parsed = Number(String(value).replace(/[,+%]/g, '').trim());
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+export function parseNaverStockFacts(payload) {
+  if (!payload || typeof payload !== 'object') throw new Error('네이버 종목 응답이 없습니다');
+  const rows = (Array.isArray(payload.dealTrendInfos) ? payload.dealTrendInfos : [])
+    .map((row) => ({
+      asOf: String(row?.bizdate ?? '').replace(/-/g, ''),
+      foreign: numeric(row?.foreignerPureBuyQuant),
+      institution: numeric(row?.organPureBuyQuant),
+      foreignRate: numeric(row?.foreignerHoldRatio),
+      volume: numeric(row?.accumulatedTradingVolume),
+    }))
+    .filter((row) => DATE8.test(row.asOf) && row.foreign != null && row.institution != null)
+    .sort((a, b) => b.asOf.localeCompare(a.asOf));
+  if (!rows.length) throw new Error('네이버 종목 수급 행이 없습니다');
+
+  const latest = rows[0];
+  const latestFive = rows.slice(0, 5);
+  const info = (code) => numeric((payload.totalInfos ?? []).find((item) => item?.code === code)?.value);
+  return {
+    asOf: latest.asOf,
+    foreignToday: latest.foreign,
+    institutionToday: latest.institution,
+    foreign5d: latestFive.reduce((sum, row) => sum + row.foreign, 0),
+    institution5d: latestFive.reduce((sum, row) => sum + row.institution, 0),
+    foreignRate: latest.foreignRate,
+    volume: latest.volume,
+    forwardPer: info('cnsPer'),
+    pbr: info('pbr'),
+    source: 'naver',
+  };
+}
+
 export function parseAikStockHistory(payload, {
   expectedCode,
   minDate = null,

@@ -15,7 +15,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { judgeBatch } from './judge.js';
 import { computeSourceScores } from './hitrate.js';
 import { parseJSONLoose, stripHtml } from './lib/parsers.js';
-import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from './lib/market-data.js';
+import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory, parseNaverStockFacts } from './lib/market-data.js';
 import { normalizeInvestorAnalysis } from './lib/investor-analysis.js';
 import { buildPeterBacktest, buildPeterFearGreed, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { buildMentionHistory } from '../shared/discovery.js';
@@ -29,6 +29,7 @@ const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
 const HISTORY_PATH = path.join(__dirname, '../public/data/history.json');
 const PETER_HISTORY_PATH = path.join(__dirname, '../public/data/peter-history.json');
 export const ANALYSIS_SCHEMA_VERSION = 2;
+const WATCHLIST_STOCKS = ['삼성전자', 'SK하이닉스'];
 
 // KST 날짜 유틸 (YYYY-MM-DD)
 function kstDate(offsetDays = 0) {
@@ -333,12 +334,23 @@ async function fetchPrices(stockNames) {
       const closesD = await fetchClosesDated(info);
       if (closesD.length === 0) continue;
       const closes = closesD.map(c => c.close);
+      let investor = null;
+      if (info.market === 'KR' && /^\d{6}$/.test(String(info.code ?? ''))) {
+        try {
+          const integration = JSON.parse(await fetchJSON(`https://m.stock.naver.com/api/stock/${info.code}/integration`));
+          investor = parseNaverStockFacts(integration);
+        } catch (e) {
+          console.warn(`  ⚠️  ${name} 종목별 수급 실패(가격은 유지): ${e.message}`);
+        }
+      }
       prices[name] = {
         market: info.market,
         price: closes[closes.length - 1],
+        asOf: closesD[closesD.length - 1]?.date?.replace(/-/g, '') ?? null,
         d1: pctChange(closes, 1),
         d5: pctChange(closes, 5),
         d20: pctChange(closes, 20),
+        investor,
         _closes: closesD, // 이력 축적용 날짜별 종가 (posts.json 저장 전 제거)
       };
       console.log(`  💹 ${name}(${info.market}): ${prices[name].price.toLocaleString()} | 1일 ${prices[name].d1}% 5일 ${prices[name].d5}%`);
@@ -983,11 +995,11 @@ async function main() {
       (personsByStock[s] = personsByStock[s] || new Set()).add(p.person || p.blog_name);
     }
   }
-  const priceTargets = Object.entries(personsByStock)
+  const mentionedPriceTargets = Object.entries(personsByStock)
     .filter(([, persons]) => persons.size >= 2)
     .sort((a, b) => b[1].size - a[1].size)
-    .slice(0, 25)
     .map(([name]) => name);
+  const priceTargets = [...new Set([...WATCHLIST_STOCKS, ...mentionedPriceTargets])].slice(0, 25);
   let prices = {};
   try {
     prices = await fetchPrices(priceTargets);

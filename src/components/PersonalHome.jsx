@@ -53,6 +53,13 @@ export default function PersonalHome({ data, posts, peterFearGreed, onStockClick
         </aside>
       </div>
 
+      <MarketFacts
+        market={data?.market}
+        prices={data?.prices}
+        posts={posts}
+        referenceDate={data?.date}
+      />
+
       <DecisionCockpit
         posts={posts}
         scores={data?.source_scores}
@@ -75,8 +82,6 @@ export default function PersonalHome({ data, posts, peterFearGreed, onStockClick
           <small>종합 논거 · 어제와의 변화 · 반도체 펄스 · 종목 관심 추이</small>
         </summary>
         <div className="home-market-details-body">
-          <MarketFacts market={data?.market} />
-
           <DailyBrief
             briefs={data?.daily_briefs ?? data?.daily_brief}
             posts={posts}

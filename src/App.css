@@ -95,10 +95,31 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .home-market-details > summary small { margin-left: auto; color: var(--muted); font-size: 9.5px; font-weight: 500; }
 .home-market-details-body { padding: 4px 16px 18px; border-top: 1px solid #e4e7e3; }
 .home-market-details-body .daily-brief { margin-top: 16px; }
-.market-facts { margin-top: 16px; padding: 17px 18px; border: 1px solid #dfe4df; border-radius: 13px; background: #fff; }
+.market-facts { margin: 0 0 14px; padding: 17px 18px; border: 1px solid #dfe4df; border-radius: 13px; background: #fff; }
 .market-facts-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--rule); }
 .market-facts-head h2 { font-family: var(--serif); font-size: 17px; letter-spacing: -.025em; }
 .market-facts-head > span { color: var(--muted); font-size: 9.5px; }
+.watchlist-facts-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.watchlist-fact-card { min-width: 0; padding: 14px; border: 1px solid #dce5df; border-radius: 11px; background: linear-gradient(145deg, #f5faf7, #fff); }
+.watchlist-fact-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.watchlist-fact-title > div { display: flex; flex-direction: column; gap: 3px; }
+.watchlist-fact-title b { font-size: 13px; }
+.watchlist-fact-title strong { font-family: var(--serif); font-size: 20px; font-variant-numeric: tabular-nums; }
+.watchlist-fact-title > span { flex: none; padding: 3px 6px; border-radius: 999px; background: #fae8df; color: #9b4935; font-size: 8px; font-weight: 850; }
+.watchlist-return-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; margin-top: 12px; }
+.watchlist-return-grid dt { color: var(--muted); font-size: 8px; }
+.watchlist-return-grid dd { margin-top: 2px; font-size: 10px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.watchlist-flow-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-top: 10px; padding-top: 9px; border-top: 1px solid #e5e9e5; }
+.watchlist-flow-row span { color: var(--muted); font-size: 8px; line-height: 1.45; }
+.watchlist-flow-row b { display: block; margin-top: 2px; font-size: 9.5px; font-variant-numeric: tabular-nums; }
+.watchlist-return-grid .up, .watchlist-flow-row .up { color: var(--up); }
+.watchlist-return-grid .down, .watchlist-flow-row .down { color: var(--down); }
+.watchlist-return-grid .flat, .watchlist-flow-row .flat { color: var(--muted); }
+.watchlist-opinions { margin-top: 9px; color: var(--ink-soft); font-size: 9px; }
+.watchlist-alerts { display: grid; gap: 3px; margin-top: 7px; padding: 7px 8px; border-radius: 7px; background: #fff6e7; color: #7d591d; font-size: 8.5px; line-height: 1.4; list-style: none; }
+.watchlist-fact-card > small { display: block; margin-top: 8px; color: var(--muted); font-size: 8px; }
+.market-environment { margin-top: 14px; }
+.market-environment h3 { color: var(--ink-soft); font-size: 10px; font-weight: 850; letter-spacing: .04em; }
 .market-facts-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 11px; }
 .market-facts-grid article { min-width: 0; padding: 11px 12px; border: 1px solid #e4e7e3; border-radius: 10px; background: #fbfcfa; }
 .market-facts-index { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
@@ -667,7 +688,9 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
   .home-market-details > summary { align-items: flex-start; flex-wrap: wrap; padding: 12px 13px; }
   .home-market-details > summary small { order: 3; width: 100%; margin-left: 0; }
   .home-market-details-body { padding: 2px 12px 14px; }
-  .market-facts { margin: 12px -5px 0; padding: 14px 12px; }
+  .market-facts { margin: 0 -5px 12px; padding: 14px 12px; }
+  .watchlist-facts-grid { grid-template-columns: 1fr; }
+  .watchlist-return-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 7px; }
   .market-facts-grid { grid-template-columns: 1fr; }
   .home-headline { font-size: 20px; line-height: 1.43; }
   .home-signal-grid { grid-template-columns: 1fr; margin-top: 14px; }
