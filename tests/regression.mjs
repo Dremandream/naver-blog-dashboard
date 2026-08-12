@@ -20,6 +20,10 @@ import { buildHomeBrief } from '../src/utils/personal-home.js';
 import { feedbackKey, updateFeedback, feedbackCounts, savedForLater } from '../src/utils/feedback.js';
 import { readFileSync } from 'node:fs';
 
+const blogsConfig = JSON.parse(readFileSync(new URL('../config/blogs.json', import.meta.url), 'utf8'));
+const telegramConfig = JSON.parse(readFileSync(new URL('../config/telegram-channels.json', import.meta.url), 'utf8'));
+const currentPosts = JSON.parse(readFileSync(new URL('../public/data/posts.json', import.meta.url), 'utf8'));
+
 let pass = 0, fail = 0;
 function eq(name, got, want) {
   const g = JSON.stringify(got), w = JSON.stringify(want);
@@ -407,6 +411,12 @@ eq('BR4 종합의견과 무관한 원문은 제외', briefSources.some((item) =>
 eq('BR5 같은 원문을 중복 연결하지 않음', new Set(briefSources.map((item) => item.post.url)).size, briefSources.length);
 eq('BR6 리포트 기준 2일보다 오래된 원문은 제외', briefSources.every((item) => item.post.date >= '2026-08-08'), true);
 
+const sameTopicSources = selectBriefSources(briefFixture, [
+  { id: 'same-topic-telegram', date: '2026-08-09', person: '동일소스', title: '알파 신규 수주', summary: '알파 실적 상향', stocks: ['알파'], stance: '강세', source: 'telegram', url: 'https://example.com/same-topic-telegram' },
+  { id: 'same-topic-blog', date: '2026-08-09', person: '동일소스', title: '알파 신규 수주', summary: '알파 실적 상향', stocks: ['알파'], stance: '강세', source: 'blog', url: 'https://example.com/same-topic-blog' },
+], null, { limit: 1 });
+eq('BR7 같은 근거·필자면 축적 가능한 블로그 원문을 우선', sameTopicSources[0].post.id, 'same-topic-blog');
+
 console.log('── 오늘 꼭 읽을 글 ──');
 const normalizedInvestor = normalizeInvestorAnalysis({
   evidence_grade: 'B', evidence_reason: '기업 IR 수치가 포함됨',
@@ -464,6 +474,17 @@ const withoutExcluded = selectMustReadPosts([
   mustReadPosts[1],
 ], decisionScores, { referenceDate: '2026-08-09', limit: 2 });
 eq('MR13 제외하기로 판정된 글은 추천에서 제거', withoutExcluded.map((item) => item.post.id), ['new-evidence']);
+
+const sourcePriorityReads = selectMustReadPosts([
+  { ...mustReadPosts[1], id: 'same-score-telegram', person: '동일소스', blog_name: '동일소스', source: 'telegram', url: 'https://example.com/same-score-telegram' },
+  { ...mustReadPosts[1], id: 'same-score-blog', person: '동일소스', blog_name: '동일소스', source: 'blog', url: 'https://example.com/same-score-blog' },
+], null, { referenceDate: '2026-08-09', limit: 2 });
+eq('MR14 같은 투자 가치면 블로그 글을 먼저 추천', sourcePriorityReads.map((item) => item.post.id), ['same-score-blog', 'same-score-telegram']);
+
+console.log('── 소스 운영 정책 ──');
+eq('SRC1 잠실개미 블로그는 유지', blogsConfig.blogs.some((blog) => blog.id === '68083015'), true);
+eq('SRC2 잠실개미 텔레그램은 수집 대상에서 제거', telegramConfig.channels.some((channel) => channel.id === 'jake8lee'), false);
+eq('SRC3 현재 7일 데이터에서도 잠실개미 텔레그램 글 제거', currentPosts.posts.some((post) => String(post.id).startsWith('jake8lee_')), false);
 
 console.log('── 반도체 데일리 펄스 ──');
 const semiconductorPosts = [

@@ -45,12 +45,14 @@ function enrich(post, trustMap) {
   return {
     post,
     source,
+    sourcePriority: post.source === 'blog' ? 1 : 0,
     trust: trustMap.get(source) ?? { adjustedScore: null, rate: null, total: 0 },
   };
 }
 
 function compareMatches(a, b) {
   return b.matchScore - a.matchScore
+    || b.sourcePriority - a.sourcePriority
     || (b.trust.adjustedScore ?? -1) - (a.trust.adjustedScore ?? -1)
     || b.post.date.localeCompare(a.post.date);
 }

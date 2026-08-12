@@ -4,6 +4,7 @@ const DIRECTIONAL = new Set(['강세', '약세']);
 const DEPTH_SCORE = { full: 8, rss: 4, unknown: 0, title: -12 };
 const ACTIONS = new Set(['반드시 원문 읽기', '추가 조사하기', '관심 목록에 저장', '기존 투자 논리 점검', '참고만 하기', '제외하기']);
 const ACTION_SCORE = { '반드시 원문 읽기': 12, '기존 투자 논리 점검': 9, '추가 조사하기': 6, '관심 목록에 저장': 4, '참고만 하기': 0, '제외하기': -100 };
+const SOURCE_SCORE = { blog: 8, telegram: 0 };
 
 function clampScore(value, max = 3) {
   const number = Number(value);
@@ -86,6 +87,7 @@ function enrichPost(post, trustMap, watchlist, preferredSectors) {
     + (trust.adjustedScore == null ? 0 : Math.max(0, Math.min(100, trust.adjustedScore)) * 0.25)
     + (DEPTH_SCORE[depth] ?? DEPTH_SCORE.unknown)
     + (ACTION_SCORE[action] ?? 0)
+    + (SOURCE_SCORE[post.source] ?? 0)
     - trustPenalty;
 
   return {
