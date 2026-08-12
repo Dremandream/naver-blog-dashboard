@@ -13,6 +13,7 @@ import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
 import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
 import { selectBriefSources } from '../src/utils/brief-sources.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from '../scripts/lib/market-data.js';
+import { analysisDepthLabel, selectMustReadPosts } from '../src/utils/must-read.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -367,6 +368,31 @@ eq('BR3 같은 주제면 검증된 1년 소스를 우선', briefSources.find((it
 eq('BR4 종합의견과 무관한 원문은 제외', briefSources.some((item) => item.post.id === 'unrelated'), false);
 eq('BR5 같은 원문을 중복 연결하지 않음', new Set(briefSources.map((item) => item.post.url)).size, briefSources.length);
 eq('BR6 리포트 기준 2일보다 오래된 원문은 제외', briefSources.every((item) => item.post.date >= '2026-08-08'), true);
+
+console.log('── 오늘 꼭 읽을 글 ──');
+const mustReadPosts = [
+  { id: 'watch-deep', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '삼성전자 HBM 공급 변화', url: 'https://example.com/watch-deep', summary: '삼성전자 공급 변화', stocks: ['삼성전자'], sector: '반도체', stance: '강세', reasoning: '고객사 인증 일정이 앞당겨졌다.', catalyst: 'HBM 인증 일정 단축', why_read: '관심 종목의 공급 일정이 바뀐 글입니다.', novelty: 3, evidence_quality: 3, analysis_depth: 'full' },
+  { id: 'new-evidence', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '뉴코 신규 계약', url: 'https://example.com/new-evidence', summary: '신규 계약 체결', stocks: ['뉴코'], sector: '방산', stance: '강세', reasoning: '계약 규모가 매출의 30%다.', catalyst: '첫 해외 계약', why_read: '실적을 바꿀 계약 규모가 제시됐습니다.', novelty: 3, evidence_quality: 3, analysis_depth: 'rss' },
+  { id: 'contrarian', date: '2026-08-09', person: '신뢰C', blog_name: '신뢰C', title: '베타 시장의 반대 관점', url: 'https://example.com/contrarian', summary: '시장과 다른 관점', stocks: ['베타'], sector: '바이오', stance: '약세', reasoning: '현금 소진 속도가 예상보다 빠르다.', why_read: '시장 기대와 반대되는 리스크 근거가 있습니다.', novelty: 2, evidence_quality: 2, analysis_depth: 'full' },
+  { id: 'same-source', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '감마 반복 의견', url: 'https://example.com/same-source', summary: '반복 의견', stocks: ['감마'], sector: '반도체', stance: '강세', reasoning: '기존 전망 유지', novelty: 1, evidence_quality: 2, analysis_depth: 'full' },
+  { id: 'title-only', date: '2026-08-09', person: '미검증', blog_name: '미검증', title: '델타 전망', url: 'https://example.com/title-only', summary: '델타 전망', stocks: ['델타'], sector: '금융', stance: '중립', reasoning: '', catalyst: '', novelty: 3, evidence_quality: 3, analysis_depth: 'title' },
+  { id: 'daily-life', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '점심 기록', url: 'https://example.com/life', summary: '투자 관련 내용 없음', stocks: [], sector: '기타', stance: '해당없음', analysis_depth: 'full' },
+  { id: 'no-url', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: 'URL 없음', summary: '투자 글', stocks: ['오메가'], sector: '금융', stance: '강세', analysis_depth: 'full' },
+];
+const mustReads = selectMustReadPosts(mustReadPosts, decisionScores, {
+  referenceDate: '2026-08-09', watchlist: ['삼성전자', 'SK하이닉스'], limit: 3, days: 2,
+});
+eq('MR1 투자 무관·URL 없는 글 제외하고 3개 선별', mustReads.map((item) => item.post.id), ['watch-deep', 'new-evidence', 'contrarian']);
+eq('MR2 관심 종목의 새로운 촉매를 최우선', mustReads[0].post.id, 'watch-deep');
+eq('MR3 가능한 경우 서로 다른 필자 선택', mustReads.map((item) => item.source), ['신뢰A', '신뢰B', '신뢰C']);
+eq('MR4 AI 선정 이유를 그대로 사용', mustReads[1].whyRead, '실적을 바꿀 계약 규모가 제시됐습니다.');
+eq('MR5 제목 기반 분석은 근거 점수를 신뢰하지 않음', selectMustReadPosts([mustReadPosts[4]], decisionScores, { referenceDate: '2026-08-09' })[0].evidenceQuality, 0);
+eq('MR6 분석 깊이 라벨', ['full', 'rss', 'title'].map(analysisDepthLabel), ['본문 분석', 'RSS 요약 분석', '제목 기반 분석']);
+const themePriority = selectMustReadPosts([
+  { id: 'general', date: '2026-08-09', person: '신뢰A', title: '일반 금융 아이디어', url: 'https://example.com/general', summary: '새 아이디어', stocks: ['일반주'], sector: '금융', stance: '강세', novelty: 2, evidence_quality: 2, analysis_depth: 'full' },
+  { id: 'semiconductor', date: '2026-08-09', person: '신뢰A', title: '반도체 업황 아이디어', url: 'https://example.com/semiconductor', summary: '반도체 사이클', stocks: ['반도체주'], sector: '반도체', stance: '강세', novelty: 2, evidence_quality: 2, analysis_depth: 'full' },
+], decisionScores, { referenceDate: '2026-08-09', preferredSectors: ['반도체'], limit: 1 });
+eq('MR7 반도체 선호 섹터를 동급 아이디어보다 우선', themePriority[0].post.id, 'semiconductor');
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { buildOpinionConflicts, buildTodayDiscovery, buildWatchlistBrief, getSessionLabel } from '../utils/decision-dashboard';
+import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel } from '../utils/decision-dashboard';
+import { selectMustReadPosts } from '../utils/must-read';
 
 const WATCHLIST = ['삼성전자', 'SK하이닉스'];
+const PREFERRED_SECTORS = ['반도체'];
 const USAGE_KEY = 'dashboard:usage:v1';
-const TYPE_LABEL = { critical: '중대 변화', new: '완전 신규', resurfaced: '재부상' };
 
 function kstTimeParts() {
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -54,38 +55,48 @@ function Evidence({ item, stance }) {
   );
 }
 
-function DiscoveryRow({ item, opened, onOpen }) {
+function evidenceLabel(value) {
+  return ['근거 미확인', '주장 중심', '근거 있음', '근거 풍부'][value] ?? '근거 미확인';
+}
+
+function MustReadCard({ item, rank, opened, onOpen }) {
   const directional = item.post.stance === '강세' || item.post.stance === '약세';
   return (
-    <article className={`dc-discovery-row dc-type-${item.type} ${opened ? 'dc-row-opened' : ''}`}>
-      <div className="dc-row-main">
-        <div className="dc-row-labels">
-          <span className="dc-type-label">{TYPE_LABEL[item.type]}</span>
+    <article className={`must-read-card ${rank === 1 ? 'must-read-featured' : ''} ${opened ? 'dc-row-opened' : ''}`}>
+      <div className="must-read-rank"><span>{rank}</span><small>Pick</small></div>
+      <div className="must-read-main">
+        <div className="must-read-labels">
+          {item.watchlistHit && <span className="must-read-watch">관심 종목</span>}
+          {item.preferredSectorHit && <span className="must-read-sector">반도체 포커스</span>}
+          {item.marketView && <span className="must-read-market">시장 시황</span>}
+          {item.post.catalyst && <span className="must-read-catalyst-tag">새 촉매</span>}
           {directional && <span className={`dc-row-stance ${item.post.stance === '강세' ? 'bull' : 'bear'}`}>{item.post.stance}</span>}
         </div>
-        <h3>{item.stock}</h3>
-        <p className="dc-row-reason">{item.reason}</p>
-        {item.catalyst && <p className="dc-row-catalyst"><b>촉매</b> {item.catalyst}</p>}
-        <div className="dc-row-meta">
-          {item.source} · {trustLabel(item.trust)} · {item.post.date}
-          {item.sector && <span> · {item.sector}</span>}
+        <h3>{item.post.title}</h3>
+        <p className="must-read-why"><b>왜 읽어야 하나</b> {item.whyRead}</p>
+        <div className="must-read-meta">
+          <span>{item.source}</span>
+          <span>{trustLabel(item.trust)}</span>
+          <span>{item.depthLabel}</span>
+          <span>{evidenceLabel(item.evidenceQuality)}</span>
+          <span>{item.post.date}</span>
         </div>
       </div>
-      <a className="dc-row-link" href={item.post.url} target="_blank" rel="noreferrer" onClick={() => onOpen(item.post.id)}>
+      <a className="must-read-link" href={item.post.url} target="_blank" rel="noreferrer" onClick={() => onOpen(item.post.id)}>
         {opened ? '✓ 다시 보기' : '원문 보기'} <span>→</span>
       </a>
     </article>
   );
 }
 
-export default function DecisionCockpit({ posts = [], scores, mentionHistory, verdicts, referenceDate, onStockClick }) {
+export default function DecisionCockpit({ posts = [], scores, referenceDate, onStockClick }) {
   const time = kstTimeParts();
   const session = getSessionLabel(time.hour, time.minute);
-  const discovery = useMemo(
-    () => buildTodayDiscovery(posts, scores, mentionHistory, verdicts, {
-      referenceDate, watchlist: WATCHLIST, newLimit: 2, resurfacedLimit: 1,
+  const mustReads = useMemo(
+    () => selectMustReadPosts(posts, scores, {
+      referenceDate, watchlist: WATCHLIST, preferredSectors: PREFERRED_SECTORS, limit: 3, days: 2,
     }),
-    [posts, scores, mentionHistory, verdicts, referenceDate],
+    [posts, scores, referenceDate],
   );
   const watchlist = useMemo(
     () => buildWatchlistBrief(posts, scores, WATCHLIST, { referenceDate, days: 7 }),
@@ -106,12 +117,12 @@ export default function DecisionCockpit({ posts = [], scores, mentionHistory, ve
   }, [referenceDate]);
 
   const openedIds = new Set(usage[referenceDate]?.opened ?? []);
-  const openedCount = discovery.items.filter((item) => openedIds.has(item.post.id)).length;
+  const openedCount = mustReads.filter((item) => openedIds.has(item.post.id)).length;
   const weekCutoff = dateOffset(referenceDate, -6);
   const weekEntries = Object.entries(usage).filter(([date]) => date >= weekCutoff && date <= referenceDate);
   const visitDays = weekEntries.filter(([, value]) => value.visited).length;
   const weekClicks = weekEntries.reduce((sum, [, value]) => sum + new Set(value.opened ?? []).size, 0);
-  const selectionRatio = posts.length ? ((discovery.items.length / posts.length) * 100).toFixed(1) : '0.0';
+  const selectionRatio = posts.length ? ((mustReads.length / posts.length) * 100).toFixed(1) : '0.0';
 
   const markOpened = (postId) => {
     setUsage((current) => {
@@ -128,24 +139,24 @@ export default function DecisionCockpit({ posts = [], scores, mentionHistory, ve
       <div className="dc-app-header">
         <div>
           <span className="dc-kicker">Today · {session}</span>
-          <h2 id="decision-title">오늘 새로 볼 것</h2>
-          <p>중요한 변화만 최대 1+2+1로 선별합니다.</p>
+          <h2 id="decision-title">오늘 꼭 읽을 글</h2>
+          <p>반도체 시황·관심 종목·새 촉매·근거 수준을 함께 평가한 3개입니다.</p>
         </div>
-        <div className="dc-open-progress">원문 <b>{openedCount}/{discovery.items.length}</b> 확인</div>
+        <div className="dc-open-progress">원문 <b>{openedCount}/{mustReads.length}</b> 확인</div>
       </div>
 
       <div className="dc-usage-strip" aria-label="대시보드 이용 현황">
-        <span><b>{discovery.items.length}</b>/{posts.length}개 선별 <small>{selectionRatio}%</small></span>
+        <span><b>{mustReads.length}</b>/{posts.length}개 선별 <small>{selectionRatio}%</small></span>
         <span>최근 7일 <b>{visitDays}</b>일 이용</span>
         <span>원문 <b>{weekClicks}</b>회 열람</span>
       </div>
 
-      <div className="dc-discovery-list">
-        {discovery.items.length === 0 && (
-          <div className="dc-empty">오늘은 기준을 충족한 중대 변화·신규·재부상 아이디어가 없습니다.</div>
+      <div className="must-read-list">
+        {mustReads.length === 0 && (
+          <div className="dc-empty">최근 2일 글 중 원문을 우선 추천할 만한 투자 글이 없습니다.</div>
         )}
-        {discovery.items.map((item) => (
-          <DiscoveryRow key={`${item.type}-${item.post.id}`} item={item} opened={openedIds.has(item.post.id)} onOpen={markOpened} />
+        {mustReads.map((item, index) => (
+          <MustReadCard key={item.post.id} item={item} rank={index + 1} opened={openedIds.has(item.post.id)} onOpen={markOpened} />
         ))}
       </div>
 
@@ -183,7 +194,7 @@ export default function DecisionCockpit({ posts = [], scores, mentionHistory, ve
         </div>
       </div>
 
-      <p className="dc-disclaimer">1년 적중률과 표본 수를 보정해 원문 우선순위를 정합니다. 매매 추천이 아니며, 클릭·이용 기록은 이 기기에만 저장됩니다.</p>
+      <p className="dc-disclaimer">추천 순서는 반도체·시장 시황·관심 종목·새 촉매·근거 수준·본문 확보 범위·1년 소스 신뢰도를 함께 반영합니다. 매매 추천이 아니며, 클릭·이용 기록은 이 기기에만 저장됩니다.</p>
     </section>
   );
 }

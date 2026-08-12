@@ -460,6 +460,9 @@ export async function analyzePost(title, content, blogName) {
   "stance": "강세|약세|중립|해당없음 (글쓴이의 시각 톤. 추천이 아니라 글의 논조)",
   "reasoning": "글쓴이 주장의 가장 중요한 근거 1문장 — 없으면 빈 문자열",
   "catalyst": "이 글에서 새롭게 발생한 투자 촉매 1문장. 실적·수주·계약·정책·제품·가격·목표가 변화 등이 명시된 경우만 작성하고, 기존 견해 반복이면 빈 문자열",
+  "why_read": "원문을 읽을 가치가 있다면 그 이유를 구체적으로 1문장. 새로운 수치·촉매·반대 관점·관심 종목 변화 중 무엇인지 명시. 투자 가치가 없거나 본문이 부족하면 빈 문자열",
+  "novelty": 0|1|2|3 (0 반복/무관, 1 기존 견해 보완, 2 새로운 근거나 관점, 3 투자 판단을 바꿀 새 촉매),
+  "evidence_quality": 0|1|2|3 (0 근거 없음, 1 주장만 있음, 2 구체 근거 또는 수치 1개, 3 복수 수치·공시·계약 등 검증 가능한 근거),
   "risks": ["글쓴이가 직접 언급한 리스크·유보 조건만 (없으면 빈 배열)"],
   "market_view": true 또는 false (시장 전체·주도주·지수·수급·유동성에 대한 글쓴이 본인의 시각이면 true. 단순 기업 뉴스·실적 전달이면 false),
   "market_sentiment": -2|-1|0|1|2 (시장 관점의 강도. -2 매우 비관, -1 비관, 0 중립/해당없음, 1 낙관, 2 매우 낙관),
@@ -479,7 +482,7 @@ export async function analyzePost(title, content, blogName) {
       try {
         res = await client.messages.create({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 1800,
+          max_tokens: 2000,
           messages: [{ role: 'user', content: prompt }],
         });
         break;
@@ -501,6 +504,11 @@ export async function analyzePost(title, content, blogName) {
     result.risks      = normalizeArr(result.risks);
     result.headline   = typeof result.headline === 'string' ? result.headline.trim() : '';
     result.catalyst   = typeof result.catalyst === 'string' ? result.catalyst.trim() : '';
+    result.why_read   = typeof result.why_read === 'string' ? result.why_read.trim() : '';
+    const clampMetric = value => Number.isFinite(Number(value))
+      ? Math.max(0, Math.min(3, Math.round(Number(value)))) : 0;
+    result.novelty = clampMetric(result.novelty);
+    result.evidence_quality = clampMetric(result.evidence_quality);
     result.market_view = result.market_view === true;
     result.market_sentiment = Number.isFinite(Number(result.market_sentiment))
       ? Math.max(-2, Math.min(2, Number(result.market_sentiment))) : 0;
@@ -512,6 +520,7 @@ export async function analyzePost(title, content, blogName) {
     return {
       summary: title, stocks: [], sector: '기타', key_points: [],
       numbers: [], stance: '해당없음', reasoning: '', catalyst: '', risks: [],
+      why_read: '', novelty: 0, evidence_quality: 0,
       market_view: false, market_sentiment: 0, market_reason: '',
       _failed: true, // 호출자가 실패를 구분해 캐시 오염을 피하도록 표식 (재시도 소진 후)
     };
@@ -812,15 +821,18 @@ async function main() {
   for (let i = 0; i < collected.length; i++) {
     const post = collected[i];
     console.log(`\n[${i + 1}/${collected.length}] 분석 중: ${post.blog_name} - ${post.title}`);
+    let analysisDepth = post.content.trim().length >= 120 ? 'rss' : 'title';
 
     // 본문 전문 수집 (텔레그램은 이미 본문 확보 → 스킵, 블로그만 수집)
     if (post.source === 'telegram') {
+      analysisDepth = post.content.trim().length >= 120 ? 'full' : 'title';
       console.log(`  📱 텔레그램 본문 사용: ${post.content.length}자`);
     } else {
       const fullBody = await fetchFullContent(post.url);
       if (fullBody && fullBody.length > post.content.length) {
         console.log(`  📄 본문 전문 수집: ${fullBody.length.toLocaleString()}자 (RSS: ${post.content.length}자)`);
         post.content = fullBody;
+        analysisDepth = 'full';
       } else {
         console.log(`  📄 RSS 본문 사용: ${post.content.length}자`);
       }
@@ -829,6 +841,7 @@ async function main() {
     let analysis = {
       summary: post.title, stocks: [], sector: '기타', key_points: [],
       numbers: [], stance: '해당없음', reasoning: '', catalyst: '', risks: [],
+      why_read: '', novelty: 0, evidence_quality: 0,
     };
 
     if (process.env.CLAUDE_API_KEY) {
@@ -855,6 +868,10 @@ async function main() {
       stance: analysis.stance ?? '해당없음',
       reasoning: analysis.reasoning ?? '',
       catalyst: analysis.catalyst ?? '',
+      why_read: analysis.why_read ?? '',
+      novelty: analysis.novelty ?? 0,
+      evidence_quality: analysis.evidence_quality ?? 0,
+      analysis_depth: analysisDepth,
       risks: analysis.risks ?? [],
       market_view: analysis.market_view ?? false,
       market_sentiment: analysis.market_sentiment ?? 0,
