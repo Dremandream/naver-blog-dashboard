@@ -16,6 +16,7 @@ import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from 
 import { analysisDepthLabel, selectMustReadPosts } from '../src/utils/must-read.js';
 import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
 import { buildHomeBrief } from '../src/utils/personal-home.js';
+import { feedbackKey, updateFeedback, feedbackCounts, savedForLater } from '../src/utils/feedback.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -452,6 +453,21 @@ eq('HOME2 전일 대비 방향 전환을 신규 주제보다 우선', [homeBrief
 eq('HOME3 새로 부각된 주제를 언급 수 순으로 표시', homeBrief.changes.slice(1).map((item) => item.name), ['엔비디아', '마이크론']);
 eq('HOME4 전일 리포트가 없으면 비교 데이터 부족', buildHomeBrief(homeBriefs.slice(0, 1)).comparisonStatus, '비교 데이터 부족');
 eq('HOME5 변동 주제가 없으면 중대한 변화 없음', buildHomeBrief([homeBriefs[1], homeBriefs[1]]).comparisonStatus, '중대한 변화 없음');
+
+console.log('── 개인 피드백 루프 ──');
+const feedbackPost = { id: 'feedback-1', title: 'HBM 신규 수주', url: 'https://example.com/feedback-1', person: '신뢰A', sector: '반도체', stocks: ['삼성전자'], date: '2026-08-12' };
+const usefulFeedback = updateFeedback({}, feedbackPost, 'useful', '2026-08-12T01:00:00.000Z');
+eq('FB1 유용함 피드백에 원문 스냅샷 저장', usefulFeedback['https://example.com/feedback-1'], {
+  status: 'useful', title: 'HBM 신규 수주', url: 'https://example.com/feedback-1', source: '신뢰A', sector: '반도체', stocks: ['삼성전자'], postDate: '2026-08-12', ratedAt: '2026-08-12T01:00:00.000Z',
+});
+eq('FB2 같은 피드백을 다시 누르면 취소', updateFeedback(usefulFeedback, feedbackPost, 'useful', '2026-08-12T02:00:00.000Z'), {});
+const laterFeedback = updateFeedback(usefulFeedback, feedbackPost, 'later', '2026-08-12T02:00:00.000Z');
+eq('FB3 다른 선택은 기존 상태를 교체', feedbackCounts(laterFeedback), { useful: 0, later: 1, notUseful: 0, total: 1 });
+eq('FB4 7일 글 목록에서 사라져도 나중에 원문 유지', savedForLater([], laterFeedback), [{
+  id: 'https://example.com/feedback-1', title: 'HBM 신규 수주', url: 'https://example.com/feedback-1', source: '신뢰A', sector: '반도체', stocks: ['삼성전자'], postDate: '2026-08-12', ratedAt: '2026-08-12T02:00:00.000Z',
+}]);
+eq('FB5 잘못된 상태는 저장하지 않음', updateFeedback({}, feedbackPost, 'buy'), {});
+eq('FB6 실행마다 글 id가 바뀌어도 URL을 안정 키로 사용', feedbackKey({ ...feedbackPost, id: 'regenerated-id' }), 'https://example.com/feedback-1');
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

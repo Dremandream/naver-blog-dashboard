@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel } from '../utils/decision-dashboard';
 import { selectMustReadPosts } from '../utils/must-read';
+import { feedbackCounts, feedbackKey, savedForLater, updateFeedback } from '../utils/feedback';
 
 const WATCHLIST = ['삼성전자', 'SK하이닉스'];
 const PREFERRED_SECTORS = ['반도체'];
 const USAGE_KEY = 'dashboard:usage:v1';
+const FEEDBACK_KEY = 'dashboard:feedback:v1';
 
 function kstTimeParts() {
   const parts = new Intl.DateTimeFormat('en-US', {
@@ -30,6 +32,11 @@ function readUsage(referenceDate) {
   } catch {
     return {};
   }
+}
+
+function readFeedback() {
+  try { return JSON.parse(localStorage.getItem(FEEDBACK_KEY) ?? '{}'); }
+  catch { return {}; }
 }
 
 function trustLabel(trust) {
@@ -59,7 +66,7 @@ function evidenceLabel(value) {
   return ['근거 미확인', '주장 중심', '근거 있음', '근거 풍부'][value] ?? '근거 미확인';
 }
 
-function MustReadCard({ item, rank, opened, onOpen }) {
+function MustReadCard({ item, rank, opened, feedback, onOpen, onFeedback }) {
   const directional = item.post.stance === '강세' || item.post.stance === '약세';
   return (
     <article className={`must-read-card ${rank === 1 ? 'must-read-featured' : ''} ${opened ? 'dc-row-opened' : ''}`}>
@@ -81,6 +88,11 @@ function MustReadCard({ item, rank, opened, onOpen }) {
           <span>{item.depthLabel}</span>
           <span>{evidenceLabel(item.evidenceQuality)}</span>
           <span>{item.post.date}</span>
+        </div>
+        <div className="must-read-feedback" aria-label={`${item.post.title} 피드백`}>
+          <button type="button" aria-pressed={feedback === 'useful'} className={feedback === 'useful' ? 'active useful' : ''} onClick={() => onFeedback(item.post, 'useful')}>✓ 유용함</button>
+          <button type="button" aria-pressed={feedback === 'later'} className={feedback === 'later' ? 'active later' : ''} onClick={() => onFeedback(item.post, 'later')}>◇ 나중에</button>
+          <button type="button" aria-pressed={feedback === 'notUseful'} className={feedback === 'notUseful' ? 'active not-useful' : ''} onClick={() => onFeedback(item.post, 'notUseful')}>별로</button>
         </div>
       </div>
       <a className="must-read-link" href={item.post.url} target="_blank" rel="noreferrer" onClick={() => onOpen(item.post.id)}>
@@ -108,6 +120,7 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
     [posts, scores, referenceDate],
   );
   const [usage, setUsage] = useState(() => readUsage(referenceDate));
+  const [feedback, setFeedback] = useState(readFeedback);
 
   useEffect(() => {
     setUsage((current) => {
@@ -124,6 +137,8 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
   const visitDays = weekEntries.filter(([, value]) => value.visited).length;
   const weekClicks = weekEntries.reduce((sum, [, value]) => sum + new Set(value.opened ?? []).size, 0);
   const selectionRatio = posts.length ? ((mustReads.length / posts.length) * 100).toFixed(1) : '0.0';
+  const feedbackSummary = feedbackCounts(feedback);
+  const laterItems = savedForLater(posts, feedback);
 
   const markOpened = (postId) => {
     setUsage((current) => {
@@ -131,6 +146,14 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
       opened.add(postId);
       const next = { ...current, [referenceDate]: { ...(current[referenceDate] ?? {}), visited: true, opened: [...opened] } };
       try { localStorage.setItem(USAGE_KEY, JSON.stringify(next)); } catch { /* 기기 내 표시만 유지 */ }
+      return next;
+    });
+  };
+
+  const markFeedback = (post, status) => {
+    setFeedback((current) => {
+      const next = updateFeedback(current, post, status);
+      try { localStorage.setItem(FEEDBACK_KEY, JSON.stringify(next)); } catch { /* 기기 내 표시만 유지 */ }
       return next;
     });
   };
@@ -143,7 +166,7 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
           <h2 id="decision-title">오늘 꼭 읽을 글</h2>
           <p>반도체 시황·관심 종목·새 촉매·근거 수준을 함께 평가한 3개입니다.</p>
         </div>
-        <div className="dc-open-progress">원문 <b>{openedCount}/{mustReads.length}</b> 확인</div>
+        <div className="dc-open-progress">원문 <b>{openedCount}/{mustReads.length}</b> · 피드백 <b>{feedbackSummary.total}</b></div>
       </div>
 
       {!compact && (
@@ -159,9 +182,31 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
           <div className="dc-empty">최근 2일 글 중 원문을 우선 추천할 만한 투자 글이 없습니다.</div>
         )}
         {mustReads.map((item, index) => (
-          <MustReadCard key={item.post.id} item={item} rank={index + 1} opened={openedIds.has(item.post.id)} onOpen={markOpened} />
+          <MustReadCard
+            key={item.post.id}
+            item={item}
+            rank={index + 1}
+            opened={openedIds.has(item.post.id)}
+            feedback={feedback[feedbackKey(item.post)]?.status}
+            onOpen={markOpened}
+            onFeedback={markFeedback}
+          />
         ))}
       </div>
+
+      {compact && laterItems.length > 0 && (
+        <div className="read-later-shelf">
+          <div className="read-later-head"><b>나중에 보기</b><span>{laterItems.length}개 저장 · 이 기기에서만</span></div>
+          <div className="read-later-list">
+            {laterItems.map((item) => (
+              <a key={item.id} href={item.url} target="_blank" rel="noreferrer" onClick={() => markOpened(item.id)}>
+                <span>{item.title}</span>
+                <small>{item.source} · {item.postDate}</small>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
 
       {!compact && <div className="dc-lower-grid">
         <div className="dc-panel">
