@@ -28,6 +28,7 @@ const TELEGRAM_PATH = path.join(__dirname, '../config/telegram-channels.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
 const HISTORY_PATH = path.join(__dirname, '../public/data/history.json');
 const PETER_HISTORY_PATH = path.join(__dirname, '../public/data/peter-history.json');
+export const ANALYSIS_SCHEMA_VERSION = 2;
 
 // KST 날짜 유틸 (YYYY-MM-DD)
 function kstDate(offsetDays = 0) {
@@ -188,6 +189,10 @@ export function activeTelegramChannels(channels, referenceDate) {
 
 export function isOpinionEligible(post) {
   return post?.source_role !== 'fact' && post?.source_role !== 'mixed';
+}
+
+export function canReuseAnalysis(post) {
+  return post?.analysis_version === ANALYSIS_SCHEMA_VERSION;
 }
 
 // 채널 HTML → 메시지 배열 [{ text, postDate, url }]
@@ -847,11 +852,43 @@ async function main() {
     console.warn('\n⚠️  CLAUDE_API_KEY 없음 → AI 요약 스킵 (구조만 저장)\n');
   }
 
+  // 같은 분석 스키마로 처리한 URL은 다음 실행에서 Claude를 다시 호출하지 않는다.
+  // 프롬프트·스키마를 바꾸면 ANALYSIS_SCHEMA_VERSION을 올려 1회만 재분석한다.
+  let existingPosts = [];
+  let existingBriefs = [];
+  let verdictHistory = [];
+  let existingMentionHistory = {};
+  if (fs.existsSync(OUTPUT_PATH)) {
+    try {
+      const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
+      const parsed = JSON.parse(raw);
+      existingPosts = parsed.posts ?? [];
+      verdictHistory = parsed.verdict_history ?? [];
+      existingMentionHistory = parsed.mention_history ?? {};
+      existingBriefs = parsed.daily_briefs ?? (parsed.daily_brief ? [parsed.daily_brief] : []);
+    } catch {
+      console.warn('⚠️  기존 posts.json 읽기 실패, 새로 시작합니다.');
+    }
+  }
+  const existingByUrl = new Map(existingPosts.filter((post) => post.url).map((post) => [post.url, post]));
   const results = [];
 
   for (let i = 0; i < collected.length; i++) {
     const post = collected[i];
     console.log(`\n[${i + 1}/${collected.length}] 분석 중: ${post.blog_name} - ${post.title}`);
+    const cached = existingByUrl.get(post.url);
+    if (canReuseAnalysis(cached)) {
+      console.log(`  ♻️ 분석 재사용 (v${ANALYSIS_SCHEMA_VERSION})`);
+      results.push({
+        ...cached,
+        date: post.postDate,
+        source: post.source || 'blog',
+        blog_name: post.blog_name,
+        person: post.person || post.blog_name,
+        url: post.url,
+      });
+      continue;
+    }
     let analysisDepth = post.content.trim().length >= 120 ? 'rss' : 'title';
 
     // 본문 전문 수집 (텔레그램은 이미 본문 확보 → 스킵, 블로그만 수집)
@@ -920,6 +957,7 @@ async function main() {
       market_sentiment: analysis.market_sentiment ?? 0,
       market_reason: analysis.market_reason ?? '',
       source_role: analysis.source_role ?? 'mixed',
+      analysis_version: process.env.CLAUDE_API_KEY ? ANALYSIS_SCHEMA_VERSION : 0,
     });
 
     if (i < collected.length - 1) await new Promise(r => setTimeout(r, 500));
@@ -927,28 +965,6 @@ async function main() {
 
   // ── 저장 (7일 히스토리 누적) ──────────────────────────────────────────────
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
-
-  // 기존 데이터 읽기 (daily_brief 단수 → daily_briefs 배열 하위 호환)
-  let existingPosts = [];
-  let existingBriefs = [];
-  let verdictHistory = [];
-  let existingMentionHistory = {};
-  if (fs.existsSync(OUTPUT_PATH)) {
-    try {
-      const raw = fs.readFileSync(OUTPUT_PATH, 'utf-8').replace(/\x00/g, '').trim();
-      const parsed = JSON.parse(raw);
-      existingPosts = parsed.posts ?? [];
-      verdictHistory = parsed.verdict_history ?? [];
-      existingMentionHistory = parsed.mention_history ?? {};
-      if (parsed.daily_briefs) {
-        existingBriefs = parsed.daily_briefs;
-      } else if (parsed.daily_brief) {
-        existingBriefs = [parsed.daily_brief]; // 기존 단수 데이터 마이그레이션
-      }
-    } catch (e) {
-      console.warn('⚠️  기존 posts.json 읽기 실패, 새로 시작합니다.');
-    }
-  }
 
   // 새 글 ID 목록 (중복 방지)
   const newIds = new Set(results.map(p => p.id));

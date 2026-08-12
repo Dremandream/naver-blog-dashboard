@@ -25,6 +25,7 @@ _최종 갱신: 2026-08-12 (세션 30)_
 매일 KST 08:00 GitHub Actions
   → scripts/collect-rss.js
   → 블로그 RSS(rss.blog.naver.com) + 텔레그램 공개채널(t.me/s/) 수집 (오늘+어제 2일)
+  → 같은 analysis_version으로 이미 분석한 URL은 저장 결과 재사용
   → [개별 분석] Claude Haiku: 글마다 요약·종목·섹터·스탠스·근거·리스크·헤드라인 (JSON)
   → 종목 별칭 정규화(config/stock-aliases.json)
   → [종합의견] Claude Opus: 그날 전체를 비교 → headline/brief/consensus/divergence/minority/hot_stocks

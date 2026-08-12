@@ -1,7 +1,7 @@
 // 회귀 테스트 — 수집기 순수 함수 골든 케이스
 // 실행: npm test  (외부 네트워크 불필요, <1초)
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
-import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated, activeTelegramChannels, isOpinionEligible } from '../scripts/collect-rss.js';
+import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated, activeTelegramChannels, isOpinionEligible, canReuseAnalysis, ANALYSIS_SCHEMA_VERSION } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
@@ -24,6 +24,7 @@ import { readFileSync } from 'node:fs';
 const blogsConfig = JSON.parse(readFileSync(new URL('../config/blogs.json', import.meta.url), 'utf8'));
 const telegramConfig = JSON.parse(readFileSync(new URL('../config/telegram-channels.json', import.meta.url), 'utf8'));
 const currentPosts = JSON.parse(readFileSync(new URL('../public/data/posts.json', import.meta.url), 'utf8'));
+const collectWorkflowSource = readFileSync(new URL('../.github/workflows/collect.yml', import.meta.url), 'utf8');
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -491,6 +492,9 @@ eq('SRC5 중복 텔레그램은 빼고 itechkorea만 시험 추가', ['kkkontemp
 eq('SRC6 itechkorea 시험 종료일까지 활성', activeTelegramChannels(telegramConfig.channels, '2026-08-26').some((channel) => channel.id === 'itechkorea'), true);
 eq('SRC7 itechkorea 시험 종료 다음 날 자동 제외', activeTelegramChannels(telegramConfig.channels, '2026-08-27').some((channel) => channel.id === 'itechkorea'), false);
 eq('SRC8 전달형 fact·혼합형 글은 채널 적중률에서 제외', [isOpinionEligible({ source_role: 'opinion' }), isOpinionEligible({ source_role: 'fact' }), isOpinionEligible({ source_role: 'mixed' })], [true, false, false]);
+eq('SRC9 현재 분석 스키마 글은 Claude 재호출 없이 재사용', canReuseAnalysis({ analysis_version: ANALYSIS_SCHEMA_VERSION }), true);
+eq('SRC10 구버전 분석은 새 기준으로 한 번 갱신', canReuseAnalysis({ analysis_version: ANALYSIS_SCHEMA_VERSION - 1 }), false);
+eq('SRC11 소스 증가 후에도 31건 분석을 완주할 실행 여유 확보', /timeout-minutes:\s*20/.test(collectWorkflowSource), true);
 
 console.log('── 시장 팩트 보드 ──');
 const marketFacts = buildMarketFacts({
