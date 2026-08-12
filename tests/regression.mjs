@@ -15,6 +15,7 @@ import { selectBriefSources } from '../src/utils/brief-sources.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from '../scripts/lib/market-data.js';
 import { analysisDepthLabel, selectMustReadPosts } from '../src/utils/must-read.js';
 import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
+import { buildHomeBrief } from '../src/utils/personal-home.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -421,6 +422,36 @@ eq('SP6 반도체 데이터 없음은 데이터 부족', buildSemiconductorPulse
 eq('SP7 방향성 의견이 없으면 방향성 부족', buildSemiconductorPulse([
   { id: 'neutral-semi', date: '2026-08-12', person: 'A', title: '반도체 업황 점검', sector: '반도체', stance: '중립' },
 ], { referenceDate: '2026-08-12' }).tone, '방향성 부족');
+
+console.log('── 개인화 홈 브리핑 ──');
+const homeBriefs = [
+  {
+    date: '2026-08-12', headline: '반도체 강세 우세, 데이터센터 병목은 확인 필요',
+    positive: [{ sector: '반도체', items: [
+      { name: '삼성전자', point: 'HBM 공급 확대', mentions: 3 },
+      { name: '엔비디아', point: '신규 금융 플랫폼', mentions: 4 },
+    ] }],
+    negative: [{ sector: '반도체', items: [
+      { name: 'SK하이닉스', point: '리레이팅 지연', mentions: 2 },
+      { name: '마이크론', point: '가격 경쟁 심화', mentions: 1 },
+    ] }],
+    minority: ['다수 강세와 달리 데이터센터 인허가 병목을 경고'],
+  },
+  {
+    date: '2026-08-11', headline: '메모리 강세 유지',
+    positive: [{ sector: '반도체', items: [
+      { name: '삼성전자', point: 'HBM 기대', mentions: 2 },
+      { name: 'SK하이닉스', point: '실적 개선', mentions: 3 },
+    ] }],
+    negative: [],
+  },
+];
+const homeBrief = buildHomeBrief(homeBriefs);
+eq('HOME1 최신 종합판단과 핵심 강세·리스크 추출', [homeBrief.headline, homeBrief.positive.name, homeBrief.risk.name], ['반도체 강세 우세, 데이터센터 병목은 확인 필요', '엔비디아', 'SK하이닉스']);
+eq('HOME2 전일 대비 방향 전환을 신규 주제보다 우선', [homeBrief.changes[0].type, homeBrief.changes[0].name], ['시각 전환', 'SK하이닉스']);
+eq('HOME3 새로 부각된 주제를 언급 수 순으로 표시', homeBrief.changes.slice(1).map((item) => item.name), ['엔비디아', '마이크론']);
+eq('HOME4 전일 리포트가 없으면 비교 데이터 부족', buildHomeBrief(homeBriefs.slice(0, 1)).comparisonStatus, '비교 데이터 부족');
+eq('HOME5 변동 주제가 없으면 중대한 변화 없음', buildHomeBrief([homeBriefs[1], homeBriefs[1]]).comparisonStatus, '중대한 변화 없음');
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

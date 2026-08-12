@@ -90,7 +90,7 @@ function MustReadCard({ item, rank, opened, onOpen }) {
   );
 }
 
-export default function DecisionCockpit({ posts = [], scores, referenceDate, onStockClick }) {
+export default function DecisionCockpit({ posts = [], scores, referenceDate, onStockClick, compact = false }) {
   const time = kstTimeParts();
   const session = getSessionLabel(time.hour, time.minute);
   const mustReads = useMemo(
@@ -136,7 +136,7 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
   };
 
   return (
-    <section className="decision-cockpit" aria-labelledby="decision-title">
+    <section className={`decision-cockpit ${compact ? 'decision-cockpit-compact' : ''}`} aria-labelledby="decision-title">
       <div className="dc-app-header">
         <div>
           <span className="dc-kicker">Today · {session}</span>
@@ -146,11 +146,13 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
         <div className="dc-open-progress">원문 <b>{openedCount}/{mustReads.length}</b> 확인</div>
       </div>
 
-      <div className="dc-usage-strip" aria-label="대시보드 이용 현황">
-        <span><b>{mustReads.length}</b>/{posts.length}개 선별 <small>{selectionRatio}%</small></span>
-        <span>최근 7일 <b>{visitDays}</b>일 이용</span>
-        <span>원문 <b>{weekClicks}</b>회 열람</span>
-      </div>
+      {!compact && (
+        <div className="dc-usage-strip" aria-label="대시보드 이용 현황">
+          <span><b>{mustReads.length}</b>/{posts.length}개 선별 <small>{selectionRatio}%</small></span>
+          <span>최근 7일 <b>{visitDays}</b>일 이용</span>
+          <span>원문 <b>{weekClicks}</b>회 열람</span>
+        </div>
+      )}
 
       <div className="must-read-list">
         {mustReads.length === 0 && (
@@ -161,7 +163,7 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
         ))}
       </div>
 
-      <div className="dc-lower-grid">
+      {!compact && <div className="dc-lower-grid">
         <div className="dc-panel">
           <div className="dc-panel-title"><span>관심 종목</span><small>터치해 근거 펼치기</small></div>
           {watchlist.map((item) => (
@@ -193,9 +195,9 @@ export default function DecisionCockpit({ posts = [], scores, referenceDate, onS
             </div>
           ))}
         </div>
-      </div>
+      </div>}
 
-      <p className="dc-disclaimer">추천 순서는 반도체·시장 시황·관심 종목·새 촉매·근거 수준·본문 확보 범위·1년 소스 신뢰도를 함께 반영합니다. 매매 추천이 아니며, 클릭·이용 기록은 이 기기에만 저장됩니다.</p>
+      {!compact && <p className="dc-disclaimer">추천 순서는 반도체·시장 시황·관심 종목·새 촉매·근거 수준·본문 확보 범위·1년 소스 신뢰도를 함께 반영합니다. 매매 추천이 아니며, 클릭·이용 기록은 이 기기에만 저장됩니다.</p>}
     </section>
   );
 }

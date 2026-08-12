@@ -9,7 +9,7 @@ import AttentionTrends from "./components/AttentionTrends";
 import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
 import DecisionCockpit from "./components/DecisionCockpit";
-import SemiconductorPulse from "./components/SemiconductorPulse";
+import PersonalHome from "./components/PersonalHome";
 import { INITIAL_VISIBLE_POSTS, visibleItems } from "./utils/post-list";
 import { buildPeterFearGreed } from "../shared/peter-fear-greed";
 import "./App.css";
@@ -24,6 +24,12 @@ function getKSTDate(offsetDays = 0) {
 const DATES    = ["전체", "오늘", "어제", "최근 7일"];
 const SORT_OPT = ["최신순", "블로그별"];
 const SOURCES  = ["전체", "블로그", "텔레그램"];
+const NAV_ITEMS = [
+  { id: "home", label: "홈", icon: "⌂" },
+  { id: "ideas", label: "아이디어", icon: "◇" },
+  { id: "sources", label: "소스", icon: "◎" },
+  { id: "posts", label: "전체 글", icon: "▤" },
+];
 
 export default function App() {
   const [data, setData]               = useState(null);
@@ -31,6 +37,7 @@ export default function App() {
   const [error, setError]             = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
   const [selectedStock, setSelectedStock] = useState(null);
+  const [activeView, setActiveView] = useState("home");
 
   // 필터 state
   const [selectedSector, setSelectedSector] = useState("전체");
@@ -101,8 +108,9 @@ export default function App() {
   const showSourcePosts = (person) => {
     const blogName = posts.find((post) => (post.person || post.blog_name) === person)?.blog_name || person;
     setSelectedBlog(blogName);
+    setActiveView("posts");
     resetVisible();
-    setTimeout(() => document.getElementById('individual-posts')?.scrollIntoView({ behavior: 'smooth' }), 0);
+    setTimeout(() => document.getElementById('individual-posts')?.scrollIntoView({ behavior: 'smooth' }), 50);
   };
 
   // 섹터별 글 수 (StatsBar용)
@@ -122,14 +130,23 @@ export default function App() {
               <p className="date">블로그·텔레그램 여론 종합</p>
             </div>
           </div>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="종목·블로그·제목 검색..."
-            value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); resetVisible(); }}
-          />
+          {activeView === "posts" && (
+            <input
+              className="search-input"
+              type="text"
+              placeholder="종목·블로그·제목 검색..."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); resetVisible(); }}
+            />
+          )}
         </div>
+        <nav className="top-navigation" aria-label="대시보드 주요 화면">
+          {NAV_ITEMS.map((item) => (
+            <button key={item.id} type="button" className={activeView === item.id ? "active" : ""} onClick={() => setActiveView(item.id)}>
+              <span>{item.icon}</span>{item.label}
+            </button>
+          ))}
+        </nav>
       </header>
 
       <main className="main">
@@ -143,81 +160,73 @@ export default function App() {
             </div>
           ) : null;
         })()}
-        <div className="report-layout">
-          <DailyBrief
-            briefs={data?.daily_briefs ?? data?.daily_brief}
-            posts={posts}
-            scores={data?.source_scores}
-            onStockClick={setSelectedStock}
-          />
-          <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
-        </div>
-        <SemiconductorPulse posts={posts} referenceDate={data?.date} onStockClick={setSelectedStock} />
-        <DecisionCockpit
-          posts={posts}
-          scores={data?.source_scores}
-          referenceDate={data?.date}
-          onStockClick={setSelectedStock}
-        />
-        <SourceScores
-          scores={data?.source_scores}
-          posts={posts}
-          onSourceClick={showSourcePosts}
-          onPostClick={setSelectedPost}
-        />
-        <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
-        <StatsBar total={posts.length} sectors={sectorCounts} />
-
-        <div className="section-divider" id="individual-posts">
-          <h2>개별 글</h2>
-          <span className="sd-count">{visiblePosts.length}/{sorted.length}건</span>
-        </div>
-
-        <FilterBar
-          sectors={sectors}
-          blogs={blogs}
-          dates={DATES}
-          sources={SOURCES}
-          sortOptions={SORT_OPT}
-          selectedSector={selectedSector}
-          selectedBlog={selectedBlog}
-          selectedSource={selectedSource}
-          selectedDate={selectedDate}
-          sortBy={sortBy}
-          onSectorChange={(value) => { setSelectedSector(value); resetVisible(); }}
-          onBlogChange={(value) => { setSelectedBlog(value); resetVisible(); }}
-          onSourceChange={(value) => { setSelectedSource(value); resetVisible(); }}
-          onDateChange={(value) => { setSelectedDate(value); resetVisible(); }}
-          onSortChange={(value) => { setSortBy(value); resetVisible(); }}
-        />
-        {sorted.length === 0 ? (
-          <div className="empty">해당 조건의 글이 없습니다.</div>
-        ) : (
-          <div className="card-grid">
-            {visiblePosts.map((post) => (
-              <PostCard
-                key={post.id}
-                post={post}
-                onCardClick={setSelectedPost}
-                onStockClick={(stock) => { setSearchQuery(stock); resetVisible(); }}
-              />
-            ))}
-          </div>
+        {activeView === "home" && (
+          <PersonalHome data={data} posts={posts} onStockClick={setSelectedStock} onOpenAnalysis={() => setActiveView("ideas")} />
         )}
-        {visiblePosts.length < sorted.length && (
-          <button
-            className="load-more"
-            type="button"
-            onClick={() => setVisibleCount((count) => count + INITIAL_VISIBLE_POSTS)}
-          >
-            글 더 보기 ({sorted.length - visiblePosts.length}건 남음)
-          </button>
+
+        {activeView === "ideas" && (
+          <>
+            <div className="view-heading"><span>DEEP DIVE</span><h2>아이디어와 상세 분석</h2><p>종합 논거와 반대 의견, 관심 종목 변화를 깊게 확인합니다.</p></div>
+            <div className="report-layout">
+              <DailyBrief briefs={data?.daily_briefs ?? data?.daily_brief} posts={posts} scores={data?.source_scores} onStockClick={setSelectedStock} />
+              <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
+            </div>
+            <DecisionCockpit posts={posts} scores={data?.source_scores} referenceDate={data?.date} onStockClick={setSelectedStock} />
+            <AttentionTrends posts={posts} prices={data?.prices} verdicts={data?.verdicts} onStockClick={setSelectedStock} />
+          </>
+        )}
+
+        {activeView === "sources" && (
+          <>
+            <div className="view-heading"><span>TRACK RECORD</span><h2>누구의 글을 먼저 볼까</h2><p>1년 적중률과 표본을 함께 보고 소스별 관련 글을 확인합니다.</p></div>
+            <SourceScores scores={data?.source_scores} posts={posts} onSourceClick={showSourcePosts} onPostClick={setSelectedPost} />
+          </>
+        )}
+
+        {activeView === "posts" && (
+          <>
+            <StatsBar total={posts.length} sectors={sectorCounts} />
+            <div className="section-divider" id="individual-posts">
+              <h2>전체 글</h2>
+              <span className="sd-count">{visiblePosts.length}/{sorted.length}건</span>
+            </div>
+            <FilterBar
+              sectors={sectors} blogs={blogs} dates={DATES} sources={SOURCES} sortOptions={SORT_OPT}
+              selectedSector={selectedSector} selectedBlog={selectedBlog} selectedSource={selectedSource}
+              selectedDate={selectedDate} sortBy={sortBy}
+              onSectorChange={(value) => { setSelectedSector(value); resetVisible(); }}
+              onBlogChange={(value) => { setSelectedBlog(value); resetVisible(); }}
+              onSourceChange={(value) => { setSelectedSource(value); resetVisible(); }}
+              onDateChange={(value) => { setSelectedDate(value); resetVisible(); }}
+              onSortChange={(value) => { setSortBy(value); resetVisible(); }}
+            />
+            {sorted.length === 0 ? <div className="empty">해당 조건의 글이 없습니다.</div> : (
+              <div className="card-grid">
+                {visiblePosts.map((post) => (
+                  <PostCard key={post.id} post={post} onCardClick={setSelectedPost} onStockClick={(stock) => { setSearchQuery(stock); resetVisible(); }} />
+                ))}
+              </div>
+            )}
+            {visiblePosts.length < sorted.length && (
+              <button className="load-more" type="button" onClick={() => setVisibleCount((count) => count + INITIAL_VISIBLE_POSTS)}>
+                글 더 보기 ({sorted.length - visiblePosts.length}건 남음)
+              </button>
+            )}
+          </>
         )}
       </main>
 
       <footer className="footer">
         자동 수집 · Claude AI 요약 · 투자 참고용 (매매 권유 아님)
       </footer>
+
+      <nav className="bottom-navigation" aria-label="모바일 대시보드 주요 화면">
+        {NAV_ITEMS.map((item) => (
+          <button key={item.id} type="button" className={activeView === item.id ? "active" : ""} onClick={() => { setActiveView(item.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+            <span>{item.icon}</span><small>{item.label}</small>
+          </button>
+        ))}
+      </nav>
 
       {selectedPost && (
         <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
