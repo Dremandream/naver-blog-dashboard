@@ -1,7 +1,7 @@
 // 회귀 테스트 — 수집기 순수 함수 골든 케이스
 // 실행: npm test  (외부 네트워크 불필요, <1초)
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
-import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated } from '../scripts/collect-rss.js';
+import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated, activeTelegramChannels, isOpinionEligible } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
@@ -18,6 +18,7 @@ import { normalizeInvestorAnalysis } from '../scripts/lib/investor-analysis.js';
 import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
 import { buildHomeBrief } from '../src/utils/personal-home.js';
 import { feedbackKey, updateFeedback, feedbackCounts, savedForLater } from '../src/utils/feedback.js';
+import { buildMarketFacts } from '../src/utils/market-facts.js';
 import { readFileSync } from 'node:fs';
 
 const blogsConfig = JSON.parse(readFileSync(new URL('../config/blogs.json', import.meta.url), 'utf8'));
@@ -485,6 +486,21 @@ console.log('── 소스 운영 정책 ──');
 eq('SRC1 잠실개미 블로그는 유지', blogsConfig.blogs.some((blog) => blog.id === '68083015'), true);
 eq('SRC2 잠실개미 텔레그램은 수집 대상에서 제거', telegramConfig.channels.some((channel) => channel.id === 'jake8lee'), false);
 eq('SRC3 현재 7일 데이터에서도 잠실개미 텔레그램 글 제거', currentPosts.posts.some((post) => String(post.id).startsWith('jake8lee_')), false);
+eq('SRC4 원문형 신규 블로그 4개 추가', ['egzion', 'kk_kontemp', 'redbirdstock', 'granit34'].every((id) => blogsConfig.blogs.some((blog) => blog.id === id)), true);
+eq('SRC5 중복 텔레그램은 빼고 itechkorea만 시험 추가', ['kkkontemp', 'redbirdstock', 'Joorini34'].some((id) => telegramConfig.channels.some((channel) => channel.id === id)), false);
+eq('SRC6 itechkorea 시험 종료일까지 활성', activeTelegramChannels(telegramConfig.channels, '2026-08-26').some((channel) => channel.id === 'itechkorea'), true);
+eq('SRC7 itechkorea 시험 종료 다음 날 자동 제외', activeTelegramChannels(telegramConfig.channels, '2026-08-27').some((channel) => channel.id === 'itechkorea'), false);
+eq('SRC8 전달형 fact·혼합형 글은 채널 적중률에서 제외', [isOpinionEligible({ source_role: 'opinion' }), isOpinionEligible({ source_role: 'fact' }), isOpinionEligible({ source_role: 'mixed' })], [true, false, false]);
+
+console.log('── 시장 팩트 보드 ──');
+const marketFacts = buildMarketFacts({
+  kospi: { index: 6579.04, asOf: '20260812', d1: 3.7, d5: -0.3, d20: -4.1, flows: { foreign: 28357, institution: 5277, foreign5d: -27561 } },
+  kosdaq: { index: 858.91, asOf: '20260812', d1: 0.1, d5: 7.4, d20: 9.6, flows: { foreign: -1622, institution: -1476, foreign5d: -9160 } },
+});
+eq('MF1 국내 지수의 1·5·20일 팩트를 보존', marketFacts.indices.map((item) => [item.label, item.d1, item.d5, item.d20]), [['KOSPI', 3.7, -0.3, -4.1], ['KOSDAQ', 0.1, 7.4, 9.6]]);
+eq('MF2 외국인 당일·5일 수급 합산', [marketFacts.foreignToday, marketFacts.foreign5d], [26735, -36721]);
+eq('MF3 코스피·코스닥 5일 방향 차이를 사실로 감지', marketFacts.divergent, true);
+eq('MF4 시장 데이터 없음은 과장 없이 빈 상태', buildMarketFacts({}), { asOf: '', indices: [], foreignToday: null, foreign5d: null, divergent: false });
 
 console.log('── 반도체 데일리 펄스 ──');
 const semiconductorPosts = [
@@ -557,6 +573,7 @@ console.log('── 오늘 중심 2화면 정보 구조 ──');
 const appSource = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
 const homeSource = readFileSync(new URL('../src/components/PersonalHome.jsx', import.meta.url), 'utf8');
 const sourceScoreSource = readFileSync(new URL('../src/components/SourceScores.jsx', import.meta.url), 'utf8');
+const marketFactsSource = readFileSync(new URL('../src/components/MarketFacts.jsx', import.meta.url), 'utf8');
 const decisionCockpitSource = readFileSync(new URL('../src/components/DecisionCockpit.jsx', import.meta.url), 'utf8');
 const appCssSource = readFileSync(new URL('../src/App.css', import.meta.url), 'utf8');
 eq('IA1 메인 메뉴는 오늘과 전체 글만 유지', [...appSource.matchAll(/\{ id: "([^"]+)", label:/g)].map((match) => match[1]), ['home', 'posts']);
@@ -570,6 +587,8 @@ eq('IA8 추천 카드에 행동 분류 표시', decisionCockpitSource.includes('
 eq('IA9 추천 카드에 가장 강한 반대 근거 표시', decisionCockpitSource.includes('must-read-counter') && decisionCockpitSource.includes('counter_argument'), true);
 eq('IA10 추천 카드에 관심 종목 영향 표시', decisionCockpitSource.includes('must-read-watch-impact') && decisionCockpitSource.includes('watchlist_impact'), true);
 eq('IA11 좁은 추천 카드에서 라벨이 다음 줄로 자연스럽게 배치', appCssSource.includes('.must-read-labels { display: flex; align-items: center; flex-wrap: wrap;'), true);
+eq('IA12 상세 시황에 의견과 분리된 시장 팩트 보드 배치', homeSource.includes('<MarketFacts market={data?.market} />') && marketFactsSource.includes('정량 사실'), true);
+eq('IA13 시장 수급은 원본 억원 단위를 다시 나누지 않음', marketFactsSource.includes('Math.round(value).toLocaleString') && !marketFactsSource.includes('100_000_000'), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

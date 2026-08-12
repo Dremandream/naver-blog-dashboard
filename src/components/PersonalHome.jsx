@@ -5,6 +5,7 @@ import PeterFearGreed from './PeterFearGreed';
 import SemiconductorPulse from './SemiconductorPulse';
 import AttentionTrends from './AttentionTrends';
 import SourceScores from './SourceScores';
+import MarketFacts from './MarketFacts';
 import { buildHomeBrief } from '../utils/personal-home';
 
 function SignalLine({ label, item, variant }) {
@@ -74,6 +75,8 @@ export default function PersonalHome({ data, posts, peterFearGreed, onStockClick
           <small>종합 논거 · 어제와의 변화 · 반도체 펄스 · 종목 관심 추이</small>
         </summary>
         <div className="home-market-details-body">
+          <MarketFacts market={data?.market} />
+
           <DailyBrief
             briefs={data?.daily_briefs ?? data?.daily_brief}
             posts={posts}

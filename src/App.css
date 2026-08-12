@@ -95,6 +95,23 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .home-market-details > summary small { margin-left: auto; color: var(--muted); font-size: 9.5px; font-weight: 500; }
 .home-market-details-body { padding: 4px 16px 18px; border-top: 1px solid #e4e7e3; }
 .home-market-details-body .daily-brief { margin-top: 16px; }
+.market-facts { margin-top: 16px; padding: 17px 18px; border: 1px solid #dfe4df; border-radius: 13px; background: #fff; }
+.market-facts-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--rule); }
+.market-facts-head h2 { font-family: var(--serif); font-size: 17px; letter-spacing: -.025em; }
+.market-facts-head > span { color: var(--muted); font-size: 9.5px; }
+.market-facts-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 11px; }
+.market-facts-grid article { min-width: 0; padding: 11px 12px; border: 1px solid #e4e7e3; border-radius: 10px; background: #fbfcfa; }
+.market-facts-index { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.market-facts-index b { font-size: 11px; }
+.market-facts-index strong { font-family: var(--serif); font-size: 16px; font-variant-numeric: tabular-nums; }
+.market-facts-grid dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; margin-top: 8px; }
+.market-facts-grid dl div { min-width: 0; }
+.market-facts-grid dt { color: var(--muted); font-size: 8.5px; }
+.market-facts-grid dd { margin-top: 2px; overflow: hidden; font-size: 10px; font-weight: 800; font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
+.market-facts-grid dd.up { color: var(--up); }
+.market-facts-grid dd.down { color: var(--down); }
+.market-facts-grid dd.flat { color: var(--muted); }
+.market-facts-note { margin-top: 9px; color: var(--muted); font-size: 9.5px; line-height: 1.5; }
 .decision-cockpit-compact { margin-bottom: 0; }
 
 /* ===== StatsBar ===== */
@@ -650,6 +667,8 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
   .home-market-details > summary { align-items: flex-start; flex-wrap: wrap; padding: 12px 13px; }
   .home-market-details > summary small { order: 3; width: 100%; margin-left: 0; }
   .home-market-details-body { padding: 2px 12px 14px; }
+  .market-facts { margin: 12px -5px 0; padding: 14px 12px; }
+  .market-facts-grid { grid-template-columns: 1fr; }
   .home-headline { font-size: 20px; line-height: 1.43; }
   .home-signal-grid { grid-template-columns: 1fr; margin-top: 14px; }
   .home-signal-minority { grid-column: auto; }

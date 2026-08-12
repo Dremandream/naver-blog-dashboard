@@ -182,6 +182,14 @@ export function classifyTelegramHealth({ previewOff, parsedCount, windowCount })
 }
 export const TELEGRAM_PROBLEM_STATUSES = ['preview-off', 'parse-empty'];
 
+export function activeTelegramChannels(channels, referenceDate) {
+  return channels.filter((channel) => !channel.trial_until || referenceDate <= channel.trial_until);
+}
+
+export function isOpinionEligible(post) {
+  return post?.source_role !== 'fact' && post?.source_role !== 'mixed';
+}
+
 // 채널 HTML → 메시지 배열 [{ text, postDate, url }]
 export function parseTelegramMessages(html, channelId) {
   const messages = [];
@@ -482,7 +490,8 @@ export async function analyzePost(title, content, blogName) {
   "risks": ["글쓴이가 직접 언급한 리스크·유보 조건만 (없으면 빈 배열)"],
   "market_view": true 또는 false (시장 전체·주도주·지수·수급·유동성에 대한 글쓴이 본인의 시각이면 true. 단순 기업 뉴스·실적 전달이면 false),
   "market_sentiment": -2|-1|0|1|2 (시장 관점의 강도. -2 매우 비관, -1 비관, 0 중립/해당없음, 1 낙관, 2 매우 낙관),
-  "market_reason": "시장 심리 점수의 직접 근거 1문장. market_view가 false면 빈 문자열"
+  "market_reason": "시장 심리 점수의 직접 근거 1문장. market_view가 false면 빈 문자열",
+  "source_role": "opinion|fact|mixed (글쓴이의 직접 해석·전망이 중심이면 opinion, 공시·뉴스·리포트 전달만 있으면 fact, 둘이 섞여 분리하기 어려우면 mixed)"
 }`;
 
   try {
@@ -529,6 +538,8 @@ export async function analyzePost(title, content, blogName) {
     result.market_sentiment = Number.isFinite(Number(result.market_sentiment))
       ? Math.max(-2, Math.min(2, Number(result.market_sentiment))) : 0;
     result.market_reason = typeof result.market_reason === 'string' ? result.market_reason.trim() : '';
+    result.source_role = ['opinion', 'fact', 'mixed'].includes(result.source_role)
+      ? result.source_role : 'mixed';
     result.generatedAt = new Date().toISOString();
     return result;
   } catch (e) {
@@ -538,7 +549,7 @@ export async function analyzePost(title, content, blogName) {
       numbers: [], stance: '해당없음', reasoning: '', catalyst: '', risks: [],
       why_read: '', novelty: 0, evidence_quality: 0,
       ...normalizeInvestorAnalysis(),
-      market_view: false, market_sentiment: 0, market_reason: '',
+      market_view: false, market_sentiment: 0, market_reason: '', source_role: 'mixed',
       _failed: true, // 호출자가 실패를 구분해 캐시 오염을 피하도록 표식 (재시도 소진 후)
     };
   }
@@ -556,6 +567,7 @@ async function generateDailyBrief(posts, prices = {}, market = {}) {
     summary: p.summary,
     reasoning: p.reasoning,
     numbers: p.numbers,
+    source_role: p.source_role,
   }));
 
   // 쏠림 지표: 섹터 집중도 + 스탠스 편향 (인물 단위) — 프롬프트에 근거로 제공
@@ -598,7 +610,7 @@ ${Object.entries(market).map(([k, v]) =>
 1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 필자들의 시각을 정리만 합니다.
 2. **간결이 최우선**: 독자는 아침에 1~2분만 봅니다. 종목당 근거는 25자 내외 한 구절 + 핵심 수치 하나.
 3. 투자 무관 글은 무시하세요.
-4. **동일 인물 중복 주의**: 같은 person이 블로그와 텔레그램에 모두 쓸 수 있습니다(예: '너쟁이', '잠실개미'). mentions는 person 기준으로 세고, 같은 사람을 2명으로 세지 마세요.
+4. **동일 인물 중복 주의**: 같은 person이 블로그와 텔레그램에 모두 쓸 수 있습니다(예: '너쟁이', '잠실개미'). mentions는 person 기준으로 세고, 같은 사람을 2명으로 세지 마세요. source_role이 fact인 글은 사실 확인에만 참고하고 필자의 긍정·부정·소수의견으로 세지 마세요. mixed도 직접 의견과 전달 사실을 분리할 수 없으면 인물 의견 수에서 제외하세요.
 5. **positive/negative 분류**: 필자들의 시각이 긍정(강세)인 대상은 positive에, 부정(신중·약세)인 대상은 negative에. 같은 종목에 강세·약세가 갈리면 양쪽에 각각 넣되 point에 인원을 명시 (예: '강세 3명 vs 약세 2명 갈림').
 6. **sector 그룹**: 종목들을 산업별로 묶으세요 (예: 반도체, AI/빅테크, 2차전지, 금융, 매크로). 종목이 아닌 시장 전체 의견(지수·수급·금리)은 sector '매크로'에 name을 주제어로 (예: name '외인 수급').
 7. **minority(소수·역발상)**: 다수와 다르게 보는 근거 있는 시각 최대 2개, 각 한 문장. 억지로 만들지 말고 진짜 없으면 빈 배열.
@@ -686,6 +698,7 @@ function archiveHistory(prices, market, posts) {
   const rank = s => (s === '강세' ? 2 : s === '약세' ? 2 : 1);
   const opinionsByDate = {};
   for (const p of posts) {
+    if (!isOpinionEligible(p)) continue;
     const person = p.person || p.blog_name;
     for (const stock of p.stocks ?? []) {
       if (!priceByDate[p.date]?.[stock]) continue; // 그날 종가 없으면 판정 불가 → 제외
@@ -767,6 +780,7 @@ async function main() {
   let channels = [];
   try {
     ({ channels } = JSON.parse(fs.readFileSync(TELEGRAM_PATH, 'utf-8')));
+    channels = activeTelegramChannels(channels, TODAY_KST);
   } catch {
     console.warn('⚠️  telegram-channels.json 로드 실패 — 텔레그램 수집 스킵');
   }
@@ -905,6 +919,7 @@ async function main() {
       market_view: analysis.market_view ?? false,
       market_sentiment: analysis.market_sentiment ?? 0,
       market_reason: analysis.market_reason ?? '',
+      source_role: analysis.source_role ?? 'mixed',
     });
 
     if (i < collected.length - 1) await new Promise(r => setTimeout(r, 500));

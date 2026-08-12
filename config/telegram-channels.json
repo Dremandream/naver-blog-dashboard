@@ -5,6 +5,7 @@
     { "id": "Kyaooo", "name": "캬오의 공부방", "person": "캬오의 공부방" },
     { "id": "pengmeup", "name": "펭미업", "person": "펭미업" },
     { "id": "aetherjapanresearch", "name": "에테르 일본&미국", "person": "에테르" },
-    { "id": "pikachu_aje", "name": "피카츄 아저씨", "person": "피카츄 아저씨" }
+    { "id": "pikachu_aje", "name": "피카츄 아저씨", "person": "피카츄 아저씨" },
+    { "id": "itechkorea", "name": "미국주식과 투자이야기", "person": "ITK 미주투", "trial_until": "2026-08-26" }
   ]
 }
