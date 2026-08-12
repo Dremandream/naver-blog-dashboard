@@ -119,13 +119,29 @@ export function selectMustReadPosts(posts, scores, options = {}) {
   const selected = [];
   const selectedIds = new Set();
   const selectedSources = new Set();
-  const append = (item, requireNewSource) => {
+  const append = (item, requireNewSource, role = '추가 핵심') => {
     if (selected.length >= limit || selectedIds.has(item.post.id)) return;
     if (requireNewSource && selectedSources.has(item.source)) return;
-    selected.push(item);
+    selected.push({ ...item, role });
     selectedIds.add(item.post.id);
     selectedSources.add(item.source);
   };
+
+  if (preferredSectorSet.size > 0) {
+    // A preferred-sector post is the strongest fit for this slot. Fall back to
+    // a broader market-view post only when the recent set has no sector match.
+    const focus = candidates.find((item) => item.preferredSectorHit)
+      ?? candidates.find((item) => item.marketView);
+    if (focus) append(focus, false, '반도체·시황');
+
+    const fresh = candidates.filter((item) => (
+      !selectedIds.has(item.post.id)
+      && !item.watchlistHit
+      && (item.novelty >= 2 || Boolean(item.post.catalyst))
+    ));
+    const diverseFresh = fresh.find((item) => !selectedSources.has(item.source)) ?? fresh[0];
+    if (diverseFresh) append(diverseFresh, false, '신선 아이디어');
+  }
 
   candidates.forEach((item) => append(item, true));
   if (selected.length < limit) candidates.forEach((item) => append(item, false));

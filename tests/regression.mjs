@@ -14,6 +14,7 @@ import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
 import { selectBriefSources } from '../src/utils/brief-sources.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from '../scripts/lib/market-data.js';
 import { analysisDepthLabel, selectMustReadPosts } from '../src/utils/must-read.js';
+import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -393,6 +394,33 @@ const themePriority = selectMustReadPosts([
   { id: 'semiconductor', date: '2026-08-09', person: '신뢰A', title: '반도체 업황 아이디어', url: 'https://example.com/semiconductor', summary: '반도체 사이클', stocks: ['반도체주'], sector: '반도체', stance: '강세', novelty: 2, evidence_quality: 2, analysis_depth: 'full' },
 ], decisionScores, { referenceDate: '2026-08-09', preferredSectors: ['반도체'], limit: 1 });
 eq('MR7 반도체 선호 섹터를 동급 아이디어보다 우선', themePriority[0].post.id, 'semiconductor');
+const editorialReads = selectMustReadPosts(mustReadPosts, decisionScores, {
+  referenceDate: '2026-08-09', watchlist: ['삼성전자', 'SK하이닉스'], preferredSectors: ['반도체'], limit: 3, days: 2,
+});
+eq('MR8 목적형 편성은 반도체·시황을 첫 슬롯에 배치', [editorialReads[0].post.id, editorialReads[0].role], ['watch-deep', '반도체·시황']);
+eq('MR9 목적형 편성은 비관심종목 신선 아이디어를 포함', editorialReads.some((item) => item.post.id === 'new-evidence' && item.role === '신선 아이디어'), true);
+
+console.log('── 반도체 데일리 펄스 ──');
+const semiconductorPosts = [
+  { id: 'semi-bull', date: '2026-08-12', person: 'A', title: '삼성전자 HBM 공급 확대', url: 'https://example.com/semi-bull', summary: 'HBM 공급이 늘어난다.', stocks: ['삼성전자'], sector: '반도체', stance: '강세', catalyst: 'HBM 고객사 인증 통과' },
+  { id: 'semi-bear', date: '2026-08-11', person: 'B', title: 'SK하이닉스 메모리 가격 우려', url: 'https://example.com/semi-bear', summary: '가격 하락 가능성', stocks: ['SK하이닉스'], sector: '반도체', stance: '약세', catalyst: '메모리 계약가격 하락' },
+  { id: 'semi-market', date: '2026-08-11', person: 'C', title: 'AI 반도체 주도주 점검', url: 'https://example.com/semi-market', summary: '주도주 수급 점검', stocks: ['삼성전자', 'SK하이닉스'], sector: '거시경제', stance: '중립', market_view: true, catalyst: '' },
+  { id: 'old-semi', date: '2026-08-09', person: 'D', title: '오래된 반도체 글', url: 'https://example.com/old', summary: '오래된 글', stocks: ['삼성전자'], sector: '반도체', stance: '강세', catalyst: '과거 촉매' },
+  { id: 'finance', date: '2026-08-12', person: 'E', title: '은행 실적', url: 'https://example.com/finance', summary: '금융 글', stocks: ['은행주'], sector: '금융', stance: '강세' },
+];
+const semiconductorPulse = buildSemiconductorPulse(semiconductorPosts, { referenceDate: '2026-08-12', days: 2, catalystLimit: 3 });
+eq('SP1 최근 2일 반도체 관련 글만 집계', [semiconductorPulse.postCount, semiconductorPulse.sourceCount], [3, 3]);
+eq('SP2 강세·약세·중립 분포', semiconductorPulse.stances, { bull: 1, bear: 1, neutral: 1 });
+eq('SP3 강약이 같으면 혼조로 과장 없이 표시', semiconductorPulse.tone, '혼조');
+eq('SP4 언급 종목 빈도순', semiconductorPulse.topStocks, [{ name: '삼성전자', count: 2 }, { name: 'SK하이닉스', count: 2 }]);
+eq('SP5 새 촉매와 원문을 연결', semiconductorPulse.catalysts.map((item) => [item.text, item.url]), [
+  ['HBM 고객사 인증 통과', 'https://example.com/semi-bull'],
+  ['메모리 계약가격 하락', 'https://example.com/semi-bear'],
+]);
+eq('SP6 반도체 데이터 없음은 데이터 부족', buildSemiconductorPulse([], { referenceDate: '2026-08-12' }).tone, '데이터 부족');
+eq('SP7 방향성 의견이 없으면 방향성 부족', buildSemiconductorPulse([
+  { id: 'neutral-semi', date: '2026-08-12', person: 'A', title: '반도체 업황 점검', sector: '반도체', stance: '중립' },
+], { referenceDate: '2026-08-12' }).tone, '방향성 부족');
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

@@ -9,6 +9,7 @@ import AttentionTrends from "./components/AttentionTrends";
 import SourceScores from "./components/SourceScores";
 import StockReport from "./components/StockReport";
 import DecisionCockpit from "./components/DecisionCockpit";
+import SemiconductorPulse from "./components/SemiconductorPulse";
 import { INITIAL_VISIBLE_POSTS, visibleItems } from "./utils/post-list";
 import { buildPeterFearGreed } from "../shared/peter-fear-greed";
 import "./App.css";
@@ -151,6 +152,7 @@ export default function App() {
           />
           <FactSidebar peterFearGreed={peterFearGreed} verdicts={data?.verdicts} dailyBriefs={data?.daily_briefs} onStockClick={setSelectedStock} />
         </div>
+        <SemiconductorPulse posts={posts} referenceDate={data?.date} onStockClick={setSelectedStock} />
         <DecisionCockpit
           posts={posts}
           scores={data?.source_scores}

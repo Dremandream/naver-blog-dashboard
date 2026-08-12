@@ -66,6 +66,7 @@ function MustReadCard({ item, rank, opened, onOpen }) {
       <div className="must-read-rank"><span>{rank}</span><small>Pick</small></div>
       <div className="must-read-main">
         <div className="must-read-labels">
+          <span className="must-read-role">{item.role}</span>
           {item.watchlistHit && <span className="must-read-watch">관심 종목</span>}
           {item.preferredSectorHit && <span className="must-read-sector">반도체 포커스</span>}
           {item.marketView && <span className="must-read-market">시장 시황</span>}
