@@ -13,7 +13,8 @@ import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
 import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
 import { selectBriefSources } from '../src/utils/brief-sources.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from '../scripts/lib/market-data.js';
-import { analysisDepthLabel, selectMustReadPosts } from '../src/utils/must-read.js';
+import { analysisDepthLabel, resolveReadAction, selectMustReadPosts } from '../src/utils/must-read.js';
+import { normalizeInvestorAnalysis } from '../scripts/lib/investor-analysis.js';
 import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
 import { buildHomeBrief } from '../src/utils/personal-home.js';
 import { feedbackKey, updateFeedback, feedbackCounts, savedForLater } from '../src/utils/feedback.js';
@@ -98,6 +99,7 @@ const workflowSource = readFileSync(new URL('../.github/workflows/collect.yml', 
 eq('PFG10 UI에 장기 검증 결과와 표본 한계를 표시', peterComponentSource.includes('data?.backtest') && peterComponentSource.includes('장기 검증'), true);
 eq('PFG11 일일 수집기가 Peter K 장기 이력을 증분 병합', collectorSource.includes('mergePeterHistory(existingPeterHistory, merged)'), true);
 eq('PFG12 자동 배포가 Peter K 장기 이력도 커밋', workflowSource.includes('public/data/peter-history.json'), true);
+eq('INV4 AI 분석 실패 글은 기존 데이터 보존을 위해 저장 스킵', collectorSource.includes("if (analysis._failed)") && collectorSource.includes('이번 글 저장 스킵'), true);
 
 console.log('── parseTelegramMessages (t.me/s 구조 골든) ──');
 const tgHtml = `
@@ -406,6 +408,26 @@ eq('BR5 같은 원문을 중복 연결하지 않음', new Set(briefSources.map((
 eq('BR6 리포트 기준 2일보다 오래된 원문은 제외', briefSources.every((item) => item.post.date >= '2026-08-08'), true);
 
 console.log('── 오늘 꼭 읽을 글 ──');
+const normalizedInvestor = normalizeInvestorAnalysis({
+  evidence_grade: 'B', evidence_reason: '기업 IR 수치가 포함됨',
+  action: '반드시 원문 읽기', action_reason: '관심 종목 실적 변화',
+  price_reflection: '일부 반영', counter_argument: '수요가 예상보다 둔화될 수 있음',
+  investment_chain: '수주 증가 → 매출 증가 → 이익 상향 → 주가 재평가',
+  watchlist_impact: {
+    삼성전자: { direction: '긍정', reason: 'HBM 공급 확대' },
+    SK하이닉스: { direction: '잘못된 값', reason: '오류' },
+  },
+});
+eq('INV1 투자판단 필드 허용값 정규화', [
+  normalizedInvestor.evidence_grade, normalizedInvestor.evidence_quality,
+  normalizedInvestor.action, normalizedInvestor.price_reflection,
+], ['B', 3, '반드시 원문 읽기', '일부 반영']);
+eq('INV2 관심 종목 영향의 잘못된 방향은 판단 불가', normalizedInvestor.watchlist_impact.SK하이닉스, { direction: '판단 불가', reason: '오류' });
+const invalidInvestor = normalizeInvestorAnalysis({ evidence_grade: '최상', action: '매수', price_reflection: '저평가' });
+eq('INV3 근거 없는 AI 확신은 보수적 기본값', [
+  invalidInvestor.evidence_grade, invalidInvestor.evidence_quality,
+  invalidInvestor.action, invalidInvestor.price_reflection,
+], ['F', 0, '추가 조사하기', '판단 불가']);
 const mustReadPosts = [
   { id: 'watch-deep', date: '2026-08-09', person: '신뢰A', blog_name: '신뢰A', title: '삼성전자 HBM 공급 변화', url: 'https://example.com/watch-deep', summary: '삼성전자 공급 변화', stocks: ['삼성전자'], sector: '반도체', stance: '강세', reasoning: '고객사 인증 일정이 앞당겨졌다.', catalyst: 'HBM 인증 일정 단축', why_read: '관심 종목의 공급 일정이 바뀐 글입니다.', novelty: 3, evidence_quality: 3, analysis_depth: 'full' },
   { id: 'new-evidence', date: '2026-08-09', person: '신뢰B', blog_name: '신뢰B', title: '뉴코 신규 계약', url: 'https://example.com/new-evidence', summary: '신규 계약 체결', stocks: ['뉴코'], sector: '방산', stance: '강세', reasoning: '계약 규모가 매출의 30%다.', catalyst: '첫 해외 계약', why_read: '실적을 바꿀 계약 규모가 제시됐습니다.', novelty: 3, evidence_quality: 3, analysis_depth: 'rss' },
@@ -434,6 +456,14 @@ const editorialReads = selectMustReadPosts(mustReadPosts, decisionScores, {
 });
 eq('MR8 목적형 편성은 반도체·시황을 첫 슬롯에 배치', [editorialReads[0].post.id, editorialReads[0].role], ['watch-deep', '반도체·시황']);
 eq('MR9 목적형 편성은 비관심종목 신선 아이디어를 포함', editorialReads.some((item) => item.post.id === 'new-evidence' && item.role === '신선 아이디어'), true);
+eq('MR10 근거와 신뢰도가 충분하면 AI 행동 분류 유지', resolveReadAction({ action: '반드시 원문 읽기' }, { rate: 58 }, 'full', 3), '반드시 원문 읽기');
+eq('MR11 저신뢰 소스의 반드시 읽기는 추가 조사로 하향', resolveReadAction({ action: '반드시 원문 읽기' }, { rate: 20 }, 'full', 3), '추가 조사하기');
+eq('MR12 근거 미확인 글의 반드시 읽기는 추가 조사로 하향', resolveReadAction({ action: '반드시 원문 읽기' }, { rate: 58 }, 'full', 0), '추가 조사하기');
+const withoutExcluded = selectMustReadPosts([
+  { ...mustReadPosts[0], id: 'excluded', url: 'https://example.com/excluded', action: '제외하기' },
+  mustReadPosts[1],
+], decisionScores, { referenceDate: '2026-08-09', limit: 2 });
+eq('MR13 제외하기로 판정된 글은 추천에서 제거', withoutExcluded.map((item) => item.post.id), ['new-evidence']);
 
 console.log('── 반도체 데일리 펄스 ──');
 const semiconductorPosts = [
@@ -506,6 +536,8 @@ console.log('── 오늘 중심 2화면 정보 구조 ──');
 const appSource = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
 const homeSource = readFileSync(new URL('../src/components/PersonalHome.jsx', import.meta.url), 'utf8');
 const sourceScoreSource = readFileSync(new URL('../src/components/SourceScores.jsx', import.meta.url), 'utf8');
+const decisionCockpitSource = readFileSync(new URL('../src/components/DecisionCockpit.jsx', import.meta.url), 'utf8');
+const appCssSource = readFileSync(new URL('../src/App.css', import.meta.url), 'utf8');
 eq('IA1 메인 메뉴는 오늘과 전체 글만 유지', [...appSource.matchAll(/\{ id: "([^"]+)", label:/g)].map((match) => match[1]), ['home', 'posts']);
 eq('IA2 아이디어·소스 독립 화면 제거', ['ideas', 'sources'].some((view) => appSource.includes(`activeView === "${view}"`)), false);
 eq('IA3 Peter K 지수를 홈에 직접 배치', homeSource.includes('<PeterFearGreed data={peterFearGreed} />'), true);
@@ -513,6 +545,10 @@ eq('IA4 홈에서 Peter K 지수가 독특한 글보다 먼저 표시', homeSour
 eq('IA5 소스 적중률 상위 목록을 홈에 통합', homeSource.includes('<SourceScores') && homeSource.includes('compact'), true);
 eq('IA6 상세 분석은 기본 접힘 영역으로 보존', homeSource.includes('<details className="home-market-details">'), true);
 eq('IA7 전체 소스 성적표 접근은 접힘 영역으로 보존', sourceScoreSource.includes('<summary>전체 소스 성적표 보기</summary>'), true);
+eq('IA8 추천 카드에 행동 분류 표시', decisionCockpitSource.includes('must-read-action') && decisionCockpitSource.includes('item.action'), true);
+eq('IA9 추천 카드에 가장 강한 반대 근거 표시', decisionCockpitSource.includes('must-read-counter') && decisionCockpitSource.includes('counter_argument'), true);
+eq('IA10 추천 카드에 관심 종목 영향 표시', decisionCockpitSource.includes('must-read-watch-impact') && decisionCockpitSource.includes('watchlist_impact'), true);
+eq('IA11 좁은 추천 카드에서 라벨이 다음 줄로 자연스럽게 배치', appCssSource.includes('.must-read-labels { display: flex; align-items: center; flex-wrap: wrap;'), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

@@ -2,6 +2,8 @@ import { rankSources } from './source-ranking.js';
 
 const DIRECTIONAL = new Set(['강세', '약세']);
 const DEPTH_SCORE = { full: 8, rss: 4, unknown: 0, title: -12 };
+const ACTIONS = new Set(['반드시 원문 읽기', '추가 조사하기', '관심 목록에 저장', '기존 투자 논리 점검', '참고만 하기', '제외하기']);
+const ACTION_SCORE = { '반드시 원문 읽기': 12, '기존 투자 논리 점검': 9, '추가 조사하기': 6, '관심 목록에 저장': 4, '참고만 하기': 0, '제외하기': -100 };
 
 function clampScore(value, max = 3) {
   const number = Number(value);
@@ -55,6 +57,15 @@ function fallbackWhyRead(post, depth) {
   return post.reasoning || post.summary || post.title || '원문에서 투자 근거를 확인할 필요가 있습니다.';
 }
 
+export function resolveReadAction(post, trust, depth, evidenceQuality) {
+  let action = ACTIONS.has(post?.action) ? post.action : '추가 조사하기';
+  if (action === '제외하기') return action;
+  if (action === '반드시 원문 읽기' && (
+    depth === 'title' || evidenceQuality === 0 || (trust?.rate != null && trust.rate < 40)
+  )) return '추가 조사하기';
+  return action;
+}
+
 function enrichPost(post, trustMap, watchlist, preferredSectors) {
   const depth = ['full', 'rss', 'title'].includes(post.analysis_depth) ? post.analysis_depth : 'unknown';
   const evidenceQuality = depth === 'title' ? 0 : clampScore(post.evidence_quality);
@@ -64,6 +75,8 @@ function enrichPost(post, trustMap, watchlist, preferredSectors) {
   const watchlistHit = (post.stocks ?? []).some((stock) => watchlist.has(stock));
   const preferredSectorHit = preferredSectors.has(post.sector);
   const marketView = post.market_view === true;
+  const action = resolveReadAction(post, trust, depth, evidenceQuality);
+  const trustPenalty = trust.rate != null && trust.rate < 40 && trust.total >= 20 ? 20 : 0;
   const score = (watchlistHit ? 30 : 0)
     + (preferredSectorHit ? 14 : 0)
     + (marketView ? 12 : 0)
@@ -71,7 +84,9 @@ function enrichPost(post, trustMap, watchlist, preferredSectors) {
     + novelty * 10
     + evidenceQuality * 9
     + (trust.adjustedScore == null ? 0 : Math.max(0, Math.min(100, trust.adjustedScore)) * 0.25)
-    + (DEPTH_SCORE[depth] ?? DEPTH_SCORE.unknown);
+    + (DEPTH_SCORE[depth] ?? DEPTH_SCORE.unknown)
+    + (ACTION_SCORE[action] ?? 0)
+    - trustPenalty;
 
   return {
     post,
@@ -86,6 +101,7 @@ function enrichPost(post, trustMap, watchlist, preferredSectors) {
     watchlistHit,
     preferredSectorHit,
     marketView,
+    action,
   };
 }
 
@@ -106,6 +122,7 @@ export function selectMustReadPosts(posts, scores, options = {}) {
   const seenUrls = new Set();
   const candidates = posts
     .filter((post) => post?.url && post.date >= cutoff && post.date <= referenceDate && isInvestmentPost(post))
+    .filter((post) => post.action !== '제외하기')
     .filter((post) => {
       if (seenUrls.has(post.url)) return false;
       seenUrls.add(post.url);

@@ -66,13 +66,28 @@ function evidenceLabel(value) {
   return ['근거 미확인', '주장 중심', '근거 있음', '근거 풍부'][value] ?? '근거 미확인';
 }
 
+function WatchlistImpact({ post }) {
+  const impacts = Object.entries(post.watchlist_impact ?? {})
+    .filter(([stock, value]) => WATCHLIST.includes(stock) && value?.direction !== '관련 없음')
+    .slice(0, 2);
+  if (!impacts.length) return null;
+  return (
+    <div className="must-read-watch-impact">
+      {impacts.map(([stock, value]) => (
+        <p key={stock}><b>{stock} · {value.direction}</b><span>{value.reason || '영향 경로 추가 확인 필요'}</span></p>
+      ))}
+    </div>
+  );
+}
+
 function MustReadCard({ item, rank, opened, feedback, onOpen, onFeedback }) {
   const directional = item.post.stance === '강세' || item.post.stance === '약세';
   return (
     <article className={`must-read-card ${rank === 1 ? 'must-read-featured' : ''} ${opened ? 'dc-row-opened' : ''}`}>
-      <div className="must-read-rank"><span>{rank}</span><small>Pick</small></div>
+      <div className="must-read-rank"><span>{rank}</span><small>선별</small></div>
       <div className="must-read-main">
         <div className="must-read-labels">
+          <span className="must-read-action" title={item.post.action_reason || ''}>{item.action}</span>
           <span className="must-read-role">{item.role}</span>
           {item.watchlistHit && <span className="must-read-watch">관심 종목</span>}
           {item.preferredSectorHit && <span className="must-read-sector">반도체 포커스</span>}
@@ -82,11 +97,16 @@ function MustReadCard({ item, rank, opened, feedback, onOpen, onFeedback }) {
         </div>
         <h3>{item.post.title}</h3>
         <p className="must-read-why"><b>왜 읽어야 하나</b> {item.whyRead}</p>
+        {item.post.counter_argument && (
+          <p className="must-read-counter"><b>가장 강한 반대 근거</b> {item.post.counter_argument}</p>
+        )}
+        <WatchlistImpact post={item.post} />
         <div className="must-read-meta">
           <span>{item.source}</span>
           <span>{trustLabel(item.trust)}</span>
           <span>{item.depthLabel}</span>
-          <span>{evidenceLabel(item.evidenceQuality)}</span>
+          <span>{item.post.evidence_grade ? `근거 ${item.post.evidence_grade}` : evidenceLabel(item.evidenceQuality)}</span>
+          <span>가격 {item.post.price_reflection || '판단 불가'}</span>
           <span>{item.post.date}</span>
         </div>
         <div className="must-read-feedback" aria-label={`${item.post.title} 피드백`}>

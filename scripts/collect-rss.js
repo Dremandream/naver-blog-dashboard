@@ -16,6 +16,7 @@ import { judgeBatch } from './judge.js';
 import { computeSourceScores } from './hitrate.js';
 import { parseJSONLoose, stripHtml } from './lib/parsers.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from './lib/market-data.js';
+import { normalizeInvestorAnalysis } from './lib/investor-analysis.js';
 import { buildPeterBacktest, buildPeterFearGreed, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { buildMentionHistory } from '../shared/discovery.js';
 
@@ -431,7 +432,7 @@ async function fetchMarketData() {
 
 // ─── Claude AI 투자 요약 ──────────────────────────────────────────────────────
 export async function analyzePost(title, content, blogName) {
-  const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래 블로그 글을 읽고, 독자가 원글을 열지 않아도 판단할 수 있게 정보를 최대한 구체적으로 추출하세요.
+  const prompt = `당신은 삼성전자·SK하이닉스를 핵심 관심 종목으로 두고 반도체 업황, 시장 주도주, 수급과 새 촉매를 추적하는 능동적 투자자의 리서치 파트너입니다. 매수·매도를 대신 결정하지 말고, 이 글을 읽을 가치와 추가 검증할 사실을 판단하세요.
 
 블로그: ${blogName}
 제목: ${title}
@@ -442,6 +443,10 @@ export async function analyzePost(title, content, blogName) {
 2. 두루뭉술 금지: "긍정적 전망" (X) → "2Q 영업이익 90조 전망, 컨센서스 75~84조 상회" (O)
 3. 숫자가 있으면 반드시 포함: 목표가, 전망치, 증감률, 날짜, 밸류에이션.
 4. 글쓴이의 논리 구조(주장 → 근거)를 보존하세요.
+5. 글쓴이 주장과 객관적으로 검증 가능한 사실을 구분하세요. 본문 밖 사실은 만들지 마세요.
+6. 강세 논리만 반복하지 말고 이 논리가 틀릴 수 있는 가장 강한 반대 근거를 제시하세요.
+7. 현재 가격·밸류에이션 정보가 본문에 없으면 가격 반영 여부는 반드시 '판단 불가'로 표시하세요.
+8. 글의 확신이나 유명세를 근거 등급으로 착각하지 마세요.
 
 [sector 분류 기준] 본문이 짧거나 없어도 제목 키워드로 반드시 분류하세요. 기타는 정말 어떤 섹터에도 해당하지 않을 때만 사용.
 - 반도체: HBM, DRAM, LPDDR, 메모리, 반도체, 삼성전자, SK하이닉스, 엔비디아, AI칩, 파운드리
@@ -463,7 +468,17 @@ export async function analyzePost(title, content, blogName) {
   "catalyst": "이 글에서 새롭게 발생한 투자 촉매 1문장. 실적·수주·계약·정책·제품·가격·목표가 변화 등이 명시된 경우만 작성하고, 기존 견해 반복이면 빈 문자열",
   "why_read": "원문을 읽을 가치가 있다면 그 이유를 구체적으로 1문장. 새로운 수치·촉매·반대 관점·관심 종목 변화 중 무엇인지 명시. 투자 가치가 없거나 본문이 부족하면 빈 문자열",
   "novelty": 0|1|2|3 (0 반복/무관, 1 기존 견해 보완, 2 새로운 근거나 관점, 3 투자 판단을 바꿀 새 촉매),
-  "evidence_quality": 0|1|2|3 (0 근거 없음, 1 주장만 있음, 2 구체 근거 또는 수치 1개, 3 복수 수치·공시·계약 등 검증 가능한 근거),
+  "evidence_grade": "A|B|C|D|F (A 공시·실적·계약·공식통계, B 기업 IR·구체 산업데이터·복수 자료, C 합리적 해석이나 추가 검증 필요, D 개인 전망·정성 주장, F 근거 없음)",
+  "evidence_reason": "근거 등급을 정한 이유 1문장",
+  "counter_argument": "이 투자 논리가 틀릴 수 있는 가장 강한 반대 근거 1문장. 없으면 '본문에 반대 근거 없음'",
+  "price_reflection": "미반영 가능성|일부 반영|상당 부분 반영|판단 불가",
+  "investment_chain": "촉매 → 산업·기업 변화 → 실적 영향 → 주가 영향 순서의 1문장. 연결이 끊기면 해당 단계에 '근거 부족' 명시",
+  "watchlist_impact": {
+    "삼성전자": { "direction": "긍정|부정|혼재|관련 없음|판단 불가", "reason": "영향 경로 1문장" },
+    "SK하이닉스": { "direction": "긍정|부정|혼재|관련 없음|판단 불가", "reason": "영향 경로 1문장" }
+  },
+  "action": "반드시 원문 읽기|추가 조사하기|관심 목록에 저장|기존 투자 논리 점검|참고만 하기|제외하기",
+  "action_reason": "해당 행동을 선택한 이유 1문장. 매수·매도 표현 금지",
   "risks": ["글쓴이가 직접 언급한 리스크·유보 조건만 (없으면 빈 배열)"],
   "market_view": true 또는 false (시장 전체·주도주·지수·수급·유동성에 대한 글쓴이 본인의 시각이면 true. 단순 기업 뉴스·실적 전달이면 false),
   "market_sentiment": -2|-1|0|1|2 (시장 관점의 강도. -2 매우 비관, -1 비관, 0 중립/해당없음, 1 낙관, 2 매우 낙관),
@@ -475,17 +490,18 @@ export async function analyzePost(title, content, blogName) {
     const isRetryable = (e) => {
       const s = e?.status;
       const m = String(e?.message || '');
-      return [408, 429, 500, 502, 503, 529].includes(s) ||
+      return e instanceof SyntaxError || [408, 429, 500, 502, 503, 529].includes(s) ||
         /overload|too many requests|connection error|timed out|timeout|ECONNRESET|ETIMEDOUT|socket hang up/i.test(m);
     };
-    let res;
+    let res, result;
     for (let attempt = 1; ; attempt++) {
       try {
         res = await client.messages.create({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2000,
+          max_tokens: 3200,
           messages: [{ role: 'user', content: prompt }],
         });
+        result = parseJSONLoose(res.content[0].text);
         break;
       } catch (e) {
         if (attempt >= 5 || !isRetryable(e)) throw e;
@@ -494,7 +510,6 @@ export async function analyzePost(title, content, blogName) {
         await new Promise((r) => setTimeout(r, wait));
       }
     }
-    const result = parseJSONLoose(res.content[0].text);
     // sector 단일화: 여러 개("반도체|거시경제")로 나오면 첫 번째만 사용 (필터 매칭 보장)
     if (typeof result.sector === 'string') result.sector = result.sector.split(/[|,/]/)[0].trim();
     // AI 응답 스키마 검증 (배열 타입 보장)
@@ -509,7 +524,7 @@ export async function analyzePost(title, content, blogName) {
     const clampMetric = value => Number.isFinite(Number(value))
       ? Math.max(0, Math.min(3, Math.round(Number(value)))) : 0;
     result.novelty = clampMetric(result.novelty);
-    result.evidence_quality = clampMetric(result.evidence_quality);
+    Object.assign(result, normalizeInvestorAnalysis(result));
     result.market_view = result.market_view === true;
     result.market_sentiment = Number.isFinite(Number(result.market_sentiment))
       ? Math.max(-2, Math.min(2, Number(result.market_sentiment))) : 0;
@@ -522,6 +537,7 @@ export async function analyzePost(title, content, blogName) {
       summary: title, stocks: [], sector: '기타', key_points: [],
       numbers: [], stance: '해당없음', reasoning: '', catalyst: '', risks: [],
       why_read: '', novelty: 0, evidence_quality: 0,
+      ...normalizeInvestorAnalysis(),
       market_view: false, market_sentiment: 0, market_reason: '',
       _failed: true, // 호출자가 실패를 구분해 캐시 오염을 피하도록 표식 (재시도 소진 후)
     };
@@ -847,6 +863,10 @@ async function main() {
 
     if (process.env.CLAUDE_API_KEY) {
       analysis = await analyzePost(post.title, post.content, post.blog_name);
+      if (analysis._failed) {
+        console.warn('  ⏭️ 분석 실패 — 기존 데이터 보존을 위해 이번 글 저장 스킵');
+        continue;
+      }
       console.log(`  → ${analysis.sector} | ${analysis.stance || '-'} | ${analysis.stocks.join(', ') || '종목 없음'}`);
     }
 
@@ -872,6 +892,14 @@ async function main() {
       why_read: analysis.why_read ?? '',
       novelty: analysis.novelty ?? 0,
       evidence_quality: analysis.evidence_quality ?? 0,
+      evidence_grade: analysis.evidence_grade ?? 'F',
+      evidence_reason: analysis.evidence_reason ?? '',
+      counter_argument: analysis.counter_argument ?? '',
+      price_reflection: analysis.price_reflection ?? '판단 불가',
+      investment_chain: analysis.investment_chain ?? '',
+      watchlist_impact: analysis.watchlist_impact ?? normalizeInvestorAnalysis().watchlist_impact,
+      action: analysis.action ?? '추가 조사하기',
+      action_reason: analysis.action_reason ?? '',
       analysis_depth: analysisDepth,
       risks: analysis.risks ?? [],
       market_view: analysis.market_view ?? false,
