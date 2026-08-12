@@ -15,6 +15,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { judgeBatch } from './judge.js';
 import { computeSourceScores } from './hitrate.js';
 import { parseJSONLoose, stripHtml } from './lib/parsers.js';
+import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from './lib/market-data.js';
 import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
 import { buildMentionHistory } from '../shared/discovery.js';
 
@@ -217,6 +218,7 @@ export function parseTelegramMessages(html, channelId) {
 
 // ─── 주가 수집 (네이버 금융, 무료 공개 API) ──────────────────────────────────
 const CODES_PATH = path.join(__dirname, '../config/stock-codes.json');
+const AIK_DATA_BASE = 'https://aikstockdata.com/data/public';
 
 async function fetchJSON(url, retries = 4) {
   // 레이트리밋(429)·5xx·타임아웃·네트워크 오류는 일시적 → 지수 백오프 재시도.
@@ -262,6 +264,20 @@ function yyyymmdd(offsetDays = 0) {
 const ymd8ToDash = s => `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
 export async function fetchClosesDated(info, daysBack = 45) {
   if (info.market === 'KR') {
+    const code = /^\d{6}$/.test(String(info.code ?? '')) ? String(info.code) : null;
+    if (code && daysBack <= 365) {
+      try {
+        const raw = await fetchJSON(`${AIK_DATA_BASE}/s/${code}_history.json`);
+        const closes = parseAikStockHistory(JSON.parse(raw), {
+          expectedCode: code,
+          minDate: ymd8ToDash(yyyymmdd(daysBack)),
+        });
+        console.log(`  🌐 ${code}: 한국주식데이터 확정 종가 사용`);
+        return closes;
+      } catch (e) {
+        console.warn(`  ⚠️  ${code}: 공개 JSON 실패 → 네이버 시세 폴백 (${e.message})`);
+      }
+    }
     const raw = await fetchJSON(`https://api.finance.naver.com/siseJson.naver?symbol=${info.code}&requestType=1&startTime=${yyyymmdd(daysBack)}&endTime=${yyyymmdd(0)}&timeframe=day`);
     const rows = [...raw.matchAll(/\["(\d{8})",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)/g)];
     return rows.map(r => ({ date: ymd8ToDash(r[1]), close: Number(r[5]) }));
@@ -340,19 +356,48 @@ async function fetchInvestorFlows(sosok) {
 
 async function fetchMarketData() {
   const market = {};
+  let aikToday = null;
+  try {
+    aikToday = JSON.parse(await fetchJSON(`${AIK_DATA_BASE}/today.json`));
+  } catch (e) {
+    console.warn(`  ⚠️  공개 시장 JSON 실패 → 네이버 지수 폴백 (${e.message})`);
+  }
+
   for (const [key, symbol, sosok] of [['kospi', 'KOSPI', '01'], ['kosdaq', 'KOSDAQ', '02']]) {
     try {
-      const closesD = await fetchIndexClosesDated(symbol);
+      let closesD = [];
+      try {
+        closesD = await fetchIndexClosesDated(symbol);
+      } catch (e) {
+        console.warn(`  ⚠️  ${symbol} 과거 지수 실패: ${e.message}`);
+      }
+      let aikSnapshot = null;
+      if (aikToday) {
+        try {
+          aikSnapshot = parseAikIndexSnapshot(aikToday, symbol);
+          closesD = mergeIndexSnapshot(closesD, aikSnapshot);
+        } catch (e) {
+          aikSnapshot = null;
+          console.warn(`  ⚠️  ${symbol} 공개 최신값 거부 → 네이버 값 유지 (${e.message})`);
+        }
+      }
+      if (closesD.length === 0) throw new Error('사용 가능한 지수 데이터 없음');
       const closes = closesD.map(c => c.close);
-      const flows = await fetchInvestorFlows(sosok);
+      let flows = null;
+      try {
+        flows = await fetchInvestorFlows(sosok);
+      } catch (e) {
+        console.warn(`  ⚠️  ${symbol} 투자자 수급 실패: ${e.message}`);
+      }
       market[key] = {
         index: closes[closes.length - 1],
         asOf: closesD.length ? closesD[closesD.length - 1].date.replace(/-/g, '') : null, // 지수 기준일 YYYYMMDD
-        d1: pctChange(closes, 1),
+        d1: aikSnapshot?.d1 ?? pctChange(closes, 1),
         d5: pctChange(closes, 5),
         d20: pctChange(closes, 20),
         flows, // { date, individual, foreign, institution, foreign5d } 단위: 억원
         _closes: closesD, // 이력 축적용 날짜별 종가 (posts.json 저장 전 제거)
+        dataSource: aikSnapshot ? 'aikstockdata' : 'naver',
       };
       console.log(`  📈 ${symbol}: ${market[key].index?.toLocaleString()} (1일 ${market[key].d1}%, 5일 ${market[key].d5}%) | 외인 ${flows?.foreign?.toLocaleString()}억 기관 ${flows?.institution?.toLocaleString()}억`);
       await new Promise(r => setTimeout(r, 300));

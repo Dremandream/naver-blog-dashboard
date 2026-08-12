@@ -1,7 +1,7 @@
 // 회귀 테스트 — 수집기 순수 함수 골든 케이스
 // 실행: npm test  (외부 네트워크 불필요, <1초)
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
-import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth } from '../scripts/collect-rss.js';
+import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
@@ -12,6 +12,7 @@ import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewI
 import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
 import { buildTodayDiscovery } from '../src/utils/decision-dashboard.js';
 import { selectBriefSources } from '../src/utils/brief-sources.js';
+import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from '../scripts/lib/market-data.js';
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -87,6 +88,71 @@ eq('P1 1일 등락', pctChange([100, 110], 1), 10);
 eq('P2 5일 등락(음수)', pctChange([200, 1, 1, 1, 1, 180], 5), -10);
 eq('P3 데이터 부족 → null', pctChange([100], 1), null);
 eq('P4 소수1자리 반올림', pctChange([3, 1, 1, 1], 1), 0);
+
+console.log('── 한국주식데이터 공개 JSON ──');
+const aikHistory = {
+  code: '005930', as_of: '20260810', columns: ['date', 'close', 'volume'],
+  rows: [['20260807', 231000, 20546010], ['20260810', 230000, 16327805]],
+};
+eq('AIK1 종목 이력을 기존 형식으로 변환', parseAikStockHistory(aikHistory, {
+  expectedCode: '005930', minDate: '2026-08-01', now: new Date('2026-08-12T00:00:00+09:00'),
+}), [{ date: '2026-08-07', close: 231000 }, { date: '2026-08-10', close: 230000 }]);
+try {
+  parseAikStockHistory({ ...aikHistory, code: '000660' }, {
+    expectedCode: '005930', now: new Date('2026-08-12T00:00:00+09:00'),
+  });
+  eq('AIK2 종목코드 불일치 거부', 'no-throw', 'throw');
+} catch { eq('AIK2 종목코드 불일치 거부', 'throw', 'throw'); }
+try {
+  parseAikStockHistory({ ...aikHistory, as_of: '20260804' }, {
+    expectedCode: '005930', now: new Date('2026-08-12T00:00:00+09:00'),
+  });
+  eq('AIK3 8일 이상 지연 데이터 거부', 'no-throw', 'throw');
+} catch { eq('AIK3 8일 이상 지연 데이터 거부', 'throw', 'throw'); }
+try {
+  parseAikStockHistory({ ...aikHistory, rows: [['20260810', null, 1]] }, {
+    expectedCode: '005930', now: new Date('2026-08-12T00:00:00+09:00'),
+  });
+  eq('AIK4 잘못된 종가 거부', 'no-throw', 'throw');
+} catch { eq('AIK4 잘못된 종가 거부', 'throw', 'throw'); }
+
+const aikToday = {
+  quote_as_of: '20260810',
+  market_index: {
+    '코스피': { name_en: 'KOSPI', close: 6299.66, change_pct: 0.65, as_of: '20260810' },
+    '코스닥': { name_en: 'KOSDAQ', close: 854.47, change_pct: 6.97, as_of: '20260810' },
+  },
+};
+const kospiSnapshot = parseAikIndexSnapshot(aikToday, 'KOSPI', new Date('2026-08-12T00:00:00+09:00'));
+eq('AIK5 국내 지수 최신값 변환', kospiSnapshot, { date: '2026-08-10', close: 6299.66, d1: 0.65 });
+eq('AIK6 같은 날짜 지수를 공개값으로 교체', mergeIndexSnapshot([
+  { date: '2026-08-07', close: 6258.77 }, { date: '2026-08-10', close: 6200 },
+], kospiSnapshot), [
+  { date: '2026-08-07', close: 6258.77 }, { date: '2026-08-10', close: 6299.66 },
+]);
+const originalFetch = globalThis.fetch;
+const fallbackUrls = [];
+globalThis.fetch = async (url) => {
+  fallbackUrls.push(String(url));
+  if (String(url).includes('aikstockdata.com')) return new Response('not found', { status: 404 });
+  return new Response('["날짜","시가","고가","저가","종가"],["20260807",1,2,3,231000],["20260810",1,2,3,230000]', { status: 200 });
+};
+const fallbackCloses = await fetchClosesDated({ market: 'KR', code: '005930' }, 45);
+globalThis.fetch = originalFetch;
+eq('AIK7 공개 JSON 실패 시 기존 네이버 시세 폴백', [
+  fallbackCloses, fallbackUrls.some((url) => url.includes('api.finance.naver.com')),
+], [[{ date: '2026-08-07', close: 231000 }, { date: '2026-08-10', close: 230000 }], true]);
+try {
+  mergeIndexSnapshot([{ date: '2026-08-11', close: 6400 }], kospiSnapshot);
+  eq('AIK8 공개 지수가 기존 이력보다 오래되면 거부', 'no-throw', 'throw');
+} catch { eq('AIK8 공개 지수가 기존 이력보다 오래되면 거부', 'throw', 'throw'); }
+try {
+  parseAikIndexSnapshot({
+    ...aikToday,
+    market_index: { '코스피': { name_en: 'KOSPI', close: 6299.66, change_pct: null, as_of: '20260810' } },
+  }, 'KOSPI', new Date('2026-08-12T00:00:00+09:00'));
+  eq('AIK9 결측 등락률을 0으로 오인하지 않음', 'no-throw', 'throw');
+} catch { eq('AIK9 결측 등락률을 0으로 오인하지 않음', 'throw', 'throw'); }
 
 console.log('── 수급 HTML 정규식 (investorDealTrendDay 골든) ──');
 const flowHtml = `<td class="date2">26.07.10</td>
