@@ -6,7 +6,7 @@ import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
-import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
+import { buildPeterFearGreed, buildPeterBacktest, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../src/utils/decision-dashboard.js';
 import { buildMentionHistory, extractCatalyst } from '../shared/discovery.js';
@@ -66,6 +66,38 @@ const peterFallback = buildPeterFearGreed([
 eq('PFG4 과거 스키마 제한적 폴백', [peterFallback.score, peterFallback.confidence], [75, '매우 낮음']);
 const noPeter = buildPeterFearGreed([], { referenceDate: '2026-08-07' });
 eq('PFG5 표본 없음', [noPeter.score, noPeter.label, noPeter.postCount], [null, '데이터 부족', 0]);
+const peterHistory = mergePeterHistory([
+  { id: 'p1', date: '2026-08-01', title: '공포', sentiment: -2, reason: '기존 근거' },
+], [
+  { id: 'p1', date: '2026-08-01', person: '피터케이', title: '공포 수정', market_view: true, market_sentiment: -2, market_reason: '수정 근거' },
+  { id: 'p2', date: '2026-08-02', blog_id: 'luy1978', title: '투매 지속', url: 'https://example.com/p2', market_view: true, market_sentiment: -2, market_reason: '수급 악화' },
+  { id: 'x1', date: '2026-08-02', person: '다른 필자', title: '무관', market_view: true, market_sentiment: -2 },
+  { id: 'p3', date: '2026-08-03', person: '피터케이', title: '기업 뉴스', market_view: false, market_sentiment: 2 },
+]);
+eq('PFG6 장기 이력은 피터케이 시장 글만 ID 기준 병합', peterHistory.map(x => [x.id, x.title, x.sentiment]), [
+  ['p1', '공포 수정', -2], ['p2', '투매 지속', -2],
+]);
+const peterMarketHistory = {
+  '2026-08-03': { indices: { KOSPI: 100, KOSDAQ: 200 } },
+  '2026-08-04': { indices: { KOSPI: 105, KOSDAQ: 190 } },
+  '2026-08-05': { indices: { KOSPI: 110, KOSDAQ: 180 } },
+};
+const peterBacktest = buildPeterBacktest(peterHistory, peterMarketHistory, { windows: [2], minEvents: 1 });
+eq('PFG7 연속 극단 공포는 한 사건으로 묶음', peterBacktest.fear.events, 1);
+eq('PFG8 다음 거래일 종가부터 N거래일 성과 계산', [
+  peterBacktest.fear.w[2].KOSPI.avg,
+  peterBacktest.fear.w[2].KOSDAQ.avg,
+  peterBacktest.fear.w[2].KOSPI.samples,
+], [10, -10, 1]);
+eq('PFG9 장기 표본 범위와 상태 공개', [
+  peterBacktest.historyStart, peterBacktest.historyEnd, peterBacktest.marketPostCount, peterBacktest.status,
+], ['2026-08-01', '2026-08-02', 2, 'ready']);
+const peterComponentSource = readFileSync(new URL('../src/components/PeterFearGreed.jsx', import.meta.url), 'utf8');
+const collectorSource = readFileSync(new URL('../scripts/collect-rss.js', import.meta.url), 'utf8');
+const workflowSource = readFileSync(new URL('../.github/workflows/collect.yml', import.meta.url), 'utf8');
+eq('PFG10 UI에 장기 검증 결과와 표본 한계를 표시', peterComponentSource.includes('data?.backtest') && peterComponentSource.includes('장기 검증'), true);
+eq('PFG11 일일 수집기가 Peter K 장기 이력을 증분 병합', collectorSource.includes('mergePeterHistory(existingPeterHistory, merged)'), true);
+eq('PFG12 자동 배포가 Peter K 장기 이력도 커밋', workflowSource.includes('public/data/peter-history.json'), true);
 
 console.log('── parseTelegramMessages (t.me/s 구조 골든) ──');
 const tgHtml = `

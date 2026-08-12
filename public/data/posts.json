@@ -15015,20 +15015,174 @@
     "score": 75,
     "label": "탐욕",
     "interpretation": "낙관 우세 — 과열 전환 여부 관찰",
-    "asOf": "2026-08-11",
+    "asOf": "2026-08-12",
     "postCount": 1,
     "dayCount": 1,
     "confidence": "매우 낮음",
     "beta": true,
     "evidence": [
       {
-        "id": "luy1978_2026-08-11_224375620779",
-        "date": "2026-08-11",
+        "id": "luy1978_2026-08-12_224375620779",
+        "date": "2026-08-12",
         "title": "코스닥 승강제.",
         "sentiment": 1,
-        "reason": "승강제 도입으로 새로운 대표지수 추종 ETF와 리밸런싱에 따른 패시브 자금 유입 확대가 예상되며, 이는 편입 종목 중심의 긍정적 수급 변화를 가져올 것으로 전망된다."
+        "reason": ""
       }
-    ]
+    ],
+    "history": {
+      "start": "2024-08-13",
+      "end": "2026-08-12",
+      "posts": 353,
+      "yearsRequested": 2
+    },
+    "backtest": {
+      "status": "ready",
+      "historyStart": "2024-08-13",
+      "historyEnd": "2026-08-12",
+      "marketPostCount": 353,
+      "eventCount": 16,
+      "judgedEvents": 16,
+      "windows": [
+        5,
+        20
+      ],
+      "method": "게시일 다음 거래일 종가부터 N거래일 후",
+      "fear": {
+        "events": 4,
+        "w": {
+          "5": {
+            "KOSPI": {
+              "avg": -0.7,
+              "positiveRate": 25,
+              "samples": 4
+            },
+            "KOSDAQ": {
+              "avg": 3.8,
+              "positiveRate": 75,
+              "samples": 4
+            }
+          },
+          "20": {
+            "KOSPI": {
+              "avg": -3.3,
+              "positiveRate": 0,
+              "samples": 3
+            },
+            "KOSDAQ": {
+              "avg": -5.7,
+              "positiveRate": 33.3,
+              "samples": 3
+            }
+          }
+        }
+      },
+      "greed": {
+        "events": 12,
+        "w": {
+          "5": {
+            "KOSPI": {
+              "avg": 3.7,
+              "positiveRate": 75,
+              "samples": 12
+            },
+            "KOSDAQ": {
+              "avg": 2.2,
+              "positiveRate": 75,
+              "samples": 12
+            }
+          },
+          "20": {
+            "KOSPI": {
+              "avg": 4.5,
+              "positiveRate": 72.7,
+              "samples": 11
+            },
+            "KOSDAQ": {
+              "avg": -4.1,
+              "positiveRate": 36.4,
+              "samples": 11
+            }
+          }
+        }
+      },
+      "recentEvents": [
+        {
+          "kind": "fear",
+          "date": "2026-07-31",
+          "score": 18,
+          "outcomes": {
+            "5": {
+              "KOSPI": 0.7,
+              "KOSDAQ": 15.9
+            },
+            "20": {
+              "KOSPI": null,
+              "KOSDAQ": null
+            }
+          }
+        },
+        {
+          "kind": "greed",
+          "date": "2026-07-16",
+          "score": 83,
+          "outcomes": {
+            "5": {
+              "KOSPI": 3.7,
+              "KOSDAQ": 2
+            },
+            "20": {
+              "KOSPI": null,
+              "KOSDAQ": null
+            }
+          }
+        },
+        {
+          "kind": "greed",
+          "date": "2026-06-24",
+          "score": 97,
+          "outcomes": {
+            "5": {
+              "KOSPI": -14.4,
+              "KOSDAQ": -2.4
+            },
+            "20": {
+              "KOSPI": -25.1,
+              "KOSDAQ": -15.7
+            }
+          }
+        },
+        {
+          "kind": "greed",
+          "date": "2026-06-05",
+          "score": 82,
+          "outcomes": {
+            "5": {
+              "KOSPI": 14.2,
+              "KOSDAQ": 13.5
+            },
+            "20": {
+              "KOSPI": 7.6,
+              "KOSDAQ": -7.1
+            }
+          }
+        },
+        {
+          "kind": "greed",
+          "date": "2026-05-16",
+          "score": 88,
+          "outcomes": {
+            "5": {
+              "KOSPI": 7.1,
+              "KOSDAQ": 5.5
+            },
+            "20": {
+              "KOSPI": 17.9,
+              "KOSDAQ": -7.1
+            }
+          }
+        }
+      ]
+    }
   },
   "posts": [
     {

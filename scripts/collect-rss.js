@@ -16,7 +16,7 @@ import { judgeBatch } from './judge.js';
 import { computeSourceScores } from './hitrate.js';
 import { parseJSONLoose, stripHtml } from './lib/parsers.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory } from './lib/market-data.js';
-import { buildPeterFearGreed } from '../shared/peter-fear-greed.js';
+import { buildPeterBacktest, buildPeterFearGreed, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { buildMentionHistory } from '../shared/discovery.js';
 
 export { parseJSONLoose, stripHtml } from './lib/parsers.js';
@@ -26,6 +26,7 @@ const BLOGS_PATH  = path.join(__dirname, '../config/blogs.json');
 const TELEGRAM_PATH = path.join(__dirname, '../config/telegram-channels.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
 const HISTORY_PATH = path.join(__dirname, '../public/data/history.json');
+const PETER_HISTORY_PATH = path.join(__dirname, '../public/data/peter-history.json');
 
 // KST 날짜 유틸 (YYYY-MM-DD)
 function kstDate(offsetDays = 0) {
@@ -914,7 +915,6 @@ async function main() {
     ...existingPosts.filter(p => p.date >= WEEK_AGO_KST && !newIds.has(p.id)),
     ...results,
   ].sort((a, b) => b.date.localeCompare(a.date));
-  const peterFearGreed = buildPeterFearGreed(merged, { referenceDate: TODAY_KST });
 
   // ── 주가 수집 (7일 내 2명 이상 언급 종목, 상한 25) — 브리핑보다 먼저 ───────
   console.log('\n💹 주가 수집 중...');
@@ -993,6 +993,19 @@ async function main() {
   for (const v of Object.values(prices)) delete v._closes;
   for (const v of Object.values(market)) delete v._closes;
   const mentionHistory = buildMentionHistory(existingMentionHistory, merged, archivedHistory, TODAY_KST, 45);
+
+  // Peter K 장기 이력은 백필 파일에 오늘 분석을 증분 병합한다. 프론트에는 집계 결과만 포함한다.
+  let existingPeterHistory = [];
+  try { existingPeterHistory = JSON.parse(fs.readFileSync(PETER_HISTORY_PATH, 'utf8')); } catch { /* 백필 전 */ }
+  const peterHistory = mergePeterHistory(existingPeterHistory, merged);
+  const peterFearGreed = buildPeterFearGreed(peterHistory, { referenceDate: TODAY_KST });
+  peterFearGreed.history = {
+    start: peterHistory[0]?.date || null,
+    end: peterHistory.at(-1)?.date || null,
+    posts: peterHistory.length,
+  };
+  peterFearGreed.backtest = buildPeterBacktest(peterHistory, archivedHistory);
+  fs.writeFileSync(PETER_HISTORY_PATH, JSON.stringify(peterHistory, null, 2), 'utf8');
 
   fs.writeFileSync(
     OUTPUT_PATH,
