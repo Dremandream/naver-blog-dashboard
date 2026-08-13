@@ -53,19 +53,19 @@ export default function PersonalHome({ data, posts, peterFearGreed, onStockClick
         </aside>
       </div>
 
-      <MarketFacts
-        market={data?.market}
-        prices={data?.prices}
-        posts={posts}
-        referenceDate={data?.date}
-      />
-
       <DecisionCockpit
         posts={posts}
         scores={data?.source_scores}
         referenceDate={data?.date}
         onStockClick={onStockClick}
         compact
+      />
+
+      <MarketFacts
+        market={data?.market}
+        prices={data?.prices}
+        posts={posts}
+        referenceDate={data?.date}
       />
 
       <SourceScores

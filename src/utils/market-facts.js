@@ -30,7 +30,7 @@ function ageInDays(asOf, referenceDate) {
 function countOpinions(posts, stock) {
   const people = { bull: new Set(), bear: new Set() };
   for (const post of posts ?? []) {
-    if (!post?.stocks?.includes(stock) || ['fact', 'mixed'].includes(post.source_role)) continue;
+    if (!post?.stocks?.includes(stock) || post.source_role !== 'opinion' || post.analysis_version !== 3) continue;
     const person = post.person || post.blog_name;
     if (!person) continue;
     if (post.stance === '강세') people.bull.add(person);

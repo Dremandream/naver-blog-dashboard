@@ -1,7 +1,7 @@
 // 회귀 테스트 — 수집기 순수 함수 골든 케이스
 // 실행: npm test  (외부 네트워크 불필요, <1초)
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
-import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated, activeTelegramChannels, isOpinionEligible, canReuseAnalysis, ANALYSIS_SCHEMA_VERSION } from '../scripts/collect-rss.js';
+import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated, activeTelegramChannels, isOpinionEligible, isArchivedOpinionEligible, canReuseAnalysis, buildBriefInputHash, shouldReuseDailyBrief, resolveTelegramSourceUrl, ANALYSIS_SCHEMA_VERSION } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
@@ -121,6 +121,15 @@ eq('T2 KST 날짜 변환(UTC 23:30→익일)', msgs[0].postDate, '2026-07-11');
 eq('T3 텍스트+엔티티', msgs[0].text, '첫 번째 메시지 $100');
 eq('T4 URL', msgs[1].url, 'https://t.me/chan/101');
 
+console.log('── 텔레그램 묶음 원문 연결 ──');
+const telegramBundle = {
+  url: 'https://t.me/chan/100',
+  source_urls: ['https://t.me/chan/100', 'https://t.me/chan/101'],
+};
+eq('TG-L1 AI가 고른 핵심 메시지 URL 사용', resolveTelegramSourceUrl(telegramBundle, { primary_source_index: 2 }), 'https://t.me/chan/101');
+eq('TG-L2 범위 밖 번호는 안전하게 대표 URL 사용', resolveTelegramSourceUrl(telegramBundle, { primary_source_index: 9 }), 'https://t.me/chan/100');
+eq('TG-L3 숫자 문자열도 허용', resolveTelegramSourceUrl(telegramBundle, { primary_source_index: '2' }), 'https://t.me/chan/101');
+
 console.log('── classifyTelegramHealth (조용한 실패 감지) ──');
 eq('TG-H1 프리뷰 꺼짐(수집 불가)', classifyTelegramHealth({ previewOff: true, parsedCount: 0, windowCount: 0 }), 'preview-off');
 eq('TG-H2 프리뷰 우선(파싱값 무관)', classifyTelegramHealth({ previewOff: true, parsedCount: 5, windowCount: 3 }), 'preview-off');
@@ -232,7 +241,9 @@ console.log('── 소스 적중률 골든 케이스 (hitrate.js, 지수 대비
 const D = ['2026-01-02', '2026-01-03', '2026-01-06', '2026-01-07', '2026-01-08', '2026-01-09'];
 const p100 = {};
 ['S1','S2','S3','S4','S5','U1','U2','U3','U4','U5','V1','V2','V3','V4','V5','W1','W2'].forEach(s => (p100[s] = 100));
-const op = (person, stock, stance, market) => ({ person, stock, stance, market });
+const op = (person, stock, stance, market) => ({
+  person, stock, stance, market, source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION,
+});
 const hist = {
   [D[0]]: {
     prices: p100,
@@ -243,6 +254,7 @@ const hist = {
       ...['V1','V2','V3','V4','V5'].map(s => op('약세러', s, '약세', 'KR')),      // KR 약세
       op('약세러', 'S1', '중립', 'KR'),                                          // 중립 → 집계 제외
       op('소수러', 'W1', '강세', 'KR'), op('소수러', 'W2', '강세', 'KR'),        // 표본 2건 → rate null
+      { person: '구형스키마', stock: 'S1', stance: '강세', market: 'KR' },         // 분석 버전·역할 없음 → 제외
     ],
   },
   [D[1]]: { prices: {}, indices: {}, opinions: [] },
@@ -275,6 +287,7 @@ eq('HR8 windows 메타(라벨 포함)', scores.windows, [{ n: 5, label: '5일' }
 eq('HR9 기본창 프로덕션값 [63,252](3개월·1년)', computeSourceScores(hist).windows.map((w) => w.n), [63, 252]);
 eq('HR10 기본창 라벨(3개월·1년)', computeSourceScores(hist).windows.map((w) => w.label), ['3개월', '1년']);
 eq('HR11 기본 minSample=20(랭킹 신뢰용)', computeSourceScores(hist).minSample, 20);
+eq('HR12 구형 분석 스키마 의견은 적중률에서 제외', S('구형스키마'), undefined);
 
 console.log('── 소스 신뢰 순위·관련글 ──');
 eq('SR1 윌슨 보정은 작은 표본 과대평가 방지',
@@ -491,10 +504,37 @@ eq('SRC4 원문형 신규 블로그 4개 추가', ['egzion', 'kk_kontemp', 'redb
 eq('SRC5 중복 텔레그램은 빼고 itechkorea만 시험 추가', ['kkkontemp', 'redbirdstock', 'Joorini34'].some((id) => telegramConfig.channels.some((channel) => channel.id === id)), false);
 eq('SRC6 itechkorea 시험 종료일까지 활성', activeTelegramChannels(telegramConfig.channels, '2026-08-26').some((channel) => channel.id === 'itechkorea'), true);
 eq('SRC7 itechkorea 시험 종료 다음 날 자동 제외', activeTelegramChannels(telegramConfig.channels, '2026-08-27').some((channel) => channel.id === 'itechkorea'), false);
-eq('SRC8 전달형 fact·혼합형 글은 채널 적중률에서 제외', [isOpinionEligible({ source_role: 'opinion' }), isOpinionEligible({ source_role: 'fact' }), isOpinionEligible({ source_role: 'mixed' })], [true, false, false]);
+eq('SRC8 현재 스키마의 직접 의견만 채널 적중률에 포함', [
+  isOpinionEligible({ source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION }),
+  isOpinionEligible({ source_role: 'fact', analysis_version: ANALYSIS_SCHEMA_VERSION }),
+  isOpinionEligible({ source_role: 'mixed', analysis_version: ANALYSIS_SCHEMA_VERSION }),
+  isOpinionEligible({ source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION - 1 }),
+], [true, false, false, false]);
+eq('SRC8b 과거 이력도 현재 스키마의 직접 의견만 유지', [
+  isArchivedOpinionEligible({ source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION }),
+  isArchivedOpinionEligible({ source_role: 'opinion' }),
+], [true, false]);
 eq('SRC9 현재 분석 스키마 글은 Claude 재호출 없이 재사용', canReuseAnalysis({ analysis_version: ANALYSIS_SCHEMA_VERSION }), true);
 eq('SRC10 구버전 분석은 새 기준으로 한 번 갱신', canReuseAnalysis({ analysis_version: ANALYSIS_SCHEMA_VERSION - 1 }), false);
 eq('SRC11 소스 증가 후에도 31건 분석을 완주할 실행 여유 확보', /timeout-minutes:\s*20/.test(collectWorkflowSource), true);
+
+console.log('── 일일 종합판단 캐시 무효화 ──');
+const briefHashA = buildBriefInputHash([
+  { id: 'p1', date: '2026-08-13', summary: '오전 글', stance: '중립', source_role: 'opinion' },
+], { 삼성전자: { price: 100, d1: 1 } }, { kospi: { index: 1000, d1: 1 } });
+const briefHashB = buildBriefInputHash([
+  { id: 'p1', date: '2026-08-13', summary: '오전 글', stance: '중립', source_role: 'opinion' },
+  { id: 'p2', date: '2026-08-13', summary: '오후 새 글', stance: '강세', source_role: 'opinion' },
+], { 삼성전자: { price: 101, d1: 2 } }, { kospi: { index: 1010, d1: 2 } });
+eq('BR-C1 동일 입력은 같은 해시', briefHashA, buildBriefInputHash([
+  { id: 'p1', date: '2026-08-13', summary: '오전 글', stance: '중립', source_role: 'opinion' },
+], { 삼성전자: { price: 100, d1: 1 } }, { kospi: { index: 1000, d1: 1 } }));
+eq('BR-C2 오후 글·시장 데이터 변화는 캐시 무효화', briefHashA === briefHashB, false);
+eq('BR-C3 날짜와 입력 해시가 모두 같을 때만 재사용', [
+  shouldReuseDailyBrief({ date: '2026-08-13', inputHash: briefHashA }, '2026-08-13', briefHashA),
+  shouldReuseDailyBrief({ date: '2026-08-13', inputHash: briefHashA }, '2026-08-13', briefHashB),
+  shouldReuseDailyBrief({ date: '2026-08-12', inputHash: briefHashA }, '2026-08-13', briefHashA),
+], [true, false, false]);
 
 console.log('── 시장 팩트 보드 ──');
 const marketFacts = buildMarketFacts({
@@ -518,10 +558,10 @@ const expandedMarketFacts = buildMarketFacts({
     investor: { asOf: '20260812', foreignToday: 5802466, institutionToday: 776871, foreign5d: -1200000, institution5d: 900000 },
   },
 }, [
-  { person: 'A', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion' },
-  { person: 'A', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion' },
-  { person: 'B', stocks: ['삼성전자'], stance: '강세' },
-  { person: '전달채널', stocks: ['삼성전자'], stance: '강세', source_role: 'fact' },
+  { person: 'A', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION },
+  { person: 'A', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION },
+  { person: 'B', stocks: ['삼성전자'], stance: '강세', source_role: 'opinion', analysis_version: ANALYSIS_SCHEMA_VERSION },
+  { person: '전달채널', stocks: ['삼성전자'], stance: '강세', source_role: 'fact', analysis_version: ANALYSIS_SCHEMA_VERSION },
 ], { referenceDate: '2026-08-13' });
 eq('MF5 이미 수집 중인 미국 지수를 시장 환경에 노출', expandedMarketFacts.globalIndices.map((item) => item.label), ['NASDAQ', 'S&P 500']);
 eq('MF6 관심 종목의 KOSPI 대비 상대강도 계산', [
@@ -563,8 +603,8 @@ const marketFactsComponentSource = readFileSync(new URL('../src/components/Marke
 const personalHomeSource = readFileSync(new URL('../src/components/PersonalHome.jsx', import.meta.url), 'utf8');
 eq('MF11 팩트 보드가 가격·글·기준일을 함께 받음',
   marketFactsComponentSource.includes('prices, posts, referenceDate'), true);
-eq('MF12 팩트 보드를 의사결정 영역보다 먼저 전면 배치',
-  personalHomeSource.indexOf('<MarketFacts') < personalHomeSource.indexOf('<DecisionCockpit'), true);
+eq('MF12 원문 선별을 팩트 상세보다 먼저 전면 배치',
+  personalHomeSource.indexOf('<DecisionCockpit') < personalHomeSource.indexOf('<MarketFacts'), true);
 eq('MF13 관심 종목은 언급 수와 무관하게 수집 대상',
   collectorSource.includes('WATCHLIST_STOCKS') && collectorSource.includes('...WATCHLIST_STOCKS'), true);
 eq('MF14 종목별 네이버 수급 응답을 수집',
@@ -655,9 +695,10 @@ eq('IA8 추천 카드에 행동 분류 표시', decisionCockpitSource.includes('
 eq('IA9 추천 카드에 가장 강한 반대 근거 표시', decisionCockpitSource.includes('must-read-counter') && decisionCockpitSource.includes('counter_argument'), true);
 eq('IA10 추천 카드에 관심 종목 영향 표시', decisionCockpitSource.includes('must-read-watch-impact') && decisionCockpitSource.includes('watchlist_impact'), true);
 eq('IA11 좁은 추천 카드에서 라벨이 다음 줄로 자연스럽게 배치', appCssSource.includes('.must-read-labels { display: flex; align-items: center; flex-wrap: wrap;'), true);
-eq('IA12 첫 화면에 의견과 분리된 시장 팩트 보드 배치',
-  homeSource.indexOf('<MarketFacts') < homeSource.indexOf('<DecisionCockpit') && marketFactsSource.includes('객관 데이터'), true);
+eq('IA12 원문 선별 다음에 의견과 분리된 시장 팩트 보드 배치',
+  homeSource.indexOf('<DecisionCockpit') < homeSource.indexOf('<MarketFacts') && marketFactsSource.includes('객관 데이터'), true);
 eq('IA13 시장 수급은 원본 억원 단위를 다시 나누지 않음', marketFactsSource.includes('Math.round(value).toLocaleString') && !marketFactsSource.includes('100_000_000'), true);
+eq('IA14 소스 성적을 실험 통계로 명확히 표시', sourceScoreSource.includes('소스 실험 통계'), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

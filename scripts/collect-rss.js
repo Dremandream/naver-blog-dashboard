@@ -10,6 +10,7 @@
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'crypto';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
 import { judgeBatch } from './judge.js';
@@ -28,7 +29,7 @@ const TELEGRAM_PATH = path.join(__dirname, '../config/telegram-channels.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/data/posts.json');
 const HISTORY_PATH = path.join(__dirname, '../public/data/history.json');
 const PETER_HISTORY_PATH = path.join(__dirname, '../public/data/peter-history.json');
-export const ANALYSIS_SCHEMA_VERSION = 2;
+export const ANALYSIS_SCHEMA_VERSION = 3;
 const WATCHLIST_STOCKS = ['삼성전자', 'SK하이닉스'];
 
 // KST 날짜 유틸 (YYYY-MM-DD)
@@ -189,7 +190,11 @@ export function activeTelegramChannels(channels, referenceDate) {
 }
 
 export function isOpinionEligible(post) {
-  return post?.source_role !== 'fact' && post?.source_role !== 'mixed';
+  return post?.analysis_version === ANALYSIS_SCHEMA_VERSION && post?.source_role === 'opinion';
+}
+
+export function isArchivedOpinionEligible(opinion) {
+  return opinion?.analysis_version === ANALYSIS_SCHEMA_VERSION && opinion?.source_role === 'opinion';
 }
 
 export function canReuseAnalysis(post) {
@@ -230,6 +235,13 @@ export function parseTelegramMessages(html, channelId) {
     });
   }
   return messages;
+}
+
+export function resolveTelegramSourceUrl(post, analysis) {
+  const urls = Array.isArray(post?.source_urls) ? post.source_urls : [];
+  const index = Number(analysis?.primary_source_index);
+  if (Number.isInteger(index) && index >= 1 && index <= urls.length) return urls[index - 1];
+  return post?.url || urls[0] || '';
 }
 
 // ─── 주가 수집 (네이버 금융, 무료 공개 API) ──────────────────────────────────
@@ -508,7 +520,8 @@ export async function analyzePost(title, content, blogName) {
   "market_view": true 또는 false (시장 전체·주도주·지수·수급·유동성에 대한 글쓴이 본인의 시각이면 true. 단순 기업 뉴스·실적 전달이면 false),
   "market_sentiment": -2|-1|0|1|2 (시장 관점의 강도. -2 매우 비관, -1 비관, 0 중립/해당없음, 1 낙관, 2 매우 낙관),
   "market_reason": "시장 심리 점수의 직접 근거 1문장. market_view가 false면 빈 문자열",
-  "source_role": "opinion|fact|mixed (글쓴이의 직접 해석·전망이 중심이면 opinion, 공시·뉴스·리포트 전달만 있으면 fact, 둘이 섞여 분리하기 어려우면 mixed)"
+  "source_role": "opinion|fact|mixed (글쓴이의 직접 해석·전망이 중심이면 opinion, 공시·뉴스·리포트 전달만 있으면 fact, 둘이 섞여 분리하기 어려우면 mixed)",
+  "primary_source_index": "본문에 [메시지 N] 표기가 있으면 핵심 주장과 가장 직접 연결된 메시지 번호 N. 블로그 글이거나 판단할 수 없으면 1"
 }`;
 
   try {
@@ -557,6 +570,8 @@ export async function analyzePost(title, content, blogName) {
     result.market_reason = typeof result.market_reason === 'string' ? result.market_reason.trim() : '';
     result.source_role = ['opinion', 'fact', 'mixed'].includes(result.source_role)
       ? result.source_role : 'mixed';
+    result.primary_source_index = Number.isInteger(Number(result.primary_source_index))
+      ? Number(result.primary_source_index) : 1;
     result.generatedAt = new Date().toISOString();
     return result;
   } catch (e) {
@@ -573,6 +588,33 @@ export async function analyzePost(title, content, blogName) {
 }
 
 // ─── 일별 종합 브리핑 ─────────────────────────────────────────────────────────
+export function buildBriefInputHash(posts = [], prices = {}, market = {}) {
+  const postSnapshot = posts.map((post) => ({
+    id: post.id,
+    url: post.url,
+    date: post.date,
+    summary: post.summary,
+    stance: post.stance,
+    stocks: post.stocks,
+    sector: post.sector,
+    source_role: post.source_role,
+    analysis_version: post.analysis_version,
+  })).sort((a, b) => String(a.id || a.url).localeCompare(String(b.id || b.url)));
+  const priceSnapshot = Object.fromEntries(Object.entries(prices).sort(([a], [b]) => a.localeCompare(b)).map(([name, value]) => [name, {
+    price: value.price, asOf: value.asOf, d1: value.d1, d5: value.d5, d20: value.d20, investor: value.investor,
+  }]));
+  const marketSnapshot = Object.fromEntries(Object.entries(market).sort(([a], [b]) => a.localeCompare(b)).map(([name, value]) => [name, {
+    index: value.index, asOf: value.asOf, d1: value.d1, d5: value.d5, d20: value.d20, flows: value.flows,
+  }]));
+  return createHash('sha256')
+    .update(JSON.stringify({ posts: postSnapshot, prices: priceSnapshot, market: marketSnapshot }))
+    .digest('hex');
+}
+
+export function shouldReuseDailyBrief(cachedBrief, date, inputHash) {
+  return cachedBrief?.date === date && cachedBrief?.inputHash === inputHash;
+}
+
 async function generateDailyBrief(posts, prices = {}, market = {}) {
   const digest = posts.map(p => ({
     blog: p.blog_name,
@@ -723,7 +765,10 @@ function archiveHistory(prices, market, posts) {
       const key = `${person}|${stock}`;
       const stance = p.stance === '강세' ? '강세' : p.stance === '약세' ? '약세' : '중립';
       if (!map[key] || rank(stance) > rank(map[key].stance)) {
-        map[key] = { person, stock, stance, market: marketOf[stock] };
+        map[key] = {
+          person, stock, stance, market: marketOf[stock],
+          source_role: p.source_role, analysis_version: p.analysis_version,
+        };
       }
     }
   }
@@ -737,7 +782,9 @@ function archiveHistory(prices, market, posts) {
       // 기존 레코드와 병합(덮어쓰기 금지) — 백필/과거 축적분이 일일 실행에 지워지지 않게
       const prev = history[date] || {};
       const ops = {};
-      for (const o of prev.opinions || []) ops[`${o.person}|${o.stock}`] = o;
+      for (const o of prev.opinions || []) {
+        if (isArchivedOpinionEligible(o)) ops[`${o.person}|${o.stock}`] = o;
+      }
       for (const o of Object.values(opinionsByDate[date] || {})) {
         const k = `${o.person}|${o.stock}`;
         if (!ops[k] || rank(o.stance) > rank(ops[k].stance)) ops[k] = o;
@@ -815,13 +862,17 @@ async function main() {
           const dayMsgs = msgs.filter(m => m.postDate === date);
           if (dayMsgs.length === 0) continue;
           windowCount += dayMsgs.length;
-          const content = dayMsgs.map(m => m.text).join('\n\n---\n\n').slice(0, 8000);
+          const content = dayMsgs.map((m, index) => (
+            `[메시지 ${index + 1}] 원문: ${m.url}\n${m.text}`
+          )).join('\n\n---\n\n').slice(0, 8000);
           collected.push({
             blog_id: ch.id,
             blog_name: ch.name,
             person: ch.person || ch.name,
             title: `${ch.name} 텔레그램 (${date}, ${dayMsgs.length}건)`,
             url: dayMsgs[0].url,
+            source_urls: dayMsgs.map(m => m.url),
+            collection_key: `telegram:${ch.id}:${date}`,
             content,
             postDate: date,
             source: 'telegram',
@@ -883,12 +934,13 @@ async function main() {
     }
   }
   const existingByUrl = new Map(existingPosts.filter((post) => post.url).map((post) => [post.url, post]));
+  const existingByCollectionKey = new Map(existingPosts.filter((post) => post.collection_key).map((post) => [post.collection_key, post]));
   const results = [];
 
   for (let i = 0; i < collected.length; i++) {
     const post = collected[i];
     console.log(`\n[${i + 1}/${collected.length}] 분석 중: ${post.blog_name} - ${post.title}`);
-    const cached = existingByUrl.get(post.url);
+    const cached = (post.collection_key && existingByCollectionKey.get(post.collection_key)) || existingByUrl.get(post.url);
     if (canReuseAnalysis(cached)) {
       console.log(`  ♻️ 분석 재사용 (v${ANALYSIS_SCHEMA_VERSION})`);
       results.push({
@@ -897,7 +949,9 @@ async function main() {
         source: post.source || 'blog',
         blog_name: post.blog_name,
         person: post.person || post.blog_name,
-        url: post.url,
+        url: cached.url,
+        source_urls: post.source_urls || cached.source_urls,
+        collection_key: post.collection_key || cached.collection_key,
       });
       continue;
     }
@@ -933,6 +987,7 @@ async function main() {
       console.log(`  → ${analysis.sector} | ${analysis.stance || '-'} | ${analysis.stocks.join(', ') || '종목 없음'}`);
     }
 
+    const resolvedUrl = post.source === 'telegram' ? resolveTelegramSourceUrl(post, analysis) : post.url;
     results.push({
       id: `${post.blog_id}_${post.postDate}_${post.url.split('/').pop() || i}`,
       date: post.postDate,
@@ -943,7 +998,9 @@ async function main() {
       title: post.source === 'telegram' && analysis.headline
         ? `${analysis.headline} (${post.title.match(/\d+건/)?.[0] || ''})`.replace(' ()', '')
         : post.title,
-      url: post.url,
+      url: resolvedUrl,
+      source_urls: post.source_urls,
+      collection_key: post.collection_key,
       summary: analysis.summary,
       stocks: analysis.stocks,
       sector: analysis.sector,
@@ -1030,12 +1087,13 @@ async function main() {
   if (process.env.CLAUDE_API_KEY && results.length > 0) {
     console.log('\n📰 일별 브리핑 생성 중...');
     const cachedBrief = existingBriefs[0];
-    const isCached = cachedBrief && cachedBrief.date === TODAY_KST;
+    const inputHash = buildBriefInputHash(results, prices, market);
+    const isCached = shouldReuseDailyBrief(cachedBrief, TODAY_KST, inputHash);
     const brief = isCached
       ? (console.log('[DailyBrief] 캐시 사용:', cachedBrief.generatedAt) || cachedBrief)
       : await generateDailyBrief(results, prices, market);
     if (brief) {
-      todayBrief = { ...brief, date: TODAY_KST, post_count: results.length };
+      todayBrief = { ...brief, date: TODAY_KST, post_count: results.length, inputHash };
       console.log(`  → ${brief.headline}`);
     }
   }

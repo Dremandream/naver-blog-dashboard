@@ -48,7 +48,7 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
     <section className={`source-scores ${compact ? 'source-scores-compact' : ''}`} aria-labelledby="source-scores-title">
       <div className="brief-header ss-header">
         <span className="brief-label" id="source-scores-title">
-          🎯 소스 적중률 <span className="at-sub">표본을 보정한 과거 성적 순위</span>
+          🎯 소스 실험 통계 <span className="at-sub">AI 방향 판정의 과거 지수 대비 결과</span>
         </span>
         {scores.asOf && <span className="brief-date">{scores.asOf} 기준</span>}
       </div>
@@ -136,7 +136,7 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
       </details>
 
       {compact ? (
-        <div className="ss-note">1년 적중률과 표본 수를 함께 확인하세요. 소스를 누르면 해당 필자의 글만 볼 수 있습니다.</div>
+        <div className="ss-note">실험 통계입니다. 반복 의견·AI 방향 판정·국내 종목의 KOSPI 단일 벤치마크 영향을 포함하며, 예측력이나 매매 성과를 뜻하지 않습니다.</div>
       ) : (
         <div className="ss-note">
           <b>보정점수</b>는 적중률과 표본 수를 함께 반영한 윌슨 하한입니다. 종합은 {first.label} 40%와 {last.label} 60%를 합산하며,

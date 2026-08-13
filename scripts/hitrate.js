@@ -17,6 +17,7 @@
 // 2026-07-22 사용자 결정: 1개월 제거, 3개월·1년 두 창만. 3개월=근거리 신뢰 랭킹, 1년=장기 성적표(축적되며 채워짐)
 const DEFAULT_WINDOWS = [63, 252];
 const MIN_SAMPLE = 20; // 이 미만이면 적중률(rate) 숨김. 랭킹 신뢰용 상향(2026-07-23 5→20, n=12 우연 배제)
+const ANALYSIS_SCHEMA_VERSION = 3;
 const BENCH = { KR: 'KOSPI', US: 'NASDAQ' };
 const LABELS = { 5: '5일', 20: '20일', 21: '1개월', 63: '3개월', 252: '1년' };
 const labelOf = (n) => LABELS[n] || `${n}거래일`;
@@ -45,6 +46,7 @@ export function computeSourceScores(history, windows = DEFAULT_WINDOWS, minSampl
     const T = dates[i];
     const recT = history[T];
     for (const op of recT.opinions || []) {
+      if (op.analysis_version !== ANALYSIS_SCHEMA_VERSION || op.source_role !== 'opinion') continue;
       if (op.stance !== '강세' && op.stance !== '약세') continue; // 중립 제외
       const a = bump(op.person);
       a.opinions++;
