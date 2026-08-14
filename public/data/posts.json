@@ -2,35 +2,45 @@
   "date": "2026-08-14",
   "daily_briefs": [
     {
-      "headline": "AI 인프라 자금·수요 검증으로 반도체 강세론 압도적 우세(강세 8 vs 약세 1), 다만 멀티플 축소·AI 인플레 경고 소수 존재",
+      "headline": "AI 인프라 슈퍼사이클 근거로 반도체 강세론이 압도적이나, 일부는 사이클 멀티플 축소·AI 인플레 통제불능을 경고",
       "positive": [
         {
           "sector": "반도체",
           "items": [
             {
-              "name": "삼성전자 우선주",
-              "point": "주주환원 수익률 10%+ 방어 매력",
+              "name": "삼성전자",
+              "point": "우선주 주주환원 수익률 10%+, 배당 매력",
               "mentions": 1
             },
             {
               "name": "SK하이닉스",
-              "point": "경쟁사 대비 저평가, 시총比 생산 과도",
+              "point": "마이크론·AMD 대비 저평가, 비중확대",
               "mentions": 1
             },
             {
               "name": "메모리/HBM",
-              "point": "HBM 비중 9%→13%(2027), 수량 성장 재현",
+              "point": "월가 AI 펀딩으로 2027 수량 성장 재현실화",
               "mentions": 1
             },
             {
-              "name": "반도체 장비(WFE)",
-              "point": "CY26 30%+ 성장, AMAT 매출 사상 최대",
+              "name": "Applied Materials",
+              "point": "장비매출 $7.0B, CY26 WFE +30%↑",
+              "mentions": 1
+            },
+            {
+              "name": "샌디스크",
+              "point": "FY28~30 GPM~80%, 매출 $20B(+175%)",
               "mentions": 2
             },
             {
-              "name": "샌디스크(NAND)",
-              "point": "FY26 매출 +175%, GPM 71.6%",
-              "mentions": 2
+              "name": "Advantest",
+              "point": "역사적 신고가 +4.7%, 테스트 수요 확대",
+              "mentions": 1
+            },
+            {
+              "name": "국내 반도체 장비주",
+              "point": "7월 하락분 8월 반등 기대·규제완화",
+              "mentions": 1
             }
           ]
         },
@@ -39,33 +49,43 @@
           "items": [
             {
               "name": "Nebius",
-              "point": "AI클라우드 +514%, MW단가 $12M→$20M+",
+              "point": "MW단가 $12M→$40M+, ARR $30억(+598%)",
               "mentions": 2
             },
             {
               "name": "Cisco",
-              "point": "AI 인프라 FY27 가이던스 $7.5B",
+              "point": "AI인프라 수주 $9.3B, FY27 매출 상향",
               "mentions": 1
             },
             {
-              "name": "AI CAPEX 자금원",
-              "point": "월가·CoreWeave 백로그로 FCF 우려 해소",
+              "name": "CoreWeave",
+              "point": "백로그 $1,040억, 자금원 다층화",
               "mentions": 1
             },
             {
               "name": "Bloom Energy",
-              "point": "연료전지로 전력 병목·사이트 언락",
+              "point": "연료전지로 전력병목·사이트 언락",
+              "mentions": 2
+            }
+          ]
+        },
+        {
+          "sector": "자동차·로봇",
+          "items": [
+            {
+              "name": "중국 휴머노이드(유니트리)",
+              "point": "상장 러시·청약 8,000배, 실용화 가속",
               "mentions": 1
             }
           ]
         },
         {
-          "sector": "소재·화학",
+          "sector": "소비재",
           "items": [
             {
-              "name": "달바글로벌",
-              "point": "2Q 영업익 +15%, 북미·유럽 채널 폭증",
-              "mentions": 1
+              "name": "화장품·식음료",
+              "point": "2Q 이익 반도체서 다각 섹터로 확산",
+              "mentions": 2
             }
           ]
         },
@@ -73,8 +93,18 @@
           "sector": "방산",
           "items": [
             {
-              "name": "미 조선업",
-              "point": "트럼프 국가안보 각서, 80년만 신규 공창",
+              "name": "미국 조선/함정",
+              "point": "트럼프 국가안보 각서, 제5공창 신설",
+              "mentions": 1
+            }
+          ]
+        },
+        {
+          "sector": "매크로",
+          "items": [
+            {
+              "name": "금리 안정",
+              "point": "9월 인상확률 50%→40%, AI자본 불안 완화",
               "mentions": 1
             }
           ]
@@ -85,8 +115,13 @@
           "sector": "반도체",
           "items": [
             {
-              "name": "반도체 장비·소재",
-              "point": "P사이클 中 멀티플 축소·셀온 리스크",
+              "name": "장비·소재주",
+              "point": "P사이클 중 실적호전에도 멀티플 축소 우려",
+              "mentions": 1
+            },
+            {
+              "name": "삼성전자 본주",
+              "point": "시총비율 1.5:1 생산능력 대비 과도",
               "mentions": 1
             }
           ]
@@ -96,21 +131,40 @@
           "items": [
             {
               "name": "AI 인플레",
-              "point": "전자부품 PPI +28%, 연준 통제 이탈 우려",
+              "point": "전자부품 PPI +28%, 연준 통제불능 우려",
               "mentions": 1
             }
           ]
         }
       ],
       "minority": [
-        "너쟁이: 실적 호전에도 P사이클 진행 중 멀티플 축소로 신고가주 일괄 매도 압박 가능(피델릭스 셀온 사례).",
-        "ITK 미주투: 전자부품 인플레·물류 병목으로 연준이 금리 인상·인하 모두 불가능한 'AI 인플레' 태동."
+        "ITK 미주투: AI 자본지출·전자부품·물류병목이 통제불능 인플레 유발, 연준 금리 인상·인하 모두 불가능(유일 약세론)",
+        "너쟁이: 실적 호조 신고가에도 피델릭스 셀온처럼 PER 리레이팅으로 유사기업 일괄 매도 압박 경고"
       ],
-      "events": [],
-      "generatedAt": "2026-08-13T23:31:25.176Z",
+      "events": [
+        {
+          "date": "2026-08-19",
+          "label": "WRC 2026 세계로봇대회",
+          "stocks": [
+            "중국 휴머노이드(유니트리)"
+          ],
+          "source": "투자콤",
+          "approx": false
+        },
+        {
+          "date": "2026-08-22",
+          "label": "세계 휴머노이드 로봇 대회 2026",
+          "stocks": [
+            "중국 휴머노이드(유니트리)"
+          ],
+          "source": "투자콤",
+          "approx": false
+        }
+      ],
+      "generatedAt": "2026-08-14T08:48:12.272Z",
       "date": "2026-08-14",
-      "post_count": 18,
-      "inputHash": "bc8c401c6095f3c3d0558fa2f9a22da7bd8751d0440e93fd8c4ba9504a72f035"
+      "post_count": 22,
+      "inputHash": "8fd690bcb26aa16f61f77bcd45cf9b5324dd48e88bc3d720e2591ac02aba617a"
     },
     {
       "headline": "AI CAPEX '자산화·금융화' 논리로 반도체 강세론 압도적 우세, 실제 코스피 3.6%·삼성전자 6.7% 급등으로 화답",
@@ -1018,32 +1072,32 @@
   ],
   "market": {
     "kospi": {
-      "index": 6813.34,
-      "asOf": "20260813",
-      "d1": 3.6,
-      "d5": 8.2,
-      "d20": -6.5,
+      "index": 6977.94,
+      "asOf": "20260814",
+      "d1": 2.4,
+      "d5": 11.5,
+      "d20": 2.3,
       "flows": {
-        "date": "26.08.13",
-        "individual": -27410,
-        "foreign": 21102,
-        "institution": 6834,
-        "foreign5d": 26431
+        "date": "26.08.14",
+        "individual": -19820,
+        "foreign": 30387,
+        "institution": -10298,
+        "foreign5d": 65469
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 861.37,
-      "asOf": "20260813",
-      "d1": 0.3,
-      "d5": 7.4,
-      "d20": 3.9,
+      "index": 864.65,
+      "asOf": "20260814",
+      "d1": 0.4,
+      "d5": 8.2,
+      "d20": 9.2,
       "flows": {
-        "date": "26.08.13",
-        "individual": 2565,
-        "foreign": -1362,
-        "institution": -1132,
-        "foreign5d": -8042
+        "date": "26.08.14",
+        "individual": 3150,
+        "foreign": -659,
+        "institution": -2531,
+        "foreign5d": -6179
       },
       "dataSource": "naver"
     },
@@ -1322,6 +1376,46 @@
         "source": "naver"
       }
     },
+    "일진전기": {
+      "market": "KR",
+      "price": 72500,
+      "asOf": "20260812",
+      "d1": 17.3,
+      "d5": 18.7,
+      "d20": 16,
+      "investor": {
+        "asOf": "20260813",
+        "foreignToday": 82516,
+        "institutionToday": -61103,
+        "foreign5d": -167242,
+        "institution5d": 120658,
+        "foreignRate": 10.72,
+        "volume": 703120,
+        "forwardPer": null,
+        "pbr": null,
+        "source": "naver"
+      }
+    },
+    "효성중공업": {
+      "market": "KR",
+      "price": 2892000,
+      "asOf": "20260812",
+      "d1": 2.2,
+      "d5": -3.1,
+      "d20": 8,
+      "investor": {
+        "asOf": "20260813",
+        "foreignToday": 3469,
+        "institutionToday": 6375,
+        "foreign5d": -1570,
+        "institution5d": 17639,
+        "foreignRate": 26.9,
+        "volume": 45167,
+        "forwardPer": null,
+        "pbr": null,
+        "source": "naver"
+      }
+    },
     "CoreWeave": {
       "market": "US",
       "price": 106.29,
@@ -1333,11 +1427,11 @@
     },
     "뉴파워프라즈마": {
       "market": "KR",
-      "price": 12490,
-      "asOf": "20260813",
-      "d1": 6,
-      "d5": 13.8,
-      "d20": 20.9,
+      "price": 11170,
+      "asOf": "20260814",
+      "d1": -10.6,
+      "d5": 5.6,
+      "d20": 19.5,
       "investor": {
         "asOf": "20260813",
         "foreignToday": 299228,
@@ -1399,29 +1493,11 @@
       "d5": 3.2,
       "d20": 14.3,
       "investor": null
-    },
-    "브로드컴": {
-      "market": "US",
-      "price": 417.82,
-      "asOf": "20260813",
-      "d1": 0.4,
-      "d5": -0.7,
-      "d20": 11.6,
-      "investor": null
-    },
-    "슈퍼마이크로": {
-      "market": "US",
-      "price": 39.16,
-      "asOf": "20260813",
-      "d1": 4.1,
-      "d5": 33.3,
-      "d20": 58.7,
-      "investor": null
     }
   },
   "verdicts": {
     "date": "2026-08-14",
-    "generatedAt": "2026-08-13T23:31:06.845Z",
+    "generatedAt": "2026-08-14T08:47:48.268Z",
     "items": [
       {
         "ticker": "삼성전자",
@@ -1531,7 +1607,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-08-13",
+    "asOf": "2026-08-14",
     "minSample": 20,
     "windows": [
       {
@@ -15246,7 +15322,11 @@
         "삼성전자",
         "샌디스크",
         "엔비디아",
+        "일진전기",
+        "현대일렉트릭",
+        "효성중공업",
         "Applied Materials",
+        "LS일렉트릭",
         "SK스퀘어",
         "SK하이닉스",
         "Western Digital"
@@ -15254,7 +15334,9 @@
       "sectors": [
         "거시경제",
         "반도체",
-        "방산"
+        "방산",
+        "소재·화학",
+        "자동차·로봇"
       ],
       "opinions": [
         {
@@ -15286,6 +15368,26 @@
           "person": "우용용",
           "stock": "SK하이닉스",
           "stance": "강세"
+        },
+        {
+          "person": "피카츄 아저씨",
+          "stock": "일진전기",
+          "stance": "중립"
+        },
+        {
+          "person": "피카츄 아저씨",
+          "stock": "현대일렉트릭",
+          "stance": "중립"
+        },
+        {
+          "person": "피카츄 아저씨",
+          "stock": "효성중공업",
+          "stance": "중립"
+        },
+        {
+          "person": "피카츄 아저씨",
+          "stock": "LS일렉트릭",
+          "stance": "중립"
         },
         {
           "person": "IT는 SK",
@@ -15503,6 +15605,56 @@
   },
   "posts": [
     {
+      "id": "audistar_2026-08-14_224378425606",
+      "date": "2026-08-14",
+      "source": "blog",
+      "blog_name": "콤디티",
+      "person": "콤디티",
+      "title": "투자 잡생각",
+      "url": "https://blog.naver.com/audistar/224378425606",
+      "summary": "글쓴이는 7월 급등락 이후 8월 시장이 정상화되면서 단순 추종에서 종목 선정 능력이 중요해진다고 주장. 2분기 실적이 반도체 독주에서 화장품·식음료 등 다양 섹터 이익 확산으로 이어지면서 하반기 투자도 섹터 다각화가 필요하다고 봄. 구체 수치나 실적 자료는 없으며 개인 관찰 기반 주장.",
+      "stocks": [],
+      "sector": "거시경제",
+      "key_points": [
+        "7월 급등락 후 8월 시장이 '정상적으로 돌아가고 있다'는 분위기 형성으로 투자자 심리 개선",
+        "2분기 실적이 '반도체 독주에서 이익 확산'으로 이어지며 화장품, 식음료 등 다양 섹터 주가 상승",
+        "화장품은 '상고하저의 고정관념을 깬다'는 기대, 식음료는 '전반적으로 좋은 모습'이나 구체 실적 미제시",
+        "하반기 투자 전략으로 '2분기 실적주 중 3~4분기까지 이어질 회사 찾기'를 추구",
+        "글쓴이는 단기 매매 소음에 취약해 바이앤홀드 전략 선호, 장 급등락 완화로 '편안한 상태' 유지"
+      ],
+      "numbers": [],
+      "stance": "중립",
+      "reasoning": "시장의 급등락 완화와 이익 확산 흐름이 종목 선정의 중요성을 높인다는 관찰에 기반",
+      "catalyst": "",
+      "why_read": "시장 심리 변화(7월 급등락→8월 정상화)와 섹터 확산 추이를 개인 투자자 관점에서 서술하지만, 반도체 독주 종료와 이익 확산이라는 주장을 뒷받침할 구체 실적·수치·데이터가 전무해 검증 불가",
+      "novelty": 0,
+      "evidence_quality": 1,
+      "evidence_grade": "D",
+      "evidence_reason": "2분기 실적 언급과 화장품·식음료 선전을 주장하지만 매출·이익·밸류에이션 수치가 없고 '분위기''기대' 같은 정성 표현만 있음",
+      "counter_argument": "2분기 실적이 반도체에 의존한다면 3~4분기 반도체 부진 시 '이익 확산' 흐름이 재역전될 수 있고, 화장품·식음료 상승도 일시적 실적 개선일 가능성 있음",
+      "price_reflection": "판단 불가",
+      "investment_chain": "시장 급등락 완화 → 종목 선정이 중요 → 실적 선행 종목 발굴 → 주가 상승, 하지만 '이익 확산' 범위와 지속성의 근거 부족",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "관련 없음",
+          "reason": "반도체 섹터 언급은 있으나 삼성전자 직접 분석·전망 없음"
+        },
+        "SK하이닉스": {
+          "direction": "관련 없음",
+          "reason": "반도체 섹터 언급은 있으나 SK하이닉스 직접 분석·전망 없음"
+        }
+      },
+      "action": "참고만 하기",
+      "action_reason": "시장 심리와 섹터 회전 흐름에 대한 개인 관찰이지만, 반도체 업황 독주 종료와 이익 확산 주장을 뒷받침할 공시·실적·산업데이터가 없어 핵심 투자 판단 근거로 사용하기 부족",
+      "analysis_depth": "full",
+      "risks": [],
+      "market_view": true,
+      "market_sentiment": 1,
+      "market_reason": "7월 급등락 완화와 '정상적으로 돌아가고 있다'는 표현, 투자자 분위기 개선으로 시장 약한 낙관 기조",
+      "source_role": "opinion",
+      "analysis_version": 3
+    },
+    {
       "id": "doctordk_2026-08-14_224378158605",
       "date": "2026-08-14",
       "source": "blog",
@@ -15617,6 +15769,67 @@
       "analysis_version": 3
     },
     {
+      "id": "comvestment_2026-08-14_1964",
+      "date": "2026-08-14",
+      "source": "telegram",
+      "blog_name": "투자콤",
+      "person": "투자콤",
+      "title": "중국 휴머노이드 로봇 상장 러시 + 국내 반도체주 2Q 실적 확산 (4건)",
+      "url": "https://t.me/comvestment/1965",
+      "source_urls": [
+        "https://t.me/comvestment/1964",
+        "https://t.me/comvestment/1965",
+        "https://t.me/comvestment/1966",
+        "https://t.me/comvestment/1967"
+      ],
+      "collection_key": "telegram:comvestment:2026-08-14",
+      "summary": "투자콤은 중국 유니트리(Unitree) 상장(공모가 150.80위안, 61억 위안 조달), WRC 2026(8/19-23), 세계 휴머노이드 로봇 대회 2026(8/22-26, 팀 수 +138%, 로봇 4배 확대)을 거론하며 로봇 산업 실용화 가속을 강조. 국내 시장 관점에서는 2Q 실적이 반도체 독주에서 화장품·식음료·정유화학 등으로 이익 확산되며, PSK 2Q 매출 1,675억(컨센서스 1,634억 대비 +2.5%), 영업익 503억(+9.5%), 순이익 440억(+12.1%)으로 컨센서스 상회.",
+      "stocks": [],
+      "sector": "자동차·로봇",
+      "key_points": [
+        "유니트리 상장: 공모가 150.80위안, 61억 위안(9.04억 달러) 조달, 개인투자자 청약 8,000배+ 초과구독, 2025년 순이익 기준 밸류에이션 219배",
+        "WRC 2026(8/19-23): 참가기업 300곳 이상(YoY +36%), 신제품 150개+ 공개, 구매 상담·산업 밸류체인 협력 강화",
+        "세계 휴머노이드 로봇 대회 2026(8/22-26): 16개국 666팀 2,056대 참가(팀 수 YoY +138%, 로봇 4배), 공장·호텔·가정·응급구조 등 실제 작업 시나리오 검증",
+        "PSK 2Q 실적: 매출 1,675억(예상 1,634억 +2.5%), 영업익 503억(예상 459억 +9.5%), 순이익 440억(예상 392억 +12.1%)",
+        "국내 시장 시각: 반도체 독주 끝나고 화장품·식음료·정유화학 등 섹터로 이익 확산, 하반기 실적주 3~4분기 연속성 확인"
+      ],
+      "numbers": [
+        "유니트리 공모가 150.80위안, 61억 위안 규모, 개인투자자 청약 8,000배 초과",
+        "세계 휴머노이드 로봇 대회 팀 수 YoY +138%, 로봇 수 4배 확대",
+        "PSK 2Q 영업익 503억(컨센서스 459억 대비 +9.5%)"
+      ],
+      "stance": "낙관",
+      "reasoning": "중국 휴머노이드 기업 상장 러시와 대규모 산업 행사(WRC, 휴머노이드 로봇 대회)를 통해 로봇의 실제 산업 적용이 가속되고 있으며, 국내 시장도 2Q 반도체 중심 상승에서 화장품·식음료 등 다양한 섹터로 이익 확산이 일어나고 있다는 점.",
+      "catalyst": "유니트리 상장 임박 + WRC 2026, 세계 휴머노이드 로봇 대회 동시 개최(8월 중순~하순)로 중국 로봇 산업 실용화 가속 신호 + PSK 2Q 컨센서스 초과 실적.",
+      "why_read": "중국 휴머노이드 로봇 산업의 구체적 규모(유니트리 밸류에이션, 참가팀·로봇 수)와 국내 반도체주(PSK) 실적 추이 동시 제시로 한 블로그에서 글로벌 산업 트렌드와 국내 종목의 실적 동향을 함께 확인할 수 있음.",
+      "novelty": 2,
+      "evidence_quality": 3,
+      "evidence_grade": "B",
+      "evidence_reason": "유니트리 공모 수치, WRC·휴머노이드 로봇 대회 참가 규모는 공식 발표/언론 보도 기반이나, 국내 섹터 확산과 하반기 투자 전략은 글쓴이의 해석이 강함.",
+      "counter_argument": "중국 휴머노이드 로봇 기업의 높은 밸류에이션(유니트리 2025년 순이익 기준 219배)이 거품을 시사하며, 국내 시장의 이익 확산 현상이 하반기까지 지속된다는 보장이 없음.",
+      "price_reflection": "판단 불가",
+      "investment_chain": "유니트리 상장 + 로봇 산업 행사 규모 확대 → 중국 휴머노이드 로봇 실용화 가속 → (국내영향 근거 부족) | PSK 2Q 컨센서스 초과 → 반도체주 수익성 개선 → 주가 상승",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "판단 불가",
+          "reason": "휴머노이드 로봇은 반도체(AI칩·고급 센서) 수요 증가 가능성이 있으나, 본문에서 삼성전자 관련 구체적 언급이 없고 국내 시장 섹터 확산과의 직접 연결도 명시되지 않음."
+        },
+        "SK하이닉스": {
+          "direction": "판단 불가",
+          "reason": "마찬가지로 로봇 산업 내 메모리 칩 수요 증가의 간접 수혜 가능성이 있으나, 본문에서 언급되지 않았고 PSK 같은 후공정 업체 중심 실적 언급이 주를 이룸."
+        }
+      },
+      "action": "추가 조사하기",
+      "action_reason": "유니트리 밸류에이션의 타당성, WRC·휴머노이드 로봇 대회가 실제 산업 수요 창출로 이어질 경로, 그리고 PSK를 포함한 국내 반도체주와 중국 로봇 산업의 연결고리를 더 깊게 검증해야 투자 판단이 가능함.",
+      "analysis_depth": "full",
+      "risks": [],
+      "market_view": true,
+      "market_sentiment": 1,
+      "market_reason": "반도체 독주에서 화장품·식음료·정유화학으로 이익 확산되며 섹터별 주가 상승이 자연스럽게 진행되고 있다는 낙관적 시각.",
+      "source_role": "mixed",
+      "analysis_version": 3
+    },
+    {
       "id": "skitteam_2026-08-14_4481",
       "date": "2026-08-14",
       "source": "telegram",
@@ -15628,7 +15841,15 @@
         "https://t.me/skitteam/4481",
         "https://t.me/skitteam/4482",
         "https://t.me/skitteam/4483",
-        "https://t.me/skitteam/4484"
+        "https://t.me/skitteam/4484",
+        "https://t.me/skitteam/4485",
+        "https://t.me/skitteam/4486",
+        "https://t.me/skitteam/4487",
+        "https://t.me/skitteam/4488",
+        "https://t.me/skitteam/4489",
+        "https://t.me/skitteam/4490",
+        "https://t.me/skitteam/4491",
+        "https://t.me/skitteam/4492"
       ],
       "collection_key": "telegram:skitteam:2026-08-14",
       "summary": "Applied Materials FY3Q26 반도체 장비 매출 $7.0B(+18% QoQ, +27% YoY) 기록 최대, 총마진 55.4% 달성 중. SanDisk는 18개월 만에 매출 $1.7B → $9.0B, 연간 매출 $20B(+175%), GPM 71.6%로 급증하며 NBM 8개 고객 $93.9B TCV 계약 확보. 두 회사 모두 2026~27년 다년 계약 기반 4년 이상 수요 가시성 확보로 사이클성 완화 주장.",
@@ -15689,6 +15910,67 @@
       "analysis_version": 3
     },
     {
+      "id": "Kyaooo_2026-08-14_33450",
+      "date": "2026-08-14",
+      "source": "telegram",
+      "blog_name": "캬오의 공부방",
+      "person": "캬오의 공부방",
+      "title": "텔레그램 메시지 모음, 투자 가치 분석 불가 (8건)",
+      "url": "https://t.me/Kyaooo/33450",
+      "source_urls": [
+        "https://t.me/Kyaooo/33450",
+        "https://t.me/Kyaooo/33451",
+        "https://t.me/Kyaooo/33452",
+        "https://t.me/Kyaooo/33453",
+        "https://t.me/Kyaooo/33454",
+        "https://t.me/Kyaooo/33455",
+        "https://t.me/Kyaooo/33457",
+        "https://t.me/Kyaooo/33458"
+      ],
+      "collection_key": "telegram:Kyaooo:2026-08-14",
+      "summary": "투자 관련 내용 없음",
+      "stocks": [],
+      "sector": "기타",
+      "key_points": [
+        "8개 메시지 중 7개는 제목만 있고 본문 없음",
+        "메시지 2: 정유 산업분석 외부 블로그 링크만 제시",
+        "메시지 5: 게임 관련 뉴스 링크만 제시",
+        "메시지 6: 유튜브 링크만 제시 (내용 미확인)",
+        "메시지 8: 모건 하우절의 일반적 격언만 인용"
+      ],
+      "numbers": [],
+      "stance": "해당없음",
+      "reasoning": "",
+      "catalyst": "",
+      "why_read": "",
+      "novelty": 0,
+      "evidence_quality": 0,
+      "evidence_grade": "F",
+      "evidence_reason": "8개 메시지 중 실질적 분석이나 수치가 없고, 제목만 남겨진 메시지들과 외부 링크만 제시되어 독립적인 근거가 전혀 없음",
+      "counter_argument": "본문에 반대 근거 없음",
+      "price_reflection": "판단 불가",
+      "investment_chain": "본문이 실질적 투자 주장을 담고 있지 않아 연결 불가능",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "관련 없음",
+          "reason": "본문에 삼성전자 관련 언급 또는 분석 없음"
+        },
+        "SK하이닉스": {
+          "direction": "관련 없음",
+          "reason": "본문에 SK하이닉스 관련 언급 또는 분석 없음"
+        }
+      },
+      "action": "제외하기",
+      "action_reason": "텔레그램 메시지 스니펫만 제공되었으며 실질적인 투자 분석, 수치, 주장이 전혀 없어 리서치 가치가 없음",
+      "analysis_depth": "full",
+      "risks": [],
+      "market_view": false,
+      "market_sentiment": 0,
+      "market_reason": "",
+      "source_role": "fact",
+      "analysis_version": 3
+    },
+    {
       "id": "pengmeup_2026-08-14_30853",
       "date": "2026-08-14",
       "source": "telegram",
@@ -15697,7 +15979,23 @@
       "title": "트럼프, 미 해군·조선 산업 재건 국가안보 각서 서명 (1건)",
       "url": "https://t.me/pengmeup/30853",
       "source_urls": [
-        "https://t.me/pengmeup/30853"
+        "https://t.me/pengmeup/30860",
+        "https://t.me/pengmeup/30861",
+        "https://t.me/pengmeup/30862",
+        "https://t.me/pengmeup/30863",
+        "https://t.me/pengmeup/30864",
+        "https://t.me/pengmeup/30865",
+        "https://t.me/pengmeup/30866",
+        "https://t.me/pengmeup/30867",
+        "https://t.me/pengmeup/30868",
+        "https://t.me/pengmeup/30869",
+        "https://t.me/pengmeup/30870",
+        "https://t.me/pengmeup/30871",
+        "https://t.me/pengmeup/30872",
+        "https://t.me/pengmeup/30873",
+        "https://t.me/pengmeup/30874",
+        "https://t.me/pengmeup/30875",
+        "https://t.me/pengmeup/30877"
       ],
       "collection_key": "telegram:pengmeup:2026-08-14",
       "summary": "트럼프 대통령이 해군 함정 건조·수리 프로그램 개혁과 조선 산업 기반 역량 회복을 위한 국가안보 대통령 각서에 서명. CVN-81 항공모함 설계 변경(EMALS→증기·유압 방식), 제5 해군 공창 신설(80년 만의 첫 신규 공창), 외국 조선소 임시 건조 허용(미국 조선소 투자 조건) 등 구체 정책 추진.",
@@ -15814,6 +16112,73 @@
       "analysis_version": 3
     },
     {
+      "id": "pikachu_aje_2026-08-14_8230",
+      "date": "2026-08-14",
+      "source": "telegram",
+      "blog_name": "피카츄 아저씨",
+      "person": "피카츄 아저씨",
+      "title": "국내 전력변압기 업체 미국 반덤핑 관세 확정, 향후 0% 수렴 전망 (1건)",
+      "url": "https://t.me/pikachu_aje/8230",
+      "source_urls": [
+        "https://t.me/pikachu_aje/8230"
+      ],
+      "collection_key": "telegram:pikachu_aje:2026-08-14",
+      "summary": "미국 상무부가 2023년 8월~2024년 7월 POR에서 현대일렉트릭·일진전기 0%, 효성중공업·LS ELECTRIC 4.32% 반덤핑 관세를 확정했다. 글쓴이는 비필수응답자(Non-Selected) 업체들이 필수응답자의 세율을 기반으로 관세가 결정되는 구조상, 향후 POR(2024년 8월~2025년 7월)에서 0%로 수렴할 것으로 전망한다. 다만 미국 상무부 공식 문서 미확인 상태이며, 국내 업체들의 해당 기간 미국 매출비중이 유의미하지 않았어 재무 영향은 제한적일 것으로 예상한다.",
+      "stocks": [
+        "현대일렉트릭",
+        "일진전기",
+        "효성중공업",
+        "LS일렉트릭"
+      ],
+      "sector": "소재·화학",
+      "key_points": [
+        "2023년 8월~2024년 7월 POR 반덤핑 관세율: 현대일렉트릭·일진전기 0%, 효성중공업·LS ELECTRIC 4.32% 확정",
+        "LS ELECTRIC은 이전 예비판정 16.87%에서 4.32%로 인하되며 충당금 환입 가능성 있으나, 해당 기간 미국 매출비중이 유의미하지 않아 재무적 영향 제한적",
+        "미국 상무부의 POR 프로세스: 필수응답자(Mandatory Respondent)의 세율을 기반으로 비필수응답자(Non-Selected) 세율 결정, 0% 제외",
+        "다음 POR(2024년 8월~2025년 7월)은 국내 업체의 미국 매출이 유의미하게 상승한 시기로, 효성중공업이 상무부와 논의 예정",
+        "향후 반덤핑 관세율은 필수응답자인 현대일렉트릭·일진전기의 0% 세율로 수렴할 것으로 전망"
+      ],
+      "numbers": [
+        "현대일렉트릭·일진전기 반덤핑 관세율 0% (2023-2024 POR)",
+        "효성중공업·LS ELECTRIC 반덤핑 관세율 4.32% (2023-2024 POR)",
+        "LS ELECTRIC 이전 예비판정 관세율 16.87% (2022-2023 POR)"
+      ],
+      "stance": "중립",
+      "reasoning": "글쓴이는 미국 상무부의 제한된 심사능력과 POR 프로세스 로직을 분석하여, 향후 세율이 필수응답자의 0% 기준으로 수렴할 것으로 구조적으로 추론했다.",
+      "catalyst": "다음 POR(2024년 8월~2025년 7월) 국내 업체 미국 매출 상승 시기 도래로 반덤핑 관세율 재심사 진행 예정",
+      "why_read": "반덤핑 관세의 복잡한 POR 프로세스 로직을 체계적으로 설명하여 향후 2-3년 리드타임의 실적 영향을 선제적으로 이해할 수 있으며, 현대일렉트릭·일진전기·효성중공업·LS일렉트릭의 미국 전력변압기 수출 사업 동향 추적에 유용하다.",
+      "novelty": 2,
+      "evidence_quality": 2,
+      "evidence_grade": "C",
+      "evidence_reason": "미국 상무부 공식 최종 문서 미확인 상태로 SBS 보도에 의존하고 있으며, POR 프로세스 로직은 합리적 해석이나 추가 검증(상무부 공식 결정문, 각 업체별 POR 제출 자료)이 필요하다.",
+      "counter_argument": "향후 POR에서 필수응답자로 선정되는 업체가 변경되거나, 비필수응답자 업체들의 실제 실사가 진행될 경우 글쓴이의 0% 수렴 시나리오가 성립하지 않을 수 있다.",
+      "price_reflection": "판단 불가",
+      "investment_chain": "다음 POR(2024년 8월~2025년 7월)에서 반덤핑 관세율이 0%로 인하 → 해당 기간 미국 수출 채산성 개선 → 2-3년 후 반영된 실적 증가 → 주가 상향, 단 현재 기간 미국 매출비중 유의미하지 않아 단기 실적 영향은 제한적",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "관련 없음",
+          "reason": "반도체 기업으로 전력변압기 반덤핑 관세 이슈와 사업 무관"
+        },
+        "SK하이닉스": {
+          "direction": "관련 없음",
+          "reason": "반도체 기업으로 전력변압기 반덤핑 관세 이슈와 사업 무관"
+        }
+      },
+      "action": "추가 조사하기",
+      "action_reason": "미국 상무부 공식 최종 결정문 확인, 효성중공업과 LS일렉트릭의 2024년 8월~2025년 7월 POR 진행 상황 및 미국 매출 비중 변화 추적 필요",
+      "analysis_depth": "full",
+      "risks": [
+        "미국 상무부 공식 최종 문서 아직 미확인 (SBS 보도 의존)",
+        "향후 POR에서 필수응답자·비필수응답자 지정 변동 가능성",
+        "2024년 8월~2025년 7월 기간 미국 매출이 예상 수준으로 증가하지 않을 가능성"
+      ],
+      "market_view": false,
+      "market_sentiment": 0,
+      "market_reason": "시장 전체 관점이 아닌 특정 업체의 산업 뉴스 분석이므로 해당 없음",
+      "source_role": "mixed",
+      "analysis_version": 3
+    },
+    {
       "id": "itechkorea_2026-08-14_5681",
       "date": "2026-08-14",
       "source": "telegram",
@@ -15822,7 +16187,8 @@
       "title": "연준 통제 벗어난 AI·물류 인플레, 금리 인상·인하 모두 불가능 (1건)",
       "url": "https://t.me/itechkorea/5681",
       "source_urls": [
-        "https://t.me/itechkorea/5681"
+        "https://t.me/itechkorea/5681",
+        "https://t.me/itechkorea/5682"
       ],
       "collection_key": "telegram:itechkorea:2026-08-14",
       "summary": "7월 PPI 전월비 0%, 전년비 5.5%→4.7%로 둔화했으나, 전자부품 폭등(+28% YoY)과 호르무즈 해협 물류 병목으로 AI 인플레가 태동 중. 연준이 통제할 수 없는 인플레 압력이 커지면서 금리 결정 여지가 사라지고 있다는 주장.",
@@ -15926,6 +16292,86 @@
       "market_reason": "미국 정부의 AI/데이터센터 인프라 금융화 지원을 '판도라의 상자' 개봉으로 표현하며 장기 산업 성장 구조 형성을 극도로 낙관적으로 평가",
       "source_role": "opinion",
       "analysis_version": 2
+    },
+    {
+      "id": "pengmeup_2026-08-13_30830",
+      "date": "2026-08-13",
+      "source": "telegram",
+      "blog_name": "펭미업",
+      "person": "펭미업",
+      "title": "달바글로벌 2Q 실적 강세, 북미·유럽 채널 확대 가속 (16건)",
+      "url": "https://t.me/pengmeup/30833",
+      "source_urls": [
+        "https://t.me/pengmeup/30836",
+        "https://t.me/pengmeup/30837",
+        "https://t.me/pengmeup/30838",
+        "https://t.me/pengmeup/30839",
+        "https://t.me/pengmeup/30840",
+        "https://t.me/pengmeup/30841",
+        "https://t.me/pengmeup/30843",
+        "https://t.me/pengmeup/30844",
+        "https://t.me/pengmeup/30845",
+        "https://t.me/pengmeup/30846",
+        "https://t.me/pengmeup/30847",
+        "https://t.me/pengmeup/30848",
+        "https://t.me/pengmeup/30850",
+        "https://t.me/pengmeup/30851",
+        "https://t.me/pengmeup/30852"
+      ],
+      "collection_key": "telegram:pengmeup:2026-08-13",
+      "summary": "달바글로벌이 2Q26 매출 1,869억원(예상 대비 +2%), 영업익 472억원(+15%), 순이익 381억원(+23%)을 기록했다. 북미 온라인 채널이 +128%, 유럽이 +235% 성장했으며, 미국 코스트코 625개 매장 입점(연말 목표) 및 유럽 부츠 신규 입점 계획 등 오프라인 채널 확대가 주요 성장 동력이다. 3Q는 매출 1,700억원(+50%), 영업이익률 17% 전망.",
+      "stocks": [
+        "달바글로벌"
+      ],
+      "sector": "소재·화학",
+      "key_points": [
+        "2Q26 영업익 472억원, 예상 410억원 대비 +15% 달성 (콜 노트 기준)",
+        "북미 상반기 누적 +181% 성장, 아마존·틱톡샵 견인 및 코스트코 625개 매장 입점 목표",
+        "유럽 상반기 누적 +230% 성장(343억원), 연간 목표 450억원 근접 중",
+        "PP 용기 부족으로 2Q 선크림 수요 미응(3Q부터 정상화 기대), 러시아는 일시적 공급 차질(3Q부터 회복 예상)",
+        "2026년 전사 가이던스: 매출 7,250억원, 영업이익률 21% (3Q는 매출 1,700억원)"
+      ],
+      "numbers": [
+        "2Q26 영업익 472억원(예상 410억원 대비 +15%)",
+        "북미 상반기 +181% 성장, 유럽 +230% 성장",
+        "2026년 목표 매출 7,250억원, 영업이익률 21%",
+        "3Q 전망 매출 1,700억원(+50%), 영업이익률 17%"
+      ],
+      "stance": "강세",
+      "reasoning": "주요 지역(북미, 유럽, 중화권)에서 이중 이상의 고성장을 달성 중이며, 글로벌 대형 소매채널(코스트코, 부츠, KKV) 입점 확대가 지속되고 있기 때문.",
+      "catalyst": "미국 코스트코 625개 매장 전사 입점(연말 목표), 영국 부츠 신규 입점, 3Q 부자재 수급 정상화로 선크림 공급 재개 예정",
+      "why_read": "K-뷰티 수출 호조와 글로벌 채널 확대가 실제로 실적(+181~230%)으로 이어지는 구체적 근거와 함께, 경영진이 제시한 권역별 성장 드라이버와 3~4분기 전망이 포함되어 있어 달바의 중기 성장 추적에 필수적.",
+      "novelty": 2,
+      "evidence_quality": 3,
+      "evidence_grade": "A",
+      "evidence_reason": "공시 기반의 반기실적과 경영진 콜 노트에서 비롯한 구체적 수치, 지역별 성장률, 채널별 입점 계획, 분기 가이던스 등이 모두 1차 자료 기반.",
+      "counter_argument": "2Q 선크림 재고 부족 및 러시아 역성장(-22%)에서 보듯 공급망 불안정성이 지속되면 3Q 가이던스(+50%)를 달성하지 못할 수 있으며, 선진국 경기 둔화 시 온라인·오프라인 채널 성장률이 급반전될 가능성이 있다.",
+      "price_reflection": "판단 불가",
+      "investment_chain": "글로벌 오프라인 채널(코스트코, 부츠) 입점 → 판매점포 수 증가(1Q 8천 → 2Q 9천+) → 권역별 매출 가속(북미+181%, 유럽+230%) → 상반기 기저 높아도 3Q는 +50% 성장 가능 → 2026년 연간 매출 7,250억원 달성 가능성",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "관련 없음",
+          "reason": "달바글로벌은 K-뷰티 선크림·화장품 전문으로 반도체와 무관"
+        },
+        "SK하이닉스": {
+          "direction": "관련 없음",
+          "reason": "달바글로벌은 K-뷰티 선크림·화장품 전문으로 반도체와 무관"
+        }
+      },
+      "action": "추가 조사하기",
+      "action_reason": "2Q 실적이 가이던스를 상회했으나, 부자재 수급 정상화 시점, 러시아 회복 정도, 3Q 계절적 약세 극복 가능성 등을 추가로 검증할 필요가 있으며, 현재 밸류에이션(3조 3,046억)이 성장률을 반영했는지 확인 필수.",
+      "analysis_depth": "full",
+      "risks": [
+        "PP 용기 수급 차질(2Q 영향, 3Q 정상화 예정)",
+        "러시아 선적 이연, 와일드베리 창고 공격 등 공급망 불안정(일시적 이슈로 판단)",
+        "국내 3Q 비수기 및 계절적 약세(경영진 언급)",
+        "부자재 수급 이슈 7월까지 영향(경영진 언급)"
+      ],
+      "market_view": false,
+      "market_sentiment": 1,
+      "market_reason": "단일 기업의 반기 실적과 전망 공시 전달로, 시장 전체 수급·유동성에 대한 별도 견해는 없음. 다만 K-뷰티 브랜드의 미국 스킨케어 시장 진입 성공([메시지 2])을 배경으로 낙관하는 톤.",
+      "source_role": "mixed",
+      "analysis_version": 3
     },
     {
       "id": "doctordk_2026-08-13_224377481237",
@@ -16294,7 +16740,9 @@
         "https://t.me/comvestment/1957",
         "https://t.me/comvestment/1958",
         "https://t.me/comvestment/1959",
-        "https://t.me/comvestment/1961"
+        "https://t.me/comvestment/1961",
+        "https://t.me/comvestment/1962",
+        "https://t.me/comvestment/1963"
       ],
       "collection_key": "telegram:comvestment:2026-08-13",
       "summary": "일본 반도체 테스트 장비업체 Advantest가 +4.7% 상승하며 역사적 신고가를 기록했고, 시가총액 기준 순위가 8위에서 7위로 상승. 블로거는 7월 하락한 국내 반도체 장비주들이 8월에 반등할 가능성을 제시하며, 정부의 반도체·이차전지 규제 완화(용인 클러스터 공장 증설 지원, 4조 2천억 투자 유발 효과)를 긍정적 배경으로 언급.",
@@ -16354,13 +16802,6 @@
       "title": "Cisco AI 인프라 슈퍼사이클·Nebius 기가와트급 캐파 확대 (15건)",
       "url": "https://t.me/skitteam/4463",
       "source_urls": [
-        "https://t.me/skitteam/4467",
-        "https://t.me/skitteam/4468",
-        "https://t.me/skitteam/4469",
-        "https://t.me/skitteam/4470",
-        "https://t.me/skitteam/4471",
-        "https://t.me/skitteam/4472",
-        "https://t.me/skitteam/4473",
         "https://t.me/skitteam/4474",
         "https://t.me/skitteam/4475",
         "https://t.me/skitteam/4476",
@@ -16424,83 +16865,55 @@
       "analysis_version": 3
     },
     {
-      "id": "pengmeup_2026-08-13_30830",
+      "id": "Kyaooo_2026-08-13_33448",
       "date": "2026-08-13",
       "source": "telegram",
-      "blog_name": "펭미업",
-      "person": "펭미업",
-      "title": "달바글로벌 2Q 실적 강세, 북미·유럽 채널 확대 가속 (16건)",
-      "url": "https://t.me/pengmeup/30833",
+      "blog_name": "캬오의 공부방",
+      "person": "캬오의 공부방",
+      "title": "환율 강세 전환 시 외국인 매수 유입 가능성 (1건)",
+      "url": "https://t.me/Kyaooo/33448",
       "source_urls": [
-        "https://t.me/pengmeup/30836",
-        "https://t.me/pengmeup/30837",
-        "https://t.me/pengmeup/30838",
-        "https://t.me/pengmeup/30839",
-        "https://t.me/pengmeup/30840",
-        "https://t.me/pengmeup/30841",
-        "https://t.me/pengmeup/30843",
-        "https://t.me/pengmeup/30844",
-        "https://t.me/pengmeup/30845",
-        "https://t.me/pengmeup/30846",
-        "https://t.me/pengmeup/30847",
-        "https://t.me/pengmeup/30848",
-        "https://t.me/pengmeup/30850",
-        "https://t.me/pengmeup/30851",
-        "https://t.me/pengmeup/30852"
+        "https://t.me/Kyaooo/33448"
       ],
-      "collection_key": "telegram:pengmeup:2026-08-13",
-      "summary": "달바글로벌이 2Q26 매출 1,869억원(예상 대비 +2%), 영업익 472억원(+15%), 순이익 381억원(+23%)을 기록했다. 북미 온라인 채널이 +128%, 유럽이 +235% 성장했으며, 미국 코스트코 625개 매장 입점(연말 목표) 및 유럽 부츠 신규 입점 계획 등 오프라인 채널 확대가 주요 성장 동력이다. 3Q는 매출 1,700억원(+50%), 영업이익률 17% 전망.",
-      "stocks": [
-        "달바글로벌"
-      ],
-      "sector": "소재·화학",
+      "collection_key": "telegram:Kyaooo:2026-08-13",
+      "summary": "투자 관련 내용 없음. 블로그 게시물은 텔레그램 메시지 링크만 제시하며, 본문에 구체적인 주장·수치·근거가 기재되지 않았음.",
+      "stocks": [],
+      "sector": "거시경제",
       "key_points": [
-        "2Q26 영업익 472억원, 예상 410억원 대비 +15% 달성 (콜 노트 기준)",
-        "북미 상반기 누적 +181% 성장, 아마존·틱톡샵 견인 및 코스트코 625개 매장 입점 목표",
-        "유럽 상반기 누적 +230% 성장(343억원), 연간 목표 450억원 근접 중",
-        "PP 용기 부족으로 2Q 선크림 수요 미응(3Q부터 정상화 기대), 러시아는 일시적 공급 차질(3Q부터 회복 예상)",
-        "2026년 전사 가이던스: 매출 7,250억원, 영업이익률 21% (3Q는 매출 1,700억원)"
+        "환율 방향 전환이 외국인 매수의 선행지표라는 추측 제시",
+        "구체적 수치, 산업 데이터, 시장 현황 부재",
+        "원문 접근이 불가능(텔레그램 링크만 제시)"
       ],
-      "numbers": [
-        "2Q26 영업익 472억원(예상 410억원 대비 +15%)",
-        "북미 상반기 +181% 성장, 유럽 +230% 성장",
-        "2026년 목표 매출 7,250억원, 영업이익률 21%",
-        "3Q 전망 매출 1,700억원(+50%), 영업이익률 17%"
-      ],
-      "stance": "강세",
-      "reasoning": "주요 지역(북미, 유럽, 중화권)에서 이중 이상의 고성장을 달성 중이며, 글로벌 대형 소매채널(코스트코, 부츠, KKV) 입점 확대가 지속되고 있기 때문.",
-      "catalyst": "미국 코스트코 625개 매장 전사 입점(연말 목표), 영국 부츠 신규 입점, 3Q 부자재 수급 정상화로 선크림 공급 재개 예정",
-      "why_read": "K-뷰티 수출 호조와 글로벌 채널 확대가 실제로 실적(+181~230%)으로 이어지는 구체적 근거와 함께, 경영진이 제시한 권역별 성장 드라이버와 3~4분기 전망이 포함되어 있어 달바의 중기 성장 추적에 필수적.",
-      "novelty": 2,
-      "evidence_quality": 3,
-      "evidence_grade": "A",
-      "evidence_reason": "공시 기반의 반기실적과 경영진 콜 노트에서 비롯한 구체적 수치, 지역별 성장률, 채널별 입점 계획, 분기 가이던스 등이 모두 1차 자료 기반.",
-      "counter_argument": "2Q 선크림 재고 부족 및 러시아 역성장(-22%)에서 보듯 공급망 불안정성이 지속되면 3Q 가이던스(+50%)를 달성하지 못할 수 있으며, 선진국 경기 둔화 시 온라인·오프라인 채널 성장률이 급반전될 가능성이 있다.",
+      "numbers": [],
+      "stance": "중립",
+      "reasoning": "환율 강세 전환과 외국인 매수 간의 인과관계 추측만 있고, 근거가 명시되지 않음.",
+      "catalyst": "",
+      "why_read": "텔레그램 원문([메시지 1])을 직접 확인하지 않으면 실제 내용 검증 불가능하며, 블로그 게시물 자체에는 검증 가능한 정보가 없음.",
+      "novelty": 0,
+      "evidence_quality": 0,
+      "evidence_grade": "F",
+      "evidence_reason": "본문이 사실상 공백이고, 텔레그램 링크만 제시되어 투자 근거를 판단할 객관적 자료가 전혀 없음.",
+      "counter_argument": "환율 강세가 반드시 외국인 매수로 이어진다는 보장이 없으며, 한국 주식 외국인 수급은 글로벌 펀드플로우·금리·경기·기업실적 등 다층적 요인에 의존함.",
       "price_reflection": "판단 불가",
-      "investment_chain": "글로벌 오프라인 채널(코스트코, 부츠) 입점 → 판매점포 수 증가(1Q 8천 → 2Q 9천+) → 권역별 매출 가속(북미+181%, 유럽+230%) → 상반기 기저 높아도 3Q는 +50% 성장 가능 → 2026년 연간 매출 7,250억원 달성 가능성",
+      "investment_chain": "환율 전환 → 외국인 매수 유입으로의 연결이 주장되나, 중간 메커니즘(왜 강한 환율이 외국인 매수 신호인지)에 근거 부족.",
       "watchlist_impact": {
         "삼성전자": {
-          "direction": "관련 없음",
-          "reason": "달바글로벌은 K-뷰티 선크림·화장품 전문으로 반도체와 무관"
+          "direction": "판단 불가",
+          "reason": "환율 강세와 외국인 수급의 관계가 검증되지 않아, 삼성전자 주가에 미칠 영향을 판단할 근거 없음."
         },
         "SK하이닉스": {
-          "direction": "관련 없음",
-          "reason": "달바글로벌은 K-뷰티 선크림·화장품 전문으로 반도체와 무관"
+          "direction": "판단 불가",
+          "reason": "환율 강세와 외국인 수급의 관계가 검증되지 않아, SK하이닉스 주가에 미칠 영향을 판단할 근거 없음."
         }
       },
-      "action": "추가 조사하기",
-      "action_reason": "2Q 실적이 가이던스를 상회했으나, 부자재 수급 정상화 시점, 러시아 회복 정도, 3Q 계절적 약세 극복 가능성 등을 추가로 검증할 필요가 있으며, 현재 밸류에이션(3조 3,046억)이 성장률을 반영했는지 확인 필수.",
-      "analysis_depth": "full",
-      "risks": [
-        "PP 용기 수급 차질(2Q 영향, 3Q 정상화 예정)",
-        "러시아 선적 이연, 와일드베리 창고 공격 등 공급망 불안정(일시적 이슈로 판단)",
-        "국내 3Q 비수기 및 계절적 약세(경영진 언급)",
-        "부자재 수급 이슈 7월까지 영향(경영진 언급)"
-      ],
-      "market_view": false,
+      "action": "제외하기",
+      "action_reason": "블로그 본문이 실질적 투자 정보 없이 텔레그램 링크만 제시하여 검증 불가능하며, 반도체 업황·실적·수급에 대한 구체적 근거가 전혀 포함되지 않음.",
+      "analysis_depth": "title",
+      "risks": [],
+      "market_view": true,
       "market_sentiment": 1,
-      "market_reason": "단일 기업의 반기 실적과 전망 공시 전달로, 시장 전체 수급·유동성에 대한 별도 견해는 없음. 다만 K-뷰티 브랜드의 미국 스킨케어 시장 진입 성공([메시지 2])을 배경으로 낙관하는 톤.",
-      "source_role": "mixed",
+      "market_reason": "환율 전환 → 외국인 매수 유입이라는 연결고리를 통해 시장 수급의 긍정적 변화를 암시하고 있음.",
+      "source_role": "opinion",
       "analysis_version": 3
     },
     {
