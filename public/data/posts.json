@@ -1,6 +1,126 @@
 {
-  "date": "2026-08-14",
+  "date": "2026-08-15",
   "daily_briefs": [
+    {
+      "headline": "메모리·반도체 소부장 강세론이 압도적 다수, 삼성전자·SK하이닉스 성장주 재평가 논리 확산 — 다만 AI발 전자부품 인플레로 연준 통제력 상실 경고도",
+      "positive": [
+        {
+          "sector": "반도체",
+          "items": [
+            {
+              "name": "삼성전자·삼성전자우",
+              "point": "메모리 성장주 재평가·주주환원 매력, 5일 +16%",
+              "mentions": 1
+            },
+            {
+              "name": "SK하이닉스",
+              "point": "SKHY 대비 괴리율 40%, 5일 +6.6%·20일 -23.5%",
+              "mentions": 2
+            },
+            {
+              "name": "샌디스크(SanDisk)",
+              "point": "FY26 매출 +175%·GPM 71.6%, 5일 +35%",
+              "mentions": 1
+            },
+            {
+              "name": "Applied Materials",
+              "point": "CY26 장비 성장 30%+·다년계약 가시성",
+              "mentions": 1
+            },
+            {
+              "name": "후공정·테스트 소부장",
+              "point": "'미친 써프' 30%+ 실적 상향 슈퍼사이클",
+              "mentions": 1
+            }
+          ]
+        },
+        {
+          "sector": "자동차·로봇",
+          "items": [
+            {
+              "name": "중국 휴머노이드(유니트리)",
+              "point": "상장 러시·청약 8,000배, 실용화 가속",
+              "mentions": 1
+            }
+          ]
+        },
+        {
+          "sector": "방산·조선",
+          "items": [
+            {
+              "name": "미국 조선",
+              "point": "트럼프 국가안보 각서, 80년만 신규 공창",
+              "mentions": 1
+            }
+          ]
+        },
+        {
+          "sector": "소재·화학",
+          "items": [
+            {
+              "name": "전력변압기(현대일렉·일진전기)",
+              "point": "반덤핑 0% 확정·향후 수렴 전망",
+              "mentions": 1
+            }
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "sector": "매크로",
+          "items": [
+            {
+              "name": "AI 인플레·연준",
+              "point": "전자부품 PPI +28%로 금리 여지 상실 주장",
+              "mentions": 1
+            }
+          ]
+        },
+        {
+          "sector": "반도체",
+          "items": [
+            {
+              "name": "삼성·SK 낸드 점유율",
+              "point": "YMTC 14%로 3위 진입, 공급구조 변화",
+              "mentions": 1
+            }
+          ]
+        }
+      ],
+      "minority": [
+        "ITK 미주투는 다수 강세론과 달리, AI 전자부품·물류 인플레로 연준이 인상·인하 모두 불가능한 통제 불능 국면에 진입했다고 경고.",
+        "우용용은 메모리 성장주론 속에서도 사이클주 인식 전환을 전제로 본주보다 주주환원율 높은 삼성전자우를 포트 1위로 역발상 배치."
+      ],
+      "events": [
+        {
+          "date": "2026-08-19",
+          "label": "WRC 2026 세계로봇대회",
+          "stocks": [],
+          "source": "투자콤",
+          "approx": false
+        },
+        {
+          "date": "2026-08-22",
+          "label": "세계 휴머노이드 로봇 대회 2026",
+          "stocks": [],
+          "source": "투자콤",
+          "approx": false
+        },
+        {
+          "date": "2026-12-31",
+          "label": "구글 Gemini 3.7 Flash API 50% 할인 종료",
+          "stocks": [
+            "알파벳"
+          ],
+          "source": "캬오의 공부방",
+          "approx": false
+        }
+      ],
+      "generatedAt": "2026-08-14T23:11:41.107Z",
+      "date": "2026-08-15",
+      "post_count": 13,
+      "inputHash": "1b61bfd3cb636267ede6999113aeb8a38be1ec589a5765890999d8f50772f6f4"
+    },
     {
       "headline": "AI 인프라 슈퍼사이클 근거로 반도체 강세론이 압도적이나, 일부는 사이클 멀티플 축소·AI 인플레 통제불능을 경고",
       "positive": [
@@ -906,168 +1026,6 @@
       "generatedAt": "2026-08-08T23:17:34.928Z",
       "date": "2026-08-09",
       "post_count": 12
-    },
-    {
-      "headline": "반도체 강세론 여전하나 '가격 피크 임박·주가 급락' 경고 팽팽 — SK하이닉스 20일 -34.9%로 여론과 역행",
-      "positive": [
-        {
-          "sector": "반도체",
-          "items": [
-            {
-              "name": "SK하이닉스",
-              "point": "54조 투자·HBM ASP 27년 2배 전망, 그러나 20일 -34.9%",
-              "mentions": 4
-            },
-            {
-              "name": "반도체 IDM 섹터",
-              "point": "AI 데이터센터 수요로 27~28년 HBM 부족 심화",
-              "mentions": 2
-            }
-          ]
-        },
-        {
-          "sector": "에너지",
-          "items": [
-            {
-              "name": "원전",
-              "point": "美 175억달러 공급망 지원, 26년 하반기 발주 시작",
-              "mentions": 1
-            }
-          ]
-        },
-        {
-          "sector": "소재·화학",
-          "items": [
-            {
-              "name": "폴리실리콘·태양광(MIP)",
-              "point": "美 최저수입가 도입으로 밸류체인 수익성 구조 개선",
-              "mentions": 1
-            },
-            {
-              "name": "OCI홀딩스(태양광 관련)",
-              "point": "정책 수혜 기대, 5일 +43.2%",
-              "mentions": 1
-            },
-            {
-              "name": "금호석유화학",
-              "point": "2Q 영업익 3,390억 컨센 +132% 상회",
-              "mentions": 1
-            }
-          ]
-        },
-        {
-          "sector": "방산·AI",
-          "items": [
-            {
-              "name": "마키나락스",
-              "point": "국방 AI 확대로 27년 흑자전환·영업이익 128억",
-              "mentions": 1
-            }
-          ]
-        },
-        {
-          "sector": "AI/빅테크",
-          "items": [
-            {
-              "name": "AI 인프라주(TSMC·브로드컴 등)",
-              "point": "M7→P7 주도권 이동, 인프라 기업 급등",
-              "mentions": 1
-            }
-          ]
-        }
-      ],
-      "negative": [
-        {
-          "sector": "반도체",
-          "items": [
-            {
-              "name": "메모리(D램·NAND)",
-              "point": "26년 3Q 가격 인상폭 20%로 축소, 사이클 막바지",
-              "mentions": 1
-            },
-            {
-              "name": "한국 반도체(전자닉)",
-              "point": "주주환원 미흡·정부개입으로 밸류 디스카운트",
-              "mentions": 1
-            }
-          ]
-        },
-        {
-          "sector": "AI/빅테크",
-          "items": [
-            {
-              "name": "메타·테슬라",
-              "point": "M7 부진, 작년말 대비 각 -10.5%·-28.9%",
-              "mentions": 1
-            }
-          ]
-        },
-        {
-          "sector": "매크로",
-          "items": [
-            {
-              "name": "외인 수급",
-              "point": "KOSPI 외인 5일 누적 -5.9조 순매도",
-              "mentions": 1
-            },
-            {
-              "name": "성과급 규제",
-              "point": "산업부, 거액 성과급 주총 의결 의무화 추진",
-              "mentions": 1
-            },
-            {
-              "name": "포트폴리오 전략",
-              "point": "하반기 박스권 전환, 대형주 축소·섹터 분산 권고",
-              "mentions": 2
-            }
-          ]
-        }
-      ],
-      "minority": [
-        "펭미업·번스타인: 공급부족은 27년까지지만 PC·폰 수요 부진으로 가격 상승 여력 이미 제한적이라 인상 사이클 막바지 관점.",
-        "에테르: 소프트뱅크 NAV 72.3조엔 확대에도 45~55% 할인 거래, 장기 평균 할인율 감안 시 상승 여력 크다는 시각."
-      ],
-      "events": [
-        {
-          "date": "2026-12-04",
-          "label": "美 폴리실리콘·파생제품 MIP 제도 시행",
-          "stocks": [
-            "OCI홀딩스"
-          ],
-          "source": "의교창",
-          "approx": false
-        },
-        {
-          "date": "2026-01-31",
-          "label": "SK하이닉스 용인 첫 클린룸 완공(2개월 앞당김)",
-          "stocks": [
-            "SK하이닉스"
-          ],
-          "source": "너는 무한하지 않느냐",
-          "approx": true
-        },
-        {
-          "date": "2026-09-30",
-          "label": "SK하이닉스 추가 주주환원 방안 3Q 중 확정·발표",
-          "stocks": [
-            "SK하이닉스"
-          ],
-          "source": "IT는 SK",
-          "approx": true
-        },
-        {
-          "date": "2030-12-31",
-          "label": "삼성 테일러 팹2 양산 목표",
-          "stocks": [
-            "삼성전자"
-          ],
-          "source": "너는 무한하지 않느냐",
-          "approx": true
-        }
-      ],
-      "generatedAt": "2026-08-07T23:24:45.319Z",
-      "date": "2026-08-08",
-      "post_count": 17
     }
   ],
   "market": {
@@ -1094,42 +1052,42 @@
       "d20": 9.2,
       "flows": {
         "date": "26.08.14",
-        "individual": 3150,
+        "individual": 3145,
         "foreign": -659,
-        "institution": -2531,
+        "institution": -2524,
         "foreign5d": -6179
       },
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26803.025,
-      "asOf": "20260813",
-      "d1": 0.8,
-      "d5": 1.7
+      "index": 26729.164,
+      "asOf": "20260814",
+      "d1": -0.3,
+      "d5": 0.1
     },
     "sp500": {
-      "index": 7798.99,
-      "asOf": "20260813",
-      "d1": 0.7,
-      "d5": 1.2
+      "index": 7785.76,
+      "asOf": "20260814",
+      "d1": -0.2,
+      "d5": 0.4
     }
   },
   "prices": {
     "삼성전자": {
       "market": "KR",
-      "price": 255500,
-      "asOf": "20260812",
-      "d1": 6.7,
-      "d5": 3.9,
-      "d20": -2.9,
+      "price": 268000,
+      "asOf": "20260813",
+      "d1": 4.9,
+      "d5": 16.3,
+      "d20": -4.1,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": -401379,
-        "institutionToday": 5544777,
-        "foreign5d": 1731784,
-        "institution5d": 7302597,
-        "foreignRate": 46.7,
-        "volume": 35530867,
+        "asOf": "20260814",
+        "foreignToday": 4913433,
+        "institutionToday": -1830920,
+        "foreign5d": 8382584,
+        "institution5d": 5435073,
+        "foreignRate": 46.79,
+        "volume": 21668266,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1137,19 +1095,19 @@
     },
     "SK하이닉스": {
       "market": "KR",
-      "price": 1504000,
-      "asOf": "20260812",
-      "d1": 5.5,
-      "d5": -9.8,
-      "d20": -21.4,
+      "price": 1593000,
+      "asOf": "20260813",
+      "d1": 5.9,
+      "d5": 6.6,
+      "d20": -23.5,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 649842,
-        "institutionToday": 159109,
-        "foreign5d": 656172,
-        "institution5d": 522096,
-        "foreignRate": 50.96,
-        "volume": 4680347,
+        "asOf": "20260814",
+        "foreignToday": 747508,
+        "institutionToday": -334859,
+        "foreign5d": 1460037,
+        "institution5d": 154329,
+        "foreignRate": 51.06,
+        "volume": 4295990,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1157,122 +1115,91 @@
     },
     "마이크론": {
       "market": "US",
-      "price": 949.83,
-      "asOf": "20260813",
-      "d1": 4.2,
-      "d5": 7.8,
-      "d20": 11.3,
+      "price": 971.66,
+      "asOf": "20260814",
+      "d1": 2.3,
+      "d5": 10.7,
+      "d20": 14.5,
       "investor": null
     },
     "엔비디아": {
       "market": "US",
-      "price": 225.3,
-      "asOf": "20260813",
-      "d1": 0.5,
-      "d5": 2.9,
-      "d20": 8.6,
+      "price": 225.16,
+      "asOf": "20260814",
+      "d1": -0.1,
+      "d5": 0.5,
+      "d20": 11,
       "investor": null
     },
     "알파벳": {
       "market": "US",
-      "price": 346.36,
-      "asOf": "20260813",
-      "d1": 0.8,
-      "d5": -3.2,
-      "d20": -2.3,
+      "price": 345.9,
+      "asOf": "20260814",
+      "d1": -0.1,
+      "d5": -2.4,
+      "d20": -0.3,
       "investor": null
     },
     "샌디스크": {
       "market": "US",
-      "price": 1528.11,
-      "asOf": "20260813",
-      "d1": 13.7,
-      "d5": 21.4,
-      "d20": 8.3,
+      "price": 1641.11,
+      "asOf": "20260814",
+      "d1": 7.4,
+      "d5": 35.4,
+      "d20": 21.1,
       "investor": null
     },
     "Nebius Group": {
       "market": "US",
-      "price": 255.04,
-      "asOf": "20260813",
-      "d1": -1.6,
-      "d5": 34.3,
-      "d20": 48.5,
+      "price": 277.68,
+      "asOf": "20260814",
+      "d1": 8.9,
+      "d5": 47.7,
+      "d20": 56.3,
       "investor": null
     },
     "TSMC": {
       "market": "US",
-      "price": 430.49,
-      "asOf": "20260813",
-      "d1": 0.3,
-      "d5": 2.9,
-      "d20": 5.1,
+      "price": 426.35,
+      "asOf": "20260814",
+      "d1": -1,
+      "d5": 1.5,
+      "d20": 7,
       "investor": null
     },
-    "파마리서치": {
-      "market": "KR",
-      "price": 408000,
-      "asOf": "20260812",
-      "d1": -2.2,
-      "d5": 7.9,
-      "d20": 28.1,
-      "investor": {
-        "asOf": "20260813",
-        "foreignToday": 67958,
-        "institutionToday": -30502,
-        "foreign5d": 93982,
-        "institution5d": -6655,
-        "foreignRate": 6.78,
-        "volume": 257095,
-        "forwardPer": null,
-        "pbr": null,
-        "source": "naver"
-      }
-    },
-    "코스맥스엔비티": {
-      "market": "KR",
-      "price": 10060,
-      "asOf": "20260812",
-      "d1": -3.5,
-      "d5": 29.5,
-      "d20": 26.7,
-      "investor": {
-        "asOf": "20260813",
-        "foreignToday": 40143,
-        "institutionToday": -2618,
-        "foreign5d": 250846,
-        "institution5d": -9734,
-        "foreignRate": 6.74,
-        "volume": 580921,
-        "forwardPer": null,
-        "pbr": null,
-        "source": "naver"
-      }
+    "키옥시아": {
+      "market": "US",
+      "price": 53740,
+      "asOf": "20260814",
+      "d1": 3.7,
+      "d5": 10.3,
+      "d20": -26.5,
+      "investor": null
     },
     "AMD": {
       "market": "US",
-      "price": 483.01,
-      "asOf": "20260813",
-      "d1": 0,
-      "d5": -1.3,
-      "d20": -3.6,
+      "price": 514.39,
+      "asOf": "20260814",
+      "d1": 6.5,
+      "d5": 6.4,
+      "d20": 3.8,
       "investor": null
     },
     "코스맥스": {
       "market": "KR",
-      "price": 249500,
-      "asOf": "20260812",
-      "d1": 18.8,
-      "d5": 27.9,
-      "d20": 42.7,
+      "price": 249000,
+      "asOf": "20260813",
+      "d1": -0.2,
+      "d5": 23.3,
+      "d20": 38.5,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 83914,
-        "institutionToday": -20761,
-        "foreign5d": 212104,
-        "institution5d": -51826,
-        "foreignRate": 38.28,
-        "volume": 266194,
+        "asOf": "20260814",
+        "foreignToday": 28721,
+        "institutionToday": -3551,
+        "foreign5d": 239120,
+        "institution5d": -62474,
+        "foreignRate": 38.54,
+        "volume": 148572,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1280,28 +1207,28 @@
     },
     "아마존": {
       "market": "US",
-      "price": 265.13,
-      "asOf": "20260813",
-      "d1": -0.8,
-      "d5": -2.6,
-      "d20": 6.1,
+      "price": 262.65,
+      "asOf": "20260814",
+      "d1": -0.9,
+      "d5": -4.3,
+      "d20": 6.2,
       "investor": null
     },
     "네오팜": {
       "market": "KR",
-      "price": 25200,
-      "asOf": "20260812",
-      "d1": -1,
-      "d5": 25.1,
-      "d20": 31.7,
+      "price": 24400,
+      "asOf": "20260813",
+      "d1": -3.2,
+      "d5": 13.5,
+      "d20": 24.5,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 45871,
-        "institutionToday": -15067,
-        "foreign5d": 164661,
-        "institution5d": 14492,
-        "foreignRate": 28.32,
-        "volume": 108723,
+        "asOf": "20260814",
+        "foreignToday": 8860,
+        "institutionToday": -511,
+        "foreign5d": 161952,
+        "institution5d": 18802,
+        "foreignRate": 28.38,
+        "volume": 47636,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1309,48 +1236,28 @@
     },
     "인텔": {
       "market": "US",
-      "price": 104.56,
-      "asOf": "20260813",
-      "d1": 3.6,
-      "d5": 4.8,
+      "price": 102.5,
+      "asOf": "20260814",
+      "d1": -2,
+      "d5": 0.8,
       "d20": 7.8,
       "investor": null
     },
     "자이에스앤디": {
       "market": "KR",
-      "price": 8770,
-      "asOf": "20260812",
-      "d1": 4,
-      "d5": 16.5,
-      "d20": 91.9,
+      "price": 9490,
+      "asOf": "20260813",
+      "d1": 8.2,
+      "d5": 16.6,
+      "d20": 89.8,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": -988,
-        "institutionToday": 372432,
-        "foreign5d": -105753,
-        "institution5d": 1551886,
-        "foreignRate": 4.64,
-        "volume": 2602173,
-        "forwardPer": null,
-        "pbr": null,
-        "source": "naver"
-      }
-    },
-    "지엔씨에너지": {
-      "market": "KR",
-      "price": 48200,
-      "asOf": "20260812",
-      "d1": -3.4,
-      "d5": -3.6,
-      "d20": 60.7,
-      "investor": {
-        "asOf": "20260813",
-        "foreignToday": 209814,
-        "institutionToday": 13936,
-        "foreign5d": 521975,
-        "institution5d": -221610,
-        "foreignRate": 9.45,
-        "volume": 1849111,
+        "asOf": "20260814",
+        "foreignToday": -285248,
+        "institutionToday": 304676,
+        "foreign5d": -372110,
+        "institution5d": 1499657,
+        "foreignRate": 3.91,
+        "volume": 2196432,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1358,19 +1265,59 @@
     },
     "심텍": {
       "market": "KR",
-      "price": 104600,
-      "asOf": "20260812",
-      "d1": -8.2,
-      "d5": 1.6,
-      "d20": -3.1,
+      "price": 105800,
+      "asOf": "20260813",
+      "d1": 1.1,
+      "d5": -0.2,
+      "d20": -13,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 153733,
-        "institutionToday": -201429,
-        "foreign5d": 281915,
-        "institution5d": -660023,
-        "foreignRate": 10.61,
-        "volume": 1045721,
+        "asOf": "20260814",
+        "foreignToday": 64007,
+        "institutionToday": -60770,
+        "foreign5d": 354755,
+        "institution5d": -813592,
+        "foreignRate": 10.78,
+        "volume": 861169,
+        "forwardPer": null,
+        "pbr": null,
+        "source": "naver"
+      }
+    },
+    "이오테크닉스": {
+      "market": "KR",
+      "price": 378500,
+      "asOf": "20260813",
+      "d1": -1.8,
+      "d5": 12.5,
+      "d20": -1.7,
+      "investor": {
+        "asOf": "20260814",
+        "foreignToday": -49268,
+        "institutionToday": 48049,
+        "foreign5d": -151619,
+        "institution5d": 112119,
+        "foreignRate": 28.09,
+        "volume": 179666,
+        "forwardPer": null,
+        "pbr": null,
+        "source": "naver"
+      }
+    },
+    "엑시콘": {
+      "market": "KR",
+      "price": 19890,
+      "asOf": "20260813",
+      "d1": 4.6,
+      "d5": 25.8,
+      "d20": 8.9,
+      "investor": {
+        "asOf": "20260814",
+        "foreignToday": -74219,
+        "institutionToday": -879,
+        "foreign5d": -128348,
+        "institution5d": 29355,
+        "foreignRate": 8.41,
+        "volume": 423013,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1378,39 +1325,19 @@
     },
     "일진전기": {
       "market": "KR",
-      "price": 72500,
-      "asOf": "20260812",
-      "d1": 17.3,
-      "d5": 18.7,
-      "d20": 16,
+      "price": 72400,
+      "asOf": "20260813",
+      "d1": -0.1,
+      "d5": 22.9,
+      "d20": 13.7,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 82516,
-        "institutionToday": -61103,
-        "foreign5d": -167242,
-        "institution5d": 120658,
-        "foreignRate": 10.72,
-        "volume": 703120,
-        "forwardPer": null,
-        "pbr": null,
-        "source": "naver"
-      }
-    },
-    "효성중공업": {
-      "market": "KR",
-      "price": 2892000,
-      "asOf": "20260812",
-      "d1": 2.2,
-      "d5": -3.1,
-      "d20": 8,
-      "investor": {
-        "asOf": "20260813",
-        "foreignToday": 3469,
-        "institutionToday": 6375,
-        "foreign5d": -1570,
-        "institution5d": 17639,
-        "foreignRate": 26.9,
-        "volume": 45167,
+        "asOf": "20260814",
+        "foreignToday": 30663,
+        "institutionToday": -83700,
+        "foreign5d": -72161,
+        "institution5d": 19777,
+        "foreignRate": 10.78,
+        "volume": 528090,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1418,11 +1345,11 @@
     },
     "CoreWeave": {
       "market": "US",
-      "price": 106.29,
-      "asOf": "20260813",
-      "d1": -1.3,
-      "d5": 24.6,
-      "d20": 45.8,
+      "price": 105.26,
+      "asOf": "20260814",
+      "d1": -1,
+      "d5": 16.1,
+      "d20": 43.8,
       "investor": null
     },
     "뉴파워프라즈마": {
@@ -1433,33 +1360,13 @@
       "d5": 5.6,
       "d20": 19.5,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 299228,
-        "institutionToday": 38171,
-        "foreign5d": 64070,
-        "institution5d": 271699,
-        "foreignRate": 7.37,
-        "volume": 3186443,
-        "forwardPer": null,
-        "pbr": null,
-        "source": "naver"
-      }
-    },
-    "OCI홀딩스": {
-      "market": "KR",
-      "price": 256000,
-      "asOf": "20260812",
-      "d1": -6.4,
-      "d5": 4.1,
-      "d20": 39.1,
-      "investor": {
-        "asOf": "20260813",
-        "foreignToday": 91302,
-        "institutionToday": 76821,
-        "foreign5d": -2886,
-        "institution5d": 109928,
-        "foreignRate": 15.08,
-        "volume": 481626,
+        "asOf": "20260814",
+        "foreignToday": -113018,
+        "institutionToday": -23433,
+        "foreign5d": 30600,
+        "institution5d": 283729,
+        "foreignRate": 7.12,
+        "volume": 2510214,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1467,19 +1374,19 @@
     },
     "삼성전기": {
       "market": "KR",
-      "price": 1335000,
-      "asOf": "20260812",
-      "d1": 5.8,
-      "d5": -1.5,
-      "d20": 6,
+      "price": 1503000,
+      "asOf": "20260813",
+      "d1": 12.6,
+      "d5": 22.3,
+      "d20": 6.4,
       "investor": {
-        "asOf": "20260813",
-        "foreignToday": 101072,
-        "institutionToday": 21729,
-        "foreign5d": 50003,
-        "institution5d": 120977,
-        "foreignRate": 38.73,
-        "volume": 1157518,
+        "asOf": "20260814",
+        "foreignToday": -178543,
+        "institutionToday": 24624,
+        "foreign5d": -106018,
+        "institution5d": 78687,
+        "foreignRate": 38.49,
+        "volume": 968103,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1487,93 +1394,89 @@
     },
     "Bloom Energy": {
       "market": "US",
-      "price": 236.22,
-      "asOf": "20260813",
-      "d1": -0.4,
-      "d5": 3.2,
-      "d20": 14.3,
+      "price": 229.94,
+      "asOf": "20260814",
+      "d1": -2.7,
+      "d5": 4.8,
+      "d20": 7,
+      "investor": null
+    },
+    "브로드컴": {
+      "market": "US",
+      "price": 392.99,
+      "asOf": "20260814",
+      "d1": -5.9,
+      "d5": -8.1,
+      "d20": 6,
       "investor": null
     }
   },
   "verdicts": {
-    "date": "2026-08-14",
-    "generatedAt": "2026-08-14T08:47:48.268Z",
+    "date": "2026-08-15",
+    "generatedAt": "2026-08-14T23:11:20.633Z",
     "items": [
+      {
+        "ticker": "SK하이닉스",
+        "N": 4,
+        "B": 3,
+        "R": 0,
+        "P5": 6.6,
+        "FRESH_H": 0,
+        "DIR": "bull",
+        "PDIR": "up",
+        "ILLUSION": "False",
+        "verdict": "buy",
+        "confidence": 0.4
+      },
       {
         "ticker": "삼성전자",
         "N": 3,
-        "B": 3,
-        "R": 0,
-        "P5": 3.9,
-        "FRESH_H": 0,
-        "DIR": "bull",
-        "PDIR": "up",
-        "ILLUSION": "False",
-        "verdict": "buy",
-        "confidence": 0.4
-      },
-      {
-        "ticker": "SK하이닉스",
-        "N": 3,
-        "B": 3,
-        "R": 0,
-        "P5": -9.8,
-        "FRESH_H": 0,
-        "DIR": "bull",
-        "PDIR": "down",
-        "ILLUSION": "True",
-        "verdict": "needs_review",
-        "confidence": 0.1
-      },
-      {
-        "ticker": "Nebius Group",
-        "N": 3,
-        "B": 3,
-        "R": 0,
-        "P5": 34.3,
-        "FRESH_H": 0,
-        "DIR": "bull",
-        "PDIR": "up",
-        "ILLUSION": "False",
-        "verdict": "buy",
-        "confidence": 0.4
-      },
-      {
-        "ticker": "마이크론",
-        "N": 2,
         "B": 2,
         "R": 0,
-        "P5": 7.8,
+        "P5": 16.3,
         "FRESH_H": 0,
         "DIR": "bull",
         "PDIR": "up",
         "ILLUSION": "False",
-        "verdict": "watch",
-        "confidence": 0.2
+        "verdict": "buy",
+        "confidence": 0.4
       },
       {
         "ticker": "엔비디아",
         "N": 2,
         "B": 2,
         "R": 0,
-        "P5": 2.9,
+        "P5": 0.5,
         "FRESH_H": 0,
         "DIR": "bull",
+        "PDIR": "flat",
+        "ILLUSION": "미확인",
+        "verdict": "watch",
+        "confidence": 0.1
+      },
+      {
+        "ticker": "마이크론",
+        "N": 2,
+        "B": 1,
+        "R": 0,
+        "P5": 10.7,
+        "FRESH_H": 0,
+        "DIR": "mixed",
         "PDIR": "up",
-        "ILLUSION": "False",
+        "ILLUSION": "미확인",
         "verdict": "watch",
         "confidence": 0.2
       },
       {
-        "ticker": "Bloom Energy",
+        "ticker": "샌디스크",
         "N": 2,
-        "B": 2,
+        "B": 1,
         "R": 0,
-        "P5": 3.2,
+        "P5": 35.4,
         "FRESH_H": 0,
-        "DIR": "bull",
+        "DIR": "mixed",
         "PDIR": "up",
-        "ILLUSION": "False",
+        "ILLUSION": "미확인",
         "verdict": "watch",
         "confidence": 0.2
       }
@@ -1585,6 +1488,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-08-15",
+      "buy_pct": 40
+    },
     {
       "date": "2026-08-14",
       "buy_pct": 33.3
@@ -1600,10 +1507,6 @@
     {
       "date": "2026-08-11",
       "buy_pct": 20
-    },
-    {
-      "date": "2026-08-10",
-      "buy_pct": 0
     }
   ],
   "source_scores": {
@@ -1638,7 +1541,7 @@
       },
       {
         "person": "우용용",
-        "opinions": 3,
+        "opinions": 6,
         "w": {
           "63": {
             "hits": 0,
@@ -1671,279 +1574,6 @@
     ]
   },
   "mention_history": {
-    "2026-07-01": {
-      "stocks": [
-        "디스코",
-        "마이크로소프트",
-        "마이크론",
-        "메타",
-        "브이엠",
-        "블룸에너지",
-        "삼성전자",
-        "샌디스크",
-        "서진시스템",
-        "섬코",
-        "소프트뱅크",
-        "신세계",
-        "아마존",
-        "엔비디아",
-        "유진테크",
-        "이비덴",
-        "인바디",
-        "캐터필러",
-        "커민스",
-        "피에스케이",
-        "AMD",
-        "Bloom Energy",
-        "Brookfield",
-        "GE 버노바",
-        "SK",
-        "SK하이닉스",
-        "TBEA",
-        "TSMC"
-      ],
-      "sectors": [
-        "반도체|거시경제",
-        "플랫폼"
-      ],
-      "opinions": [
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "마이크로소프트",
-          "stance": "중립"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "아마존",
-          "stance": "중립"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "SK",
-          "stance": "약세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "메타",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "소프트뱅크",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "블룸에너지",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "캐터필러",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "커민스",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "GE 버노바",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "TBEA",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "의교창",
-          "stock": "SK하이닉스",
-          "stance": "중립"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "샌디스크",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "신세계",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "디스코",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "마이크론",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "브이엠",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "섬코",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "엔비디아",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "유진테크",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "이비덴",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "인바디",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "피에스케이",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "AMD",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "SK하이닉스",
-          "stance": "중립"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "서진시스템",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "Bloom Energy",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "Brookfield",
-          "stance": "강세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "TSMC",
-          "stance": "강세"
-        }
-      ]
-    },
     "2026-07-02": {
       "stocks": [
         "네비우스",
@@ -15415,10 +15045,244 @@
           "stance": "강세"
         }
       ]
+    },
+    "2026-08-15": {
+      "stocks": [
+        "농심",
+        "대동",
+        "마이크로컨텍솔",
+        "마이크론",
+        "메가터치",
+        "빙그레",
+        "삼성전자",
+        "삼성SDI",
+        "상신이디피",
+        "샌디스크",
+        "성일하이텍",
+        "세보엠이씨",
+        "아비코전자",
+        "알파벳",
+        "에이직랜드",
+        "엑시콘",
+        "엔비디아",
+        "오킨스전자",
+        "유니테스트",
+        "윤성에프엔씨",
+        "율촌화학",
+        "이엘씨",
+        "이오테크닉스",
+        "키옥시아",
+        "티에스이",
+        "프로텍",
+        "하나마이크론",
+        "한솔제지",
+        "LB세미콘",
+        "LG이노텍",
+        "LG하우시스",
+        "SanDisk",
+        "SK하이닉스",
+        "TYM",
+        "YMTC"
+      ],
+      "sectors": [
+        "반도체"
+      ],
+      "opinions": [
+        {
+          "person": "너쟁이",
+          "stock": "농심",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "마이크로컨텍솔",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "메가터치",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "빙그레",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "삼성SDI",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "상신이디피",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "성일하이텍",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "세보엠이씨",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "아비코전자",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "에이직랜드",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "엑시콘",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "엔비디아",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "오킨스전자",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "유니테스트",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "윤성에프엔씨",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "율촌화학",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "이엘씨",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "이오테크닉스",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "티에스이",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "프로텍",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "하나마이크론",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "LB세미콘",
+          "stance": "강세"
+        },
+        {
+          "person": "너쟁이",
+          "stock": "LG이노텍",
+          "stance": "강세"
+        },
+        {
+          "person": "우용용",
+          "stock": "마이크론",
+          "stance": "강세"
+        },
+        {
+          "person": "우용용",
+          "stock": "삼성전자",
+          "stance": "강세"
+        },
+        {
+          "person": "우용용",
+          "stock": "SanDisk",
+          "stance": "강세"
+        },
+        {
+          "person": "우용용",
+          "stock": "SK하이닉스",
+          "stance": "강세"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "대동",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "마이크론",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "삼성전자",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "샌디스크",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "알파벳",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "키옥시아",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "한솔제지",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "LG하우시스",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "SK하이닉스",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "TYM",
+          "stance": "중립"
+        },
+        {
+          "person": "캬오의 공부방",
+          "stock": "YMTC",
+          "stance": "중립"
+        }
+      ]
     }
   },
   "peter_fear_greed": {
-    "score": 67,
+    "score": 68,
     "label": "탐욕",
     "interpretation": "낙관 우세 — 과열 전환 여부 관찰",
     "asOf": "2026-08-12",
@@ -15604,6 +15468,227 @@
     }
   },
   "posts": [
+    {
+      "id": "chcmg2022_2026-08-15_224379101688",
+      "date": "2026-08-15",
+      "source": "blog",
+      "blog_name": "너쟁이",
+      "person": "너쟁이",
+      "title": "생각들 (시장)",
+      "url": "https://blog.naver.com/chcmg2022/224379101688",
+      "summary": "글쓴이는 반도체 후공정·테스트 관련 기업들이 대량의 실적 상향(써프)을 발표하며 '미친 써프'가 연달아 나타나고 있다고 주장. JPM 추정 반도체 WFE는 CY26 1,590억 달러(+28%), CY27 2,050억 달러(+29%)로 강한 성장 전망을 배경으로 소부장 슈퍼사이클이 이미 시작되었다고 해석. 2차전지는 ESS 중심으로 턴어라운드 국면이 가능할 것으로 전망.",
+      "stocks": [
+        "윤성에프엔씨",
+        "삼성SDI",
+        "상신이디피",
+        "성일하이텍",
+        "빙그레",
+        "농심",
+        "율촌화학",
+        "아비코전자",
+        "에이직랜드",
+        "이엘씨",
+        "세보엠이씨",
+        "LG이노텍",
+        "이오테크닉스",
+        "유니테스트",
+        "프로텍",
+        "엑시콘",
+        "오킨스전자",
+        "마이크로컨텍솔",
+        "티에스이",
+        "메가터치",
+        "LB세미콘",
+        "하나마이크론",
+        "엔비디아"
+      ],
+      "sector": "반도체",
+      "key_points": [
+        "후공정·테스트 기업들의 30% 이상 실적 상향(써프)이 연달아 발생 중 — 유니테스트(HBM번인테스터), 하나마이크론(시외단일가 상한가), 마이크로컨텍솔(시외단일가 상한가) 등",
+        "JPM 추정 반도체 장비(WFE) 시장 성장률: CY26 +28% (1,590억 달러), CY27 +29% (2,050억 달러), CY28 2,370억 달러로 가속화 시대 진입",
+        "글쓴이는 HBM, LPDDR 수요 기업과 테스트 기업에 포트폴리오를 집중해왔으며, 어드반테스트의 역사적 신고가가 후공정 강세의 신호라고 해석",
+        "2차전지는 ESS(각형 배터리 대세)를 발판으로 턴어라운드 신호 — 삼성SDI, 윤성에프엔씨, 성일하이텍 등의 실적 개선",
+        "소비재·화장품·공작기계·건기식 등도 동시에 실적 써프 중이나, 글쓴이의 핵심 관심은 소부장 초점"
+      ],
+      "numbers": [
+        "JPM CY26 반도체 WFE 추정: 1,590억 달러 (+28%)",
+        "JPM CY27 반도체 WFE 추정: 2,050억 달러 (+29%)",
+        "JPM CY28 반도체 WFE 추정: 2,370억 달러",
+        "후공정·테스트 기업 평균 실적 상향 규모: 30% 이상"
+      ],
+      "stance": "강세",
+      "reasoning": "반도체 장비 시장 성장이 가속화되면서 후공정·테스트 소부장의 대량 실적 상향이 실제로 발생하고 있으며, 이는 글쓴이가 사전에 예측했던 HBM·LPDDR 수요 및 테스트 강세론과 일치한다는 논리.",
+      "catalyst": "JPM의 반도체 WFE 성장률 상향 전망(CY26 +28%, CY27 +29%)과 후공정·테스트 기업들의 대량 실적 상향(30% 이상) 동시 발생으로 소부장 슈퍼사이클 신호 확인",
+      "why_read": "JPM의 구체적 WFE 성장률 추정치와 후공정 기업 실명(유니테스트, 하나마이크론, 마이크로컨텍솔 등)의 구체적 실적 상향 규모(30% 이상)가 제시되어 있어, 반도체 소부장 투자 논리의 정량적 뒷받침을 확인할 수 있으나 글쓴이의 주관적 해석 비중이 높음.",
+      "novelty": 2,
+      "evidence_quality": 2,
+      "evidence_grade": "C",
+      "evidence_reason": "JPM의 WFE 추정치는 제3자 리포트이나, 후공정 기업들의 '실적 써프' 규모와 타이밍을 글쓴이가 직접 관찰한 것으로 제시되었을 뿐 공시 링크나 구체적 수치 확인이 없음.",
+      "counter_argument": "반도체 WFE 성장 전망이 높더라도 후공정 기업의 실적이 글쓴이가 관찰한 것보다 실제로는 시장에 이미 반영되어 있을 가능성, 또는 2024년의 강한 실적 발표가 2025~2026년 수요 예상에 기반한 것으로 실제 리드타임 밸류가 단기에 가격에 선반영되었을 수 있음.",
+      "price_reflection": "판단 불가",
+      "investment_chain": "글로벌 AI/반도체 수요 증가 → WFE 시장 성장률 상향(CY26 +28%) → 후공정·테스트 기업 실적 증가 → 주가 상승(부분 반영 중), 다만 2024년 실적이 2026년 수요 예상 기반인지 즉각적 수요 전환인지 구분 근거 부족.",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "판단 불가",
+          "reason": ""
+        },
+        "SK하이닉스": {
+          "direction": "혼재",
+          "reason": "HBM 수요 강세로 반도체 장비 투자가 증가하는 것은 장기 긍정이나, 글에서는 후공정·테스트 업체 중심으로 다루고 있어 메모리 패키징 기업(예: 테스트 파트너)의 실적 개선은 간접적"
+        }
+      },
+      "action": "반드시 원문 읽기",
+      "action_reason": "JPM WFE 성장률 추정치와 후공정·테스트 기업의 실적 상향이 구체적으로 제시되어 있으나, 공시 링크나 확인 가능한 실적 수치 부족하므로 글쓴이가 인용한 위의 블로그 링크와 해당 기업들의 공시 확인이 필수적.",
+      "analysis_depth": "full",
+      "risks": [],
+      "market_view": true,
+      "market_sentiment": 1,
+      "market_reason": "글쓴이는 외국인 대량 매수, 원달러 환율 호조, 반도체 소부장 슈퍼사이클 신호를 종합하며 시장 전체를 긍정적으로 평가하되, 코스닥은 60일선 저항에 막혀 있다고 언급해 부분적 상승 제약 인식.",
+      "source_role": "mixed",
+      "analysis_version": 3
+    },
+    {
+      "id": "deskhunter_2026-08-15_224378862461",
+      "date": "2026-08-15",
+      "source": "blog",
+      "blog_name": "우용용",
+      "person": "우용용",
+      "title": "260815 신용확대",
+      "url": "https://blog.naver.com/deskhunter/224378862461",
+      "summary": "글쓴이는 시장이 메모리 반도체를 시크리컬에서 성장주로 다시 평가하는 흐름을 감지하고, 순자산의 30% 신용을 투입해 SK하이닉스(닉스) 및 삼성전자우를 비중 확대했음. 삼전+삼전우:닉스 비율 7:3 포트폴리오 중 삼성전자우를 절대 1위로 설정한 이유는 시크리컬 국면에서 주주환원 중시, 닉스를 30% 유지한 이유는 메모리의 성장주 복귀 가능성 때문. 근거로 마이크론·SanDisk의 주가 강세, CoreWeave의 H100 가속기 자본화 인정(2029년까지), 삼전/닉스의 27년 Fwd PER 3.X대 저평가, SKHY 대비 닉스 괴리율 40% 초반(TSMC 기준 20% 수렴 가능) 제시.",
+      "stocks": [
+        "삼성전자",
+        "SK하이닉스",
+        "마이크론",
+        "SanDisk"
+      ],
+      "sector": "반도체",
+      "key_points": [
+        "메모리 반도체가 성장주에서 시크리컬로, 다시 성장주로 평가 변화 중이라는 시장 심리 해석",
+        "삼성전자우(주가 대비 환원율 최고)를 포트폴리오 절대 1위로, 삼전 본주는 성장장세 탄력성으로 30% 비중 유지",
+        "SK하이닉스의 27년 Fwd PER 3.X대 저평가 + SKHY 대비 40% 초반 괴리율(TSMC 기준 20% 수렴 가능)을 상승 근거로 제시",
+        "CoreWeave의 H100 가속기 2029년까지 자본가치 인정으로 데이터센터 자본 조달 구조 개선 → 메모리 수요 증가 인상",
+        "외국인이 개인 매도물량을 적극 흡수하며 주가를 상승시키는 양상(수급 개선 신호)"
+      ],
+      "numbers": [
+        "순자산의 30% 신용 투입 (추가 신용 중단 선언)",
+        "삼전+삼전우:닉스 비율 7:3",
+        "삼전 및 삼전우 비율 약 1:9 (삼전우가 포트폴리오 절대 1위)",
+        "삼성전자·SK하이닉스 27년 Fwd PER 3.X 수준",
+        "현재 닉스와 SKHY 시총 괴리율 약 40% 초반 (TSMC 기준 20% 수렴 가능)"
+      ],
+      "stance": "강세",
+      "reasoning": "시장이 메모리를 다시 성장주로 보는 증거로 마이크론/SanDisk 주가 강세, CoreWeave의 H100 자본화 인정, 그리고 외국인의 적극적인 매수세(개인 매도물량 흡수)가 동시에 진행 중이기 때문.",
+      "catalyst": "CoreWeave가 H100 가속기의 잔존가치를 2029년까지 인정받으면서 데이터센터 자본 조달 구조 개선 → 메모리칩 수요 구조 강화 가능성",
+      "why_read": "글쓴이가 메모리 반도체의 심리 전환 근거(마이크론·SanDisk 강세, 가속기 자본화)와 구체 밸류에이션 괴리율(SKHY 대비 40% vs. TSMC 20% 기준)을 동시에 제시해, 시장 수급 변화와 밸류에이션 리레이팅 시나리오의 연결고리를 보여주므로 추가 검증 가치가 있음.",
+      "novelty": 2,
+      "evidence_quality": 2,
+      "evidence_grade": "C",
+      "evidence_reason": "마이크론·SanDisk 주가 강세, CoreWeave 소식은 산업 신호이지만 SK하이닉스 실적 개선 증거나 공식 수요 전망 부족하며, SKHY 괴리율과 TSMC 비교는 합리적 해석이지만 추가 검증(실적·주문·외국인 자금 흐름 데이터) 필요.",
+      "counter_argument": "개인 투자자 물량이 '일시적 괴리' 반영이 아니라 근본적 실적 부진(메모리 수급 악화 지속, AI 수요 편중)에 따른 구조적 할인일 가능성; 또한 가속기 자본화가 메모리 수요 증가로 바로 연결되지 않을 수 있고, 27년 Fwd PER 3.X는 이미 극도의 저평가를 반영해 상승 여지 제한적일 수 있음.",
+      "price_reflection": "판단 불가",
+      "investment_chain": "메모리의 성장주 재평가 + CoreWeave 자본화 인정 → 데이터센터 자본 조달 개선 + 메모리 수요 회복 기대 → SK하이닉스·삼성전자 실적 개선(증거 부족) → 저PER 밸류에이션 확대 → 주가 상승, 단 수요 회복의 타이밍·규모 근거 부족.",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "긍정",
+          "reason": "메모리 성장주 재평가 + 주주환원(우선주) 비중 확대 기조 속에서 시크리컬 국면의 배당·자사주 수익성 강조, 본주는 성장장세 탄력성 평가"
+        },
+        "SK하이닉스": {
+          "direction": "긍정",
+          "reason": "27년 Fwd PER 3.X 저평가 + SKHY 대비 40% 괴리 수렴 기대, 메모리 성장주 복귀 시 상승 탄력 우대, 외국인 매수 지속 가능성"
+        }
+      },
+      "action": "추가 조사하기",
+      "action_reason": "글쓴이의 메모리 성장주 재평가 근거(마이크론·가속기 자본화)는 산업 신호로 주목할 만하지만, SK하이닉스·삼성전자의 실제 수요 회복·실적 개선 근거, 외국인 자금 흐름의 지속성, SKHY 괴리율 수렴 타이밍을 독립적으로 검증하고 현재 주가 반영도를 판단해야 투자 결정 근거가 완성됨.",
+      "analysis_depth": "full",
+      "risks": [
+        "추가 신용투입은 주가 하락 시에만 중단(손실 고착 리스크 인식)",
+        "개인 물량이 '일시적 괴리'가 아닐 수 있음 (실적 부진 구조적)",
+        "메모리 성장주 복귀 타이밍·규모 불확실"
+      ],
+      "market_view": true,
+      "market_sentiment": 2,
+      "market_reason": "글쓴이가 메모리 반도체의 심리 전환(시크리컬 → 성장주)과 외국인의 적극적 매수세(개인 매도물량 흡수)를 시장 강화 신호로 해석하며, 수급 개선이 지속될 것으로 예상.",
+      "source_role": "opinion",
+      "analysis_version": 3
+    },
+    {
+      "id": "Kyaooo_2026-08-15_33460",
+      "date": "2026-08-15",
+      "source": "telegram",
+      "blog_name": "캬오의 공부방",
+      "person": "캬오의 공부방",
+      "title": "YMTC 3위 진입·구글 AI 가격경쟁·관세환급 기업 수혜 (5건)",
+      "url": "https://t.me/Kyaooo/33463",
+      "source_urls": [
+        "https://t.me/Kyaooo/33460",
+        "https://t.me/Kyaooo/33461",
+        "https://t.me/Kyaooo/33462",
+        "https://t.me/Kyaooo/33463",
+        "https://t.me/Kyaooo/33464"
+      ],
+      "collection_key": "telegram:Kyaooo:2026-08-15",
+      "summary": "중국 YMTC가 2Q 14% 점유율로 키옥시아를 제치고 낸드 3위에 진입했으며, 구글이 Gemini 3.7 Flash로 API 50% 할인(~12/31) 공격을 펼치고 있고, 미국 대법원 관세 위헌 판결(2월)에 따라 수입업체들의 관세환급이 진행 중이다. 반도체 공급 구조 변화와 정책 리스크가 동시에 작용하고 있다.",
+      "stocks": [
+        "삼성전자",
+        "SK하이닉스",
+        "알파벳",
+        "YMTC",
+        "키옥시아",
+        "마이크론",
+        "샌디스크",
+        "TYM",
+        "대동",
+        "한솔제지",
+        "LG하우시스"
+      ],
+      "sector": "반도체",
+      "key_points": [
+        "YMTC 2Q 글로벌 낸드 점유율 14%로 키옥시아(추정 13% 이상) 제쳤고, 삼성전자 25%·SK하이닉스 22% 차이 벌어짐",
+        "YMTC 2Q 출하량 전년 대비 22% 증가, 전분기 대비 5% 증가 — AI 고부가 제품 편중으로 범용 낸드 공급 부족이 원인",
+        "구글 Gemini 3.7 Flash API 가격 입력 0.75달러·출력 3.75달러/백만토큰(50% 할인 ~12/31), 이후 1.50·7.50달러로 인상 예정",
+        "Claude Sonnet 5(입력 2·출력 10달러) 대비 Google이 가격 경쟁력 우위 유지",
+        "미국 IEEPA 관세 환급 판결(2월 연방대법원) 이후 CBP가 수입업자들에게 관세 환급 시행 중"
+      ],
+      "numbers": [
+        "YMTC 2Q 낸드 점유율 14%, 삼성전자 25%·SK하이닉스 22%",
+        "YMTC 2Q 출하량 전년 대비 22%, 전분기 대비 5% 증가",
+        "구글 Gemini 3.7 Flash 프로모션 가격 입력 0.75달러/백만토큰(통상 1.50달러)",
+        "관세환급 정책 변동 2월 연방대법원 판결 기준"
+      ],
+      "stance": "혼재",
+      "reasoning": "낸드 공급 구조 변화(YMTC 급부상 vs 삼성·SK 점유율 고착)와 AI 모델 가격전쟁, 관세정책 변동이 동시 진행 중이며 반도체 업황 수급 변수가 복합적으로 작용 중",
+      "catalyst": "YMTC 낸드 3위 진입(글로벌 공급망 다극화 신호)·구글 AI API 50% 할인(경쟁 심화)·미국 관세환급 정책 실행(기업 원가 구조 변화)",
+      "why_read": "삼성전자·SK하이닉스의 낸드 점유율 추이를 객관적 수치(카운터포인트 2Q 데이터)로 추적할 수 있고, YMTC 부상이 의미하는 글로벌 공급 리스크 변화를 판단하기 위해 필요한 신규 산업 구조 데이터 포함",
+      "novelty": 2,
+      "evidence_quality": 3,
+      "evidence_grade": "B",
+      "evidence_reason": "카운터포인트리서치(신뢰도 높은 산업 조사사), 구글 공식 발표(API 가격), 미국 연방대법원·국제무역법원 판결 근거이나, 메시지 5 링크는 접근 불가로 검증 불가능",
+      "counter_argument": "YMTC 3위 진입은 AI 수요 특수 속에서 범용 낸드 저가 공급 기여이며, 고부가 HBM·고급 DRAM 영역에서 삼성·SK의 경쟁 우위는 여전하므로 전체 수익성 악화는 제한적일 수 있음",
+      "price_reflection": "판단 불가",
+      "investment_chain": "YMTC 점유율 상승 → 범용 낸드 가격 하락압 → 메모리 업체(특히 범용 낸드 의존도 높은 곳) ASP 악화 → 영업이익 마진 축소 위험 | 구글 AI 가격 할인 → API 경쟁 심화 → 메모리/데이터센터 칩 수요 분산 가능성",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "혼재",
+          "reason": "YMTC 저가 공급으로 낸드 가격 압박 위험이나, 25% 점유율 유지로 수량 부정적 영향 제한적이며, AI 고부가 제품(HBM·고속메모리)은 경쟁력 우위 지속"
+        },
+        "SK하이닉스": {
+          "direction": "혼재",
+          "reason": "22% 점유율 유지하면서도 솔리다임 40% 출하 급증으로 고부가 포트폴리오 강화 중이나, YMTC 저가 낸드 확산으로 범용 메모리 부문 ASP 하락 압박"
+        }
+      },
+      "action": "반드시 원문 읽기",
+      "action_reason": "삼성·SK 핵심 종목의 시장 점유율 변동·수급 구조 변화를 객관적 데이터로 업데이트할 필요가 있으며, 특히 YMTC 부상이 낸드 가격 사이클 시그널로 작용할 가능성을 검증해야 함",
+      "analysis_depth": "full",
+      "risks": [
+        "메시지 5(이종욱·텍톡)는 링크 접근 불가로 내용 검증 불가"
+      ],
+      "market_view": true,
+      "market_sentiment": 0,
+      "market_reason": "YMTC 3위 진입은 글로벌 메모리 공급 다극화 신호(중국 경쟁력 상승)이며, 구글 가격 할인은 AI 경쟁 심화 표신으로 긍정·부정 요소가 섞여 있으므로 중립",
+      "source_role": "fact",
+      "analysis_version": 3
+    },
     {
       "id": "audistar_2026-08-14_224378425606",
       "date": "2026-08-14",
@@ -15849,7 +15934,9 @@
         "https://t.me/skitteam/4489",
         "https://t.me/skitteam/4490",
         "https://t.me/skitteam/4491",
-        "https://t.me/skitteam/4492"
+        "https://t.me/skitteam/4492",
+        "https://t.me/skitteam/4493",
+        "https://t.me/skitteam/4495"
       ],
       "collection_key": "telegram:skitteam:2026-08-14",
       "summary": "Applied Materials FY3Q26 반도체 장비 매출 $7.0B(+18% QoQ, +27% YoY) 기록 최대, 총마진 55.4% 달성 중. SanDisk는 18개월 만에 매출 $1.7B → $9.0B, 연간 매출 $20B(+175%), GPM 71.6%로 급증하며 NBM 8개 고객 $93.9B TCV 계약 확보. 두 회사 모두 2026~27년 다년 계약 기반 4년 이상 수요 가시성 확보로 사이클성 완화 주장.",
@@ -15925,7 +16012,8 @@
         "https://t.me/Kyaooo/33454",
         "https://t.me/Kyaooo/33455",
         "https://t.me/Kyaooo/33457",
-        "https://t.me/Kyaooo/33458"
+        "https://t.me/Kyaooo/33458",
+        "https://t.me/Kyaooo/33459"
       ],
       "collection_key": "telegram:Kyaooo:2026-08-14",
       "summary": "투자 관련 내용 없음",
@@ -15979,23 +16067,23 @@
       "title": "트럼프, 미 해군·조선 산업 재건 국가안보 각서 서명 (1건)",
       "url": "https://t.me/pengmeup/30853",
       "source_urls": [
-        "https://t.me/pengmeup/30860",
-        "https://t.me/pengmeup/30861",
-        "https://t.me/pengmeup/30862",
-        "https://t.me/pengmeup/30863",
-        "https://t.me/pengmeup/30864",
-        "https://t.me/pengmeup/30865",
-        "https://t.me/pengmeup/30866",
-        "https://t.me/pengmeup/30867",
-        "https://t.me/pengmeup/30868",
-        "https://t.me/pengmeup/30869",
-        "https://t.me/pengmeup/30870",
-        "https://t.me/pengmeup/30871",
-        "https://t.me/pengmeup/30872",
-        "https://t.me/pengmeup/30873",
-        "https://t.me/pengmeup/30874",
-        "https://t.me/pengmeup/30875",
-        "https://t.me/pengmeup/30877"
+        "https://t.me/pengmeup/30877",
+        "https://t.me/pengmeup/30878",
+        "https://t.me/pengmeup/30879",
+        "https://t.me/pengmeup/30880",
+        "https://t.me/pengmeup/30881",
+        "https://t.me/pengmeup/30882",
+        "https://t.me/pengmeup/30883",
+        "https://t.me/pengmeup/30884",
+        "https://t.me/pengmeup/30885",
+        "https://t.me/pengmeup/30886",
+        "https://t.me/pengmeup/30887",
+        "https://t.me/pengmeup/30888",
+        "https://t.me/pengmeup/30889",
+        "https://t.me/pengmeup/30890",
+        "https://t.me/pengmeup/30891",
+        "https://t.me/pengmeup/30892",
+        "https://t.me/pengmeup/30893"
       ],
       "collection_key": "telegram:pengmeup:2026-08-14",
       "summary": "트럼프 대통령이 해군 함정 건조·수리 프로그램 개혁과 조선 산업 기반 역량 회복을 위한 국가안보 대통령 각서에 서명. CVN-81 항공모함 설계 변경(EMALS→증기·유압 방식), 제5 해군 공창 신설(80년 만의 첫 신규 공창), 외국 조선소 임시 건조 허용(미국 조선소 투자 조건) 등 구체 정책 추진.",
@@ -16120,7 +16208,8 @@
       "title": "국내 전력변압기 업체 미국 반덤핑 관세 확정, 향후 0% 수렴 전망 (1건)",
       "url": "https://t.me/pikachu_aje/8230",
       "source_urls": [
-        "https://t.me/pikachu_aje/8230"
+        "https://t.me/pikachu_aje/8230",
+        "https://t.me/pikachu_aje/8231"
       ],
       "collection_key": "telegram:pikachu_aje:2026-08-14",
       "summary": "미국 상무부가 2023년 8월~2024년 7월 POR에서 현대일렉트릭·일진전기 0%, 효성중공업·LS ELECTRIC 4.32% 반덤핑 관세를 확정했다. 글쓴이는 비필수응답자(Non-Selected) 업체들이 필수응답자의 세율을 기반으로 관세가 결정되는 구조상, 향후 POR(2024년 8월~2025년 7월)에서 0%로 수렴할 것으로 전망한다. 다만 미국 상무부 공식 문서 미확인 상태이며, 국내 업체들의 해당 기간 미국 매출비중이 유의미하지 않았어 재무 영향은 제한적일 것으로 예상한다.",
@@ -16188,7 +16277,8 @@
       "url": "https://t.me/itechkorea/5681",
       "source_urls": [
         "https://t.me/itechkorea/5681",
-        "https://t.me/itechkorea/5682"
+        "https://t.me/itechkorea/5682",
+        "https://t.me/itechkorea/5683"
       ],
       "collection_key": "telegram:itechkorea:2026-08-14",
       "summary": "7월 PPI 전월비 0%, 전년비 5.5%→4.7%로 둔화했으나, 전자부품 폭등(+28% YoY)과 호르무즈 해협 물류 병목으로 AI 인플레가 태동 중. 연준이 통제할 수 없는 인플레 압력이 커지면서 금리 결정 여지가 사라지고 있다는 주장.",
@@ -21144,661 +21234,6 @@
       "market_view": false,
       "market_sentiment": 0,
       "market_reason": ""
-    },
-    {
-      "id": "nje2e_2026-08-07_41296",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "너쟁이(텔레)",
-      "person": "너쟁이",
-      "title": "삼성전자 이익 사이클 장기화, 주주환원 동반 시 주가 상승 (7건)",
-      "url": "https://t.me/nje2e/41296",
-      "summary": "이익 사이클의 지속성은 주가 상승의 필요조건이지만 충분조건이 아니며, 주주환원(배당·자사주매입)이 동반되어야 실제 주가 상승으로 이어진다는 주장. 아무리 이익이 길어지고 현금이 쌓여도 주주와 공유하지 않으면 시장의 재평가 이유가 없다는 점을 강조.",
-      "stocks": [
-        "삼성전자"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "이익 사이클 장기화만으로는 주가 상승 보장 불가 — 주주환원이라는 충분조건 필요",
-        "성장 모멘텀 관점에서 밋밋해 보이는 이익을 주주환원으로 '주주 가치 증가'로 전환해야 함",
-        "수백조원 현금 축적도 주주와 공유하지 않으면 회사 재평가 이유가 없음",
-        "2016~2018년 대비 2025년 7월 이후 주가 비교 시 신규 증설이 메모리 주가 수익률 변곡점 역할",
-        "애플도 중국에 밀리는 상황 — 메모리 1위 기업이라는 기존 평가 재검토 필요"
-      ],
-      "numbers": [],
-      "stance": "중립",
-      "reasoning": "회사의 이익 사이클 장기화 역량은 확실하지만, 그것을 주주에게 반환하는 경영진의 의사결정에 주가 상승 여부가 달려 있다는 점",
-      "risks": [
-        "이익 사이클 지속성에 대해 '누구도 확신할 수 없음' — 새로운 싸이클로 진입 중",
-        "경영진의 주주환원 의지 불확실성 — 내부 성과급에 현금 사용 가능성"
-      ]
-    },
-    {
-      "id": "pengmeup_2026-08-07_30637",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "펭미업",
-      "person": "펭미업",
-      "title": "일본증시, AI 밸류체인 내 차별화 장세 심화 (3건)",
-      "url": "https://t.me/pengmeup/30637",
-      "summary": "2026년 8월 7일 일본증시는 AI 관련주 전반 약세 속에서도 실적이 확실한 후공정 소재(레조낙홀딩스)는 상승, 기대치 미충족한 검사·장비·투자회사(레이저텍 -10%, 아마다·오므론)는 하락하는 차별화 장세를 보임. 레조낙홀딩스는 상반기 코어 영업이익 전년 대비 2.6배 증가, 연간 전망 1,960억엔으로 40% 상향 조정했고, 반다이남코는 1분기 매출 3,284억엔·영업이익 692억엔으로 1분기 기준 사상 최대 실적 기록.",
-      "stocks": [
-        "레조낙홀딩스",
-        "반다이남코",
-        "이데미쓰코산",
-        "시세이도",
-        "화낙",
-        "레이저텍",
-        "아마다",
-        "오므론",
-        "소프트뱅크그룹",
-        "SCREEN",
-        "롯데쇼핑"
-      ],
-      "sector": "거시경제",
-      "key_points": [
-        "레조낙홀딩스 상반기 코어 영업이익 전년 대비 2.6배 증가, 연간 전망 1,960억엔으로 40% 상향 조정",
-        "반다이남코 1분기 매출 3,284억엔·영업이익 692억엔으로 1분기 기준 사상 최대 실적 기록",
-        "시세이도 상반기 코어 영업이익 444억엔으로 90% 증가, 구조조정 효과 재평가",
-        "레이저텍 순이익 가이던스 시장 기대 미충족으로 근 10% 급락",
-        "닛케이 급등주는 반도체 소재·엔터테인먼트·정유·화장품·공장자동화로 다양하나, 고밸류 AI·반도체 종목이 급락"
-      ],
-      "numbers": [
-        "레조낙홀딩스 상반기 코어 영업이익 전년 대비 2.6배 증가",
-        "레조낙홀딩스 연간 코어 영업이익 전망 1,960억엔으로 40% 상향",
-        "반다이남코 1분기 매출 3,284억엔, 영업이익 692억엔",
-        "시세이도 상반기 코어 영업이익 444억엔으로 90% 증가, 레이저텍 약 10% 급락",
-        "롯데쇼핑 2Q 매출 34,850억원(예상치 대비 -1%), 영업익 899억원(예상치 대비 -20%), 순이익 -29억원(예상치 대비 -108%)"
-      ],
-      "stance": "중립",
-      "reasoning": "AI 밸류체인 내에서 '실적이 확실한 후공정 소재는 사고 기대치가 높았던 검사·장비·투자회사는 파는' 차별화가 일어나고 있으며, 높아진 시장 기대치를 충족하지 못하면 실적 호조에도 불구하고 하락하는 현상이 반복되고 있음.",
-      "risks": [
-        "국장의 난이도가 높음: 지수 변동성이 크고 매일 주도섹터가 변하며 시세 연속성이 힘듦",
-        "과도한 기대치 미충족 시 급락 위험: 아마다는 영업이익 84% 증가에도 연간 전망 상향 미실시로 하락, 오므론도 차익실현 매물 출현"
-      ]
-    },
-    {
-      "id": "Kyaooo_2026-08-07_33377",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "캬오의 공부방",
-      "person": "캬오의 공부방",
-      "title": "금호석유화학·롯데웰푸드·코웨이 2Q 실적 공시 + SK하이닉스 분기배당 (14건)",
-      "url": "https://t.me/Kyaooo/33377",
-      "summary": "금호석유화학이 2Q 영업이익 3,390억원으로 컨센서스 1,464억원 대비 132% 상회했으며, 이란 사태로 인한 원재료 공급 축소 속 안정적 공급 능력으로 수요 집중, 스프레드 급확대가 주요 배경. 롯데웰푸드는 2Q 영업이익 647억원(컨센서스 475억 대비 +36%), 코웨이는 2Q 영업이익 2,532억원(컨센서스 2,689억 대비 -6%) 기록. SK하이닉스는 보통주 375원 분기배당을 결정했으며, 3분기 중 추가 주주환원 방안 확정 예정.",
-      "stocks": [
-        "금호석유화학",
-        "롯데웰푸드",
-        "코웨이",
-        "SK하이닉스"
-      ],
-      "sector": "소재·화학",
-      "key_points": [
-        "금호석유화학 2Q 매출 22,682억원(컨센서스 20,079억 +13%), 영업익 3,390억원(+132%), 순이익 3,004억원(+78%)",
-        "금호석유화학 NB Latex 스프레드 급확대: 이란 사태로 경쟁사 가동률 하락→공급 축소, 당사는 안정적 공급 가능으로 수요 집중",
-        "금호석유화학 3Q 가동률 약 70% 전망(2Q 60~65%), NB Latex 약 75% 예상, 3Q는 레깅 효과로 BEP 수준 전망",
-        "금호석유화학 BD 원재료 1,200불대→최고 2,500불 근접 후 현재 1,200불 후반대, SM 800불대→1,300불 후반 급등 후 현재 1,100불대",
-        "SK하이닉스 분기배당 375원 결정, 올해 잉여현금흐름 50% 이내에서 추가 배당·자사주 매입 소각 검토 중"
-      ],
-      "numbers": [
-        "금호석유화silon 2Q 영업이익 3,390억원 (컨센서스 1,464억 대비 +132%)",
-        "금호석유화학 2Q 매출 22,682억원 (컨센서스 20,079억 대비 +13%)",
-        "금호석유화학 시가총액 3조 818억원",
-        "SK하이닉스 분기배당 보통주 1주당 375원, 배당금총액 2,733억2,480만원"
-      ],
-      "stance": "강세",
-      "reasoning": "금호석유화학은 이란 사태로 인한 공급 축소 속 경쟁사 대비 안정적 공급 능력으로 수요 집중, 상승 원재료 가격을 제품에 전가 가능한 시장 환경으로 스프레드가 급확대되며 실적이 컨센서스를 크게 상회.",
-      "risks": [
-        "금호석유화학 3Q NB Latex 약 1.5개월 제품 레깅으로 고원가 투입, 스프레드 부진으로 BEP 수준 전망 (다소 부정적)",
-        "금호석유화학 여수 구조조정(YNCC 2·3공장 셧다운) 확정 시 BD 밸런스가 계획 대비 비슷~다소 타이트해질 가능성",
-        "금호석유화학 3Q 페놀 적자, 합성수지 BEP 소폭 하회 가능성(현 스프레드·수요 기준)",
-        "금호석유화학 3Q는 역레깅으로 둔화 구간 전망, 내년부터 BEP 이상 수익성 회복 기대"
-      ]
-    },
-    {
-      "id": "nje2e_2026-08-07_41306",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "너쟁이(텔레)",
-      "person": "너쟁이",
-      "title": "DRAM ETF 공매도 30% 수준, 숏커버 유입 가능성 (19건)",
-      "url": "https://t.me/nje2e/41306",
-      "summary": "DRAM ETF의 공매도 비중이 30% 안팎까지 상승했으며, 반도체 업종에 대한 과도한 하락 베팅이 몰려 있어 분위기 반전 시 강한 숏커버 유입이 가능할 수 있다.",
-      "stocks": [],
-      "sector": "거시경제",
-      "key_points": [
-        "DRAM ETF 공매도 비중 30% 안팎",
-        "반도체 업종에 과도한 하락 베팅 집중",
-        "분위기 반전 시 숏커버 강세 기대"
-      ],
-      "numbers": [
-        "DRAM ETF 공매도 비중 30% 안팎"
-      ],
-      "stance": "강세",
-      "reasoning": "극도의 약세 심화는 기술적 반등 신호로 작용할 수 있으므로 강기에 베팅한 포지션 정리 가능성",
-      "risks": []
-    },
-    {
-      "id": "pengmeup_2026-08-07_30642",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "펭미업",
-      "person": "펭미업",
-      "title": "파마리서치 2Q 매출 1,787억, 예상치 6% 상회 (18건)",
-      "url": "https://t.me/pengmeup/30642",
-      "summary": "파마리서치가 2026년 2분기 매출 1,787억원으로 예상치(1,680억원)를 6% 상회했으나, 영업익은 665억원으로 예상치(671억원) 대비 1% 미달. 순이익은 566억원으로 예상치(565억원) 부합.",
-      "stocks": [
-        "파마리서치"
-      ],
-      "sector": "바이오",
-      "key_points": [
-        "2Q 매출 1,787억원 (+6% vs 컨센서스)",
-        "영업익 665억원 (-1% vs 컨센서스)",
-        "순이익 566억원 (컨센서스 부합)",
-        "1Q 대비 매출 +22.3%, 영업익 +16% 순차 성장",
-        "시가총액 4조 727억원"
-      ],
-      "numbers": [
-        "매출 1,787억원 (예상치 1,680억원 대비 +6%)",
-        "영업익 665억원 (예상치 671억원 대비 -1%)",
-        "순이익 566억원 (예상치 565억원)",
-        "시가총액 4조 727억원"
-      ],
-      "stance": "중립",
-      "reasoning": "매출 상위 달성했으나 영업익 소폭 미달로 전반적 중립 평가",
-      "risks": []
-    },
-    {
-      "id": "keumssoa_2026-08-07_224371323423",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "금싸",
-      "person": "금싸",
-      "title": "포트폴리오 운용이 필요 할 때",
-      "url": "https://blog.naver.com/keumssoa/224371323423",
-      "summary": "상반기 전자·반도체 대형주 중심 강세장에서 하반기 박스권 횡보장으로 전환됨에 따라, 삼성전자·SK하이닉스 비중을 줄이고 태양광·방산·소비재·전력기기·우주 등 다양한 섹터의 종목들을 5~20% 범위 내 분산 투자하는 전략 제시. 코스닥 신용잔고가 5년 내 최저치까지 하락한 상황에서 대형주 변동성이 높을 때 음봉 매수로 안전마진을 확보해야 한다고 주장.",
-      "stocks": [
-        "삼성전자",
-        "SK하이닉스",
-        "OCI홀딩스",
-        "한화에어로스페이스",
-        "파마리서치",
-        "삼양식품",
-        "효성중공업",
-        "LS",
-        "삼아알미늄",
-        "와이지원",
-        "DN오토모티브",
-        "인테리안테크",
-        "세아베스틸지주",
-        "노바렉스",
-        "코스맥스엔비티",
-        "파인엠텍",
-        "지엔씨에너지",
-        "에스피지"
-      ],
-      "sector": "거시경제",
-      "key_points": [
-        "코스닥 신용잔고가 5년 내 최저치까지 하락 — 극도의 디레버리징 장세 진행 중",
-        "7월 전자·반도체 주도주 하락으로 대규모 손실 발생, 이를 원금으로 보고 투자 재개",
-        "8월부터 반도체(삼성전자·SK하이닉스) 비중 축소, 태양광·방산·소비재·전력기기·원자재·이차전지·공작기계·우주·건기식·폴더블·로봇 등 13개 섹터별 탑픽 종목을 분산 투자",
-        "종목 선정 기준: 반도체 약세에도 양봉 유지하거나 무관한 종목, 미국·글로벌 시장에서 해당 섹터 좋은 퍼포먼스 확인",
-        "상반기와 달리 하반기 박스권 장세에서는 고비중 급등 종목 매수 후 -5~10% 이상 하락 시 손절 악순환 피하기 위해 신중한 저비중 분산 투자 필수"
-      ],
-      "numbers": [
-        "8월 일부 종목 40~50% 상승 — 반도체 약세 와중 타 섹터의 강한 성과",
-        "종목별 비중: 시가총액 작은 종목 5% 이하, 시총 큰 종목 최대 20%"
-      ],
-      "stance": "중립",
-      "reasoning": "코스닥 신용잔고 최저치 + 상반기 야수 장세에서 하반기 박스권 전환으로 투자 전략 근본적 변화 필요",
-      "risks": [
-        "7월 대규모 손실로 인한 본전 회복 급함 — 이로 인한 순환매 손절 악순환 유발 위험",
-        "고비중 집중 투자 후 급락 시 심각한 포트폴리오 손상"
-      ],
-      "market_view": true,
-      "market_sentiment": 1,
-      "market_reason": "코스닥 신용잔고 최저치로 '지금은 용기를 내야 하는 시기'라며 저점 통과 신호 포착, 음봉 매수 기회로 해석"
-    },
-    {
-      "id": "doctordk_2026-08-07_224371434156",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "의교창",
-      "person": "의교창",
-      "title": "노포에서 아들에게",
-      "url": "https://blog.naver.com/doctordk/224371434156",
-      "summary": "투자 경험을 통해 '시장은 자신의 생각보다 똑똑하며, 주가는 미래를 먼저 반영한다'는 교훈을 강조합니다. 시장과 본인의 생각이 다를 때 '내가 시장보다 더 똑똑할까?'라는 질문으로 자신을 검증하는 겸손함을 가진 사람이 장기적으로 생존하는 투자자라는 주장입니다.",
-      "stocks": [],
-      "sector": "거시경제",
-      "key_points": [
-        "시장은 완벽하지 않지만(가끔 공포나 과열 반응 보임) 언제나 미처 보지 못한 미래를 먼저 바라봅니다",
-        "주가는 오늘의 실적이 아닌 미래의 어느 시점에 일어날 무언가를 조금씩 먼저 담아낸 가격입니다",
-        "투자는 똑똑한 사람이 항상 이기는 게임이 아니며, 시장을 무시하는 사람보다 시장을 존중하며 배우려는 사람이 오래 살아남습니다",
-        "자신의 확신을 끊임없이 검증하는 과정이 투자의 본질이며, 지식량 비교가 아닙니다",
-        "이 원칙은 투자뿐 아니라 인생 전반에 적용되는 성장의 철학입니다"
-      ],
-      "numbers": [],
-      "stance": "중립",
-      "reasoning": "시장은 개인의 생각보다 더 많은 정보를 선반영하기 때문에, 시장과 충돌할 때는 먼저 자신의 관점을 의심해야 한다는 시장 효율성에 대한 신뢰",
-      "risks": [
-        "시장도 완벽하지 않으며 가끔 이유 없이 공포를 느끼거나 지나치게 들떠 있을 수 있습니다"
-      ],
-      "market_view": true,
-      "market_sentiment": 1,
-      "market_reason": "시장이 미래를 선반영하는 지능형 메커니즘으로 존경하는 태도로, 시장의 움직임을 신뢰하고 존중해야 한다는 낙관적 입장"
-    },
-    {
-      "id": "doctordk_2026-08-07_224371057478",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "의교창",
-      "person": "의교창",
-      "title": "기대가 현실이 되는 순간, 원전 산업의 전환점",
-      "url": "https://blog.naver.com/doctordk/224371057478",
-      "summary": "미국이 AI 전력 수요 대응을 위해 원전을 국가 전략산업으로 전환하고 있다. 미국 에너지부의 175억 달러 규모 공급망 금융지원, 외국인 소유 규제 완화, 퇴역 원전 재가동 추진 등이 순차적으로 진행 중이며, 2026년 하반기부터 개별 프로젝트와 기자재 발주가 실제로 시작될 것으로 예상된다.",
-      "stocks": [],
-      "sector": "에너지",
-      "key_points": [
-        "미국 에너지부, 175억 달러 규모 원전 공급망 금융지원 발표 — 정부가 공급망 구축을 직접 지원하겠다는 신호",
-        "외국인 원전 소유 규제 완화 시행 — 해외 자본(한국 기업 포함) 참여 용이화",
-        "투자 사이클 전환점: 2025년 하반기~2026년 상반기는 제도·기반 정비, 2026년 하반기부터는 프로젝트·기자재 발주 실행 단계",
-        "원전의 정치적·경제적 가치 — 수천 명의 건설 일자리, 수백 명의 고임금 상시 일자리 창출",
-        "AI 시대의 전력 부족이 현재 문제화되면서 원전이 미래 선택지가 아닌 필수 인프라로 재평가"
-      ],
-      "numbers": [
-        "미국 에너지부 175억 달러 규모 원전 공급망 금융지원",
-        "건설 과정에서 수천 명의 일자리, 운영 단계에서 수백 명의 고임금 일자리 창출"
-      ],
-      "stance": "강세",
-      "reasoning": "원전 산업이 정책 단계에서 실행 단계로 전환하는 구간에 진입했으며, 정부 지원과 규제 완화라는 실질적 조치가 뒤따르면서 기업 실적 증대로 이어질 가능성이 높다는 것이 핵심 근거",
-      "risks": [],
-      "market_view": true,
-      "market_sentiment": 1,
-      "market_reason": "정책이 산업 발주로 연결되는 단계적 성장 사이클에 진입했으며, 2026년 하반기부터 프로젝트 착공과 기자재 발주가 실제화될 가능성이 높아 산업 장기 상승 사이클을 전망"
-    },
-    {
-      "id": "doctordk_2026-08-07_224370719898",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "의교창",
-      "person": "의교창",
-      "title": "관세보다 강한 무기, 최저수입가격(MIP)",
-      "url": "https://blog.naver.com/doctordk/224370719898",
-      "summary": "미국이 2026년 12월 4일부터 폴리실리콘 및 파생제품에 최저수입가격(MIP) 제도를 도입한다. 폴리실리콘 21달러/kg, 잉곳·웨이퍼 100달러/kg, 셀 0.22달러/W, 모듈 0.38달러/W 이하로는 수입 불가하며, MIP 미달 시 차액을 종량세로 부과한다. 이는 관세보다 강력한 수단으로 미국 폴리실리콘 밸류체인의 수익성 구조를 근본적으로 바꿀 것으로 전망된다.",
-      "stocks": [],
-      "sector": "소재·화학",
-      "key_points": [
-        "핵심 수단은 관세(15%)가 아니라 MIP(최저수입가격) - 통관 시 미국 내 독립당사자 거래가격이 MPI 이상임을 증빙해야 함",
-        "MIP 미달 시 차액 전액을 종량세로 부과, 허위신고 적발 시 영구 수입금지 조치로 제재 강도가 이례적으로 높음",
-        "2018년 도입된 Section 201 세이프가드(2026년 2월 만료)를 대체하는 조치로 약 13개월 조사 기간을 거쳐 결정됨",
-        "한국산은 232 관세와 최혜국 세율 합계 15% 상한 설정, 중국산은 실질적 수입 차단 수준",
-        "약 4개월의 유예 기간(2026년 12월 4일 통관분부터 발효)을 거쳐 미국 시장 가격 구조 변화 시작"
-      ],
-      "numbers": [
-        "폴리실리콘 MIP: 21달러/kg",
-        "잉곳·웨이퍼 MIP: 100달러/kg",
-        "셀 MIP: 0.22달러/W",
-        "모듈 MIP: 0.38달러/W"
-      ],
-      "stance": "강세",
-      "reasoning": "자유시장 가격 경쟁 구도가 국가의 MIP 바닥설정으로 변화하면서 미국 폴리실리콘 밸류체인의 수익성 향상이 구조적으로 보장되는 규칙 변화",
-      "risks": [],
-      "market_view": true,
-      "market_sentiment": 1,
-      "market_reason": "국경 기반 가격 분리로 중국의 저가 위협이 제거되고 미국 시장의 가격/실적/멀티플이 순차적으로 개선될 것이라는 긍정적 전망"
-    },
-    {
-      "id": "luy1978_2026-08-07_224371451854",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "피터케이",
-      "person": "피터케이",
-      "title": "산업부장관, 성과급 반대  개정안 추친",
-      "url": "https://blog.naver.com/luy1978/224371451854",
-      "summary": "산업부장관이 주주·투자자 이익 침해를 우려해 거액 성과급 배분에 대한 법적 규제를 추진 중. 향후 거액 성과급 지급 시 주총 의결을 의무화하는 자본시장법·상법 개정을 논의 중이며, 회사의 주인은 주주임을 강조.",
-      "stocks": [],
-      "sector": "거시경제",
-      "key_points": [
-        "산업부장관이 성과급 반대 입장 표명, 주주·투자자 이익 침해라고 주장",
-        "거액 성과급 지급 시 주총 의결을 의무화하는 자본시장법·상법 개정 추진 중",
-        "회사의 주인은 주주·투자자라는 기본 원칙 재강조"
-      ],
-      "numbers": [],
-      "stance": "약세",
-      "reasoning": "성과급 배분이 주주·투자자의 이익에 반한다는 입장에서 법적 규제를 추진 중",
-      "risks": [],
-      "market_view": false,
-      "market_sentiment": 0,
-      "market_reason": ""
-    },
-    {
-      "id": "tenbagger10x_2026-08-07_224370724383",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "씹배",
-      "person": "씹배",
-      "title": "요즘 생각",
-      "url": "https://blog.naver.com/tenbagger10x/224370724383",
-      "summary": "글쓴이는 전자닉 홀더로서 한국 반도체 기업의 미국·일본 기업 대비 낮은 주주환원 행동과 정부의 과도한 개입을 비판하며, 이것이 밸류에이션 디스카운트의 원인이라 지적. 8월 초 반도체 비중을 높게 유지했으나 스트레스 관리와 포트폴리오 분산을 위해 반도체 포지션을 축소하고 원전, 편의점, 2차전지, 건기식 등으로 분산 시작.",
-      "stocks": [],
-      "sector": "반도체",
-      "key_points": [
-        "전자닉 보유자 입장에서 한국 반도체 기업이 미국·일본 동종사 대비 주주환원 미흡한 점을 비판",
-        "정부가 민간 기업에 과도하게 개입(숟가락 얹기)하면서 경영진 실언 분별능력 상실",
-        "8월 5일 스터디/YM리서치에서도 유사 지적(반도체 미장 상황에 비해 한국만 과도하게 하락)",
-        "예상과 달리 반도체 반등이 제대로 이루어지지 않았음에도 개별 종목 장세 펼쳐지는 중",
-        "8월 초 반도체 고비중 포지션을 감소시키고 원전·편의점·2차전지·건기식으로 분산 진행 중"
-      ],
-      "numbers": [],
-      "stance": "약세",
-      "reasoning": "한국 반도체 기업의 주주가치 행동 미흡과 정부 개입으로 인한 구조적 문제가 밸류에이션 디스카운트를 야기한다고 판단",
-      "risks": [
-        "비중 축소 후 반도체 섹터 급등 가능성 ('비중 줄였으니 진짜 갑자기 주주환원 선포하고 바로 급등갈 듯')",
-        "정부 정책의 예측 불가능성"
-      ],
-      "market_view": true,
-      "market_sentiment": -1,
-      "market_reason": "반도체 섹터 내 자금 흐름이 코스닥·코스피 다른 종목으로 분산되고 있으며, 한국 시장의 구조적 문제로 인한 약세 심화"
-    },
-    {
-      "id": "cybermw_2026-08-07_224371331351",
-      "date": "2026-08-07",
-      "source": "blog",
-      "blog_name": "너는 무한하지 않느냐",
-      "person": "너는 무한하지 않느냐",
-      "title": "하이닉스 용인 Y2 & 청주 M17",
-      "url": "https://blog.naver.com/cybermw/224371331351",
-      "summary": "SK하이닉스가 용인 Y2, 청주 M17, P&T7 팹 건설에 총 54조 규모의 신규 투자를 결정했으며, 용인 첫 클린룸 완공을 2개월 앞당기고 페이즈 1~3을 가속화하는 대규모 설비 투자를 진행 중. 삼성 평택 P4~P6, 테일러 2공장(2030년 양산 목표) 등과 함께 반도체 업계의 '지금껏 보지 못했던 수준'의 인프라 구축 물결이 형성되고 있음.",
-      "stocks": [
-        "SK하이닉스",
-        "삼성전자"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "SK하이닉스 용인·청주 팹 신규 건설에 54조원 규모 투자 결정",
-        "청주 P&T7에 7조931억원 투자 의결 (22일 이사회)",
-        "용인 첫 클린룸 완공 일정을 2개월 앞당기고 페이즈2·3도 동시 가속화",
-        "삼성 테일러 팹2는 2030년 양산 목표로 연말 착공 예정, 5대 글로벌 데이터센터 고객과 LTA 계약 완료",
-        "반도체 업계 전반적인 설비투자 가속화로 인프라 기업들의 수혜 2030년까지 예상"
-      ],
-      "numbers": [
-        "SK하이닉스 용인·청주 팹 투자 규모 54조원",
-        "청주 P&T7 투자액 7조931억원",
-        "삼성 테일러 팹2 양산 목표 2030년",
-        "용인 첫 클린룸 완공 2개월 앞당김 (예정 1월)"
-      ],
-      "stance": "강세",
-      "reasoning": "AI 시대 메모리 수요 급증에 대응하기 위한 삼성·하이닉스 양사의 동시다발적 대규모 팹 건설 투자로 반도체 산업의 구조적 확장이 진행 중",
-      "risks": [],
-      "market_view": true,
-      "market_sentiment": 2,
-      "market_reason": "SK하이닉스·삼성전자의 54조~대규모 팹 투자, 일정 단축, LTA 계약 완료 등으로 반도체 업계의 강력한 성장 신호와 AI 메모리 수요 확장을 동시에 반영"
-    },
-    {
-      "id": "comvestment_2026-08-07_1921",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "투자콤",
-      "person": "투자콤",
-      "title": "마키나락스, 국방 AI 납품 확대로 26년 매출 232억 (YoY+102%) (2건)",
-      "url": "https://t.me/comvestment/1921",
-      "summary": "마키나락스는 제조업·국방 특화 피지컬 AI 솔루션 기업으로, 자체 GPU 기반 폐쇄망 AI OS '런웨이'를 판매 중. 국방 AI 프로젝트 물량이 하반기부터 빠르게 확대되면서 26년 매출 232억원(전년비 102% 증가), 영업손실 -5억원, 27년 매출 434억원(87% 증가)·영업이익 128억원(영업이익률 28%)을 전망.",
-      "stocks": [
-        "마키나락스"
-      ],
-      "sector": "방산",
-      "key_points": [
-        "제조업 환경 특화 폐쇄망 AI 솔루션 제공으로 국방과학연구소·현대차 등 강력한 레퍼런스 확보",
-        "AI OS 런웨이는 GPU 시트·노드 수 기반 라이선스 계약으로 유지보수·후속 계약 등 반복 매출 창출",
-        "국방 매출은 영구 라이선스 위주 볼륨 확대 가능 시장으로, 하반기부터 빠르게 증가 예상",
-        "26년 영업손실 -5억원으로 적자 폭 대폭 축소, 27년 영업이익 128억원으로 흑자 전환 전망",
-        "27년 매출액 434억원, 영업이익률 28% 달성 시 수익성 급격히 제고"
-      ],
-      "numbers": [
-        "26년 매출액 232억원 (YoY+102%)",
-        "26년 영업손실 -5억원",
-        "27년 매출액 434억원 (YoY+87%)",
-        "27년 영업이익 128억원 (영업이익률 28%)"
-      ],
-      "stance": "강세",
-      "reasoning": "국방 AI 프로젝트 물량이 하반기부터 빠르게 확대되면서 런웨이 판매 비중 증가로 26년 적자 폭 축소, 27년 흑자 전환 가능",
-      "risks": [],
-      "market_view": false,
-      "market_sentiment": 0,
-      "market_reason": ""
-    },
-    {
-      "id": "skitteam_2026-08-07_4430",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "IT는 SK",
-      "person": "IT는 SK",
-      "title": "SK하이닉스 54.3조원 투자결정 + 분기배당 375원 (9건)",
-      "url": "https://t.me/skitteam/4430",
-      "summary": "SK하이닉스가 청주 M17(19.1조원)과 용인 2기 Fab(35.2조원) 건설에 총 54.3조원 투자를 결정하고, 분기 현금배당 375원(배당금총액 2,733억원)을 확정했다. 주주환원 방안으로 올해 잉여현금흐름의 50% 이내에서 추가 배당이나 자사주 매입·소각 등을 3분기 중 확정·발표할 예정이다.",
-      "stocks": [
-        "SK하이닉스",
-        "파미셀",
-        "더블유씨피",
-        "코오롱인더",
-        "삼성전자",
-        "마이크론",
-        "엔비디아"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "SK하이닉스 청주 M17 신규 시설투자 19.1조원, 자기자본대비 15.83% (2026-08-07~2031-04-30)",
-        "SK하이닉스 용인 반도체 클러스터 2기 Fab 투자 35.2조원, 자기자본대비 29.19% (2026-08-07~2031-10-31)",
-        "SK하이닉스 분기 현금배당 375원, 배당금총액 2,733억원 (배당기준일 2026-08-31)",
-        "SK하이닉스 본주·ADR 괴리율 37.7%, 메모리 3사 중 12MF P/E 3.5배 (SK증권 추정치)",
-        "코오롱인더 2Q26 영업이익 987억원(+118% YoY), 컨센 777억원 상회, OPM 7.3%",
-        "더블우씨피 2Q26 매출액 362억원(-5% YoY), 영업이익 -154억원 (적자축소)"
-      ],
-      "numbers": [
-        "SK하이닉스 총 투자규모 54.3조원 (청주 M17 19.1조원 + 용인 2기 Fab 35.2조원)",
-        "SK하이닉스 분기배당 375원, 배당금총액 2,733억원",
-        "SK하이닉스 본주·ADR 괴리율 37.7%",
-        "파미셀 두산과의 공급계약 79억원 (최근 매출액 대비 6.92%)"
-      ],
-      "stance": "중립",
-      "reasoning": "SK하이닉스의 메모리 수요 대응을 위한 중장기 생산 기반 확보 전략과 AI 메모리 호황에 따른 현금창출력 개선이 주주환원 확대로 이어지는 구체적 실행 단계",
-      "risks": [
-        "SK하이닉스 HBM 반값 공급설에 대해 회사가 '전혀 사실무근'이라고 부인했으나 온라인 커뮤니티 루머 확산",
-        "솔리다임 IPO 관련 추측이 제기되고 있으나 SK하이닉스는 '확정된 사항 없다'고 답변",
-        "배당금총액은 배당기준일 유통주식수 기준으로 변동 가능"
-      ],
-      "market_view": true,
-      "market_sentiment": 1,
-      "market_reason": "AI 메모리 호황에 따른 현금창출력 개선과 적극적인 설비투자 확대, 주주환원 정책 강화로 SK하이닉스 주가에 긍정적 신호"
-    },
-    {
-      "id": "Kyaooo_2026-08-07_33380",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "캬오의 공부방",
-      "person": "캬오의 공부방",
-      "title": "금호석유화학·롯데웰푸드·코웨이 2Q 실적 공시 및 주요 기업 실적 정리 (16건)",
-      "url": "https://t.me/Kyaooo/33380",
-      "summary": "금호석유화학 2Q 매출 22,682억원(컨센서스 20,079억원 대비 +13%), 영업익 3,390억원(+132%)으로 상회 달성. 롯데웰푸드는 매출 11,557억원(+4%), 영업익 647억원(+36%)으로 실적 개선. 코웨이는 매출 14,422억원(+1%), 영업익 2,532억원(-6%)으로 예상에 근접.",
-      "stocks": [
-        "금호석유화학",
-        "롯데웰푸드",
-        "코웨이",
-        "SK하이닉스",
-        "코오롱인더",
-        "S-OIL"
-      ],
-      "sector": "소재·화학",
-      "key_points": [
-        "금호석유화학 2Q 영업익 3,390억원(전년 594억원 대비 +472%), 유가·원료가 급등 시 안정적 공급으로 수요 집중 및 스프레드 급확대",
-        "합성고무 NB Latex는 3Q 레깅 효과로 BEP 수준 전망하나 내년부터 수익성 회복 기대",
-        "S-OIL 샤힌 프로젝트 내년 상업운전 예정으로 BD 원가절감 기회, 다만 여수 구조조정 시 BD 밸런스 타이트 가능성",
-        "롯데웰푸드 2Q 순이익 373억원(전년 157억원 대비 +137%), 영업이익률 개선세 지속",
-        "코웨이 2Q 영업익 2,532억원으로 전분기(2,509억원) 대비 안정적 수준 유지, 시가배당률 0.02%"
-      ],
-      "numbers": [
-        "금호석유화학 2Q 영업익 3,390억원(컨센서스 1,464억원 대비 +132%)",
-        "금호석유화학 2Q 매출 22,682억원(컨센서스 20,079억원 대비 +13%)",
-        "롯데웰푸드 2Q 영업익 647억원(컨센서스 475억원 대비 +36%)",
-        "코웨이 2Q 영업익 2,532억원(컨센서스 2,689억원 대비 -6%)"
-      ],
-      "stance": "중립",
-      "reasoning": "각 기업의 2Q 잠정 실적 공시 내용을 객관적으로 정리하고, 금호석유화학의 경우 국제유가 및 원료가 변동에 따른 시장 환경 변화와 이에 대한 회사의 대응 현황을 상세히 분석",
-      "risks": [
-        "금호석유화학: 3Q 역레깅 효과로 수익성 둔화 가능성, 여수 구조조정 확정 시 BD 밸런스 타이트",
-        "금호석유화학: 합성수지·페놀 부문 3Q 페놀 적자, 합성수지 BEP 소폭 하회 가능성",
-        "코오롱인더: 메탄올·황산 등 부원료 급등으로 당초 목표한 아라미드 영업이익 흑자 전환 미달, 중국 신규 공장발 공급 과잉 지속",
-        "SK하이닉스: 추가 주주환원 방안 3분기 중 확정 예정이나 구체 규모 미정"
-      ],
-      "market_view": false,
-      "market_sentiment": 0,
-      "market_reason": ""
-    },
-    {
-      "id": "nje2e_2026-08-07_41313",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "너쟁이(텔레)",
-      "person": "너쟁이",
-      "title": "AI 데이터센터 투자 가속화, 반도체 IDM 비중 축소 전략 (19건)",
-      "url": "https://t.me/nje2e/41313",
-      "summary": "국내 반도체 IDM(삼성전자, SK하이닉스)의 과도한 수급 쏠림이 완화되며 섹터 로테이션이 진행 중. SK하이닉스가 용인 Y2에 35조 2,246억원, 청주 M17에 19조 1,000억원 등 총 54조원 투자를 확정해 AI 메모리 수요에 대응하는 한편, 하반기 주도 테마는 K뷰티보다 AI 데이터센터·피지컬AI 쪽으로 부상할 가능성이 높다고 판단.",
-      "stocks": [
-        "SK하이닉스",
-        "삼성전자",
-        "지엔씨에너지",
-        "아이크래프트",
-        "자이에스앤디",
-        "GS",
-        "코스맥스엔비티",
-        "마이크론",
-        "엔비디아",
-        "알파벳"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "SK하이닉스 총 54조원(용인 Y2 35.2조, 청주 M17 19.1조) 설비투자로 HBM 중심 D램과 낸드 동시 확충",
-        "용인 Y2는 2029년 6월, 청주 M17은 2028년 12월 첫 클린룸 오픈 목표이며 2031년까지 순차 투자",
-        "반도체 IDM은 P(가격)사이클에서 Q(물량)사이클로 전환 중으로 당분간 횡보 흐름 예상",
-        "모건스탠리, 2027년 클라우드 Capex 전년 대비 성장률을 14%에서 29%로 상향 조정",
-        "Citi, 2027~2028년 HBM 공급 부족 심화 및 DRAM/NAND 공급 충족률 70% 이하 전망, 삼성·하이닉스 NAND ASP 약 30% 인상 가설 유지"
-      ],
-      "numbers": [
-        "SK하이닉스 총 투자액 54조원 (용인 Y2 35조 2,246억, 청주 M17 19조 1,000억)",
-        "모건스탠리 2027년 클라우드 Capex 성장률 전망 29% (기존 14%에서 상향)",
-        "코스피 ADR 106, 코스닥 ADR 104",
-        "Citi 2027년 NAND 공급 충족률 60% 이하 전망 (기존 약 80%)"
-      ],
-      "stance": "강세",
-      "reasoning": "AI 데이터센터·피지컬AI는 정부 3대 메가프로젝트 중심으로 하반기 주도 테마로 부상하며, SK하이닉스의 선제적 54조원 투자와 글로벌 Capex 가속화(모건스탠리 29% 상향)가 수요 가시성을 뒷받침",
-      "risks": [
-        "반도체 IDM은 당분간 제한적 상승세로 단기 수익률 제고에 불리한 국면",
-        "HBM 스펙 하향 조정 우려 (하이닉스 2027년 HBM4 ASP 예상보다 낮음)",
-        "공급 과잉에 따른 가격 조정 위험 (SK하이닉스가 클린룸·장비 투입을 수요에 맞춰 단계적 집행 전략 추진)"
-      ],
-      "market_view": true,
-      "market_sentiment": 1,
-      "market_reason": "수급 확산과 섹터 로테이션이 진행 중이며, AI 데이터센터 투자 확대와 글로벌 Capex 가속화로 국내증시 종목 장세 지속 가능성에 무게를 둔 긍정적 평가"
-    },
-    {
-      "id": "pengmeup_2026-08-07_30664",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "펭미업",
-      "person": "펭미업",
-      "title": "메모리 가격 상승 정점 임박, 2026년 3분기 인상폭 20% 축소 예상 (17건)",
-      "url": "https://t.me/pengmeup/30664",
-      "summary": "번스타인 분석에 따르면 2026년 3분기 D램과 NAND 계약 가격 상승폭이 약 20% 수준으로 축소될 것으로 예상된다. PC·휴대전화 수요 부진과 장기 계약 가격 상한이 제약 요인이며, 공급 부족은 2027년까지 이어지겠으나 가격 상승 여력은 이미 제한적이어서 인상 사이클이 막바지에 접근했을 가능성이 있다.",
-      "stocks": [
-        "SK하이닉스",
-        "삼성전자"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "2026년 3분기 D램 & NAND 계약 가격 상승폭 약 20% 수준으로 축소 예상",
-        "PC & 휴대전화 수요 부진이 가격 인상 여력 제약",
-        "장기 계약 가격 상한이 추가 인상을 어렵게 함",
-        "공급 부족은 2027년까지 지속되나 가격 상승 국면은 막바지 단계",
-        "메모리 가격 상승 사이클의 정점 도달 임박"
-      ],
-      "numbers": [
-        "2026년 3분기 D램 & NAND 계약 가격 상승폭 약 20%",
-        "공급 부족 지속 기간: 2027년까지"
-      ],
-      "stance": "약세",
-      "reasoning": "PC·휴대전화 수요 부진과 장기 계약 가격 상한으로 인해 메모리 가격 상승 여력이 제한적이고 인상 사이클이 막바지에 접근했다는 분석",
-      "risks": [
-        "PC & 휴대전화 수요 부진 지속",
-        "장기 계약 가격 상한선 제약"
-      ],
-      "market_view": true,
-      "market_sentiment": -1,
-      "market_reason": "메모리 가격 상승 국면이 정점을 앞두고 있어 추가 상승 기대감이 제한적이라는 분석이 반도체 산업 전망에 부정적 영향을 미칠 수 있음"
-    },
-    {
-      "id": "aetherjapanresearch_2026-08-07_24422",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "에테르 일본&미국",
-      "person": "에테르",
-      "title": "소프트뱅크, NAV 72.3조 확대도 주가 45~55% 할인 거래 중 (17건)",
-      "url": "https://t.me/aetherjapanresearch/24422",
-      "summary": "씨티는 소프트뱅크 1분기 NAV가 FY3/26 40.1조 엔에서 72.3조 엔으로 크게 확대(ARM 주가 상승 27.5조 엔 영향)되었으나, 8월 5일 기준 58.3조 엔으로 하락했다고 분석. 현재 주가가 1분기 말 NAV 대비 55%, 최근 NAV 대비 45% 할인된 수준에서 거래 중이며, LTV 13.0%로 건전한 재무 상태를 유지 중. TP 9700엔 유지.",
-      "stocks": [
-        "소프트뱅크 그룹",
-        "ARM"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "1분기 NAV 72.3조 엔(전기 40.1조 엔 대비 80% 증가), ARM 주가 상승이 주요 요인으로 총 NAV의 50~60% 차지",
-        "8월 5일 현재 NAV 58.3조 엔으로 하락, 주가는 이로부터 45% 할인 거래 중",
-        "LTV 13.0%로 25% 기준선 대비 건전한 수준 유지",
-        "1분기 실적은 예상 부합(매출 2.0조 엔 +11%, 투자이익 1.86조 엔), 서프라이즈 없음",
-        "비전 펀드 후기 단계 포트폴리오 공정가치 1,330억 달러(약 20조 엔)로 재무상태표 뒷받침 예상"
-      ],
-      "numbers": [
-        "NAV 72.3조 엔(1분기 말, 전기 40.1조 엔 대비 +80%)",
-        "ARM 영향 규모 27.5조 엔",
-        "현재 주가 할인율 45~55%(NAV 기준)",
-        "목표가 9700엔(유지)"
-      ],
-      "stance": "중립",
-      "reasoning": "NAV 대비 장기 평균 할인율 50% 내외를 감안할 때 현재 주가의 상승 여력이 상당하다는 판단",
-      "risks": [
-        "ARM 주식이 NAV의 50~60%를 차지해 ARM 주가 변동에 민감함",
-        "8월 5일 이후 NAV가 72.3조 엔에서 58.3조 엔으로 하락"
-      ],
-      "market_view": false,
-      "market_sentiment": 1,
-      "market_reason": "현재 주가가 매력적인 수준이며 상당한 상승 여력을 보유한다는 씨티의 판단"
-    },
-    {
-      "id": "pikachu_aje_2026-08-07_8203",
-      "date": "2026-08-07",
-      "source": "telegram",
-      "blog_name": "피카츄 아저씨",
-      "person": "피카츄 아저씨",
-      "title": "실적 이연 및 IR 신뢰 문제로 보수적 재평가 필요 (3건)",
-      "url": "https://t.me/pikachu_aje/8203",
-      "summary": "글쓴이는 매출 이연 힌트를 과소평가한 점을 반성하며, 회사의 IR 신뢰 문제와 장세의 숫자 민감성을 감안해 실적에 대해 더 보수적으로 접근해야 했다고 지적. 향후 하이퍼스케일러 수주, 스마트스택 전환, 지멘스 표준 연계 납품, 매출 이연 내용을 확인할 예정.",
-      "stocks": [],
-      "sector": "기타",
-      "key_points": [
-        "매출 이연에 대한 초기 힌트를 과도하게 낙관적으로 해석한 투자 판단 실수",
-        "회사의 IR 신뢰도 문제가 존재하며, 현재 시장이 숫자에 민감한 상황 반영 필요",
-        "확인 대기 중인 사항: 하이퍼스케일러 수주 여부, 스마트스택 전환 진행도, 지멘스 표준 연계 납품 여부, 매출 이연 상세 내용"
-      ],
-      "numbers": [],
-      "stance": "약세",
-      "reasoning": "회사의 IR 신뢰 문제와 실적 숫자에 대한 시장의 높은 민감도가 보수적 접근을 강제하는 상황",
-      "risks": [
-        "매출 이연 문제의 규모와 향후 실현 가능성 불확실",
-        "회사 IR의 신뢰도 훼손으로 인한 추가 부정적 해석 가능성",
-        "하이퍼스케일러 수주 기대와 실제 수주 간의 갭 가능성"
-      ],
-      "market_view": false,
-      "market_sentiment": -1,
-      "market_reason": "IR 신뢰 문제와 매출 이연 이슈로 인한 시장의 신중한 재평가 필요"
     }
   ]
 }
