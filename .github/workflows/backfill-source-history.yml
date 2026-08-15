@@ -1,0 +1,57 @@
+name: 소스 적중률 2년 정식 백필
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: 수집할 과거 연수
+        required: true
+        default: '2'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: source-history-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - name: 재개 캐시 복원
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.cache/source-history-v1.json
+          key: source-history-v1-${{ github.run_id }}
+          restore-keys: |
+            source-history-v1-
+      - name: 회귀 테스트
+        run: npm test
+      - name: 2년 원문 재분석과 가격 백필
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+        run: node scripts/backfill-source-history.js --apply --years ${{ inputs.years }}
+      - name: 결과 검증
+        run: |
+          npm test
+          npm run build
+      - name: 데이터 커밋과 push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/history.json public/data/posts.json public/data/source-history-audit.json config/stock-codes.json
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "data: 2년 소스 적중률 정식 백필"
+            git pull --rebase -X theirs origin main
+            git push
+          fi

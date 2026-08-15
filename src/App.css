@@ -607,6 +607,7 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
 .source-scores-compact .ss-top-grid { margin-top: 12px; }
 .ss-header { border-bottom-width: 3px; }
 .ss-lead { font-size: 12.5px; color: var(--ink); line-height: 1.6; margin: 8px 0 2px; }
+.ss-coverage { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.55; }
 .ss-pending { font-size: 12.5px; color: var(--muted); line-height: 1.6; background: #f6f7ff; border-left: 3px solid var(--rule); padding: 9px 12px; margin: 12px 0; }
 .ss-mode-tabs { display: flex; gap: 6px; margin: 14px 0 12px; flex-wrap: wrap; }
 .ss-mode { border: 1px solid var(--rule-thin); background: var(--paper); color: var(--muted); border-radius: 2px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; cursor: pointer; }
@@ -702,4 +703,35 @@ h1 { font-family: var(--serif); font-size: 24px; font-weight: 900; letter-spacin
   .home-change-list { grid-template-columns: 1fr; }
   .view-heading { margin-top: -4px; }
   .view-heading h2 { font-size: 20px; }
+}
+.home-choi-confidence, .team-confidence { display: inline-flex; align-items: center; border: 1px solid #d8c9a8; background: #fffaf0; color: #6d5322; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.home-choi-summary { margin: -4px 0 18px; color: #4c5563; line-height: 1.65; }
+.research-team-report { margin-bottom: 28px; }
+.research-team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.team-role-card { min-width: 0; border: 1px solid #e2e6eb; border-radius: 14px; background: #fff; padding: 16px; }
+.team-role-card > header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; border-bottom: 2px solid #e8ebef; padding-bottom: 10px; margin-bottom: 12px; }
+.team-role-card > header span { font-size: 17px; font-weight: 800; }
+.team-role-card > header small { color: #6f7884; }
+.team-role-kim > header { border-color: #93c5fd; }
+.team-role-lee > header { border-color: #86efac; }
+.team-role-park > header { border-color: #fca5a5; }
+.team-role-choi { border-color: #d8c9a8; background: #fffdf7; }
+.team-role-choi > header { border-color: #d4a84f; }
+.team-summary, .team-final-summary { margin: 0 0 12px; color: #4c5563; line-height: 1.6; }
+.team-evidence { display: grid; gap: 3px; color: inherit; text-decoration: none; border: 1px solid #edf0f3; border-radius: 9px; padding: 9px 10px; margin-top: 7px; }
+.team-evidence:hover { border-color: #aac8e8; background: #f8fbff; }
+.team-evidence span { color: #4c5563; font-size: 13px; line-height: 1.45; }
+.team-evidence small { color: #7b8490; }
+.team-list { margin-top: 12px; }
+.team-list > b, .team-counter > b { font-size: 13px; color: #313843; }
+.team-list ul { margin: 6px 0 0; padding-left: 18px; color: #4c5563; }
+.team-list li { margin: 5px 0; line-height: 1.45; }
+.team-decision-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.team-decision-row strong { background: #312e2a; color: #fff; border-radius: 7px; padding: 5px 9px; }
+.team-decision-row span { color: #6d5322; font-size: 12px; font-weight: 700; }
+.team-counter { margin-top: 12px; border-left: 3px solid #d9776a; background: #fff6f3; padding: 9px 11px; }
+.team-counter p { margin: 4px 0 0; color: #68443e; line-height: 1.5; }
+@media (max-width: 760px) {
+  .research-team-grid { grid-template-columns: 1fr; }
+  .home-hero-head { align-items: flex-start; gap: 10px; }
 }

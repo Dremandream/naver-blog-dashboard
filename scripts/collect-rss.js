@@ -14,10 +14,11 @@ import { createHash } from 'crypto';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
 import { judgeBatch } from './judge.js';
-import { computeSourceScores } from './hitrate.js';
+import { computeSourceScores, HITRATE_SCHEMA_VERSION, isHitrateOpinion } from './hitrate.js';
 import { parseJSONLoose, stripHtml } from './lib/parsers.js';
 import { mergeIndexSnapshot, parseAikIndexSnapshot, parseAikStockHistory, parseNaverStockFacts } from './lib/market-data.js';
 import { normalizeInvestorAnalysis } from './lib/investor-analysis.js';
+import { RESEARCH_TEAM_VERSION, buildKimReport, normalizeLeeReport, normalizeParkReport, normalizeChoiBrief } from './lib/research-team.js';
 import { buildPeterBacktest, buildPeterFearGreed, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { buildMentionHistory } from '../shared/discovery.js';
 
@@ -194,7 +195,7 @@ export function isOpinionEligible(post) {
 }
 
 export function isArchivedOpinionEligible(opinion) {
-  return opinion?.analysis_version === ANALYSIS_SCHEMA_VERSION && opinion?.source_role === 'opinion';
+  return isHitrateOpinion(opinion);
 }
 
 export function canReuseAnalysis(post) {
@@ -607,7 +608,7 @@ export function buildBriefInputHash(posts = [], prices = {}, market = {}) {
     index: value.index, asOf: value.asOf, d1: value.d1, d5: value.d5, d20: value.d20, flows: value.flows,
   }]));
   return createHash('sha256')
-    .update(JSON.stringify({ posts: postSnapshot, prices: priceSnapshot, market: marketSnapshot }))
+    .update(JSON.stringify({ researchTeamVersion: RESEARCH_TEAM_VERSION, posts: postSnapshot, prices: priceSnapshot, market: marketSnapshot }))
     .digest('hex');
 }
 
@@ -626,8 +627,13 @@ async function generateDailyBrief(posts, prices = {}, market = {}) {
     summary: p.summary,
     reasoning: p.reasoning,
     numbers: p.numbers,
+    counter_argument: p.counter_argument,
+    evidence_grade: p.evidence_grade,
+    url: p.url,
     source_role: p.source_role,
   }));
+
+  const kim = buildKimReport(posts);
 
   // 쏠림 지표: 섹터 집중도 + 스탠스 편향 (인물 단위) — 프롬프트에 근거로 제공
   const sectorCnt = {};
@@ -649,8 +655,50 @@ async function generateDailyBrief(posts, prices = {}, market = {}) {
     .map(([name, v]) => `${name}: 현재 ${v.price.toLocaleString()}${v.market === 'KR' ? '원' : '$'} | 1일 ${v.d1 ?? '?'}% | 5일 ${v.d5 ?? '?'}% | 20일 ${v.d20 ?? '?'}%`)
     .join('\n');
 
-  const prompt = `당신은 투자 리서치 어시스턴트입니다. 아래는 오늘 수집된 투자 블로거·텔레그램 채널들의 글 분석 결과입니다. 이를 종합해 독자가 15개 소스를 직접 안 읽어도 되도록 "그날의 종합의견"을 작성하세요.
+  const marketLines = Object.entries(market).map(([k, v]) =>
+    `${k.toUpperCase()}: ${v.index?.toLocaleString()} | 1일 ${v.d1}% 5일 ${v.d5}% 20일 ${v.d20}%` +
+    (v.flows ? ` | 최근일 수급: 개인 ${v.flows.individual?.toLocaleString()} 외국인 ${v.flows.foreign?.toLocaleString()} 기관 ${v.flows.institution?.toLocaleString()} (외인 5일 누적 ${v.flows.foreign5d?.toLocaleString()})` : '')
+  ).join('\n');
 
+  async function runSpecialist(name, prompt, normalize) {
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const response = await client.messages.create({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1800,
+          messages: [{ role: 'user', content: prompt }],
+        });
+        return normalize(parseJSONLoose(response.content[0].text));
+      } catch (error) {
+        console.warn(`  ${name} 보고서 실패(${attempt}/2):`, error.message);
+        if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 1500));
+      }
+    }
+    return normalize({});
+  }
+
+  const opinionDigest = digest.filter((item) => item.source_role === 'opinion');
+  const leePrompt = `당신은 개인 투자 리서치팀의 이대리입니다. 아래 직접 의견 자료를 서로 비교하세요. 사실을 새로 만들거나 매수·매도 결론을 내리지 마세요. 같은 person은 한 명으로 보고, 합의·충돌·근거 있는 소수 시각·추가 질문만 간결하게 작성하세요.\n\n${JSON.stringify(opinionDigest, null, 2)}\n\nJSON만 출력:\n{"consensus":["공통 시각과 근거"],"conflicts":["누가 어떤 근거로 갈리는지"],"minority":["소수 시각과 근거"],"questions":["추가 확인할 질문"]}`;
+  const parkPrompt = `당신은 개인 투자 리서치팀의 박과장입니다. 블로거 주장과 객관 데이터를 독립적으로 대조하는 감사 담당입니다. 매수·매도 결론을 내리지 말고, 실제로 확인되는 사실·명확한 역행·가장 강한 리스크·데이터 공백만 적으세요. 데이터가 없으면 추정하지 마세요.\n\n[김사원 근거표]\n${JSON.stringify(kim, null, 2)}\n\n[주가]\n${priceLines || '(없음)'}\n\n[시장]\n${marketLines || '(없음)'}\n\nJSON만 출력:\n{"verified":["객관 데이터로 확인된 사실"],"contradictions":["주장과 가격·수급의 역행"],"risks":["가장 강한 반대 근거"],"data_gaps":["판단에 없는 데이터"]}`;
+
+  console.log('  👨‍💼 이대리 의견 비교 · 박과장 독립 감사 중...');
+  const [lee, park] = await Promise.all([
+    runSpecialist('이대리', leePrompt, normalizeLeeReport),
+    runSpecialist('박과장', parkPrompt, normalizeParkReport),
+  ]);
+
+  const prompt = `당신은 개인 투자 리서치팀의 최부장입니다. 김사원의 근거표, 이대리의 의견 비교, 박과장의 독립 감사를 검토해 사용자가 1~2분 안에 읽을 최종 종합판단을 작성하세요. 매수·매도나 목표가를 결정하지 말고, 무엇을 믿을 수 있는지와 무엇을 더 확인해야 하는지를 결론 내리세요.
+
+[김사원 — 원문 근거 정리]
+${JSON.stringify(kim, null, 2)}
+
+[이대리 — 필자 의견 비교]
+${JSON.stringify(lee, null, 2)}
+
+[박과장 — 객관 데이터 감사]
+${JSON.stringify(park, null, 2)}
+
+[원자료 요약 — 필요할 때만 교차 확인]
 ${JSON.stringify(digest, null, 2)}
 
 [실제 주가 데이터 — 여론과 대조할 것]
@@ -660,13 +708,10 @@ ${priceLines || '(주가 데이터 없음)'}
 ${concentration}
 
 [시황 데이터 — 지수·수급 (단위: 억원)]
-${Object.entries(market).map(([k, v]) =>
-    `${k.toUpperCase()}: ${v.index?.toLocaleString()} | 1일 ${v.d1}% 5일 ${v.d5}% 20일 ${v.d20}%` +
-    (v.flows ? ` | 최근일 수급: 개인 ${v.flows.individual?.toLocaleString()} 외국인 ${v.flows.foreign?.toLocaleString()} 기관 ${v.flows.institution?.toLocaleString()} (외인 5일 누적 ${v.flows.foreign5d?.toLocaleString()})` : '')
-  ).join('\n') || '(시황 데이터 없음)'}
+${marketLines || '(시황 데이터 없음)'}
 
 [작성 원칙 — 매우 중요]
-1. 매수/매도 추천이나 당신의 판단을 넣지 마세요. 필자들의 시각을 정리만 합니다.
+1. 매수/매도 추천·목표가를 만들지 마세요. 리서치 행동과 판단의 한계만 제시합니다.
 2. **간결이 최우선**: 독자는 아침에 1~2분만 봅니다. 종목당 근거는 25자 내외 한 구절 + 핵심 수치 하나.
 3. 투자 무관 글은 무시하세요.
 4. **동일 인물 중복 주의**: 같은 person이 블로그와 텔레그램에 모두 쓸 수 있습니다(예: '너쟁이', '잠실개미'). mentions는 person 기준으로 세고, 같은 사람을 2명으로 세지 마세요. source_role이 fact인 글은 사실 확인에만 참고하고 필자의 긍정·부정·소수의견으로 세지 마세요. mixed도 직접 의견과 전달 사실을 분리할 수 없으면 인물 의견 수에서 제외하세요.
@@ -683,7 +728,16 @@ ${Object.entries(market).map(([k, v]) =>
   "positive": [ { "sector": "반도체", "items": [ { "name": "SK하이닉스", "point": "HBM 수요 강세, 목표가 30만", "mentions": 3 } ] } ],
   "negative": [ { "sector": "매크로", "items": [ { "name": "외인 수급", "point": "5일 연속 순매도 -1.2조", "mentions": 2 } ] } ],
   "minority": ["소수·역발상 한 문장 — 누가 왜 다르게 보는지 (최대 2개, 없으면 빈 배열)"],
-  "events": [ { "date": "2026-07-31", "label": "SK하이닉스 2Q 컨퍼런스콜", "stocks": ["SK하이닉스"], "source": "너쟁이", "approx": true } ]
+  "events": [ { "date": "2026-07-31", "label": "SK하이닉스 2Q 컨퍼런스콜", "stocks": ["SK하이닉스"], "source": "너쟁이", "approx": true } ],
+  "choi": {
+    "decision": "긍정 우세|부정 우세|혼조|판단 유보",
+    "confidence": "높음|보통|낮음",
+    "summary": "사실·의견·반론을 구분한 최종 판단 2~3문장",
+    "reasons": ["최종 판단을 지지하는 핵심 근거 최대 3개"],
+    "counter_case": "현재 결론에 대한 가장 강한 반대 논리 1문장",
+    "watch_items": ["추가로 확인할 데이터·원문 최대 5개"],
+    "invalidation_conditions": ["현재 판단을 다시 검토할 조건 최대 4개"]
+  }
 }`;
 
   // 글 수가 많은 날 출력 잘림 방지: 넉넉한 토큰 + 실패 시 1회 재시도
@@ -694,32 +748,10 @@ ${Object.entries(market).map(([k, v]) =>
         max_tokens: 5000,
         messages: [{ role: 'user', content: prompt }],
       });
-      const _r = parseJSONLoose(res.content[0].text);
-      // 스키마 정규화: 필드 누락/타입 오류가 UI까지 전파되지 않게 (명세-코드 일치 원칙)
-      const arr = v => Array.isArray(v) ? v : [];
-      const str = v => typeof v === 'string' ? v : '';
-      const groups = v => arr(v)
-        .map(g => ({
-          sector: str(g?.sector) || '기타',
-          items: arr(g?.items)
-            .map(it => ({ name: str(it?.name), point: str(it?.point), mentions: Number(it?.mentions) || 0 }))
-            .filter(it => it.name),
-        }))
-        .filter(g => g.items.length > 0);
-      _r.headline = str(_r.headline);
-      _r.positive = groups(_r.positive); _r.negative = groups(_r.negative);
-      _r.minority = arr(_r.minority).filter(m => typeof m === 'string').slice(0, 2);
-      _r.events = arr(_r.events)
-        .map(ev => ({
-          date: str(ev?.date),
-          label: str(ev?.label),
-          stocks: arr(ev?.stocks).filter(s => typeof s === 'string'),
-          source: str(ev?.source),
-          approx: ev?.approx === true,
-        }))
-        .filter(ev => /^\d{4}-\d{2}-\d{2}$/.test(ev.date) && ev.label)
-        .slice(0, 6);
-      _r.generatedAt = new Date().toISOString(); return _r;
+      const normalized = normalizeChoiBrief(parseJSONLoose(res.content[0].text));
+      normalized.research_team = { version: RESEARCH_TEAM_VERSION, kim, lee, park, choi: normalized.choi };
+      normalized.generatedAt = new Date().toISOString();
+      return normalized;
     } catch (e) {
       console.warn(`  브리핑 생성 실패(${attempt}/2):`, e.message);
       if (attempt === 2) return null;
@@ -768,6 +800,9 @@ function archiveHistory(prices, market, posts) {
         map[key] = {
           person, stock, stance, market: marketOf[stock],
           source_role: p.source_role, analysis_version: p.analysis_version,
+          hitrate_version: HITRATE_SCHEMA_VERSION,
+          source: p.source || 'blog', url: p.url || '', post_id: p.id || '',
+          evidence_grade: p.evidence_grade || 'C', analysis_depth: p.analysis_depth || 'title_only',
         };
       }
     }

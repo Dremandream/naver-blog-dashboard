@@ -6,3 +6,4 @@ dist
 scripts/.backfill-cache.json
 scripts/.scrape-cache.json
 scripts/.tg-scrape-cache.json
+node_modules/.cache/source-history-v1.json

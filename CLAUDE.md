@@ -1,82 +1,100 @@
-# CLAUDE.md — 네이버 블로그 투자 대시보드
+# CLAUDE.md — GitHub Actions·Vercel 투자 리서치 대시보드
 
-> 이 파일을 먼저 읽고 시작하라. 수많은 실패에서 얻은 실전 규칙이다.
+> 이 저장소에서 작업할 때 먼저 읽는다. 현재 운영 중인 안정 버전의 규칙이며, 별도 `n8nversion`에는 자동 적용하지 않는다.
 
----
+## 프로젝트 경계
 
-## 프로젝트 개요
-- 목적: 투자 블로거 10명의 RSS 수집 → Claude AI 분석 → React 대시보드 자동 표시
-- URL: https://naver-blog-dashboard.vercel.app
-- 스택: Node.js RSS 수집 + Claude Haiku API + React/Vite + GitHub Actions + Vercel
+- 작업 경로: `C:\Users\simin\Claude\Projects\블로그 글 자동화 프로젝트\_codex-objective-data`
+- 명칭: **GitHub 버전** 또는 **Vercel 버전**
+- 라이브: https://naver-blog-dashboard.vercel.app
+- 목적: 블로그·텔레그램의 투자 글을 수집·비교해 종합 시황과 읽을 가치가 높은 원문을 선별한다.
+- 비목표: 매수·매도 추천, 실시간 시세, 유료·비공개 콘텐츠 수집
+- 별도 실험: `..\n8nversion`은 이 저장소와 독립적으로 설계하며 명시적 요청 없이 수정하지 않는다.
+
+## 현재 구조
+
+- 소스: 네이버 블로그 15개 + 공개 텔레그램 7개
+- 수집: Node.js RSS/공개 페이지 수집
+- 분석: Claude Haiku 개별 분석 + Claude Opus 종합판단
+- 저장: GitHub의 `public/data/*.json`
+- 자동화: GitHub Actions — 매일 KST 08:00, 평일 KST 16:30
+- 화면: React/Vite → Vercel 자동 배포
+- 데이터: 최근 7일 글, 장기 적중률 이력, Peter K 장기 이력
 
 ## 핵심 파일
+
 | 파일 | 역할 |
 |---|---|
-| config/blogs.json | 블로그 10개 목록 + 닉네임 |
-| scripts/collect-rss.js | RSS 수집 + AI 분석 + 7일 누적 저장 |
-| public/data/posts.json | 수집 데이터 (7일치) |
-| src/App.jsx | 메인 컴포넌트 |
-| .github/workflows/collect.yml | 매일 KST 08:00 자동 실행 |
-| handoff.md | 세션 간 인수인계 (새 세션 시작 시 반드시 첨부) |
+| `config/blogs.json` | 블로그 15개와 인물 식별자 |
+| `config/telegram-channels.json` | 공개 텔레그램 7개와 시험 종료 조건 |
+| `scripts/collect-rss.js` | 수집·AI 분석·시장 데이터·7일 병합 |
+| `scripts/lib/` | 파서·시장 데이터·투자자 분석 모듈 |
+| `public/data/posts.json` | 프론트용 최근 데이터 |
+| `public/data/history.json` | 소스 실험 통계용 장기 가격·의견 이력 |
+| `public/data/peter-history.json` | Peter K Fear & Greed 장기 이력 |
+| `src/App.jsx` | `오늘 / 전체 글` 화면 진입점 |
+| `src/components/PersonalHome.jsx` | 첫 화면 정보 위계 |
+| `tests/regression.mjs` | 회귀 테스트 |
+| `.github/workflows/collect.yml` | 예약·수동 실행과 데이터 커밋 |
+| `PROGRESS.md` | 현재 상태와 바로 다음 작업 |
+| `handoff.md` | 세션별 상세 이력과 운영 지식 |
 
----
+## 절대 원칙
 
-## 절대 원칙 3가지
+### 1. 필요성 확인 후 구현
 
-### 1. 기능 만들기 전에 먼저 물어라
-- 구현 전 반드시: "이 기능이 실제로 필요한가?" 한 번 확인
-- 교훈: signal 기능 → 완성 후 "다 중립이야" 삭제 → 낭비
+- 먼저 “이 기능이 원문 선별 시간이나 판단 신뢰도를 실제로 개선하는가?”를 확인한다.
+- 기능 수를 늘리는 것을 개선으로 간주하지 않는다.
+- 매수·매도 신호를 다시 만들지 않는다. 필요한 행동은 `반드시 원문 읽기`, `추가 조사하기`처럼 리서치 행동으로 표현한다.
 
-### 2. Cowork + Claude Code 동시에 같은 파일 건드리지 않는다
-- Cowork에서 파일 수정 → Claude Code에서 git push → 충돌 → 잘못된 버전 배포
-- 규칙: 파일 수정은 Cowork, git 작업은 Claude Code. 같은 날 두 표면이 같은 파일을 건드리지 않는다.
+### 2. 검증 → 구조 → 구현
 
-### 3. 검증 → 구조 → 구현. 이 순서를 절대 바꾸지 마라
-- 작동하는 최소 단위 먼저 확인
-- plan.md 작성 후 구현 시작
-- 완료 = Vercel에서 직접 눈으로 확인
+- 코드 수정 전 `PROGRESS.md`, 관련 계획, 현재 구현을 확인한다.
+- 비사소한 변경은 `plan.md`에 목적·범위·완료 기준을 먼저 기록한다.
+- 최소 재현 또는 테스트를 먼저 만들고 작은 변경으로 해결한다.
+- 완료 기준은 `npm test` + `npm run build` + 필요 시 Vercel 실화면 확인이다.
 
----
+### 3. 한 작업 주체만 파일 수정
 
-## 표면 선택
+- Codex·Claude Code·Cowork가 같은 작업에서 같은 파일을 동시에 수정하지 않는다.
+- 시작 전 `git status -sb`와 `git log`를 확인하고, 자동수집 원격 커밋이 있으면 안전하게 동기화한다.
+- 사용자 변경과 무관한 파일을 정리하거나 되돌리지 않는다.
 
-| 표면 | 언제 |
-|---|---|
-| Chat | 빠른 질문, 1회성 탐색 |
-| Projects | 반복 배경이 필요한 작업 |
-| Cowork | 파일 수정, 코드 실행, 자동화 구축 |
-| Code (CLI) | git 작업, 터미널, 대규모 코드 |
+### 4. 사실과 의견을 분리
 
----
+- 가격·수급·기준일은 객관 데이터로 표시한다.
+- 블로그·텔레그램의 주장은 필자 의견으로 표시한다.
+- `source_role=opinion`만 신규 소스 실험 통계에 포함한다.
+- 결측치·오래된 데이터·작은 표본을 숨기지 않는다.
+
+### 5. 보안
+
+- API 키·쿠키·토큰을 코드, 문서, 채팅, 로그에 기록하지 않는다.
+- 기존 `CLAUDE_API_KEY`는 GitHub Secrets와 로컬 환경변수에서만 사용한다.
+- `.env`는 커밋하지 않는다.
 
 ## 멈춰야 하는 신호
 
 | 신호 | 대응 |
 |---|---|
-| 같은 파일 충돌이 2번 이상 발생 | Cowork와 Code 중 하나만 쓰는 방식으로 전환 |
-| 같은 방식으로 3번 실패 | 즉시 방법 바꾸기 |
-| plan.md 없이 구현 시작 | 멈추고 plan.md 먼저 |
-| 기능 만들고 나서 필요성 논의 | 다음엔 구현 전에 필요성 확인 |
+| 같은 방식으로 3번 실패 | 원인과 가정을 다시 검토하고 접근을 바꾼다 |
+| 같은 파일 충돌 2회 이상 | 수정 주체를 하나로 통일한다 |
+| 계획 없이 큰 기능 구현 | 중단하고 `plan.md`부터 작성한다 |
+| 테스트는 통과하지만 라이브가 다름 | 캐시·배포·데이터 기준일을 별도로 확인한다 |
+| 대용량 JSON 전체 읽기 필요 | 스키마·키·대표 표본만 먼저 확인한다 |
 
----
+## 새 대화 시작 루틴
 
-## 새 세션 시작 루틴
-1. handoff.md 첨부
-2. "이어서 진행해줘" 입력
-3. Claude가 현재 상태 확인 후 시작
+1. `PROGRESS.md`를 먼저 읽는다.
+2. `CLAUDE.md`, `PRD.md`, `plan.md`, `handoff.md`를 필요한 범위까지 읽는다.
+3. `git status -sb`와 원격 최신 상태를 확인한다.
+4. `public/data/*.json`은 전체 덤프하지 말고 스키마와 대표 표본만 확인한다.
+5. 현재 상태·가정·다음 우선순위를 보고한 후 수정한다.
 
----
+## 알려진 운영 특성
 
-## 프롬프트 요청 기준
-모든 작업 요청에 아래를 포함하면 결과가 달라진다:
-1. **어떤 파일** — 수정 대상 명시
-2. **무엇을** — 구체적인 변경 내용
-3. **완료 기준** — 어떻게 확인할지
-4. **불확실하면** — 추측하지 말고 물어볼 것
-
----
-
-## 알려진 이슈
-- git push 시 `.git/index.lock` 충돌 자주 발생 → `del .git\index.lock` 후 재시도
-- Cowork 수정 후 Claude Code push 시 충돌 → "로컬 유지" 선택 시 Cowork 수정본 유실 가능
-- RSS 본문 없는 블로그(피터케이 등) → 제목만으로 AI 분석 (정상 동작)
+- RSS 본문이 없는 글은 제목 기반 분석이 가능하지만 근거 등급을 낮춘다.
+- 텔레그램 공개 프리뷰가 꺼지거나 구조가 바뀌면 수집이 중단될 수 있다.
+- `history.json`은 장기 실험 통계 때문에 크다. 임의 삭제하지 않는다.
+- 읽음·피드백은 현재 브라우저 `localStorage`에만 저장되어 기기 간 동기화되지 않는다.
+- `itechkorea`는 2026-08-26까지 시험 운영 후 설정에 따라 자동 제외된다.

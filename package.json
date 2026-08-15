@@ -8,6 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "collect": "node scripts/collect-rss.js",
+    "backfill:sources:audit": "node scripts/backfill-source-history.js --audit --years 2",
+    "backfill:sources": "node scripts/backfill-source-history.js --apply --years 2",
+    "refresh:source-scores": "node scripts/refresh-source-scores.js",
     "test": "node tests/regression.mjs"
   },
   "dependencies": {

@@ -1,47 +1,80 @@
-# SKILL.md — 네이버 블로그 대시보드 반복 작업 가이드
+# SKILL.md — 반복 작업 실행 가이드
 
-> 자주 하는 작업의 순서와 주의사항. 작업할 때마다 새 내용을 추가한다.
+> 제품 원칙은 `CLAUDE.md`, 현재 상태는 `PROGRESS.md`를 우선한다. 이 문서는 자주 반복하는 작업의 검증 순서만 정의한다.
 
----
+## 공통 사전 점검
 
-## SKILL 1: 새 블로그 추가
-1. config/blogs.json에 추가: `{ "id": "블로그ID", "name": "닉네임", "person": "인물명" }`
-2. RSS 실제 확인: `https://rss.blog.naver.com/{blogId}.xml`
-3. git push → GitHub Actions Run workflow → 대시보드 확인
-- `person`: 같은 사람이 텔레그램에도 있으면 동일 값으로 맞춰 중복 집계 방지
-
-## SKILL 1-B: 새 텔레그램 채널 추가
-1. 공개 여부 확인: `https://t.me/s/{채널핸들}` 접속되면 공개(수집 가능)
-2. 채널명 확인: 같은 페이지 og:title
-3. config/telegram-channels.json에 추가: `{ "id": "채널핸들", "name": "표시이름", "person": "인물명" }`
-4. git push → GitHub Actions → 대시보드 확인
-- 비공개 채널은 수집 불가
-
-## SKILL 2: AI 프롬프트 개선
-- 파일: `scripts/collect-rss.js` → `analyzePost()` 함수 내 prompt 변수
-- 수정 후 확인 기준: sector 분류가 맞는지, summary가 구체적인지
-- 주의: signal 같은 기능은 구현 전에 실제 필요성 먼저 확인
-
-## SKILL 3: 배포 사이클
-```
-파일 수정 (Cowork) → git add/commit/push (Claude Code) → Vercel 자동 배포 (~2분) → 브라우저 확인
-```
-- 충돌 발생 시: `del .git\index.lock` 후 재시도
-- push 후 반드시 Vercel에서 파일 내용 변경 확인
-
-## SKILL 4: 워크플로우 수동 실행
-- GitHub → 레포 → Actions → collect → Run workflow
-- 완료 확인: 대시보드 수집일 날짜 변경 여부
-
-## SKILL 5: 데이터 현황 확인 (PowerShell)
 ```powershell
-cd "C:\Users\simin\Claude\Projects\블로그 글 자동화 프로젝트\naver-blog-dashboard"
-Select-String '"date"' public\data\posts.json | Group-Object { $_.Line.Trim() } | Sort-Object Name
+git status -sb
+git log -5 --oneline
+npm.cmd test
 ```
 
----
+- 자동수집 원격 커밋이 있으면 수정 전에 `git fetch` 후 안전하게 동기화한다.
+- 대용량 JSON은 전체 출력하지 말고 키·개수·대표 표본만 본다.
+- 코드 변경은 작게 하고 관련 회귀 테스트를 먼저 추가한다.
 
-## 추가 예정
-- 카카오/이메일 알림 설정
-- 모바일 UI 최적화
-- 블로그 추가 시 RSS 검증 자동화
+## 1. 블로그 추가·삭제
+
+1. 필요성, 기존 소스와의 중복, 직접 의견 비중을 먼저 검토한다.
+2. `config/blogs.json`을 수정한다.
+3. 추가 시 `https://rss.blog.naver.com/{blogId}.xml` 응답과 최근 글을 확인한다.
+4. `id`, 표시 `name`, 동일 인물 집계용 `person`을 정확히 입력한다.
+5. `npm.cmd test`와 `npm.cmd run build`를 실행한다.
+6. push 후 수동 워크플로를 한 번 실행하고 실제 데이터와 Vercel 화면을 확인한다.
+
+## 2. 텔레그램 추가·삭제
+
+1. `https://t.me/s/{channel}` 공개 프리뷰가 열리는지 확인한다.
+2. 단순 전달, 다른 채널과의 중복, 독점 정보 여부를 검토한다.
+3. `config/telegram-channels.json`을 수정한다.
+4. 같은 운영자의 블로그가 있으면 동일한 `person`을 사용한다.
+5. 시험 채널은 `trial_until`을 넣어 종료를 자동화한다.
+6. 회귀 테스트·수동 수집·Vercel 검증을 수행한다.
+
+## 3. AI 분석 프롬프트 변경
+
+1. 변경 이유와 기대 결과를 `plan.md`에 적는다.
+2. `scripts/collect-rss.js`의 분석 스키마와 프롬프트를 함께 확인한다.
+3. 기존 캐시 재사용 여부를 결정하고 스키마 변경이면 `analysis_version`을 올린다.
+4. 정상 JSON, 잘린 JSON, API 실패, 본문 없는 글을 테스트한다.
+5. 구형 분석 데이터가 신규 통계를 오염시키지 않는지 확인한다.
+6. 토큰 사용량과 20분 Actions 제한 안에서 완주하는지 확인한다.
+
+## 4. UI 변경
+
+1. 첫 화면의 정보 위계와 원문 선별 시간을 개선하는지 먼저 확인한다.
+2. 관련 `src/utils/` 순수 함수 테스트를 먼저 추가한다.
+3. 데스크톱과 모바일 360~375px에서 가로 넘침·접힘·원문 링크를 확인한다.
+4. 빈 데이터, 오래된 데이터, 작은 표본 표시를 확인한다.
+5. 기존 `오늘 / 전체 글` 두 화면을 불필요하게 늘리지 않는다.
+
+## 5. 배포
+
+```powershell
+npm.cmd test
+npm.cmd run build
+git status -sb
+```
+
+그다음 의도한 파일만 커밋·push하고 다음을 확인한다.
+
+- GitHub Actions 테스트와 수집 성공
+- 데이터 기준일 갱신
+- Vercel 최신 배포 성공
+- 첫 화면·원문 링크·모바일 화면 정상
+
+## 6. 장애 대응
+
+1. 데이터가 26시간 이상 오래되면 GitHub Actions 로그를 먼저 본다.
+2. 파싱 실패인지 Claude API 실패인지 데이터 커밋 충돌인지 구분한다.
+3. 로컬 `npm.cmd test`로 재현한다.
+4. 같은 접근이 세 번 실패하면 방법을 바꾼다.
+5. 기존 데이터와 장기 이력을 임의 삭제하지 않는다.
+
+## 현재 보류 사항
+
+- 피드백의 기기 간 동기화와 DB 도입
+- 소스 실험 통계의 에피소드 단위 재계산·과거 재분석
+- 환율·미국 10년물·DRAM/NAND·컨센서스·DART 일정
+- n8n 전환 — 별도 `n8nversion`에서만 검토

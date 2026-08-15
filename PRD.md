@@ -3,7 +3,7 @@
 > 현재 시스템의 단일 진실 문서(Single Source of Truth). "무엇을/왜"를 정의한다.
 > 운영 규칙은 CLAUDE.md, 반복 작업은 SKILL.md, 세션 이력은 handoff.md 참조.
 
-_최종 갱신: 2026-08-12 (세션 30)_
+_최종 갱신: 2026-08-15 (세션 32, 문서 동기화)_
 
 ---
 
@@ -18,21 +18,23 @@ _최종 갱신: 2026-08-12 (세션 30)_
 
 ## 3. 사용자 & 사용 시나리오
 - 사용자: 개인 투자자(본인). 이 대시보드가 실제 구독 소스의 절반 이상을 커버.
-- 시나리오: 매일 아침, 대시보드 상단 종합의견 + 시장심리 + 핵심종목을 5분 내 훑고 관심 지점만 원문 확인.
+- 시나리오: 장 시작 전과 장 마감 후, 첫 화면을 30초~5분 내 훑고 종합 시황·Peter K 지수·관심 종목 팩트·읽을 원문만 확인.
 
 ## 4. 데이터 파이프라인 (How)
 ```
-매일 KST 08:00 GitHub Actions
+매일 KST 08:00 + 평일 KST 16:30 GitHub Actions
   → scripts/collect-rss.js
-  → 블로그 RSS(rss.blog.naver.com) + 텔레그램 공개채널(t.me/s/) 수집 (오늘+어제 2일)
+  → 블로그 RSS(rss.blog.naver.com) + 텔레그램 공개채널(t.me/s/) 수집
   → 같은 analysis_version으로 이미 분석한 URL은 저장 결과 재사용
   → [개별 분석] Claude Haiku: 글마다 요약·종목·섹터·스탠스·근거·리스크·헤드라인 (JSON)
   → 종목 별칭 정규화(config/stock-aliases.json)
-  → [종합의견] Claude Opus: 그날 전체를 비교 → headline/brief/consensus/divergence/minority/hot_stocks
+  → [김사원] 기존 분석에서 사실·수치·촉매·출처와 데이터 공백을 결정적으로 정리
+  → [이대리·박과장] Claude Haiku 병렬 실행: 필자 의견 비교 / 가격·지수·수급 독립 감사
+  → [최부장] Claude Opus: 세 보고서를 종합 → 기존 종합의견 호환 필드 + 최종 판단·확신도·반론·재검토 조건
   → posts.json (7일 히스토리 누적)
   → git push → Vercel 자동 배포
 ```
-- **모델 배분:** 개별 분석 = Haiku(저렴·다수 호출), 종합의견 = Opus(하루 1회·최고 품질). 의도된 설계.
+- **모델 배분:** 개별 분석·이대리·박과장 = Haiku, 최부장 종합판단 = Opus. 김사원은 기존 분석을 재사용해 별도 AI 호출이 없다.
 - **인물(person) 단위 집계:** 같은 사람이 블로그+텔레그램 양쪽에 있어도 1명으로 카운트(중복 집계 방지). config의 `person` 태그 기준.
 
 ## 5. 소스 (현재 최대 22개)
@@ -43,39 +45,50 @@ _최종 갱신: 2026-08-12 (세션 30)_
 - 같은 운영자의 블로그와 텔레그램이 겹치면 축적성과 원문성이 높은 블로그를 우선한다.
 - `source_role=opinion`만 신규 적중률 이력에 포함하고, 사실 전달 `fact`와 분리 불가능한 `mixed`는 제외한다.
 
-## 6. 대시보드 구성 (상단→하단)
+## 6. 대시보드 구성 (현재 상단→하단)
 | 영역 | 내용 |
 |---|---|
-| 📰 오늘의 브리핑 | 종합의견: headline / brief / 공통 시각 / 엇갈린 시각 / 🔍 소수·역발상 / 함께 주목한 종목 |
-| 📊 시장 심리 | 섹터 분포 도넛 + 강세/약세/중립 비율(인물 단위, 최근 2일) |
-| 🎯 핵심 종목 | 종목별 언급 인물 수 + 강세/약세 비율 + 🔀 의견 갈림 배지 |
-| ⚡ 스파이크 감지 | 전일 대비 급증 종목(인물 수 기준) |
-| 📊 주간 관심 종목 트렌드 | 7일 종목 언급 빈도 막대 |
-| 필터 + 카드 | 날짜/소스/섹터/블로그/정렬 필터, 글 카드(요약·수치·종목·리스크) |
+| 오늘의 종합판단 + Peter K | 주도·리스크·다른 생각과 Peter K Fear & Greed 장기 검증 |
+| 오늘 꼭 읽을 글 | 근거·반대 근거·관심 종목 영향·읽기 행동을 이용한 원문 선별 |
+| 시장 정량 사실 | 삼성전자·SK하이닉스, 국내외 지수, 외국인·기관 수급과 기준일 |
+| 소스 실험 통계 | 표본 보정된 3개월·1년 결과와 통계 한계, 관련 원문 |
+| 상세 시황(접힘) | 종합 논거·어제와의 변화·반도체 펄스·종목 관심 추이 |
+| 전체 글 | 날짜·소스·섹터·블로그·검색·정렬 필터와 24개씩 점진 로딩 |
 
 ## 7. 데이터 스키마 (posts.json)
 ```
 {
-  date, 
-  daily_briefs: [{ date, headline, brief, consensus[], divergence[], minority[], hot_stocks[], post_count, generatedAt }],
+  date,
+  daily_briefs: [{ date, headline, positive[], negative[], minority[], events[], post_count, generatedAt,
+                    research_team: { version, kim, lee, park, choi } }],
+  market, prices, source_scores, mention_history, peter_fear_greed,
   posts: [{ id, date, source(blog|telegram), blog_name, person, title, url,
-            summary, stocks[], sector, key_points[], numbers[], stance, reasoning, risks[] }]
+            summary, stocks[], sector, key_points[], numbers[], stance, reasoning, risks[],
+            source_role, analysis_version, investment_action, why_read }]
 }
 ```
 
 ## 8. 비목표 (Non-goals)
 - 매수/매도 신호 생성 (과거 signal 기능 실패 → 제거됨)
-- 실시간 시세 (일 1회 배치)
+- 실시간 시세(예약 배치만 제공)
 - 비공개 텔레그램/유료 콘텐츠 수집
 
-## 9. 로드맵 (검토 필요)
-- [ ] 종목명 정규화 지속 보강(해외 티커)
-- [ ] 예측 vs 실제 주가 크로스체크 → 소스별 신뢰도 점수 (외부 API 필요, 대형 작업)
-- [ ] 7일 시장심리 추이 차트 (데이터 축적 후)
-- [ ] 블로거 성향 점수(평균 강세/약세)
+## 9. 로드맵 (구현 전 필요성 재확인)
+- [ ] 2026-08-26까지 `itechkorea` 시험 운영 후 중복률·원문 클릭률·추천 채택률 평가
+- [ ] 소스 실험 통계를 반복 의견이 아닌 독립 에피소드 단위로 재정의하고 필요 시 과거 데이터 재분석
+- [ ] Peter K Fear & Greed의 극단 구간 표본과 5·20거래일 결과 장기 관찰
+- [ ] 피드백이 충분히 쌓인 뒤 기기 간 동기화와 추천 반영 필요성 검토
+- [ ] 안정적인 원출처가 확보될 때만 환율·미국 10년물·DRAM/NAND·컨센서스·DART 일정 추가
+- [ ] 해외 티커 종목명 정규화 지속 보강
+
+### 별도 범위
+- n8n·Supabase 전환은 형제 폴더 `n8nversion`에서 별도 실험한다.
+- 이 저장소는 검증된 GitHub Actions·Vercel 운영 버전으로 유지하고, n8n 실험이 안정화되기 전에는 자동화를 교체하지 않는다.
 
 ## 10. 알려진 리스크·한계
 - 에코챔버: 다수가 같은 종목·시각에 쏠릴 수 있음 → 소수의견/의견갈림 배지로 완화
 - 텔레그램은 공개 채널만, 채널 비공개 전환 시 수집 중단
 - Haiku 개별 분석은 짧은 글에서 부정확할 수 있음(제목 기반 분류)
+- 읽음·피드백은 브라우저 localStorage에만 있어 PC와 모바일 간 동기화되지 않음
+- 소스 실험 통계는 반복 의견·AI 방향 판정·단일 벤치마크의 영향을 받으므로 매매 판단 근거가 아님
 - git index.lock 충돌 → unlock_and_commit.bat / del .git\index.lock

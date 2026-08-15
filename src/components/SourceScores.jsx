@@ -40,6 +40,8 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
   if (sources.length === 0 || windows.length === 0) return null;
 
   const min = scores.minSample;
+  const coverage = scores.coverage;
+  const backfill = scores.backfill;
   const first = windows[0];
   const last = windows[windows.length - 1];
   const allPending = sources.every((source) => windows.every((window) => (source.w?.[window.n]?.total ?? 0) === 0));
@@ -55,8 +57,15 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
 
       {!compact && (
         <div className="ss-lead">
-          필자가 밝힌 강세·약세 의견이 이후 지수보다 맞았는지를 비교합니다.
+          필자가 밝힌 강세·약세 의견을 게시 다음 거래일부터 시장 지수와 비교합니다.
           <b> 현재 글의 성공을 보장하는 점수나 매매 추천은 아닙니다.</b>
+          {coverage && (
+            <small className="ss-coverage">
+              검증 이력 {coverage.historyStart}~{coverage.historyEnd} · 직접 의견 {coverage.eligibleMentions}건 → 독립 에피소드 {coverage.independentEpisodes}건
+              {coverage.repeatedMentionsExcluded > 0 ? ` · 반복 ${coverage.repeatedMentionsExcluded}건 제외` : ''}
+              {backfill?.status === 'partial' ? ` · 원문 재분석 일부 실패 ${backfill.failed}건` : ''}
+            </small>
+          )}
         </div>
       )}
 
@@ -136,11 +145,11 @@ export default function SourceScores({ scores, posts = [], onSourceClick, onPost
       </details>
 
       {compact ? (
-        <div className="ss-note">실험 통계입니다. 반복 의견·AI 방향 판정·국내 종목의 KOSPI 단일 벤치마크 영향을 포함하며, 예측력이나 매매 성과를 뜻하지 않습니다.</div>
+        <div className="ss-note">실험 통계입니다. 반복 의견은 7일 에피소드로 합치고 게시 다음 거래일부터 지수 대비 성과를 판정하며, 예측력이나 매매 성과를 뜻하지 않습니다.</div>
       ) : (
         <div className="ss-note">
           <b>보정점수</b>는 적중률과 표본 수를 함께 반영한 윌슨 하한입니다. 종합은 {first.label} 40%와 {last.label} 60%를 합산하며,
-          표본 {min}건 미만은 순위 계산에서 제외합니다. 원래 적중률과 판정 건수는 카드와 전체 성적표에서 함께 확인할 수 있습니다.
+          표본 {min}건 미만은 순위 계산에서 제외합니다. 같은 인물·종목·방향의 7일 이내 반복은 한 에피소드로 묶으며, 원래 적중률과 판정 건수는 카드와 전체 성적표에서 함께 확인할 수 있습니다.
         </div>
       )}
     </section>

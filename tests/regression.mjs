@@ -3,7 +3,7 @@
 // 목적: 네이버/텔레그램 비공식 파싱과 JSON 처리 로직이 수정 중 깨지는 것을 즉시 감지.
 import { parseJSONLoose, stripHtml, parseTelegramMessages, pctChange, classifyTelegramHealth, fetchClosesDated, activeTelegramChannels, isOpinionEligible, isArchivedOpinionEligible, canReuseAnalysis, buildBriefInputHash, shouldReuseDailyBrief, resolveTelegramSourceUrl, ANALYSIS_SCHEMA_VERSION } from '../scripts/collect-rss.js';
 import { judgeOne, runCritic } from '../scripts/judge.js';
-import { computeSourceScores } from '../scripts/hitrate.js';
+import { computeSourceScores, HITRATE_SCHEMA_VERSION } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
 import { buildPeterFearGreed, buildPeterBacktest, mergePeterHistory } from '../shared/peter-fear-greed.js';
@@ -19,12 +19,16 @@ import { buildSemiconductorPulse } from '../src/utils/semiconductor-pulse.js';
 import { buildHomeBrief } from '../src/utils/personal-home.js';
 import { feedbackKey, updateFeedback, feedbackCounts, savedForLater } from '../src/utils/feedback.js';
 import { buildMarketFacts } from '../src/utils/market-facts.js';
+import { RESEARCH_TEAM_VERSION, buildKimReport, normalizeLeeReport, normalizeParkReport, normalizeChoiBrief } from '../scripts/lib/research-team.js';
 import { readFileSync } from 'node:fs';
 
 const blogsConfig = JSON.parse(readFileSync(new URL('../config/blogs.json', import.meta.url), 'utf8'));
 const telegramConfig = JSON.parse(readFileSync(new URL('../config/telegram-channels.json', import.meta.url), 'utf8'));
 const currentPosts = JSON.parse(readFileSync(new URL('../public/data/posts.json', import.meta.url), 'utf8'));
 const collectWorkflowSource = readFileSync(new URL('../.github/workflows/collect.yml', import.meta.url), 'utf8');
+const backfillWorkflowSource = readFileSync(new URL('../.github/workflows/backfill-source-history.yml', import.meta.url), 'utf8');
+const sourceBackfillSource = readFileSync(new URL('../scripts/backfill-source-history.js', import.meta.url), 'utf8');
+const sourceRefreshWorkflow = readFileSync(new URL('../.github/workflows/refresh-source-scores.yml', import.meta.url), 'utf8');
 
 let pass = 0, fail = 0;
 function eq(name, got, want) {
@@ -238,7 +242,7 @@ eq('C-K6 중복 티커(2번째부터 차단)', runCritic([ok, { ...ok }]).blocke
 
 console.log('── 소스 적중률 골든 케이스 (hitrate.js, 지수 대비 초과수익) ──');
 // 6거래일 D0..D5. D0 의견만 5일창(=D5) 판정됨. D0 전 종목·지수 100, D5에서 변동.
-const D = ['2026-01-02', '2026-01-03', '2026-01-06', '2026-01-07', '2026-01-08', '2026-01-09'];
+const D = ['2026-01-02', '2026-01-05', '2026-01-06', '2026-01-07', '2026-01-08', '2026-01-09'];
 const p100 = {};
 ['S1','S2','S3','S4','S5','U1','U2','U3','U4','U5','V1','V2','V3','V4','V5','W1','W2'].forEach(s => (p100[s] = 100));
 const op = (person, stock, stance, market) => ({
@@ -257,10 +261,10 @@ const hist = {
       { person: '구형스키마', stock: 'S1', stance: '강세', market: 'KR' },         // 분석 버전·역할 없음 → 제외
     ],
   },
-  [D[1]]: { prices: {}, indices: {}, opinions: [] },
-  [D[2]]: { prices: {}, indices: {}, opinions: [] },
-  [D[3]]: { prices: {}, indices: {}, opinions: [] },
-  [D[4]]: { prices: {}, indices: {}, opinions: [] },
+  [D[1]]: { prices: p100, indices: { KOSPI: 100, NASDAQ: 100 }, opinions: [] },
+  [D[2]]: { prices: {}, indices: { KOSPI: 100, NASDAQ: 100 }, opinions: [] },
+  [D[3]]: { prices: {}, indices: { KOSPI: 100, NASDAQ: 100 }, opinions: [] },
+  [D[4]]: { prices: {}, indices: { KOSPI: 100, NASDAQ: 100 }, opinions: [] },
   [D[5]]: {
     prices: {
       S1: 130, S2: 130, S3: 130, S4: 105, S5: 90,   // KOSPI +10% 대비: S1~3 적중, S4·S5 미적중 → 3/5
@@ -288,6 +292,28 @@ eq('HR9 기본창 프로덕션값 [63,252](3개월·1년)', computeSourceScores(
 eq('HR10 기본창 라벨(3개월·1년)', computeSourceScores(hist).windows.map((w) => w.label), ['3개월', '1년']);
 eq('HR11 기본 minSample=20(랭킹 신뢰용)', computeSourceScores(hist).minSample, 20);
 eq('HR12 구형 분석 스키마 의견은 적중률에서 제외', S('구형스키마'), undefined);
+
+const tradingHistory = {
+  '2026-01-02': { prices: { A: 100 }, indices: { KOSPI: 100 }, opinions: [{ person: '거래일', stock: 'A', stance: '강세', market: 'KR', source_role: 'opinion', hitrate_version: HITRATE_SCHEMA_VERSION }] },
+  '2026-01-03': { prices: {}, indices: {}, opinions: [] }, // 토요일은 창 길이에 포함되면 안 됨
+  '2026-01-05': { prices: { A: 101 }, indices: { KOSPI: 100 }, opinions: [] },
+  '2026-01-06': { prices: { A: 102 }, indices: { KOSPI: 100 }, opinions: [] },
+};
+const tradingScore = computeSourceScores(tradingHistory, [2], 1);
+eq('HR13 달력 날짜가 아닌 실제 시장 거래일 T+2로 판정', tradingScore.sources[0].w[2], { hits: 1, total: 1, rate: 100 });
+
+const episodeHistory = {
+  '2026-01-02': { prices: { A: 100 }, indices: { KOSPI: 100 }, opinions: [{ person: '반복러', stock: 'A', stance: '강세', market: 'KR', source_role: 'opinion', hitrate_version: HITRATE_SCHEMA_VERSION }] },
+  '2026-01-05': { prices: { A: 101 }, indices: { KOSPI: 100 }, opinions: [{ person: '반복러', stock: 'A', stance: '강세', market: 'KR', source_role: 'opinion', hitrate_version: HITRATE_SCHEMA_VERSION }] },
+  '2026-01-06': { prices: { A: 102 }, indices: { KOSPI: 100 }, opinions: [{ person: '반복러', stock: 'A', stance: '강세', market: 'KR', source_role: 'opinion', hitrate_version: HITRATE_SCHEMA_VERSION }] },
+  '2026-01-07': { prices: { A: 103 }, indices: { KOSPI: 100 }, opinions: [] },
+};
+const episodeScore = computeSourceScores(episodeHistory, [1], 1);
+eq('HR14 연속 반복 언급은 독립 에피소드 하나로 계산', episodeScore.sources[0].opinions, 1);
+eq('HR15 반복 언급 제외 수와 커버리지를 공개', episodeScore.coverage, {
+  historyStart: '2026-01-02', historyEnd: '2026-01-07', eligibleMentions: 3,
+  independentEpisodes: 1, repeatedMentionsExcluded: 2,
+});
 
 console.log('── 소스 신뢰 순위·관련글 ──');
 eq('SR1 윌슨 보정은 작은 표본 과대평가 방지',
@@ -517,6 +543,10 @@ eq('SRC8b 과거 이력도 현재 스키마의 직접 의견만 유지', [
 eq('SRC9 현재 분석 스키마 글은 Claude 재호출 없이 재사용', canReuseAnalysis({ analysis_version: ANALYSIS_SCHEMA_VERSION }), true);
 eq('SRC10 구버전 분석은 새 기준으로 한 번 갱신', canReuseAnalysis({ analysis_version: ANALYSIS_SCHEMA_VERSION - 1 }), false);
 eq('SRC11 소스 증가 후에도 31건 분석을 완주할 실행 여유 확보', /timeout-minutes:\s*20/.test(collectWorkflowSource), true);
+eq('SRC12 2년 적중률 백필은 수동 전용 장시간 작업', backfillWorkflowSource.includes('workflow_dispatch') && /timeout-minutes:\s*360/.test(backfillWorkflowSource), true);
+eq('SRC13 백필은 재개 캐시와 결과 검증 후 데이터만 커밋', backfillWorkflowSource.includes('source-history-v1') && backfillWorkflowSource.includes('npm run build') && backfillWorkflowSource.includes('source-history-audit.json'), true);
+eq('SRC14 고빈도 텔레그램은 인물별 하루 원문 묶음으로 분석', sourceBackfillSource.includes('groupTelegramBySourceDay') && sourceBackfillSource.includes('telegramSourceDays'), true);
+eq('SRC15 적중률 가격은 AI 없이 매주 자동 갱신', sourceRefreshWorkflow.includes("cron: '0 18 * * 6'") && sourceRefreshWorkflow.includes('refresh-source-scores.js'), true);
 
 console.log('── 일일 종합판단 캐시 무효화 ──');
 const briefHashA = buildBriefInputHash([
@@ -662,6 +692,33 @@ eq('HOME3 새로 부각된 주제를 언급 수 순으로 표시', homeBrief.cha
 eq('HOME4 전일 리포트가 없으면 비교 데이터 부족', buildHomeBrief(homeBriefs.slice(0, 1)).comparisonStatus, '비교 데이터 부족');
 eq('HOME5 변동 주제가 없으면 중대한 변화 없음', buildHomeBrief([homeBriefs[1], homeBriefs[1]]).comparisonStatus, '중대한 변화 없음');
 
+console.log('── 4역할 투자 리서치팀 ──');
+const teamPosts = [
+  { id: 'team-1', date: '2026-08-14', person: '필자A', blog_name: 'A블로그', source: 'blog', title: 'HBM 공급 확대', url: 'https://example.com/team-1', summary: 'HBM 공급이 확대된다는 주장', reasoning: '신규 공급 계약', sector: '반도체', stance: '강세', source_role: 'opinion', evidence_grade: 'B', novelty: 2, numbers: ['공급 20% 증가'] },
+  { id: 'team-2', date: '2026-08-14', person: '필자B', blog_name: 'B채널', source: 'telegram', title: '외국인 수급 집계', url: 'https://example.com/team-2', summary: '외국인 순매도 사실 전달', reasoning: '', sector: '거시경제', stance: '중립', source_role: 'fact', evidence_grade: 'A', novelty: 1, numbers: ['순매도 1,000억원'] },
+];
+const kimReport = buildKimReport(teamPosts);
+eq('TEAM1 김사원은 원문과 사실·의견 경계를 보존', [kimReport.post_count, kimReport.source_count, kimReport.opinion_count, kimReport.fact_count, kimReport.key_evidence[0].url], [2, 2, 1, 1, 'https://example.com/team-2']);
+eq('TEAM2 김사원은 데이터 공백을 숨기지 않음', kimReport.data_gaps.some((item) => item.includes('핵심 근거 없음')), true);
+const leeReport = normalizeLeeReport({ consensus: ['HBM 수요 강세'], conflicts: '잘못된 타입', minority: ['공급 과잉 우려', 3], questions: ['계약 규모 확인'] });
+eq('TEAM3 이대리 응답은 허용 배열만 보존', leeReport, { consensus: ['HBM 수요 강세'], conflicts: [], minority: ['공급 과잉 우려'], questions: ['계약 규모 확인'] });
+const parkReport = normalizeParkReport({ verified: ['지수 5일 상승'], contradictions: ['여론과 수급 역행'], risks: ['밸류에이션'], data_gaps: ['환율 부재'], decision: '매수' });
+eq('TEAM4 박과장 응답은 검증·반론만 보존', parkReport, { verified: ['지수 5일 상승'], contradictions: ['여론과 수급 역행'], risks: ['밸류에이션'], data_gaps: ['환율 부재'] });
+const choiBrief = normalizeChoiBrief({
+  headline: '강세 의견 우세, 수급 확인 필요',
+  positive: [{ sector: '반도체', items: [{ name: 'SK하이닉스', point: 'HBM 수요', mentions: '3' }] }],
+  negative: [], minority: ['공급 과잉 우려'], events: [],
+  choi: { decision: '강세 우세', confidence: '매우 높음', summary: '긍정적이지만 확인이 필요하다.', reasons: ['수요 증가'], counter_case: '수급 악화', watch_items: ['외국인 수급'], invalidation_conditions: ['실적 전망 하향'] },
+});
+eq('TEAM5 최부장은 매매신호 대신 제한된 판단·확신도를 사용', [choiBrief.choi.decision, choiBrief.choi.confidence], ['긍정 우세', '낮음']);
+eq('TEAM6 기존 종합의견 스키마를 함께 보존', [choiBrief.positive[0].items[0].mentions, choiBrief.minority], [3, ['공급 과잉 우려']]);
+eq('TEAM7 리서치팀 버전을 캐시 키에 포함', Number.isInteger(RESEARCH_TEAM_VERSION) && RESEARCH_TEAM_VERSION > 0, true);
+eq('TEAM8 빈 역할 응답은 보수적인 기본값으로 저장', [normalizeLeeReport(null), normalizeParkReport('오류'), normalizeChoiBrief(null).choi], [
+  { consensus: [], conflicts: [], minority: [], questions: [] },
+  { verified: [], contradictions: [], risks: [], data_gaps: [] },
+  { decision: '판단 유보', confidence: '낮음', summary: '', reasons: [], counter_case: '', watch_items: [], invalidation_conditions: [] },
+]);
+
 console.log('── 개인 피드백 루프 ──');
 const feedbackPost = { id: 'feedback-1', title: 'HBM 신규 수주', url: 'https://example.com/feedback-1', person: '신뢰A', sector: '반도체', stocks: ['삼성전자'], date: '2026-08-12' };
 const usefulFeedback = updateFeedback({}, feedbackPost, 'useful', '2026-08-12T01:00:00.000Z');
@@ -683,6 +740,7 @@ const homeSource = readFileSync(new URL('../src/components/PersonalHome.jsx', im
 const sourceScoreSource = readFileSync(new URL('../src/components/SourceScores.jsx', import.meta.url), 'utf8');
 const marketFactsSource = readFileSync(new URL('../src/components/MarketFacts.jsx', import.meta.url), 'utf8');
 const decisionCockpitSource = readFileSync(new URL('../src/components/DecisionCockpit.jsx', import.meta.url), 'utf8');
+const researchTeamSource = readFileSync(new URL('../src/components/ResearchTeamReport.jsx', import.meta.url), 'utf8');
 const appCssSource = readFileSync(new URL('../src/App.css', import.meta.url), 'utf8');
 eq('IA1 메인 메뉴는 오늘과 전체 글만 유지', [...appSource.matchAll(/\{ id: "([^"]+)", label:/g)].map((match) => match[1]), ['home', 'posts']);
 eq('IA2 아이디어·소스 독립 화면 제거', ['ideas', 'sources'].some((view) => appSource.includes(`activeView === "${view}"`)), false);
@@ -699,6 +757,9 @@ eq('IA12 원문 선별 다음에 의견과 분리된 시장 팩트 보드 배치
   homeSource.indexOf('<DecisionCockpit') < homeSource.indexOf('<MarketFacts') && marketFactsSource.includes('객관 데이터'), true);
 eq('IA13 시장 수급은 원본 억원 단위를 다시 나누지 않음', marketFactsSource.includes('Math.round(value).toLocaleString') && !marketFactsSource.includes('100_000_000'), true);
 eq('IA14 소스 성적을 실험 통계로 명확히 표시', sourceScoreSource.includes('소스 실험 통계'), true);
+eq('IA14b 적중률의 다음 거래일·에피소드 커버리지를 화면에 공개', sourceScoreSource.includes('게시 다음 거래일') && sourceScoreSource.includes('독립 에피소드'), true);
+eq('IA15 첫 화면은 최부장 종합판단과 확신도를 표시', homeSource.includes('최부장 종합판단') && homeSource.includes('brief.choi?.confidence'), true);
+eq('IA16 상세 영역에서 4역할 보고서를 확인', homeSource.includes('<ResearchTeamReport') && ['김사원', '이대리', '박과장', '최부장'].every((name) => researchTeamSource.includes(name)), true);
 
 console.log(`\n결과: ${pass} 통과 / ${fail} 실패`);
 process.exit(fail > 0 ? 1 : 0);

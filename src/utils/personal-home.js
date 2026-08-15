@@ -27,7 +27,7 @@ export function buildHomeBrief(briefs) {
   if (!latest) {
     return {
       headline: '오늘 종합 리포트가 아직 없습니다.', positive: null, risk: null,
-      minority: '', changes: [], comparisonStatus: '비교 데이터 부족', date: '',
+      minority: '', choi: null, changes: [], comparisonStatus: '비교 데이터 부족', date: '',
     };
   }
 
@@ -49,6 +49,7 @@ export function buildHomeBrief(briefs) {
     positive: strongest(current.filter((item) => item.stance === '강세')),
     risk: strongest(current.filter((item) => item.stance === '약세')),
     minority: latest.minority?.[0] ?? '',
+    choi: latest.research_team?.choi ?? latest.choi ?? null,
     changes,
     comparisonStatus: list[1] ? (changes.length ? '변화 감지' : '중대한 변화 없음') : '비교 데이터 부족',
     date: latest.date ?? '',

@@ -6,6 +6,7 @@ import SemiconductorPulse from './SemiconductorPulse';
 import AttentionTrends from './AttentionTrends';
 import SourceScores from './SourceScores';
 import MarketFacts from './MarketFacts';
+import ResearchTeamReport from './ResearchTeamReport';
 import { buildHomeBrief } from '../utils/personal-home';
 
 function SignalLine({ label, item, variant }) {
@@ -32,10 +33,12 @@ export default function PersonalHome({ data, posts, peterFearGreed, onStockClick
           <div className="home-hero-head">
             <div>
               <span className="home-kicker">My Daily Brief · {brief.date || data?.date}</span>
-              <h2 id="home-brief-title">오늘의 종합판단</h2>
+              <h2 id="home-brief-title">최부장 종합판단</h2>
             </div>
+            {brief.choi?.confidence && <span className="home-choi-confidence">확신도 {brief.choi.confidence}</span>}
           </div>
           <p className="home-headline">{brief.headline}</p>
+          {brief.choi?.summary && <p className="home-choi-summary">{brief.choi.summary}</p>}
           <div className="home-signal-grid">
             <SignalLine label="주도" item={brief.positive} variant="positive" />
             <SignalLine label="리스크" item={brief.risk} variant="risk" />
@@ -82,6 +85,8 @@ export default function PersonalHome({ data, posts, peterFearGreed, onStockClick
           <small>종합 논거 · 어제와의 변화 · 반도체 펄스 · 종목 관심 추이</small>
         </summary>
         <div className="home-market-details-body">
+          <ResearchTeamReport brief={(data?.daily_briefs ?? [data?.daily_brief])?.[0]} />
+
           <DailyBrief
             briefs={data?.daily_briefs ?? data?.daily_brief}
             posts={posts}
