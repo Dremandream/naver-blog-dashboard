@@ -6,6 +6,7 @@ import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores, HITRATE_SCHEMA_VERSION } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
+import { buildHistoricalRepairPrompt, requestHistoricalJSON } from '../scripts/lib/historical-analysis.js';
 import { buildPeterFearGreed, buildPeterBacktest, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../src/utils/decision-dashboard.js';
@@ -59,6 +60,21 @@ eq('UI4 전체보다 큰 한도는 전체 표시', visibleItems([1, 2, 3], 24), 
 console.log('── 수집기 파서 모듈 경계 ──');
 eq('M1 JSON 파서 모듈 공개', parseJSONLooseModule('{"ok":true}').ok, true);
 eq('M2 HTML 파서 모듈 공개', stripHtmlModule('a<br>b'), 'a\nb');
+const historicalCalls = [];
+const historicalClient = { messages: { create: async (request) => {
+  historicalCalls.push(request);
+  return historicalCalls.length === 1
+    ? { content: [{ type: 'text', text: '{"source_role":"opinion","opinions":[{"stock":"삼성전자"' }] }
+    : { content: [{ type: 'text', text: '{"source_role":"opinion","evidence_grade":"B","opinions":[{"stock":"삼성전자","stance":"강세"}]}' }] };
+} } };
+const repairedHistorical = await requestHistoricalJSON(historicalClient, '원문 분석', { wait: async () => {} });
+eq('M3 잘린 과거분석 JSON은 복구 요청 후 재시도', [historicalCalls.length, repairedHistorical.opinions.length], [2, 1]);
+eq('M4 복구 요청은 출력 여유를 늘리고 불완전 의견 추측을 금지', [
+  historicalCalls[0].max_tokens,
+  historicalCalls[1].max_tokens,
+  historicalCalls[1].messages[0].content.includes('추측해서 채우지 말고 제거'),
+  buildHistoricalRepairPrompt('broken').includes('broken'),
+], [900, 1800, true, true]);
 
 console.log('── 피터케이 Fear & Greed ──');
 const peterPosts = [

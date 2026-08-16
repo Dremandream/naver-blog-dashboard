@@ -12,7 +12,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
-import { parseJSONLoose } from './lib/parsers.js';
+import { requestHistoricalJSON } from './lib/historical-analysis.js';
 import {
   parseTelegramMessages, resolveStockCode, fetchClosesDated,
   fetchIndexClosesDated, fetchForeignIndexClosesDated,
@@ -211,23 +211,12 @@ function groupTelegramBySourceDay(items) {
 
 async function analyzeHistorical(client, item, content) {
   const prompt = `투자 글의 작성자 직접 의견만 적중률 검증용으로 추출하세요. 전달한 뉴스·공시·리포트의 결론을 작성자 의견으로 바꾸지 마세요. 종목마다 방향이 다르면 따로 적으세요. 글에 없는 종목이나 방향을 만들지 마세요.\n\n작성자: ${item.person}\n제목: ${item.title}\n본문: ${content.slice(0, 12000)}\n\nJSON만 출력:\n{"source_role":"opinion|fact|mixed","evidence_grade":"A|B|C|D|F","evidence_reason":"짧은 근거","opinions":[{"stock":"정식 종목명","stance":"강세|약세","reason":"작성자의 직접 주장 근거"}]}\n직접 방향성 의견이 확실하지 않으면 opinions는 빈 배열입니다.`;
-  for (let attempt = 1; attempt <= 5; attempt++) {
-    try {
-      const response = await client.messages.create({
-        model: 'claude-haiku-4-5-20251001', max_tokens: 900,
-        messages: [{ role: 'user', content: prompt }],
-      });
-      const result = parseJSONLoose(response.content[0].text);
-      const sourceRole = ['opinion', 'fact', 'mixed'].includes(result.source_role) ? result.source_role : 'mixed';
-      const opinions = sourceRole !== 'fact' && Array.isArray(result.opinions) ? result.opinions
-        .filter((op) => op && ['강세', '약세'].includes(op.stance) && typeof op.stock === 'string')
-        .map((op) => ({ stock: ALIASES[op.stock.trim()] || op.stock.trim(), stance: op.stance, reason: String(op.reason || '').slice(0, 300) })) : [];
-      return { source_role: sourceRole, evidence_grade: /^[A-F]$/.test(result.evidence_grade) ? result.evidence_grade : 'D', evidence_reason: String(result.evidence_reason || '').slice(0, 300), opinions };
-    } catch (error) {
-      if (attempt === 5) throw error;
-      await sleep(Math.min(1000 * 2 ** (attempt - 1), 16000));
-    }
-  }
+  const result = await requestHistoricalJSON(client, prompt);
+  const sourceRole = ['opinion', 'fact', 'mixed'].includes(result.source_role) ? result.source_role : 'mixed';
+  const opinions = sourceRole !== 'fact' && Array.isArray(result.opinions) ? result.opinions
+    .filter((op) => op && ['강세', '약세'].includes(op.stance) && typeof op.stock === 'string')
+    .map((op) => ({ stock: ALIASES[op.stock.trim()] || op.stock.trim(), stance: op.stance, reason: String(op.reason || '').slice(0, 300) })) : [];
+  return { source_role: sourceRole, evidence_grade: /^[A-F]$/.test(result.evidence_grade) ? result.evidence_grade : 'D', evidence_reason: String(result.evidence_reason || '').slice(0, 300), opinions };
 }
 
 console.log(`소스 이력 ${AUDIT ? '감사' : '적용'}: ${cutoffDate}~${today}`);
