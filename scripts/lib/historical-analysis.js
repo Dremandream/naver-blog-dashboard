@@ -11,6 +11,13 @@ export function buildHistoricalRepairPrompt(raw) {
 ${String(raw).slice(0, 12000)}`;
 }
 
+export function assertHistoricalBatchComplete(failed) {
+  const count = Number(failed) || 0;
+  if (count > 0) {
+    throw new Error(`Claude 과거분석 ${count}건이 실패했습니다. 부분 데이터를 배포하지 않고 다음 실행에서 실패분만 재시도합니다.`);
+  }
+}
+
 export async function requestHistoricalJSON(client, prompt, options = {}) {
   const maxAttempts = options.maxAttempts || 5;
   const wait = options.wait || ((ms) => new Promise((resolve) => setTimeout(resolve, ms)));

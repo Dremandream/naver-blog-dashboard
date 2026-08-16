@@ -12,7 +12,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
-import { requestHistoricalJSON } from './lib/historical-analysis.js';
+import { assertHistoricalBatchComplete, requestHistoricalJSON } from './lib/historical-analysis.js';
 import {
   parseTelegramMessages, resolveStockCode, fetchClosesDated,
   fetchIndexClosesDated, fetchForeignIndexClosesDated,
@@ -267,6 +267,7 @@ await pool(missing, 3, async (item) => {
   }
 });
 writeJSON(CACHE_PATH, cache);
+assertHistoricalBatchComplete(failed);
 
 const opinionRows = [];
 for (const item of allItems) {
