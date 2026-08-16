@@ -13,6 +13,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
 import { assertHistoricalBatchComplete, requestHistoricalJSON } from './lib/historical-analysis.js';
+import { assertNoTransientSourceFailures, fetchTextWithRetry } from './lib/network.js';
 import {
   parseTelegramMessages, resolveStockCode, fetchClosesDated,
   fetchIndexClosesDated, fetchForeignIndexClosesDated,
@@ -55,16 +56,7 @@ function writeJSON(file, value, pretty = false) {
 }
 
 async function get(url, referer = '') {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 20000);
-  try {
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'Mozilla/5.0', ...(referer ? { Referer: referer } : {}) },
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return await response.text();
-  } finally { clearTimeout(timer); }
+  return fetchTextWithRetry(url, { referer });
 }
 
 function kstDate(offset = 0) {
@@ -240,6 +232,7 @@ if (AUDIT) {
   console.log(JSON.stringify(auditReport, null, 2));
   process.exit(0);
 }
+assertNoTransientSourceFailures(auditReport.sources);
 if (!process.env.CLAUDE_API_KEY) throw new Error('CLAUDE_API_KEY가 필요합니다. GitHub Actions Secrets에서 실행하세요.');
 
 const cache = readJSON(CACHE_PATH, {});

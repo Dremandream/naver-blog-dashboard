@@ -7,6 +7,7 @@ import { computeSourceScores, HITRATE_SCHEMA_VERSION } from '../scripts/hitrate.
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
 import { assertHistoricalBatchComplete, buildHistoricalRepairPrompt, requestHistoricalJSON } from '../scripts/lib/historical-analysis.js';
+import { assertNoTransientSourceFailures, fetchTextWithRetry } from '../scripts/lib/network.js';
 import { buildPeterFearGreed, buildPeterBacktest, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
 import { buildOpinionConflicts, buildWatchlistBrief, getSessionLabel, selectNewIdeas } from '../src/utils/decision-dashboard.js';
@@ -81,6 +82,21 @@ try {
   eq('M5 과거분석 실패가 남으면 partial 데이터 배포 차단', 'no-throw', 'throw');
 } catch (error) {
   eq('M5 과거분석 실패가 남으면 partial 데이터 배포 차단', error.message.includes('부분 데이터를 배포하지 않고'), true);
+}
+let networkAttempts = 0;
+const retriedText = await fetchTextWithRetry('https://example.test', {
+  retries: 2,
+  wait: async () => {},
+  fetchImpl: async () => (++networkAttempts === 1
+    ? { ok: false, status: 500, text: async () => '' }
+    : { ok: true, status: 200, text: async () => '복구' }),
+});
+eq('M6 과거 원문 HTTP 5xx는 지수 백오프 재시도', [networkAttempts, retriedText], [2, '복구']);
+try {
+  assertNoTransientSourceFailures([{ person: '펭미업', error: 'HTTP 500' }]);
+  eq('M7 지속된 원문 HTTP 오류는 partial 데이터 배포 차단', 'no-throw', 'throw');
+} catch (error) {
+  eq('M7 지속된 원문 HTTP 오류는 partial 데이터 배포 차단', error.message.includes('부분 데이터를 배포하지 않고'), true);
 }
 
 console.log('── 피터케이 Fear & Greed ──');
