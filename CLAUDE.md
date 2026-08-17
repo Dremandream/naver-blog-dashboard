@@ -7,6 +7,7 @@
 - 작업 경로: `C:\Users\simin\Claude\Projects\블로그 글 자동화 프로젝트\_codex-objective-data`
 - 명칭: **GitHub 버전** 또는 **Vercel 버전**
 - 라이브: https://naver-blog-dashboard.vercel.app
+- 정식 릴리스: `v1.0.0` (2026-08-17 동결). 예약 데이터 갱신은 릴리스 이후에도 계속된다.
 - 목적: 블로그·텔레그램의 투자 글을 수집·비교해 종합 시황과 읽을 가치가 높은 원문을 선별한다.
 - 비목표: 매수·매도 추천, 실시간 시세, 유료·비공개 콘텐츠 수집
 - 별도 실험: `..\n8nversion`은 이 저장소와 독립적으로 설계하며 명시적 요청 없이 수정하지 않는다.
@@ -20,6 +21,7 @@
 - 자동화: GitHub Actions — 매일 KST 08:00, 평일 KST 16:30
 - 화면: React/Vite → Vercel 자동 배포
 - 데이터: 최근 7일 글, 장기 적중률 이력, Peter K 장기 이력
+- 검증 기준선: 회귀 테스트 216개, Vite 프로덕션 빌드 55 modules
 
 ## 핵심 파일
 
