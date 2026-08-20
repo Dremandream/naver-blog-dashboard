@@ -1744,32 +1744,32 @@
   ],
   "market": {
     "kospi": {
-      "index": 6471.17,
-      "asOf": "20260819",
-      "d1": -5.8,
-      "d5": 2,
-      "d20": -4.1,
+      "index": 6852.58,
+      "asOf": "20260820",
+      "d1": 5.9,
+      "d5": 4.2,
+      "d20": 0.8,
       "flows": {
-        "date": "26.08.19",
-        "individual": 46357,
-        "foreign": -34726,
-        "institution": -13390,
-        "foreign5d": 46031
+        "date": "26.08.20",
+        "individual": -22712,
+        "foreign": 17079,
+        "institution": -4906,
+        "foreign5d": 34756
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 824.46,
-      "asOf": "20260819",
-      "d1": -1.2,
-      "d5": -3.9,
-      "d20": 9.4,
+      "index": 840.89,
+      "asOf": "20260820",
+      "d1": 2,
+      "d5": -2.1,
+      "d20": 12,
       "flows": {
-        "date": "26.08.19",
-        "individual": -664,
-        "foreign": 147,
-        "institution": 500,
-        "foreign5d": -3131
+        "date": "26.08.20",
+        "individual": 6,
+        "foreign": -1277,
+        "institution": 1125,
+        "foreign5d": -2785
       },
       "dataSource": "naver"
     },
@@ -1856,11 +1856,11 @@
     },
     "키옥시아": {
       "market": "US",
-      "price": 49950,
-      "asOf": "20260819",
-      "d1": -12.6,
-      "d5": 0.2,
-      "d20": -18.2,
+      "price": 52950,
+      "asOf": "20260820",
+      "d1": 6,
+      "d5": 2.2,
+      "d20": -17.6,
       "investor": null
     },
     "Nebius Group": {
@@ -2069,7 +2069,7 @@
   },
   "verdicts": {
     "date": "2026-08-20",
-    "generatedAt": "2026-08-19T23:11:19.470Z",
+    "generatedAt": "2026-08-20T08:06:27.608Z",
     "items": [
       {
         "ticker": "SK하이닉스",
@@ -2205,7 +2205,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-08-19",
+    "asOf": "2026-08-20",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -2222,7 +2222,7 @@
     ],
     "coverage": {
       "historyStart": "2024-08-16",
-      "historyEnd": "2026-08-19",
+      "historyEnd": "2026-08-20",
       "eligibleMentions": 6754,
       "independentEpisodes": 5481,
       "repeatedMentionsExcluded": 1273
@@ -17214,6 +17214,11 @@
           "stance": "강세"
         }
       ]
+    },
+    "2026-08-20": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
     }
   },
   "peter_fear_greed": {
@@ -17378,6 +17383,80 @@
     }
   },
   "posts": [
+    {
+      "id": "pengmeup_2026-08-19_30940",
+      "date": "2026-08-19",
+      "source": "telegram",
+      "blog_name": "펭미업",
+      "person": "펭미업",
+      "title": "SK하이닉스 3.3% 자사주 매입 결정, 향후 배당 60조 예상 (9건)",
+      "url": "https://t.me/pengmeup/30947",
+      "source_urls": [
+        "https://t.me/pengmeup/30957",
+        "https://t.me/pengmeup/30958",
+        "https://t.me/pengmeup/30960",
+        "https://t.me/pengmeup/30961",
+        "https://t.me/pengmeup/30968",
+        "https://t.me/pengmeup/30969",
+        "https://t.me/pengmeup/30970",
+        "https://t.me/pengmeup/30971",
+        "https://t.me/pengmeup/30974",
+        "https://t.me/pengmeup/30975",
+        "https://t.me/pengmeup/30976",
+        "https://t.me/pengmeup/30977",
+        "https://t.me/pengmeup/30978",
+        "https://t.me/pengmeup/30979"
+      ],
+      "collection_key": "telegram:pengmeup:2026-08-19",
+      "summary": "SK하이닉스가 2026년 8월 19일 24,070,000주(시총 3.3%, 약 40조원 규모)의 자기주식 취득을 결정했다. 글쓴이는 자사주 소각 후 현금 배당 60조원을 예상하는 주장을 제시하지만, 배당 규모 근거가 본문에 명시되지 않았다.",
+      "stocks": [
+        "SK하이닉스"
+      ],
+      "sector": "반도체",
+      "key_points": [
+        "자기주식 취득수량 24,070,000주, 시총 대비 3.3% 규모",
+        "취득목적: 자기주식 소각을 통한 주주가치 제고",
+        "취득기간: 2026-08-20 ~ 2026-11-19",
+        "취득방법: 장내매수, 중개업자 SK증권",
+        "현재가 1,500,000원에서 공시 시점 -9.75% 하락 이후 발표"
+      ],
+      "numbers": [
+        "자기주식 취득규모: 약 40조원(24,070,000주 × 1,500,000원)",
+        "시총 대비 비율: 3.3%",
+        "SK하이닉스 시가총액: 1,095조 7,385억원",
+        "공시 시점 현재가: 1,500,000원(-9.75%)"
+      ],
+      "stance": "강세",
+      "reasoning": "자기주식 취득과 소각은 주당순이익(EPS) 증가와 주주가치 제고 수단으로 긍정적 신호",
+      "catalyst": "SK하이닉스 2026년 8월 19일 자기주식 24,070,000주(약 40조원, 시총 3.3%) 취득 공시",
+      "why_read": "SK하이닉스 핵심 관심 종목에 대한 공식 공시이며, 자사주 취득 규모·일정·목적이 명확하고, 향후 배당 정책으로의 연쇄 효과를 추적할 수 있는 단서이므로 원문 확인 필수",
+      "novelty": 3,
+      "evidence_quality": 3,
+      "evidence_grade": "A",
+      "evidence_reason": "SK하이닉스 공식 주요사항보고서(자기주식취득결정) DART 공시 원본으로, 수량·목적·기간·방법이 모두 확인 가능한 1차 자료",
+      "counter_argument": "현재 주가 1,500,000원이 기존 대비 9.75% 하락한 상태에서의 공시이므로, 이후 추가 주가 부담 속에서 예상 배당 60조원이 실제로 집행될지 불확실하며, 시장이 자사주 매입과 배당을 이미 충분히 선반영했을 가능성",
+      "price_reflection": "판단 불가",
+      "investment_chain": "자기주식 취득(주가 9.75% 하락 중) → EPS 증대 + 배당 가능성 → 주주가치 제고 예상, 다만 현재 주가 약세 속 실제 배당 집행 시점과 규모는 미정",
+      "watchlist_impact": {
+        "삼성전자": {
+          "direction": "관련 없음",
+          "reason": "삼성전자는 직접 언급되지 않았으며, SK하이닉스의 개별 자본 정책은 동종 업계 경쟁사에 직접적 영향 미미"
+        },
+        "SK하이닉스": {
+          "direction": "긍정",
+          "reason": "자기주식 소각을 통한 주당 순이익 증가 + 배당 재원 확보로 주주가치 제고 신호이나, 현재 주가 약세 속에서 시장 평가는 제한적"
+        }
+      },
+      "action": "반드시 원문 읽기",
+      "action_reason": "SK하이닉스는 핵심 관심 종목이고, 자사주 취득은 명확한 공식 촉매이지만, 글쓴이의 '배당 60조원 예상'은 근거가 부족하므로 DART 공시 원문과 회사 IR 자료를 통해 향후 정책·현금흐름 계획을 직접 검증해야 함",
+      "analysis_depth": "full",
+      "risks": [],
+      "market_view": false,
+      "market_sentiment": 0,
+      "market_reason": "",
+      "source_role": "mixed",
+      "analysis_version": 3
+    },
     {
       "id": "doctordk_2026-08-19_224383311082",
       "date": "2026-08-19",
@@ -17689,7 +17768,8 @@
         "https://t.me/skitteam/4504",
         "https://t.me/skitteam/4505",
         "https://t.me/skitteam/4506",
-        "https://t.me/skitteam/4507"
+        "https://t.me/skitteam/4507",
+        "https://t.me/skitteam/4508"
       ],
       "collection_key": "telegram:skitteam:2026-08-19",
       "summary": "SK하이닉스가 8월 19일 발행주식 3.3%에 해당하는 24,070,000주(약 40조 43억원) 자기주식 취득·소각을 결정했으며, 주주환원 규모를 기존 누적 FCF 50% 범위에서 50% 이상으로 상향 추진한다. 메모리 3사 중 SK하이닉스의 12MF P/E가 3.7배로 가장 낮으며(삼성전자 4.2배, 마이크론 6.5배), SK하이닉스 본주와 ADR 간 괴리율이 49.9%에 달한다.",
@@ -17757,20 +17837,6 @@
       "title": "국내 태양광 3사 2분기 실적 호조, 중국 저가 공세 약화로 수익성 회복 (17건)",
       "url": "https://t.me/Kyaooo/33521",
       "source_urls": [
-        "https://t.me/Kyaooo/33549",
-        "https://t.me/Kyaooo/33550",
-        "https://t.me/Kyaooo/33551",
-        "https://t.me/Kyaooo/33553",
-        "https://t.me/Kyaooo/33554",
-        "https://t.me/Kyaooo/33555",
-        "https://t.me/Kyaooo/33556",
-        "https://t.me/Kyaooo/33557",
-        "https://t.me/Kyaooo/33558",
-        "https://t.me/Kyaooo/33559",
-        "https://t.me/Kyaooo/33560",
-        "https://t.me/Kyaooo/33561",
-        "https://t.me/Kyaooo/33562",
-        "https://t.me/Kyaooo/33563",
         "https://t.me/Kyaooo/33564"
       ],
       "collection_key": "telegram:Kyaooo:2026-08-19",
@@ -17823,80 +17889,6 @@
       "analysis_version": 3
     },
     {
-      "id": "pengmeup_2026-08-19_30940",
-      "date": "2026-08-19",
-      "source": "telegram",
-      "blog_name": "펭미업",
-      "person": "펭미업",
-      "title": "SK하이닉스 3.3% 자사주 매입 결정, 향후 배당 60조 예상 (9건)",
-      "url": "https://t.me/pengmeup/30947",
-      "source_urls": [
-        "https://t.me/pengmeup/30957",
-        "https://t.me/pengmeup/30958",
-        "https://t.me/pengmeup/30960",
-        "https://t.me/pengmeup/30961",
-        "https://t.me/pengmeup/30968",
-        "https://t.me/pengmeup/30969",
-        "https://t.me/pengmeup/30970",
-        "https://t.me/pengmeup/30971",
-        "https://t.me/pengmeup/30974",
-        "https://t.me/pengmeup/30975",
-        "https://t.me/pengmeup/30976",
-        "https://t.me/pengmeup/30977",
-        "https://t.me/pengmeup/30978",
-        "https://t.me/pengmeup/30979"
-      ],
-      "collection_key": "telegram:pengmeup:2026-08-19",
-      "summary": "SK하이닉스가 2026년 8월 19일 24,070,000주(시총 3.3%, 약 40조원 규모)의 자기주식 취득을 결정했다. 글쓴이는 자사주 소각 후 현금 배당 60조원을 예상하는 주장을 제시하지만, 배당 규모 근거가 본문에 명시되지 않았다.",
-      "stocks": [
-        "SK하이닉스"
-      ],
-      "sector": "반도체",
-      "key_points": [
-        "자기주식 취득수량 24,070,000주, 시총 대비 3.3% 규모",
-        "취득목적: 자기주식 소각을 통한 주주가치 제고",
-        "취득기간: 2026-08-20 ~ 2026-11-19",
-        "취득방법: 장내매수, 중개업자 SK증권",
-        "현재가 1,500,000원에서 공시 시점 -9.75% 하락 이후 발표"
-      ],
-      "numbers": [
-        "자기주식 취득규모: 약 40조원(24,070,000주 × 1,500,000원)",
-        "시총 대비 비율: 3.3%",
-        "SK하이닉스 시가총액: 1,095조 7,385억원",
-        "공시 시점 현재가: 1,500,000원(-9.75%)"
-      ],
-      "stance": "강세",
-      "reasoning": "자기주식 취득과 소각은 주당순이익(EPS) 증가와 주주가치 제고 수단으로 긍정적 신호",
-      "catalyst": "SK하이닉스 2026년 8월 19일 자기주식 24,070,000주(약 40조원, 시총 3.3%) 취득 공시",
-      "why_read": "SK하이닉스 핵심 관심 종목에 대한 공식 공시이며, 자사주 취득 규모·일정·목적이 명확하고, 향후 배당 정책으로의 연쇄 효과를 추적할 수 있는 단서이므로 원문 확인 필수",
-      "novelty": 3,
-      "evidence_quality": 3,
-      "evidence_grade": "A",
-      "evidence_reason": "SK하이닉스 공식 주요사항보고서(자기주식취득결정) DART 공시 원본으로, 수량·목적·기간·방법이 모두 확인 가능한 1차 자료",
-      "counter_argument": "현재 주가 1,500,000원이 기존 대비 9.75% 하락한 상태에서의 공시이므로, 이후 추가 주가 부담 속에서 예상 배당 60조원이 실제로 집행될지 불확실하며, 시장이 자사주 매입과 배당을 이미 충분히 선반영했을 가능성",
-      "price_reflection": "판단 불가",
-      "investment_chain": "자기주식 취득(주가 9.75% 하락 중) → EPS 증대 + 배당 가능성 → 주주가치 제고 예상, 다만 현재 주가 약세 속 실제 배당 집행 시점과 규모는 미정",
-      "watchlist_impact": {
-        "삼성전자": {
-          "direction": "관련 없음",
-          "reason": "삼성전자는 직접 언급되지 않았으며, SK하이닉스의 개별 자본 정책은 동종 업계 경쟁사에 직접적 영향 미미"
-        },
-        "SK하이닉스": {
-          "direction": "긍정",
-          "reason": "자기주식 소각을 통한 주당 순이익 증가 + 배당 재원 확보로 주주가치 제고 신호이나, 현재 주가 약세 속에서 시장 평가는 제한적"
-        }
-      },
-      "action": "반드시 원문 읽기",
-      "action_reason": "SK하이닉스는 핵심 관심 종목이고, 자사주 취득은 명확한 공식 촉매이지만, 글쓴이의 '배당 60조원 예상'은 근거가 부족하므로 DART 공시 원문과 회사 IR 자료를 통해 향후 정책·현금흐름 계획을 직접 검증해야 함",
-      "analysis_depth": "full",
-      "risks": [],
-      "market_view": false,
-      "market_sentiment": 0,
-      "market_reason": "",
-      "source_role": "mixed",
-      "analysis_version": 3
-    },
-    {
       "id": "aetherjapanresearch_2026-08-19_24617",
       "date": "2026-08-19",
       "source": "telegram",
@@ -17905,18 +17897,6 @@
       "title": "Anthropic 간접채널 ARR 40% 돌파, 하이퍼스케일러 수익성 확대 vs 랩 마진 압박 (2건)",
       "url": "https://t.me/aetherjapanresearch/24617",
       "source_urls": [
-        "https://t.me/aetherjapanresearch/24646",
-        "https://t.me/aetherjapanresearch/24647",
-        "https://t.me/aetherjapanresearch/24648",
-        "https://t.me/aetherjapanresearch/24649",
-        "https://t.me/aetherjapanresearch/24650",
-        "https://t.me/aetherjapanresearch/24651",
-        "https://t.me/aetherjapanresearch/24652",
-        "https://t.me/aetherjapanresearch/24653",
-        "https://t.me/aetherjapanresearch/24654",
-        "https://t.me/aetherjapanresearch/24655",
-        "https://t.me/aetherjapanresearch/24656",
-        "https://t.me/aetherjapanresearch/24657",
         "https://t.me/aetherjapanresearch/24658",
         "https://t.me/aetherjapanresearch/24660",
         "https://t.me/aetherjapanresearch/24661"
