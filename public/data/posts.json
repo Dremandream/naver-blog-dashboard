@@ -2194,7 +2194,7 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-08-16",
+      "historyStart": "2024-06-13",
       "historyEnd": "2026-08-21",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
@@ -2206,14 +2206,14 @@
         "opinions": 387,
         "w": {
           "63": {
-            "hits": 190,
-            "total": 325,
-            "rate": 58.5
+            "hits": 191,
+            "total": 328,
+            "rate": 58.2
           },
           "252": {
-            "hits": 120,
-            "total": 194,
-            "rate": 61.9
+            "hits": 123,
+            "total": 203,
+            "rate": 60.6
           }
         }
       },
@@ -2238,30 +2238,14 @@
         "opinions": 685,
         "w": {
           "63": {
-            "hits": 318,
-            "total": 569,
-            "rate": 55.9
+            "hits": 319,
+            "total": 570,
+            "rate": 56
           },
           "252": {
-            "hits": 161,
-            "total": 288,
-            "rate": 55.9
-          }
-        }
-      },
-      {
-        "person": "너는 무한하지 않느냐",
-        "opinions": 489,
-        "w": {
-          "63": {
-            "hits": 222,
-            "total": 434,
-            "rate": 51.2
-          },
-          "252": {
-            "hits": 93,
-            "total": 186,
-            "rate": 50
+            "hits": 163,
+            "total": 291,
+            "rate": 56
           }
         }
       },
@@ -2298,6 +2282,22 @@
         }
       },
       {
+        "person": "너는 무한하지 않느냐",
+        "opinions": 489,
+        "w": {
+          "63": {
+            "hits": 223,
+            "total": 436,
+            "rate": 51.1
+          },
+          "252": {
+            "hits": 94,
+            "total": 192,
+            "rate": 49
+          }
+        }
+      },
+      {
         "person": "잠실개미",
         "opinions": 57,
         "w": {
@@ -2318,14 +2318,14 @@
         "opinions": 427,
         "w": {
           "63": {
-            "hits": 170,
-            "total": 360,
-            "rate": 47.2
+            "hits": 171,
+            "total": 364,
+            "rate": 47
           },
           "252": {
             "hits": 68,
-            "total": 180,
-            "rate": 37.8
+            "total": 184,
+            "rate": 37
           }
         }
       },
@@ -2334,14 +2334,14 @@
         "opinions": 370,
         "w": {
           "63": {
-            "hits": 134,
-            "total": 308,
+            "hits": 135,
+            "total": 310,
             "rate": 43.5
           },
           "252": {
             "hits": 57,
-            "total": 163,
-            "rate": 35
+            "total": 164,
+            "rate": 34.8
           }
         }
       },
@@ -2350,13 +2350,13 @@
         "opinions": 771,
         "w": {
           "63": {
-            "hits": 283,
-            "total": 682,
-            "rate": 41.5
+            "hits": 285,
+            "total": 689,
+            "rate": 41.4
           },
           "252": {
-            "hits": 122,
-            "total": 360,
+            "hits": 124,
+            "total": 366,
             "rate": 33.9
           }
         }
@@ -2388,8 +2388,8 @@
           },
           "252": {
             "hits": 48,
-            "total": 163,
-            "rate": 29.4
+            "total": 164,
+            "rate": 29.3
           }
         }
       },
@@ -2398,14 +2398,14 @@
         "opinions": 365,
         "w": {
           "63": {
-            "hits": 146,
-            "total": 292,
-            "rate": 50
+            "hits": 147,
+            "total": 293,
+            "rate": 50.2
           },
           "252": {
-            "hits": 25,
-            "total": 97,
-            "rate": 25.8
+            "hits": 26,
+            "total": 99,
+            "rate": 26.3
           }
         }
       },
@@ -2414,14 +2414,14 @@
         "opinions": 325,
         "w": {
           "63": {
-            "hits": 116,
-            "total": 291,
-            "rate": 39.9
+            "hits": 118,
+            "total": 294,
+            "rate": 40.1
           },
           "252": {
             "hits": 29,
-            "total": 115,
-            "rate": 25.2
+            "total": 116,
+            "rate": 25
           }
         }
       },
@@ -2436,8 +2436,8 @@
           },
           "252": {
             "hits": 28,
-            "total": 122,
-            "rate": 23
+            "total": 126,
+            "rate": 22.2
           }
         }
       },
@@ -2447,8 +2447,8 @@
         "w": {
           "63": {
             "hits": 63,
-            "total": 125,
-            "rate": 50.4
+            "total": 126,
+            "rate": 50
           },
           "252": {
             "hits": 15,
@@ -2478,9 +2478,9 @@
         "opinions": 170,
         "w": {
           "63": {
-            "hits": 51,
-            "total": 117,
-            "rate": 43.6
+            "hits": 54,
+            "total": 123,
+            "rate": 43.9
           },
           "252": {
             "hits": 0,
@@ -2494,9 +2494,9 @@
         "opinions": 206,
         "w": {
           "63": {
-            "hits": 35,
-            "total": 151,
-            "rate": 23.2
+            "hits": 37,
+            "total": 156,
+            "rate": 23.7
           },
           "252": {
             "hits": 0,
@@ -2537,7 +2537,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-08-22T18:33:32.601Z",
+      "stocks": 1079,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-07-09": {
