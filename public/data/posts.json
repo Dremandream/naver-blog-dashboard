@@ -1744,32 +1744,32 @@
   ],
   "market": {
     "kospi": {
-      "index": 6912.95,
-      "asOf": "20260821",
-      "d1": 0.9,
-      "d5": 1.5,
-      "d20": -2.6,
+      "index": 6696.96,
+      "asOf": "20260824",
+      "d1": -3.1,
+      "d5": -4,
+      "d20": 0.1,
       "flows": {
-        "date": "26.08.21",
-        "individual": -11652,
-        "foreign": -1760,
-        "institution": 2481,
-        "foreign5d": 11883
+        "date": "26.08.24",
+        "individual": 33209,
+        "foreign": -36764,
+        "institution": -12928,
+        "foreign5d": -55268
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 801.94,
-      "asOf": "20260821",
-      "d1": -4.6,
-      "d5": -6.9,
-      "d20": 1.5,
+      "index": 813.33,
+      "asOf": "20260824",
+      "d1": 1.4,
+      "d5": -5.9,
+      "d20": 8.7,
       "flows": {
-        "date": "26.08.21",
-        "individual": 6236,
-        "foreign": -2837,
-        "institution": -3462,
-        "foreign5d": -4311
+        "date": "26.08.24",
+        "individual": -2604,
+        "foreign": 2417,
+        "institution": 249,
+        "foreign5d": -1235
       },
       "dataSource": "naver"
     },
@@ -1865,17 +1865,17 @@
     },
     "키옥시아": {
       "market": "US",
-      "price": 54320,
-      "asOf": "20260821",
-      "d1": 2.6,
-      "d5": 1.1,
-      "d20": -12.2,
+      "price": 50930,
+      "asOf": "20260824",
+      "d1": -6.2,
+      "d5": -17.6,
+      "d20": -9.1,
       "investor": null
     }
   },
   "verdicts": {
     "date": "2026-08-24",
-    "generatedAt": "2026-08-23T23:08:35.046Z",
+    "generatedAt": "2026-08-24T08:12:07.211Z",
     "items": [
       {
         "ticker": "SK하이닉스",
@@ -2011,7 +2011,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-08-21",
+    "asOf": "2026-08-24",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -2027,8 +2027,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-07-11",
-      "historyEnd": "2026-08-21",
+      "historyStart": "2024-07-12",
+      "historyEnd": "2026-08-24",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
       "repeatedMentionsExcluded": 1273
@@ -16024,6 +16024,11 @@
       "opinions": []
     },
     "2026-08-21": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-08-24": {
       "stocks": [],
       "sectors": [],
       "opinions": []
