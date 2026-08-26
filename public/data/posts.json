@@ -1744,32 +1744,32 @@
   ],
   "market": {
     "kospi": {
-      "index": 6742.74,
-      "asOf": "20260825",
-      "d1": 0.7,
-      "d5": -1.8,
-      "d20": -0.2,
+      "index": 6808.21,
+      "asOf": "20260826",
+      "d1": 1,
+      "d5": 5.2,
+      "d20": 13,
       "flows": {
-        "date": "26.08.25",
-        "individual": 10509,
-        "foreign": -38140,
-        "institution": 11711,
-        "foreign5d": -94249
+        "date": "26.08.26",
+        "individual": -22425,
+        "foreign": -1162,
+        "institution": 7594,
+        "foreign5d": -60685
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 827.15,
-      "asOf": "20260825",
-      "d1": 1.7,
-      "d5": -0.8,
-      "d20": 8.1,
+      "index": 826.87,
+      "asOf": "20260826",
+      "d1": 0,
+      "d5": 0.3,
+      "d20": 17.1,
       "flows": {
-        "date": "26.08.25",
-        "individual": -1375,
-        "foreign": 1327,
-        "institution": 156,
-        "foreign5d": -275
+        "date": "26.08.26",
+        "individual": 1930,
+        "foreign": -917,
+        "institution": -1054,
+        "foreign5d": -1339
       },
       "dataSource": "naver"
     },
@@ -1830,7 +1830,7 @@
   },
   "verdicts": {
     "date": "2026-08-26",
-    "generatedAt": "2026-08-25T23:13:44.311Z",
+    "generatedAt": "2026-08-26T08:09:03.997Z",
     "items": [
       {
         "ticker": "SK하이닉스",
