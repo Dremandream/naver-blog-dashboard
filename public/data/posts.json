@@ -1861,7 +1861,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-08-24",
+    "asOf": "2026-08-28",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1877,8 +1877,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-07-12",
-      "historyEnd": "2026-08-24",
+      "historyStart": "2024-06-20",
+      "historyEnd": "2026-08-28",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
       "repeatedMentionsExcluded": 1273
@@ -1890,13 +1890,13 @@
         "w": {
           "63": {
             "hits": 191,
-            "total": 328,
-            "rate": 58.2
+            "total": 332,
+            "rate": 57.5
           },
           "252": {
-            "hits": 123,
-            "total": 203,
-            "rate": 60.6
+            "hits": 124,
+            "total": 204,
+            "rate": 60.8
           }
         }
       },
@@ -1905,9 +1905,9 @@
         "opinions": 190,
         "w": {
           "63": {
-            "hits": 65,
-            "total": 135,
-            "rate": 48.1
+            "hits": 67,
+            "total": 138,
+            "rate": 48.6
           },
           "252": {
             "hits": 34,
@@ -1921,14 +1921,14 @@
         "opinions": 685,
         "w": {
           "63": {
-            "hits": 321,
-            "total": 572,
-            "rate": 56.1
+            "hits": 333,
+            "total": 588,
+            "rate": 56.6
           },
           "252": {
-            "hits": 164,
-            "total": 292,
-            "rate": 56.2
+            "hits": 165,
+            "total": 294,
+            "rate": 56.1
           }
         }
       },
@@ -1943,24 +1943,8 @@
           },
           "252": {
             "hits": 32,
-            "total": 63,
-            "rate": 50.8
-          }
-        }
-      },
-      {
-        "person": "레드버드",
-        "opinions": 124,
-        "w": {
-          "63": {
-            "hits": 65,
-            "total": 108,
-            "rate": 60.2
-          },
-          "252": {
-            "hits": 35,
-            "total": 71,
-            "rate": 49.3
+            "total": 64,
+            "rate": 50
           }
         }
       },
@@ -1969,14 +1953,30 @@
         "opinions": 489,
         "w": {
           "63": {
-            "hits": 224,
-            "total": 438,
-            "rate": 51.1
+            "hits": 228,
+            "total": 443,
+            "rate": 51.5
           },
           "252": {
-            "hits": 94,
-            "total": 192,
-            "rate": 49
+            "hits": 95,
+            "total": 195,
+            "rate": 48.7
+          }
+        }
+      },
+      {
+        "person": "레드버드",
+        "opinions": 124,
+        "w": {
+          "63": {
+            "hits": 66,
+            "total": 109,
+            "rate": 60.6
+          },
+          "252": {
+            "hits": 35,
+            "total": 72,
+            "rate": 48.6
           }
         }
       },
@@ -1985,14 +1985,14 @@
         "opinions": 57,
         "w": {
           "63": {
-            "hits": 23,
-            "total": 43,
-            "rate": 53.5
+            "hits": 24,
+            "total": 44,
+            "rate": 54.5
           },
           "252": {
             "hits": 13,
-            "total": 28,
-            "rate": 46.4
+            "total": 29,
+            "rate": 44.8
           }
         }
       },
@@ -2001,14 +2001,14 @@
         "opinions": 427,
         "w": {
           "63": {
-            "hits": 171,
-            "total": 364,
-            "rate": 47
+            "hits": 175,
+            "total": 371,
+            "rate": 47.2
           },
           "252": {
-            "hits": 68,
-            "total": 184,
-            "rate": 37
+            "hits": 71,
+            "total": 194,
+            "rate": 36.6
           }
         }
       },
@@ -2017,30 +2017,14 @@
         "opinions": 370,
         "w": {
           "63": {
-            "hits": 135,
-            "total": 310,
-            "rate": 43.5
+            "hits": 136,
+            "total": 319,
+            "rate": 42.6
           },
           "252": {
-            "hits": 57,
-            "total": 164,
-            "rate": 34.8
-          }
-        }
-      },
-      {
-        "person": "캬오의 공부방",
-        "opinions": 771,
-        "w": {
-          "63": {
-            "hits": 285,
-            "total": 689,
-            "rate": 41.4
-          },
-          "252": {
-            "hits": 124,
-            "total": 366,
-            "rate": 33.9
+            "hits": 58,
+            "total": 167,
+            "rate": 34.7
           }
         }
       },
@@ -2050,8 +2034,8 @@
         "w": {
           "63": {
             "hits": 19,
-            "total": 43,
-            "rate": 44.2
+            "total": 44,
+            "rate": 43.2
           },
           "252": {
             "hits": 12,
@@ -2061,18 +2045,34 @@
         }
       },
       {
+        "person": "캬오의 공부방",
+        "opinions": 771,
+        "w": {
+          "63": {
+            "hits": 287,
+            "total": 699,
+            "rate": 41.1
+          },
+          "252": {
+            "hits": 128,
+            "total": 392,
+            "rate": 32.7
+          }
+        }
+      },
+      {
         "person": "씹배",
         "opinions": 261,
         "w": {
           "63": {
             "hits": 105,
-            "total": 244,
-            "rate": 43
+            "total": 245,
+            "rate": 42.9
           },
           "252": {
             "hits": 48,
-            "total": 164,
-            "rate": 29.3
+            "total": 165,
+            "rate": 29.1
           }
         }
       },
@@ -2081,14 +2081,14 @@
         "opinions": 365,
         "w": {
           "63": {
-            "hits": 147,
-            "total": 293,
-            "rate": 50.2
+            "hits": 150,
+            "total": 298,
+            "rate": 50.3
           },
           "252": {
-            "hits": 26,
-            "total": 99,
-            "rate": 26.3
+            "hits": 28,
+            "total": 105,
+            "rate": 26.7
           }
         }
       },
@@ -2098,12 +2098,12 @@
         "w": {
           "63": {
             "hits": 118,
-            "total": 294,
-            "rate": 40.1
+            "total": 295,
+            "rate": 40
           },
           "252": {
-            "hits": 29,
-            "total": 116,
+            "hits": 31,
+            "total": 124,
             "rate": 25
           }
         }
@@ -2113,14 +2113,14 @@
         "opinions": 261,
         "w": {
           "63": {
-            "hits": 79,
-            "total": 237,
-            "rate": 33.3
+            "hits": 80,
+            "total": 238,
+            "rate": 33.6
           },
           "252": {
-            "hits": 28,
-            "total": 126,
-            "rate": 22.2
+            "hits": 29,
+            "total": 127,
+            "rate": 22.8
           }
         }
       },
@@ -2145,9 +2145,9 @@
         "opinions": 69,
         "w": {
           "63": {
-            "hits": 35,
-            "total": 60,
-            "rate": 58.3
+            "hits": 36,
+            "total": 63,
+            "rate": 57.1
           },
           "252": {
             "hits": 5,
@@ -2161,9 +2161,9 @@
         "opinions": 170,
         "w": {
           "63": {
-            "hits": 54,
-            "total": 123,
-            "rate": 43.9
+            "hits": 56,
+            "total": 137,
+            "rate": 40.9
           },
           "252": {
             "hits": 0,
@@ -2177,9 +2177,9 @@
         "opinions": 206,
         "w": {
           "63": {
-            "hits": 37,
-            "total": 156,
-            "rate": 23.7
+            "hits": 39,
+            "total": 160,
+            "rate": 24.4
           },
           "252": {
             "hits": 0,
@@ -2220,7 +2220,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-08-29T20:31:06.154Z",
+      "stocks": 1079,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-07-16": {
