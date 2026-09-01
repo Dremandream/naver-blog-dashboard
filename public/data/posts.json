@@ -1744,32 +1744,32 @@
   ],
   "market": {
     "kospi": {
-      "index": 6797.23,
+      "index": 6835.8,
       "asOf": "20260901",
-      "d1": -0.3,
-      "d5": 0.8,
-      "d20": 8.6,
+      "d1": 0.2,
+      "d5": 1.4,
+      "d20": 9.2,
       "flows": {
         "date": "26.09.01",
-        "individual": 3158,
-        "foreign": -1570,
-        "institution": -5646,
-        "foreign5d": -16344
+        "individual": -5402,
+        "foreign": -4968,
+        "institution": -6286,
+        "foreign5d": -19742
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 821.33,
+      "index": 821.25,
       "asOf": "20260901",
       "d1": -1.6,
       "d5": -0.7,
       "d20": 11.4,
       "flows": {
         "date": "26.09.01",
-        "individual": 2923,
-        "foreign": -1548,
-        "institution": -1286,
-        "foreign5d": -1005
+        "individual": 4389,
+        "foreign": -1531,
+        "institution": -2787,
+        "foreign5d": -988
       },
       "dataSource": "naver"
     },
@@ -1789,19 +1789,19 @@
   "prices": {
     "삼성전자": {
       "market": "KR",
-      "price": 257000,
-      "asOf": "20260828",
-      "d1": -3.4,
-      "d5": -8.7,
-      "d20": 24.2,
+      "price": 260000,
+      "asOf": "20260831",
+      "d1": 1.2,
+      "d5": 1.2,
+      "d20": -1,
       "investor": {
-        "asOf": "20260831",
-        "foreignToday": -2293,
-        "institutionToday": -2349842,
-        "foreign5d": -3032653,
-        "institution5d": -3392696,
-        "foreignRate": 46.72,
-        "volume": 18270969,
+        "asOf": "20260901",
+        "foreignToday": -707536,
+        "institutionToday": -339843,
+        "foreign5d": 1263128,
+        "institution5d": -3936023,
+        "foreignRate": 46.71,
+        "volume": 12765827,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1809,19 +1809,19 @@
     },
     "SK하이닉스": {
       "market": "KR",
-      "price": 1653000,
-      "asOf": "20260828",
-      "d1": -4.5,
-      "d5": -4.5,
-      "d20": 25,
+      "price": 1674000,
+      "asOf": "20260831",
+      "d1": 1.3,
+      "d5": 0.2,
+      "d20": -2.6,
       "investor": {
-        "asOf": "20260831",
-        "foreignToday": -211935,
-        "institutionToday": -314294,
-        "foreign5d": -2023626,
-        "institution5d": -1051308,
-        "foreignRate": 50.56,
-        "volume": 3980661,
+        "asOf": "20260901",
+        "foreignToday": 91835,
+        "institutionToday": -142669,
+        "foreign5d": -697482,
+        "institution5d": -1391002,
+        "foreignRate": 50.57,
+        "volume": 2481959,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1830,7 +1830,7 @@
   },
   "verdicts": {
     "date": "2026-09-01",
-    "generatedAt": "2026-09-01T01:28:20.894Z",
+    "generatedAt": "2026-09-01T12:42:03.411Z",
     "items": [],
     "critic": {
       "pass": true,
