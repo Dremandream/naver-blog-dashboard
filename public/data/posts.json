@@ -1861,7 +1861,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-08-28",
+    "asOf": "2026-09-04",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1877,8 +1877,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-07-18",
-      "historyEnd": "2026-08-28",
+      "historyStart": "2024-06-27",
+      "historyEnd": "2026-09-04",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
       "repeatedMentionsExcluded": 1273
@@ -1894,25 +1894,9 @@
             "rate": 57.5
           },
           "252": {
-            "hits": 124,
-            "total": 204,
-            "rate": 60.8
-          }
-        }
-      },
-      {
-        "person": "ITK 미주투",
-        "opinions": 190,
-        "w": {
-          "63": {
-            "hits": 67,
-            "total": 138,
-            "rate": 48.6
-          },
-          "252": {
-            "hits": 34,
-            "total": 59,
-            "rate": 57.6
+            "hits": 125,
+            "total": 206,
+            "rate": 60.7
           }
         }
       },
@@ -1921,14 +1905,30 @@
         "opinions": 685,
         "w": {
           "63": {
-            "hits": 333,
-            "total": 588,
-            "rate": 56.6
+            "hits": 336,
+            "total": 600,
+            "rate": 56
           },
           "252": {
-            "hits": 165,
-            "total": 294,
-            "rate": 56.1
+            "hits": 173,
+            "total": 306,
+            "rate": 56.5
+          }
+        }
+      },
+      {
+        "person": "ITK 미주투",
+        "opinions": 190,
+        "w": {
+          "63": {
+            "hits": 68,
+            "total": 141,
+            "rate": 48.2
+          },
+          "252": {
+            "hits": 35,
+            "total": 62,
+            "rate": 56.5
           }
         }
       },
@@ -1938,8 +1938,8 @@
         "w": {
           "63": {
             "hits": 47,
-            "total": 101,
-            "rate": 46.5
+            "total": 102,
+            "rate": 46.1
           },
           "252": {
             "hits": 32,
@@ -1949,34 +1949,34 @@
         }
       },
       {
+        "person": "레드버드",
+        "opinions": 124,
+        "w": {
+          "63": {
+            "hits": 69,
+            "total": 115,
+            "rate": 60
+          },
+          "252": {
+            "hits": 36,
+            "total": 73,
+            "rate": 49.3
+          }
+        }
+      },
+      {
         "person": "너는 무한하지 않느냐",
         "opinions": 489,
         "w": {
           "63": {
             "hits": 228,
-            "total": 443,
-            "rate": 51.5
+            "total": 444,
+            "rate": 51.4
           },
           "252": {
-            "hits": 95,
-            "total": 195,
-            "rate": 48.7
-          }
-        }
-      },
-      {
-        "person": "레드버드",
-        "opinions": 124,
-        "w": {
-          "63": {
-            "hits": 66,
-            "total": 109,
-            "rate": 60.6
-          },
-          "252": {
-            "hits": 35,
-            "total": 72,
-            "rate": 48.6
+            "hits": 99,
+            "total": 203,
+            "rate": 48.8
           }
         }
       },
@@ -1986,8 +1986,8 @@
         "w": {
           "63": {
             "hits": 24,
-            "total": 44,
-            "rate": 54.5
+            "total": 46,
+            "rate": 52.2
           },
           "252": {
             "hits": 13,
@@ -2001,14 +2001,14 @@
         "opinions": 427,
         "w": {
           "63": {
-            "hits": 175,
-            "total": 371,
-            "rate": 47.2
+            "hits": 180,
+            "total": 377,
+            "rate": 47.7
           },
           "252": {
             "hits": 71,
-            "total": 194,
-            "rate": 36.6
+            "total": 196,
+            "rate": 36.2
           }
         }
       },
@@ -2017,14 +2017,14 @@
         "opinions": 370,
         "w": {
           "63": {
-            "hits": 136,
-            "total": 319,
-            "rate": 42.6
+            "hits": 138,
+            "total": 325,
+            "rate": 42.5
           },
           "252": {
-            "hits": 58,
-            "total": 167,
-            "rate": 34.7
+            "hits": 59,
+            "total": 169,
+            "rate": 34.9
           }
         }
       },
@@ -2049,14 +2049,14 @@
         "opinions": 771,
         "w": {
           "63": {
-            "hits": 287,
-            "total": 699,
+            "hits": 289,
+            "total": 704,
             "rate": 41.1
           },
           "252": {
-            "hits": 128,
-            "total": 392,
-            "rate": 32.7
+            "hits": 129,
+            "total": 398,
+            "rate": 32.4
           }
         }
       },
@@ -2071,8 +2071,8 @@
           },
           "252": {
             "hits": 48,
-            "total": 165,
-            "rate": 29.1
+            "total": 171,
+            "rate": 28.1
           }
         }
       },
@@ -2081,14 +2081,14 @@
         "opinions": 365,
         "w": {
           "63": {
-            "hits": 150,
-            "total": 298,
-            "rate": 50.3
+            "hits": 157,
+            "total": 307,
+            "rate": 51.1
           },
           "252": {
-            "hits": 28,
-            "total": 105,
-            "rate": 26.7
+            "hits": 30,
+            "total": 109,
+            "rate": 27.5
           }
         }
       },
@@ -2097,14 +2097,14 @@
         "opinions": 325,
         "w": {
           "63": {
-            "hits": 118,
-            "total": 295,
-            "rate": 40
+            "hits": 119,
+            "total": 301,
+            "rate": 39.5
           },
           "252": {
             "hits": 31,
-            "total": 124,
-            "rate": 25
+            "total": 125,
+            "rate": 24.8
           }
         }
       },
@@ -2113,14 +2113,14 @@
         "opinions": 261,
         "w": {
           "63": {
-            "hits": 80,
-            "total": 238,
-            "rate": 33.6
+            "hits": 82,
+            "total": 240,
+            "rate": 34.2
           },
           "252": {
-            "hits": 29,
-            "total": 127,
-            "rate": 22.8
+            "hits": 30,
+            "total": 128,
+            "rate": 23.4
           }
         }
       },
@@ -2135,8 +2135,8 @@
           },
           "252": {
             "hits": 15,
-            "total": 79,
-            "rate": 19
+            "total": 80,
+            "rate": 18.8
           }
         }
       },
@@ -2161,9 +2161,9 @@
         "opinions": 170,
         "w": {
           "63": {
-            "hits": 56,
-            "total": 137,
-            "rate": 40.9
+            "hits": 58,
+            "total": 143,
+            "rate": 40.6
           },
           "252": {
             "hits": 0,
@@ -2177,8 +2177,8 @@
         "opinions": 206,
         "w": {
           "63": {
-            "hits": 39,
-            "total": 160,
+            "hits": 40,
+            "total": 164,
             "rate": 24.4
           },
           "252": {
@@ -2220,7 +2220,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-09-05T20:03:56.059Z",
+      "stocks": 1079,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-07-23": {
