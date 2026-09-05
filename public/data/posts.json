@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-04",
+  "date": "2026-09-05",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1774,16 +1774,16 @@
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26584.06,
-      "asOf": "20260903",
-      "d1": 1.4,
-      "d5": 0.2
+      "index": 26506.99,
+      "asOf": "20260904",
+      "d1": -0.3,
+      "d5": 0.4
     },
     "sp500": {
-      "index": 7747.71,
-      "asOf": "20260903",
-      "d1": 1.1,
-      "d5": 0.2
+      "index": 7718.6,
+      "asOf": "20260904",
+      "d1": -0.4,
+      "d5": 0.1
     }
   },
   "prices": {
@@ -1829,8 +1829,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-04",
-    "generatedAt": "2026-09-04T12:13:45.157Z",
+    "date": "2026-09-05",
+    "generatedAt": "2026-09-05T00:26:11.271Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1839,6 +1839,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-05",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-04",
       "buy_pct": 0
@@ -1853,10 +1857,6 @@
     },
     {
       "date": "2026-09-01",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-08-31",
       "buy_pct": 0
     }
   ],
@@ -2223,503 +2223,6 @@
     ]
   },
   "mention_history": {
-    "2026-07-22": {
-      "stocks": [
-        "구글(알파벳)",
-        "나비타스",
-        "네이버",
-        "노키아",
-        "레인보우로보틱스",
-        "롬",
-        "루멘텀",
-        "르네사스",
-        "마이크로소프트",
-        "마이크로칩",
-        "마이크로칩 테크놀로지",
-        "마이크론",
-        "메타",
-        "블룸에너지",
-        "삼성전자",
-        "삼성증권",
-        "셀레스티카",
-        "슈퍼마이크로",
-        "시스코",
-        "시에나",
-        "아리스타",
-        "아마존",
-        "알파벳",
-        "암페놀",
-        "앤스로픽",
-        "에스피지",
-        "엔비디아",
-        "오픈AI",
-        "온세미",
-        "울프스피드",
-        "인텔",
-        "인피니언",
-        "코닝",
-        "코스모신소재",
-        "코히어런트",
-        "크레도",
-        "파브리넷",
-        "팔로알토",
-        "피델릭스",
-        "현대로템",
-        "현대자동차",
-        "ADI",
-        "AMD",
-        "Anthropic",
-        "AWS",
-        "CrowdStrike",
-        "GE Vernova",
-        "GE버노바",
-        "Okta",
-        "onsemi",
-        "SentinelOne",
-        "SK그룹",
-        "SK이터닉스",
-        "SK하이닉스",
-        "Splunk",
-        "ST마이크로일렉트로닉스",
-        "STMicroelectronics",
-        "TI",
-        "Zscaler"
-      ],
-      "sectors": [
-        "거시경제",
-        "반도체",
-        "에너지",
-        "자동차·로봇",
-        "플랫폼"
-      ],
-      "opinions": [
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "네이버",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "피델릭스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "현대자동차",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK그룹",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "노키아",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "루멘텀",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "마이크로소프트",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "셀레스티카",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "슈퍼마이크로",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "시스코",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "시에나",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "아리스타",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "암페놀",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "앤스로픽",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "코닝",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "코히어런트",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "크레도",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "파브리넷",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "팔로알토",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "AWS",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "CrowdStrike",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "GE버노바",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "Okta",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "SentinelOne",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "Splunk",
-          "stance": "중립"
-        },
-        {
-          "person": "에테르",
-          "stock": "Zscaler",
-          "stance": "중립"
-        },
-        {
-          "person": "우용용",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "우용용",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "의교창",
-          "stock": "마이크로소프트",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "메타",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "아마존",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "구글(알파벳)",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "삼성증권",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "오픈AI",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "GE Vernova",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK이터닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "레인보우로보틱스",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "레인보우로보틱스",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "에스피지",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "현대로템",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "나비타스",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "롬",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "르네사스",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "마이크로칩",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "마이크로칩 테크놀로지",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "블룸에너지",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "온세미",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "울프스피드",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "인피니언",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "ADI",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "onsemi",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "ST마이크로일렉트로닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "STMicroelectronics",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "TI",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "인텔",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "코스모신소재",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "Anthropic",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "SK하이닉스",
-          "stance": "중립"
-        }
-      ]
-    },
     "2026-07-23": {
       "stocks": [
         "네이버",
@@ -11856,7 +11359,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-04",
+    "asOf": "2026-09-05",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
