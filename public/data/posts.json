@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-05",
+  "date": "2026-09-06",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1829,8 +1829,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-05",
-    "generatedAt": "2026-09-05T00:26:11.271Z",
+    "date": "2026-09-06",
+    "generatedAt": "2026-09-06T00:17:14.441Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1839,6 +1839,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-06",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-05",
       "buy_pct": 0
@@ -1853,10 +1857,6 @@
     },
     {
       "date": "2026-09-02",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-01",
       "buy_pct": 0
     }
   ],
@@ -1877,7 +1877,7 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-06-27",
+      "historyStart": "2024-07-25",
       "historyEnd": "2026-09-04",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
@@ -2220,393 +2220,9 @@
           }
         }
       }
-    ],
-    "refresh": {
-      "generatedAt": "2026-09-05T20:03:56.059Z",
-      "stocks": 1079,
-      "failures": []
-    }
+    ]
   },
   "mention_history": {
-    "2026-07-23": {
-      "stocks": [
-        "네이버",
-        "닛토보",
-        "도쿄일렉트론",
-        "디스코",
-        "레이저테크",
-        "리가쿠홀딩스",
-        "마이크론",
-        "메타",
-        "삼미금속",
-        "삼성에스디에스",
-        "삼성전자",
-        "삼아알루미늄",
-        "삼아알미늄",
-        "삼영",
-        "아마존",
-        "알파벳",
-        "어드밴테스트",
-        "에이텀",
-        "인텔",
-        "지엔씨에너지",
-        "지투파워",
-        "케이아이엔엑스",
-        "코스모신소재",
-        "키옥시아",
-        "텍사스인스트루먼츠",
-        "AMD",
-        "GE Vernova",
-        "GS건설",
-        "JX금속",
-        "LG디스플레이",
-        "OCI홀딩스",
-        "SCREEN홀딩스",
-        "SGC에너지",
-        "SK이터닉스",
-        "SK하이닉스",
-        "Texas Instruments"
-      ],
-      "sectors": [
-        "거시경제",
-        "반도체",
-        "소재·화학",
-        "에너지",
-        "플랫폼"
-      ],
-      "opinions": [
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "네이버",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "마이크론",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼미금속",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성에스디에스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼아알미늄",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼영",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "알파벳",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "에이텀",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "인텔",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "지엔씨에너지",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "지투파워",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "케이아이엔엑스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "GS건설",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SGC에너지",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK이터닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "닛토보",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "도쿄일렉트론",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "디스코",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "레이저테크",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "리가쿠홀딩스",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "메타",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "어드밴테스트",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "키옥시아",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "텍사스인스트루먼츠",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "GE Vernova",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "JX금속",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "SCREEN홀딩스",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "인텔",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "OCI홀딩스",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "알파벳",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "네이버",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼미금속",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성에스디에스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼아알루미늄",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼영",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "에이텀",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "지엔씨에너지",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "지투파워",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "케이아이엔엑스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "GS건설",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SGC에너지",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK이터닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "콤디티",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "콤디티",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "GE Vernova",
-          "stance": "강세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "메타",
-          "stance": "강세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "아마존",
-          "stance": "강세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "코스모신소재",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "텍사스인스트루먼츠",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "LG디스플레이",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "Texas Instruments",
-          "stance": "강세"
-        }
-      ]
-    },
     "2026-07-24": {
       "stocks": [
         "고려신용정보",
@@ -11359,12 +10975,37 @@
       "stocks": [],
       "sectors": [],
       "opinions": []
+    },
+    "2026-08-31": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-01": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-02": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-03": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-04": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
     }
   },
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-05",
+    "asOf": "2026-09-06",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
@@ -11402,14 +11043,14 @@
           },
           "20": {
             "KOSPI": {
-              "avg": -3.3,
-              "positiveRate": 0,
-              "samples": 3
+              "avg": -0.1,
+              "positiveRate": 25,
+              "samples": 4
             },
             "KOSDAQ": {
-              "avg": -5.7,
-              "positiveRate": 33.3,
-              "samples": 3
+              "avg": -1.4,
+              "positiveRate": 50,
+              "samples": 4
             }
           }
         }
@@ -11454,8 +11095,8 @@
               "KOSDAQ": 15.9
             },
             "20": {
-              "KOSPI": null,
-              "KOSDAQ": null
+              "KOSPI": 9.2,
+              "KOSDAQ": 11.4
             }
           }
         },
