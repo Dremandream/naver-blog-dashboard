@@ -2,9 +2,9 @@
  * 소스 적중률 정식 이력 백필.
  *
  * 감사(원문 수량만 확인, AI/파일 변경 없음):
- *   node scripts/backfill-source-history.js --audit --years 2
+ *   node scripts/backfill-source-history.js --audit --years 2 [--only blog-id,channel-id]
  * 적용(Claude 재분석, 가격 수집, history/posts 갱신):
- *   node scripts/backfill-source-history.js --apply --years 2
+ *   node scripts/backfill-source-history.js --apply --years 2 [--only blog-id,channel-id]
  *
  * 캐시는 node_modules/.cache/source-history-v1.json에 체크포인트되므로 같은 실행을 재개할 수 있다.
  */
@@ -27,8 +27,12 @@ const POSTS_PATH = path.join(ROOT, 'public/data/posts.json');
 const AUDIT_PATH = path.join(ROOT, 'public/data/source-history-audit.json');
 const CODES_PATH = path.join(ROOT, 'config/stock-codes.json');
 const CACHE_PATH = path.join(ROOT, 'node_modules/.cache/source-history-v1.json');
-const BLOGS = readJSON(path.join(ROOT, 'config/blogs.json'), { blogs: [] }).blogs;
-const CHANNELS = readJSON(path.join(ROOT, 'config/telegram-channels.json'), { channels: [] }).channels;
+const onlyAt = process.argv.indexOf('--only');
+const ONLY = onlyAt >= 0 ? new Set(String(process.argv[onlyAt + 1] || '').split(',').filter(Boolean)) : null;
+const BLOGS = readJSON(path.join(ROOT, 'config/blogs.json'), { blogs: [] }).blogs
+  .filter((source) => !ONLY || ONLY.has(source.id));
+const CHANNELS = readJSON(path.join(ROOT, 'config/telegram-channels.json'), { channels: [] }).channels
+  .filter((source) => !ONLY || ONLY.has(source.id));
 const ALIASES = readJSON(path.join(ROOT, 'config/stock-aliases.json'), {});
 const APPLY = process.argv.includes('--apply');
 const AUDIT = process.argv.includes('--audit') || !APPLY;
@@ -315,7 +319,10 @@ for (const { item, analysis, opinion } of opinionRows) {
 }
 for (const [date, rows] of Object.entries(officialByDate)) {
   const previous = history[date] || { prices: {}, indices: {}, opinions: [] };
-  const legacy = (previous.opinions || []).filter((op) => op.hitrate_version !== HITRATE_SCHEMA_VERSION);
+  // 일부 소스만 재분석할 때 같은 날짜의 다른 필자 v1 의견까지 지우면
+  // 성공한 백필 뒤 전체 성적표가 조용히 줄어든다. 선택한 source_id만 교체한다.
+  const legacy = (previous.opinions || []).filter((op) =>
+    op.hitrate_version !== HITRATE_SCHEMA_VERSION || (ONLY && !ONLY.has(op.source_id)));
   const unique = new Map(rows.map((op) => [`${op.source}:${op.post_id}:${op.stock}`, op]));
   history[date] = { ...previous, opinions: [...legacy, ...unique.values()] };
 }

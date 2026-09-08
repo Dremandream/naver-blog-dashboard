@@ -7,6 +7,10 @@ on:
         description: 수집할 과거 연수
         required: true
         default: '2'
+      source_ids:
+        description: 쉼표로 구분한 재분석 소스 ID (비우면 전체)
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -38,7 +42,9 @@ jobs:
       - name: 2년 원문 재분석과 가격 백필
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
-        run: node scripts/backfill-source-history.js --apply --years ${{ inputs.years }}
+        run: >-
+          node scripts/backfill-source-history.js --apply --years ${{ inputs.years }}
+          ${{ inputs.source_ids && format('--only {0}', inputs.source_ids) || '' }}
       - name: 결과 검증
         run: |
           npm test
