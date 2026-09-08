@@ -2,6 +2,11 @@ import { parseJSONLoose } from './parsers.js';
 
 const MODEL = 'claude-haiku-4-5-20251001';
 
+/** 잔액 부족은 재시도로 풀리지 않는다. 호출을 계속하면 실패 로그만 수천 줄 쌓인다. */
+export function isAnthropicCreditExhausted(error) {
+  return /credit balance is too low/i.test(String(error?.message || error));
+}
+
 export function buildHistoricalRepairPrompt(raw) {
   return `다음 텍스트는 투자 의견 추출용 JSON 응답이지만 형식이 깨졌습니다.
 의미와 이미 완성된 값만 보존해 유효한 JSON 객체로 복구하세요.
@@ -47,6 +52,7 @@ export async function requestHistoricalJSON(client, prompt, options = {}) {
       }
     } catch (error) {
       lastError = error;
+      if (isAnthropicCreditExhausted(error)) throw error;
     }
 
     if (attempt < maxAttempts) {

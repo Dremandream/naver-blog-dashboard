@@ -6,7 +6,7 @@ import { judgeOne, runCritic } from '../scripts/judge.js';
 import { computeSourceScores, HITRATE_SCHEMA_VERSION } from '../scripts/hitrate.js';
 import { uniqueStrings, visibleItems } from '../src/utils/post-list.js';
 import { parseJSONLoose as parseJSONLooseModule, stripHtml as stripHtmlModule } from '../scripts/lib/parsers.js';
-import { assertHistoricalBatchComplete, buildHistoricalRepairPrompt, requestHistoricalJSON } from '../scripts/lib/historical-analysis.js';
+import { assertHistoricalBatchComplete, buildHistoricalRepairPrompt, isAnthropicCreditExhausted, requestHistoricalJSON } from '../scripts/lib/historical-analysis.js';
 import { assertNoTransientSourceFailures, fetchTextWithRetry } from '../scripts/lib/network.js';
 import { buildPeterFearGreed, buildPeterBacktest, mergePeterHistory } from '../shared/peter-fear-greed.js';
 import { rankSources, selectRelatedPosts, wilsonLowerBound } from '../src/utils/source-ranking.js';
@@ -76,6 +76,9 @@ eq('M4 복구 요청은 출력 여유를 늘리고 불완전 의견 추측을 �
   historicalCalls[1].messages[0].content.includes('추측해서 채우지 말고 제거'),
   buildHistoricalRepairPrompt('broken').includes('broken'),
 ], [900, 1800, true, true]);
+eq('M4b Claude 잔액 부족은 재시도하지 않는다', isAnthropicCreditExhausted(
+  new Error('Your credit balance is too low to access the Anthropic API.'),
+), true);
 assertHistoricalBatchComplete(0);
 try {
   assertHistoricalBatchComplete(1);
