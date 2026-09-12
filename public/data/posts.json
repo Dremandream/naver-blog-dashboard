@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-11",
+  "date": "2026-09-12",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1774,16 +1774,16 @@
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26081.725,
-      "asOf": "20260910",
-      "d1": -0.7,
-      "d5": -0.5
+      "index": 26333.035,
+      "asOf": "20260911",
+      "d1": 1,
+      "d5": -0.9
     },
     "sp500": {
-      "index": 7591.7,
-      "asOf": "20260910",
-      "d1": -0.6,
-      "d5": -1
+      "index": 7656.98,
+      "asOf": "20260911",
+      "d1": 0.9,
+      "d5": -1.2
     }
   },
   "prices": {
@@ -1829,8 +1829,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-11",
-    "generatedAt": "2026-09-11T12:19:05.824Z",
+    "date": "2026-09-12",
+    "generatedAt": "2026-09-12T00:44:04.559Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1839,6 +1839,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-12",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-11",
       "buy_pct": 0
@@ -1853,10 +1857,6 @@
     },
     {
       "date": "2026-09-08",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-07",
       "buy_pct": 0
     }
   ],
@@ -2223,280 +2223,6 @@
     ]
   },
   "mention_history": {
-    "2026-07-29": {
-      "stocks": [
-        "난야",
-        "달바글로벌",
-        "두산퓨얼셀",
-        "마이크로소프트",
-        "마이크론",
-        "메타",
-        "블룸에너지",
-        "삼성전기",
-        "삼성전자",
-        "셀트리온",
-        "시게이트",
-        "시게이트 테크놀로지",
-        "아마존",
-        "에코프로",
-        "에코프로비엠",
-        "엔비디아",
-        "웨스턴디지털",
-        "윈하이텍",
-        "주성엔지니어링",
-        "하이브",
-        "히타치제작소",
-        "Bloom Energy",
-        "HD건설기계",
-        "HD현대중공업",
-        "KLA",
-        "SK하이닉스",
-        "Teradyne",
-        "Vertiv Holdings"
-      ],
-      "sectors": [
-        "거시경제",
-        "반도체",
-        "에너지"
-      ],
-      "opinions": [
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "윈하이텍",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전기",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "블룸에너지",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "히타치제작소",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "KLA",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "의교창",
-          "stock": "마이크로소프트",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "메타",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "아마존",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "난야",
-          "stance": "중립"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "마이크론",
-          "stance": "중립"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "시게이트",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "웨스턴디지털",
-          "stance": "중립"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "달바글로벌",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "셀트리온",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "에코프로",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "에코프로비엠",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "주성엔지니어링",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "HD건설기계",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "HD현대중공업",
-          "stance": "약세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "콤디티",
-          "stock": "마이크론",
-          "stance": "약세"
-        },
-        {
-          "person": "콤디티",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전기",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "하이브",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "두산퓨얼셀",
-          "stance": "강세"
-        },
-        {
-          "person": "피카츄 아저씨",
-          "stock": "Bloom Energy",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "시게이트 테크놀로지",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "KLA",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "Teradyne",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "Vertiv Holdings",
-          "stance": "강세"
-        }
-      ]
-    },
     "2026-07-30": {
       "stocks": [
         "기가비스",
@@ -9437,7 +9163,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-11",
+    "asOf": "2026-09-12",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
