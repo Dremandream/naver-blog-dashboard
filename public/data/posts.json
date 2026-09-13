@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-12",
+  "date": "2026-09-13",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1829,8 +1829,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-12",
-    "generatedAt": "2026-09-12T00:44:04.559Z",
+    "date": "2026-09-13",
+    "generatedAt": "2026-09-13T00:28:30.324Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1839,6 +1839,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-13",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-12",
       "buy_pct": 0
@@ -1853,10 +1857,6 @@
     },
     {
       "date": "2026-09-09",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-08",
       "buy_pct": 0
     }
   ],
@@ -1877,7 +1877,7 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-07-04",
+      "historyStart": "2024-08-01",
       "historyEnd": "2026-09-11",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
@@ -2220,317 +2220,9 @@
           }
         }
       }
-    ],
-    "refresh": {
-      "generatedAt": "2026-09-12T20:18:10.014Z",
-      "stocks": 1079,
-      "failures": []
-    }
+    ]
   },
   "mention_history": {
-    "2026-07-30": {
-      "stocks": [
-        "기가비스",
-        "도쿄일렉트론",
-        "램 리서치",
-        "램리서치",
-        "마이크로소프트",
-        "마이크론",
-        "메타",
-        "브로드컴",
-        "삼성전자",
-        "삼성SDI",
-        "아마존",
-        "알파벳",
-        "애플",
-        "어드밴테스트",
-        "엔비디아",
-        "인텔",
-        "코덱스",
-        "코웨이",
-        "테라다인",
-        "폼팩터",
-        "AMD",
-        "ASML",
-        "CXMT",
-        "SK이노베이션",
-        "SK하이닉스",
-        "TSMC"
-      ],
-      "sectors": [
-        "2차전지",
-        "거시경제",
-        "반도체",
-        "플랫폼"
-      ],
-      "opinions": [
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "애플",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "램 리서치",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "마이크로소프트",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "애플",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "인텔",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "폼팩터",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "ASML",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "TSMC",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "도쿄일렉트론",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "램리서치",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "마이크론",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "어드밴테스트",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "테라다인",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "마이크로소프트",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "메타",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "브로드컴",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "아마존",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "코웨이",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK이노베이션",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "콤디티",
-          "stock": "코덱스",
-          "stance": "약세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "브로드컴",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "AMD",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "램 리서치",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "마이크로소프트",
-          "stance": "강세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "펭미업",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "CXMT",
-          "stance": "약세"
-        },
-        {
-          "person": "피터케이",
-          "stock": "SK하이닉스",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "기가비스",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "삼성SDI",
-          "stance": "강세"
-        },
-        {
-          "person": "IT는 SK",
-          "stock": "아마존",
-          "stance": "강세"
-        },
-        {
-          "person": "ITK 미주투",
-          "stock": "마이크로소프트",
-          "stance": "강세"
-        },
-        {
-          "person": "ITK 미주투",
-          "stock": "메타",
-          "stance": "약세"
-        }
-      ]
-    },
     "2026-07-31": {
       "stocks": [
         "마이크로소프트",
@@ -9163,12 +8855,37 @@
       "stocks": [],
       "sectors": [],
       "opinions": []
+    },
+    "2026-09-07": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-08": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-09": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-10": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-09-11": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
     }
   },
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-12",
+    "asOf": "2026-09-13",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
