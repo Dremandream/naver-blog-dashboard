@@ -1744,64 +1744,64 @@
   ],
   "market": {
     "kospi": {
-      "index": 6685.31,
+      "index": 6684.37,
       "asOf": "20260914",
       "d1": -3.3,
       "d5": -4.4,
       "d20": -4.2,
       "flows": {
         "date": "26.09.14",
-        "individual": 12686,
-        "foreign": -11297,
-        "institution": -2904,
-        "foreign5d": -58530
+        "individual": 30351,
+        "foreign": -33363,
+        "institution": -11869,
+        "foreign5d": -80596
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 803.61,
+      "index": 806.79,
       "asOf": "20260914",
-      "d1": -2.1,
-      "d5": -2.3,
-      "d20": -7.1,
+      "d1": -1.7,
+      "d5": -1.9,
+      "d20": -6.7,
       "flows": {
         "date": "26.09.14",
-        "individual": 937,
-        "foreign": -534,
-        "institution": -403,
-        "foreign5d": -10681
+        "individual": 1029,
+        "foreign": -923,
+        "institution": -238,
+        "foreign5d": -11070
       },
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26333.035,
-      "asOf": "20260911",
-      "d1": 1,
-      "d5": -0.9
+      "index": 26097.846,
+      "asOf": "20260914",
+      "d1": -0.9,
+      "d5": -1.5
     },
     "sp500": {
-      "index": 7656.98,
-      "asOf": "20260911",
-      "d1": 0.9,
-      "d5": -1.2
+      "index": 7612.15,
+      "asOf": "20260914",
+      "d1": -0.6,
+      "d5": -1.4
     }
   },
   "prices": {
     "삼성전자": {
       "market": "KR",
-      "price": 269000,
-      "asOf": "20260910",
-      "d1": -0.2,
-      "d5": 7.6,
-      "d20": 5.3,
+      "price": 259500,
+      "asOf": "20260911",
+      "d1": -3.5,
+      "d5": 1.6,
+      "d20": -3.2,
       "investor": {
-        "asOf": "20260911",
-        "foreignToday": -3531147,
-        "institutionToday": -2208594,
-        "foreign5d": -5605986,
-        "institution5d": 10773222,
-        "foreignRate": 46.64,
-        "volume": 13939111,
+        "asOf": "20260914",
+        "foreignToday": -3466765,
+        "institutionToday": -1817020,
+        "foreign5d": -12318998,
+        "institution5d": 4387775,
+        "foreignRate": 46.58,
+        "volume": 17757600,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1809,19 +1809,19 @@
     },
     "SK하이닉스": {
       "market": "KR",
-      "price": 1853000,
-      "asOf": "20260910",
-      "d1": -0.2,
-      "d5": 16.1,
-      "d20": 23.2,
+      "price": 1812000,
+      "asOf": "20260911",
+      "d1": -2.2,
+      "d5": 10,
+      "d20": 13.7,
       "investor": {
-        "asOf": "20260911",
-        "foreignToday": -606502,
-        "institutionToday": -274533,
-        "foreign5d": -651929,
-        "institution5d": 438838,
-        "foreignRate": 50.47,
-        "volume": 2625165,
+        "asOf": "20260914",
+        "foreignToday": -1215512,
+        "institutionToday": -266205,
+        "foreign5d": -2639477,
+        "institution5d": -193086,
+        "foreignRate": 50.3,
+        "volume": 4000232,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1830,7 +1830,7 @@
   },
   "verdicts": {
     "date": "2026-09-14",
-    "generatedAt": "2026-09-14T00:30:02.357Z",
+    "generatedAt": "2026-09-14T14:21:09.491Z",
     "items": [],
     "critic": {
       "pass": true,
