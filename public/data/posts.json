@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-14",
+  "date": "2026-09-15",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1744,46 +1744,46 @@
   ],
   "market": {
     "kospi": {
-      "index": 6684.37,
-      "asOf": "20260914",
-      "d1": -3.3,
-      "d5": -4.4,
-      "d20": -4.2,
+      "index": 6657.91,
+      "asOf": "20260915",
+      "d1": -0.4,
+      "d5": -4.3,
+      "d20": -3.1,
       "flows": {
-        "date": "26.09.14",
-        "individual": 30351,
-        "foreign": -33363,
-        "institution": -11869,
-        "foreign5d": -80596
+        "date": "26.09.15",
+        "individual": 4942,
+        "foreign": -4279,
+        "institution": -3172,
+        "foreign5d": -91191
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 806.79,
-      "asOf": "20260914",
-      "d1": -1.7,
-      "d5": -1.9,
-      "d20": -6.7,
+      "index": 814.46,
+      "asOf": "20260915",
+      "d1": 1,
+      "d5": 0.3,
+      "d20": -2.4,
       "flows": {
-        "date": "26.09.14",
-        "individual": 1029,
-        "foreign": -923,
-        "institution": -238,
-        "foreign5d": -11070
+        "date": "26.09.15",
+        "individual": 74,
+        "foreign": -327,
+        "institution": 223,
+        "foreign5d": -12980
       },
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26097.846,
-      "asOf": "20260914",
-      "d1": -0.9,
-      "d5": -1.5
-    },
-    "sp500": {
-      "index": 7612.15,
+      "index": 26186.413,
       "asOf": "20260914",
       "d1": -0.6,
-      "d5": -1.4
+      "d5": -1.2
+    },
+    "sp500": {
+      "index": 7619.98,
+      "asOf": "20260914",
+      "d1": -0.5,
+      "d5": -1.3
     }
   },
   "prices": {
@@ -1800,8 +1800,8 @@
         "institutionToday": -1817020,
         "foreign5d": -12318998,
         "institution5d": 4387775,
-        "foreignRate": 46.58,
-        "volume": 17757600,
+        "foreignRate": 46.57,
+        "volume": 17776098,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1820,8 +1820,8 @@
         "institutionToday": -266205,
         "foreign5d": -2639477,
         "institution5d": -193086,
-        "foreignRate": 50.3,
-        "volume": 4000232,
+        "foreignRate": 50.27,
+        "volume": 4001549,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1829,8 +1829,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-14",
-    "generatedAt": "2026-09-14T14:21:09.491Z",
+    "date": "2026-09-15",
+    "generatedAt": "2026-09-15T01:00:41.885Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1839,6 +1839,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-15",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-14",
       "buy_pct": 0
@@ -1853,10 +1857,6 @@
     },
     {
       "date": "2026-09-11",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-10",
       "buy_pct": 0
     }
   ],
@@ -2223,99 +2223,6 @@
     ]
   },
   "mention_history": {
-    "2026-08-01": {
-      "stocks": [
-        "브로드컴",
-        "삼성전자",
-        "아마존",
-        "알파벳",
-        "앤트로픽",
-        "키옥시아",
-        "Kioxia",
-        "SK하이닉스"
-      ],
-      "sectors": [
-        "거시경제",
-        "반도체"
-      ],
-      "opinions": [
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "Kioxia",
-          "stance": "강세"
-        },
-        {
-          "person": "에테르",
-          "stock": "키옥시아",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "아마존",
-          "stance": "중립"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "브로드컴",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "알파벳",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "앤트로픽",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "키옥시아",
-          "stance": "강세"
-        },
-        {
-          "person": "잠실개미",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "브로드컴",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "알파벳",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "앤트로픽",
-          "stance": "중립"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        }
-      ]
-    },
     "2026-08-02": {
       "stocks": [
         "달바글로벌",
@@ -8507,7 +8414,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-14",
+    "asOf": "2026-09-15",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
