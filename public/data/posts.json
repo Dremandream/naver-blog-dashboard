@@ -1744,32 +1744,32 @@
   ],
   "market": {
     "kospi": {
-      "index": 6657.91,
+      "index": 6627.26,
       "asOf": "20260915",
-      "d1": -0.4,
-      "d5": -4.3,
-      "d20": -3.1,
+      "d1": -0.9,
+      "d5": -4.7,
+      "d20": -3.5,
       "flows": {
         "date": "26.09.15",
-        "individual": 4942,
-        "foreign": -4279,
-        "institution": -3172,
-        "foreign5d": -91191
+        "individual": 8596,
+        "foreign": -15458,
+        "institution": -9585,
+        "foreign5d": -102370
       },
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 814.46,
+      "index": 812.41,
       "asOf": "20260915",
-      "d1": 1,
-      "d5": 0.3,
-      "d20": -2.4,
+      "d1": 0.7,
+      "d5": 0.1,
+      "d20": -2.6,
       "flows": {
         "date": "26.09.15",
-        "individual": 74,
-        "foreign": -327,
-        "institution": 223,
-        "foreign5d": -12980
+        "individual": -1478,
+        "foreign": 272,
+        "institution": 1149,
+        "foreign5d": -12381
       },
       "dataSource": "naver"
     },
@@ -1795,13 +1795,13 @@
       "d5": 1.6,
       "d20": -3.2,
       "investor": {
-        "asOf": "20260914",
-        "foreignToday": -3466765,
-        "institutionToday": -1817020,
-        "foreign5d": -12318998,
-        "institution5d": 4387775,
-        "foreignRate": 46.57,
-        "volume": 17776098,
+        "asOf": "20260915",
+        "foreignToday": -1088039,
+        "institutionToday": -2321959,
+        "foreign5d": -16739565,
+        "institution5d": -340434,
+        "foreignRate": 46.55,
+        "volume": 11435506,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1815,13 +1815,13 @@
       "d5": 10,
       "d20": 13.7,
       "investor": {
-        "asOf": "20260914",
-        "foreignToday": -1215512,
-        "institutionToday": -266205,
-        "foreign5d": -2639477,
-        "institution5d": -193086,
-        "foreignRate": 50.27,
-        "volume": 4001549,
+        "asOf": "20260915",
+        "foreignToday": -586836,
+        "institutionToday": -101614,
+        "foreign5d": -3323858,
+        "institution5d": -280140,
+        "foreignRate": 50.19,
+        "volume": 2651098,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1830,7 +1830,7 @@
   },
   "verdicts": {
     "date": "2026-09-15",
-    "generatedAt": "2026-09-15T01:00:41.885Z",
+    "generatedAt": "2026-09-15T12:50:28.778Z",
     "items": [],
     "critic": {
       "pass": true,
