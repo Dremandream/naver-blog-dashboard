@@ -1849,7 +1849,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-09-11",
+    "asOf": "2026-09-18",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1865,8 +1865,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-08-01",
-      "historyEnd": "2026-09-11",
+      "historyStart": "2024-07-11",
+      "historyEnd": "2026-09-18",
       "eligibleMentions": 6755,
       "independentEpisodes": 5482,
       "repeatedMentionsExcluded": 1273
@@ -1877,14 +1877,14 @@
         "opinions": 387,
         "w": {
           "63": {
-            "hits": 194,
-            "total": 338,
-            "rate": 57.4
+            "hits": 196,
+            "total": 344,
+            "rate": 57
           },
           "252": {
-            "hits": 126,
-            "total": 208,
-            "rate": 60.6
+            "hits": 128,
+            "total": 211,
+            "rate": 60.7
           }
         }
       },
@@ -1893,13 +1893,13 @@
         "opinions": 685,
         "w": {
           "63": {
-            "hits": 342,
-            "total": 612,
-            "rate": 55.9
+            "hits": 345,
+            "total": 623,
+            "rate": 55.4
           },
           "252": {
-            "hits": 174,
-            "total": 309,
+            "hits": 179,
+            "total": 318,
             "rate": 56.3
           }
         }
@@ -1909,14 +1909,14 @@
         "opinions": 190,
         "w": {
           "63": {
-            "hits": 69,
-            "total": 142,
-            "rate": 48.6
+            "hits": 71,
+            "total": 144,
+            "rate": 49.3
           },
           "252": {
-            "hits": 36,
-            "total": 64,
-            "rate": 56.3
+            "hits": 37,
+            "total": 66,
+            "rate": 56.1
           }
         }
       },
@@ -1941,9 +1941,9 @@
         "opinions": 124,
         "w": {
           "63": {
-            "hits": 69,
-            "total": 115,
-            "rate": 60
+            "hits": 71,
+            "total": 117,
+            "rate": 60.7
           },
           "252": {
             "hits": 36,
@@ -1957,14 +1957,14 @@
         "opinions": 489,
         "w": {
           "63": {
-            "hits": 228,
-            "total": 444,
-            "rate": 51.4
+            "hits": 229,
+            "total": 446,
+            "rate": 51.3
           },
           "252": {
             "hits": 99,
-            "total": 205,
-            "rate": 48.3
+            "total": 207,
+            "rate": 47.8
           }
         }
       },
@@ -1990,13 +1990,13 @@
         "w": {
           "63": {
             "hits": 181,
-            "total": 382,
-            "rate": 47.4
+            "total": 385,
+            "rate": 47
           },
           "252": {
-            "hits": 72,
-            "total": 197,
-            "rate": 36.5
+            "hits": 78,
+            "total": 209,
+            "rate": 37.3
           }
         }
       },
@@ -2005,14 +2005,14 @@
         "opinions": 370,
         "w": {
           "63": {
-            "hits": 139,
-            "total": 331,
-            "rate": 42
+            "hits": 140,
+            "total": 335,
+            "rate": 41.8
           },
           "252": {
-            "hits": 59,
-            "total": 171,
-            "rate": 34.5
+            "hits": 62,
+            "total": 174,
+            "rate": 35.6
           }
         }
       },
@@ -2037,14 +2037,30 @@
         "opinions": 771,
         "w": {
           "63": {
-            "hits": 291,
-            "total": 714,
-            "rate": 40.8
+            "hits": 294,
+            "total": 723,
+            "rate": 40.7
           },
           "252": {
-            "hits": 130,
-            "total": 401,
-            "rate": 32.4
+            "hits": 132,
+            "total": 406,
+            "rate": 32.5
+          }
+        }
+      },
+      {
+        "person": "우용용",
+        "opinions": 365,
+        "w": {
+          "63": {
+            "hits": 161,
+            "total": 315,
+            "rate": 51.1
+          },
+          "252": {
+            "hits": 33,
+            "total": 115,
+            "rate": 28.7
           }
         }
       },
@@ -2054,29 +2070,13 @@
         "w": {
           "63": {
             "hits": 108,
-            "total": 248,
-            "rate": 43.5
+            "total": 249,
+            "rate": 43.4
           },
           "252": {
             "hits": 48,
-            "total": 171,
-            "rate": 28.1
-          }
-        }
-      },
-      {
-        "person": "우용용",
-        "opinions": 365,
-        "w": {
-          "63": {
-            "hits": 158,
-            "total": 310,
-            "rate": 51
-          },
-          "252": {
-            "hits": 30,
-            "total": 110,
-            "rate": 27.3
+            "total": 173,
+            "rate": 27.7
           }
         }
       },
@@ -2086,8 +2086,8 @@
         "w": {
           "63": {
             "hits": 119,
-            "total": 303,
-            "rate": 39.3
+            "total": 305,
+            "rate": 39
           },
           "252": {
             "hits": 31,
@@ -2102,8 +2102,8 @@
         "w": {
           "63": {
             "hits": 82,
-            "total": 240,
-            "rate": 34.2
+            "total": 241,
+            "rate": 34
           },
           "252": {
             "hits": 30,
@@ -2150,8 +2150,8 @@
         "w": {
           "63": {
             "hits": 59,
-            "total": 145,
-            "rate": 40.7
+            "total": 149,
+            "rate": 39.6
           },
           "252": {
             "hits": 0,
@@ -2166,8 +2166,8 @@
         "w": {
           "63": {
             "hits": 41,
-            "total": 170,
-            "rate": 24.1
+            "total": 174,
+            "rate": 23.6
           },
           "252": {
             "hits": 0,
@@ -2198,7 +2198,7 @@
         "w": {
           "63": {
             "hits": 0,
-            "total": 0,
+            "total": 1,
             "rate": null
           },
           "252": {
@@ -2208,7 +2208,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-09-19T20:10:01.487Z",
+      "stocks": 1079,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-08-06": {
