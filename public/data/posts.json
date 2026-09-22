@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-21",
+  "date": "2026-09-22",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1744,34 +1744,34 @@
   ],
   "market": {
     "kospi": {
-      "index": 7007.72,
-      "asOf": "20260921",
+      "index": 7117.12,
+      "asOf": "20260922",
       "d1": 1.6,
-      "d5": 4.8,
-      "d20": 4.6,
+      "d5": 7.4,
+      "d20": 5.6,
       "flows": null,
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 836.27,
-      "asOf": "20260921",
-      "d1": 1.1,
+      "index": 842.81,
+      "asOf": "20260922",
+      "d1": 0.8,
       "d5": 3.7,
-      "d20": 2.8,
+      "d20": 1.9,
       "flows": null,
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26913.389,
+      "index": 27122.094,
       "asOf": "20260921",
-      "d1": 1.5,
-      "d5": 2.8
+      "d1": 2.3,
+      "d5": 3.6
     },
     "sp500": {
-      "index": 7720.58,
+      "index": 7764.7,
       "asOf": "20260921",
-      "d1": 0.9,
-      "d5": 1.3
+      "d1": 1.5,
+      "d5": 1.9
     }
   },
   "prices": {
@@ -1788,8 +1788,8 @@
         "institutionToday": 4186614,
         "foreign5d": -2758478,
         "institution5d": 6468711,
-        "foreignRate": 46.53,
-        "volume": 22223579,
+        "foreignRate": 46.56,
+        "volume": 22261519,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1808,8 +1808,8 @@
         "institutionToday": 96093,
         "foreign5d": -1188803,
         "institution5d": 318786,
-        "foreignRate": 50.18,
-        "volume": 2716408,
+        "foreignRate": 50.17,
+        "volume": 2755380,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-21",
-    "generatedAt": "2026-09-21T14:27:18.323Z",
+    "date": "2026-09-22",
+    "generatedAt": "2026-09-22T01:17:28.171Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-22",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-21",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-09-18",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-17",
       "buy_pct": 0
     }
   ],
@@ -2211,178 +2211,6 @@
     ]
   },
   "mention_history": {
-    "2026-08-08": {
-      "stocks": [
-        "델",
-        "로봇",
-        "마벨",
-        "마이크론",
-        "메타",
-        "버크셔 해서웨이",
-        "브로드컴",
-        "삼성전자",
-        "샌디스크",
-        "아마존",
-        "알리바바",
-        "알파벳",
-        "애플",
-        "엔비디아",
-        "인텔",
-        "테슬라",
-        "AMD",
-        "SK스퀘어",
-        "SK하이닉스",
-        "TSMC"
-      ],
-      "sectors": [
-        "2차전지",
-        "거시경제",
-        "반도체",
-        "플랫폼"
-      ],
-      "opinions": [
-        {
-          "person": "너쟁이",
-          "stock": "마이크론",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "마이크론",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "삼성전자",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "샌디스크",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "우용용",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "SK스퀘어",
-          "stance": "약세"
-        },
-        {
-          "person": "우용용",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "의교창",
-          "stock": "로봇",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "델",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "마벨",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "마이크론",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "메타",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "브로드컴",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "샌디스크",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "아마존",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "인텔",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "테슬라",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "AMD",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "TSMC",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "마이크론",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "버크셔 해서웨이",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "알리바바",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "알파벳",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "애플",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "엔비디아",
-          "stance": "중립"
-        },
-        {
-          "person": "펭미업",
-          "stock": "SK하이닉스",
-          "stance": "중립"
-        }
-      ]
-    },
     "2026-08-09": {
       "stocks": [
         "두산에너빌리티",
@@ -5942,7 +5770,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-21",
+    "asOf": "2026-09-22",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
