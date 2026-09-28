@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28",
+  "date": "2026-09-29",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1744,52 +1744,52 @@
   ],
   "market": {
     "kospi": {
-      "index": 6961.89,
+      "index": 6889.74,
       "asOf": "20260928",
-      "d1": -1.7,
-      "d5": 3.7,
-      "d20": 0.7,
+      "d1": -2.7,
+      "d5": 2.6,
+      "d20": -0.3,
       "flows": null,
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 856.27,
+      "index": 846.58,
       "asOf": "20260928",
-      "d1": 1.4,
-      "d5": 4.1,
-      "d20": 2.2,
+      "d1": 0.2,
+      "d5": 3,
+      "d20": 1.1,
       "flows": null,
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 27068.716,
-      "asOf": "20260925",
-      "d1": 0.5,
-      "d5": 2.1
+      "index": 26789.894,
+      "asOf": "20260928",
+      "d1": -1,
+      "d5": -1.2
     },
     "sp500": {
-      "index": 7743.41,
-      "asOf": "20260925",
-      "d1": 0.5,
-      "d5": 1.2
+      "index": 7678.26,
+      "asOf": "20260928",
+      "d1": -0.8,
+      "d5": -1.1
     }
   },
   "prices": {
     "삼성전자": {
       "market": "KR",
-      "price": 276500,
-      "asOf": "20260922",
-      "d1": 0.9,
-      "d5": 11.3,
-      "d20": 7.6,
+      "price": 285500,
+      "asOf": "20260923",
+      "d1": 3.3,
+      "d5": 12.6,
+      "d20": 9.2,
       "investor": {
-        "asOf": "20260923",
-        "foreignToday": 4513767,
-        "institutionToday": 1346883,
-        "foreign5d": 5410018,
-        "institution5d": 8736766,
-        "foreignRate": 46.64,
-        "volume": 20864376,
+        "asOf": "20260928",
+        "foreignToday": -4999903,
+        "institutionToday": -2410724,
+        "foreign5d": 2580802,
+        "institution5d": 6129204,
+        "foreignRate": 46.56,
+        "volume": 21080365,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1797,19 +1797,19 @@
     },
     "SK하이닉스": {
       "market": "KR",
-      "price": 1840000,
-      "asOf": "20260922",
-      "d1": -1.5,
-      "d5": 8.9,
-      "d20": 9.7,
+      "price": 1862000,
+      "asOf": "20260923",
+      "d1": 1.2,
+      "d5": 5.9,
+      "d20": 10.3,
       "investor": {
-        "asOf": "20260923",
-        "foreignToday": -636435,
-        "institutionToday": 122948,
-        "foreign5d": -1193303,
-        "institution5d": 166508,
-        "foreignRate": 50.06,
-        "volume": 2947714,
+        "asOf": "20260928",
+        "foreignToday": -988534,
+        "institutionToday": -274871,
+        "foreign5d": -1480041,
+        "institution5d": -54767,
+        "foreignRate": 49.92,
+        "volume": 3264425,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-28",
-    "generatedAt": "2026-09-28T01:14:57.462Z",
+    "date": "2026-09-29",
+    "generatedAt": "2026-09-28T15:47:37.227Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-29",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-28",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-09-25",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-24",
       "buy_pct": 0
     }
   ],
@@ -2211,278 +2211,6 @@
     ]
   },
   "mention_history": {
-    "2026-08-15": {
-      "stocks": [
-        "농심",
-        "대동",
-        "마이크로컨텍솔",
-        "마이크론",
-        "메가터치",
-        "빙그레",
-        "삼성전자",
-        "삼성SDI",
-        "상신이디피",
-        "샌디스크",
-        "성일하이텍",
-        "세보엠이씨",
-        "아비코전자",
-        "알파벳",
-        "에이직랜드",
-        "엑시콘",
-        "엔비디아",
-        "오킨스전자",
-        "유니테스트",
-        "유니트리",
-        "윤성에프엔씨",
-        "율촌화학",
-        "이엘씨",
-        "이오테크닉스",
-        "코어위브",
-        "키옥시아",
-        "티에스이",
-        "팔란티어",
-        "프로텍",
-        "하나마이크론",
-        "한솔제지",
-        "LB세미콘",
-        "LG이노텍",
-        "LG하우시스",
-        "SanDisk",
-        "SK하이닉스",
-        "TYM",
-        "YMTC"
-      ],
-      "sectors": [
-        "반도체"
-      ],
-      "opinions": [
-        {
-          "person": "너쟁이",
-          "stock": "농심",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "마이크로컨텍솔",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "메가터치",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "빙그레",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성SDI",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "상신이디피",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "성일하이텍",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "세보엠이씨",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "아비코전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "에이직랜드",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "엑시콘",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "오킨스전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "유니테스트",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "윤성에프엔씨",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "율촌화학",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "이엘씨",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "이오테크닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "티에스이",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "프로텍",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "하나마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "LB세미콘",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "LG이노텍",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "SanDisk",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "유니트리",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "팔란티어",
-          "stance": "강세"
-        },
-        {
-          "person": "의교창",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "대동",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "마이크론",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성전자",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "샌디스크",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "알파벳",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "키옥시아",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "한솔제지",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "LG하우시스",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK하이닉스",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "TYM",
-          "stance": "중립"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "YMTC",
-          "stance": "중립"
-        },
-        {
-          "person": "ITK 미주투",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "ITK 미주투",
-          "stock": "코어위브",
-          "stance": "강세"
-        }
-      ]
-    },
     "2026-08-16": {
       "stocks": [
         "네패스",
@@ -3489,7 +3217,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-28",
+    "asOf": "2026-09-29",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
