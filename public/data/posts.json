@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-29",
+  "date": "2026-09-30",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1744,34 +1744,34 @@
   ],
   "market": {
     "kospi": {
-      "index": 6870.81,
-      "asOf": "20260929",
-      "d1": -0.3,
-      "d5": -0.3,
+      "index": 6904.18,
+      "asOf": "20260930",
+      "d1": 0.5,
+      "d5": -1.5,
       "d20": 1.2,
       "flows": null,
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 849.8,
-      "asOf": "20260929",
-      "d1": 0.4,
-      "d5": 2.7,
-      "d20": 1.4,
+      "index": 859.5,
+      "asOf": "20260930",
+      "d1": 1.1,
+      "d5": 2.8,
+      "d20": 3,
       "flows": null,
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26821.221,
+      "index": 26797.541,
       "asOf": "20260929",
-      "d1": 0,
+      "d1": -0.1,
       "d5": -1.6
     },
     "sp500": {
-      "index": 7682.43,
+      "index": 7670.84,
       "asOf": "20260929",
-      "d1": 0,
-      "d5": -1.1
+      "d1": -0.2,
+      "d5": -1.2
     }
   },
   "prices": {
@@ -1788,8 +1788,8 @@
         "institutionToday": 53759,
         "foreign5d": 1745756,
         "institution5d": 3435991,
-        "foreignRate": 46.48,
-        "volume": 15653425,
+        "foreignRate": 46.47,
+        "volume": 15963864,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1809,7 +1809,7 @@
         "foreign5d": -3089233,
         "institution5d": -172868,
         "foreignRate": 49.82,
-        "volume": 2933822,
+        "volume": 2939411,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-09-29",
-    "generatedAt": "2026-09-29T14:15:27.873Z",
+    "date": "2026-09-30",
+    "generatedAt": "2026-09-30T01:40:09.078Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-09-30",
+      "buy_pct": 0
+    },
     {
       "date": "2026-09-29",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-09-26",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-09-25",
       "buy_pct": 0
     }
   ],
@@ -2211,225 +2211,6 @@
     ]
   },
   "mention_history": {
-    "2026-08-16": {
-      "stocks": [
-        "네패스",
-        "네패스아크",
-        "두산테스나",
-        "리노공업",
-        "마이크로컨텍솔",
-        "마이크론",
-        "삼성전자",
-        "샌디스크",
-        "샘씨엔에스",
-        "심텍",
-        "어드반테스트",
-        "에스에이엠티",
-        "에이팩트",
-        "엔비디아",
-        "오킨스전자",
-        "이비덴",
-        "제주반도체",
-        "테크윙",
-        "티에스이",
-        "티에프이",
-        "피델릭스",
-        "피에스케이홀딩스",
-        "피엠티",
-        "하나마이크론",
-        "ISC",
-        "LB세미콘",
-        "SFA반도체",
-        "SK하이닉스"
-      ],
-      "sectors": [
-        "거시경제",
-        "반도체",
-        "플랫폼"
-      ],
-      "opinions": [
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "네패스",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "네패스아크",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "두산테스나",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "리노공업",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "마이크로컨텍솔",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "샘씨엔에스",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "에이팩트",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "오킨스전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "테크윙",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "티에스이",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "티에프이",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "피에스케이홀딩스",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "피엠티",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "하나마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "ISC",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "LB세미콘",
-          "stance": "강세"
-        },
-        {
-          "person": "너는 무한하지 않느냐",
-          "stock": "SFA반도체",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "심텍",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "어드반테스트",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "에스에이엠티",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "이비덴",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "제주반도체",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "피델릭스",
-          "stance": "강세"
-        },
-        {
-          "person": "너쟁이",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "레드버드",
-          "stock": "SK하이닉스",
-          "stance": "약세"
-        },
-        {
-          "person": "에테르",
-          "stock": "샌디스크",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "마이크론",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "엔비디아",
-          "stance": "강세"
-        },
-        {
-          "person": "우용용",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "캬오의 공부방",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "삼성전자",
-          "stance": "강세"
-        },
-        {
-          "person": "투자콤",
-          "stock": "SK하이닉스",
-          "stance": "강세"
-        }
-      ]
-    },
     "2026-08-17": {
       "stocks": [
         "네오셈",
@@ -3217,7 +2998,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-09-29",
+    "asOf": "2026-09-30",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
