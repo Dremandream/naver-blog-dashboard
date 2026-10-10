@@ -1849,7 +1849,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-10-02",
+    "asOf": "2026-10-09",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1865,8 +1865,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-08-20",
-      "historyEnd": "2026-10-02",
+      "historyStart": "2024-08-01",
+      "historyEnd": "2026-10-09",
       "eligibleMentions": 6721,
       "independentEpisodes": 5450,
       "repeatedMentionsExcluded": 1271
@@ -1877,30 +1877,14 @@
         "opinions": 386,
         "w": {
           "63": {
-            "hits": 198,
-            "total": 348,
-            "rate": 56.9
+            "hits": 202,
+            "total": 360,
+            "rate": 56.1
           },
           "252": {
-            "hits": 128,
-            "total": 214,
-            "rate": 59.8
-          }
-        }
-      },
-      {
-        "person": "에테르",
-        "opinions": 677,
-        "w": {
-          "63": {
-            "hits": 343,
-            "total": 625,
-            "rate": 54.9
-          },
-          "252": {
-            "hits": 185,
-            "total": 328,
-            "rate": 56.4
+            "hits": 129,
+            "total": 218,
+            "rate": 59.2
           }
         }
       },
@@ -1914,9 +1898,25 @@
             "rate": 49.3
           },
           "252": {
-            "hits": 37,
-            "total": 69,
-            "rate": 53.6
+            "hits": 43,
+            "total": 76,
+            "rate": 56.6
+          }
+        }
+      },
+      {
+        "person": "에테르",
+        "opinions": 677,
+        "w": {
+          "63": {
+            "hits": 347,
+            "total": 634,
+            "rate": 54.7
+          },
+          "252": {
+            "hits": 195,
+            "total": 348,
+            "rate": 56
           }
         }
       },
@@ -1930,8 +1930,8 @@
             "rate": 59.5
           },
           "252": {
-            "hits": 39,
-            "total": 77,
+            "hits": 40,
+            "total": 79,
             "rate": 50.6
           }
         }
@@ -1957,14 +1957,14 @@
         "opinions": 487,
         "w": {
           "63": {
-            "hits": 232,
-            "total": 450,
-            "rate": 51.6
+            "hits": 233,
+            "total": 453,
+            "rate": 51.4
           },
           "252": {
-            "hits": 100,
-            "total": 211,
-            "rate": 47.4
+            "hits": 102,
+            "total": 214,
+            "rate": 47.7
           }
         }
       },
@@ -1989,14 +1989,14 @@
         "opinions": 424,
         "w": {
           "63": {
-            "hits": 181,
-            "total": 385,
-            "rate": 47
+            "hits": 184,
+            "total": 390,
+            "rate": 47.2
           },
           "252": {
             "hits": 79,
-            "total": 212,
-            "rate": 37.3
+            "total": 213,
+            "rate": 37.1
           }
         }
       },
@@ -2005,14 +2005,14 @@
         "opinions": 370,
         "w": {
           "63": {
-            "hits": 141,
-            "total": 341,
-            "rate": 41.3
+            "hits": 143,
+            "total": 343,
+            "rate": 41.7
           },
           "252": {
-            "hits": 64,
-            "total": 176,
-            "rate": 36.4
+            "hits": 65,
+            "total": 177,
+            "rate": 36.7
           }
         }
       },
@@ -2037,14 +2037,14 @@
         "opinions": 766,
         "w": {
           "63": {
-            "hits": 296,
-            "total": 732,
-            "rate": 40.4
+            "hits": 300,
+            "total": 738,
+            "rate": 40.7
           },
           "252": {
-            "hits": 134,
-            "total": 416,
-            "rate": 32.2
+            "hits": 135,
+            "total": 418,
+            "rate": 32.3
           }
         }
       },
@@ -2053,14 +2053,14 @@
         "opinions": 365,
         "w": {
           "63": {
-            "hits": 166,
-            "total": 327,
-            "rate": 50.8
+            "hits": 168,
+            "total": 329,
+            "rate": 51.1
           },
           "252": {
             "hits": 36,
-            "total": 122,
-            "rate": 29.5
+            "total": 125,
+            "rate": 28.8
           }
         }
       },
@@ -2069,14 +2069,14 @@
         "opinions": 260,
         "w": {
           "63": {
-            "hits": 108,
-            "total": 252,
-            "rate": 42.9
+            "hits": 109,
+            "total": 253,
+            "rate": 43.1
           },
           "252": {
             "hits": 47,
-            "total": 178,
-            "rate": 26.4
+            "total": 181,
+            "rate": 26
           }
         }
       },
@@ -2085,14 +2085,14 @@
         "opinions": 323,
         "w": {
           "63": {
-            "hits": 121,
-            "total": 305,
+            "hits": 122,
+            "total": 307,
             "rate": 39.7
           },
           "252": {
-            "hits": 33,
-            "total": 126,
-            "rate": 26.2
+            "hits": 34,
+            "total": 134,
+            "rate": 25.4
           }
         }
       },
@@ -2101,9 +2101,9 @@
         "opinions": 259,
         "w": {
           "63": {
-            "hits": 83,
-            "total": 241,
-            "rate": 34.4
+            "hits": 86,
+            "total": 244,
+            "rate": 35.2
           },
           "252": {
             "hits": 31,
@@ -2165,9 +2165,9 @@
         "opinions": 206,
         "w": {
           "63": {
-            "hits": 46,
-            "total": 181,
-            "rate": 25.4
+            "hits": 48,
+            "total": 184,
+            "rate": 26.1
           },
           "252": {
             "hits": 0,
@@ -2208,7 +2208,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-10-10T21:16:19.506Z",
+      "stocks": 1071,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-08-27": {
