@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-17",
+  "date": "2026-10-18",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-10-17",
-    "generatedAt": "2026-10-17T00:50:27.977Z",
+    "date": "2026-10-18",
+    "generatedAt": "2026-10-18T00:28:06.093Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-10-18",
+      "buy_pct": 0
+    },
     {
       "date": "2026-10-17",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-10-14",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-10-13",
       "buy_pct": 0
     }
   ],
@@ -1865,106 +1865,106 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-08-08",
+      "historyStart": "2024-08-30",
       "historyEnd": "2026-10-16",
-      "eligibleMentions": 6708,
-      "independentEpisodes": 5440,
-      "repeatedMentionsExcluded": 1268
+      "eligibleMentions": 6668,
+      "independentEpisodes": 5402,
+      "repeatedMentionsExcluded": 1266
     },
     "sources": [
       {
         "person": "피카츄 아저씨",
-        "opinions": 385,
+        "opinions": 383,
         "w": {
           "63": {
-            "hits": 210,
-            "total": 369,
+            "hits": 209,
+            "total": 367,
             "rate": 56.9
           },
           "252": {
-            "hits": 129,
-            "total": 218,
-            "rate": 59.2
-          }
-        }
-      },
-      {
-        "person": "ITK 미주투",
-        "opinions": 190,
-        "w": {
-          "63": {
-            "hits": 75,
-            "total": 156,
-            "rate": 48.1
-          },
-          "252": {
-            "hits": 43,
-            "total": 76,
-            "rate": 56.6
+            "hits": 127,
+            "total": 216,
+            "rate": 58.8
           }
         }
       },
       {
         "person": "에테르",
-        "opinions": 674,
+        "opinions": 670,
         "w": {
           "63": {
-            "hits": 348,
-            "total": 641,
-            "rate": 54.3
+            "hits": 345,
+            "total": 638,
+            "rate": 54.1
           },
           "252": {
-            "hits": 195,
-            "total": 348,
-            "rate": 56
+            "hits": 193,
+            "total": 345,
+            "rate": 55.9
           }
         }
       },
       {
-        "person": "레드버드",
-        "opinions": 124,
+        "person": "ITK 미주투",
+        "opinions": 188,
         "w": {
           "63": {
-            "hits": 72,
-            "total": 121,
-            "rate": 59.5
+            "hits": 73,
+            "total": 154,
+            "rate": 47.4
           },
           "252": {
             "hits": 41,
-            "total": 81,
-            "rate": 50.6
+            "total": 74,
+            "rate": 55.4
           }
         }
       },
       {
         "person": "피터케이",
-        "opinions": 104,
+        "opinions": 101,
         "w": {
           "63": {
             "hits": 47,
-            "total": 102,
-            "rate": 46.1
+            "total": 99,
+            "rate": 47.5
           },
           "252": {
             "hits": 31,
-            "total": 63,
-            "rate": 49.2
+            "total": 60,
+            "rate": 51.7
+          }
+        }
+      },
+      {
+        "person": "레드버드",
+        "opinions": 123,
+        "w": {
+          "63": {
+            "hits": 71,
+            "total": 120,
+            "rate": 59.2
+          },
+          "252": {
+            "hits": 40,
+            "total": 80,
+            "rate": 50
           }
         }
       },
       {
         "person": "너는 무한하지 않느냐",
-        "opinions": 487,
+        "opinions": 483,
         "w": {
           "63": {
-            "hits": 237,
-            "total": 459,
+            "hits": 235,
+            "total": 455,
             "rate": 51.6
           },
           "252": {
             "hits": 106,
-            "total": 225,
-            "rate": 47.1
+            "total": 221,
+            "rate": 48
           }
         }
       },
@@ -1986,17 +1986,17 @@
       },
       {
         "person": "IT는 SK",
-        "opinions": 424,
+        "opinions": 418,
         "w": {
           "63": {
-            "hits": 190,
-            "total": 398,
-            "rate": 47.7
+            "hits": 189,
+            "total": 392,
+            "rate": 48.2
           },
           "252": {
             "hits": 79,
-            "total": 214,
-            "rate": 36.9
+            "total": 208,
+            "rate": 38
           }
         }
       },
@@ -2034,16 +2034,16 @@
       },
       {
         "person": "캬오의 공부방",
-        "opinions": 761,
+        "opinions": 757,
         "w": {
           "63": {
-            "hits": 302,
-            "total": 739,
-            "rate": 40.9
+            "hits": 300,
+            "total": 735,
+            "rate": 40.8
           },
           "252": {
-            "hits": 138,
-            "total": 425,
+            "hits": 137,
+            "total": 421,
             "rate": 32.5
           }
         }
@@ -2082,33 +2082,33 @@
       },
       {
         "person": "씹배",
-        "opinions": 260,
+        "opinions": 255,
         "w": {
           "63": {
-            "hits": 110,
-            "total": 254,
-            "rate": 43.3
+            "hits": 106,
+            "total": 249,
+            "rate": 42.6
           },
           "252": {
-            "hits": 47,
-            "total": 181,
-            "rate": 26
+            "hits": 46,
+            "total": 176,
+            "rate": 26.1
           }
         }
       },
       {
         "person": "너쟁이",
-        "opinions": 258,
+        "opinions": 251,
         "w": {
           "63": {
-            "hits": 86,
-            "total": 244,
-            "rate": 35.2
+            "hits": 85,
+            "total": 237,
+            "rate": 35.9
           },
           "252": {
-            "hits": 31,
-            "total": 132,
-            "rate": 23.5
+            "hits": 29,
+            "total": 125,
+            "rate": 23.2
           }
         }
       },
@@ -2208,19 +2208,9 @@
           }
         }
       }
-    ],
-    "refresh": {
-      "generatedAt": "2026-10-17T20:15:07.778Z",
-      "stocks": 1069,
-      "failures": []
-    }
+    ]
   },
   "mention_history": {
-    "2026-09-03": {
-      "stocks": [],
-      "sectors": [],
-      "opinions": []
-    },
     "2026-09-04": {
       "stocks": [],
       "sectors": [],
@@ -2350,12 +2340,37 @@
       "stocks": [],
       "sectors": [],
       "opinions": []
+    },
+    "2026-10-12": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-13": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-14": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-15": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-16": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
     }
   },
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-10-17",
+    "asOf": "2026-10-18",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
