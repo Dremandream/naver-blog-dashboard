@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-24",
+  "date": "2026-10-25",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-10-24",
-    "generatedAt": "2026-10-24T01:12:07.762Z",
+    "date": "2026-10-25",
+    "generatedAt": "2026-10-25T00:36:16.032Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-10-25",
+      "buy_pct": 0
+    },
     {
       "date": "2026-10-24",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-10-21",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-10-20",
       "buy_pct": 0
     }
   ],
@@ -1865,10 +1865,10 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-08-15",
+      "historyStart": "2024-09-04",
       "historyEnd": "2026-10-23",
-      "eligibleMentions": 6668,
-      "independentEpisodes": 5402,
+      "eligibleMentions": 6632,
+      "independentEpisodes": 5366,
       "repeatedMentionsExcluded": 1266
     },
     "sources": [
@@ -1890,49 +1890,49 @@
       },
       {
         "person": "ITK 미주투",
-        "opinions": 188,
+        "opinions": 186,
         "w": {
           "63": {
-            "hits": 75,
-            "total": 156,
+            "hits": 74,
+            "total": 154,
             "rate": 48.1
           },
           "252": {
-            "hits": 42,
-            "total": 75,
-            "rate": 56
+            "hits": 41,
+            "total": 73,
+            "rate": 56.2
           }
         }
       },
       {
         "person": "에테르",
-        "opinions": 670,
+        "opinions": 669,
         "w": {
           "63": {
-            "hits": 346,
-            "total": 642,
-            "rate": 53.9
+            "hits": 345,
+            "total": 641,
+            "rate": 53.8
           },
           "252": {
             "hits": 195,
-            "total": 349,
-            "rate": 55.9
+            "total": 348,
+            "rate": 56
           }
         }
       },
       {
         "person": "레드버드",
-        "opinions": 123,
+        "opinions": 121,
         "w": {
           "63": {
-            "hits": 71,
-            "total": 121,
-            "rate": 58.7
+            "hits": 70,
+            "total": 119,
+            "rate": 58.8
           },
           "252": {
-            "hits": 42,
-            "total": 82,
-            "rate": 51.2
+            "hits": 41,
+            "total": 80,
+            "rate": 51.3
           }
         }
       },
@@ -1954,33 +1954,17 @@
       },
       {
         "person": "너는 무한하지 않느냐",
-        "opinions": 483,
+        "opinions": 481,
         "w": {
           "63": {
             "hits": 235,
-            "total": 456,
-            "rate": 51.5
+            "total": 454,
+            "rate": 51.8
           },
           "252": {
             "hits": 111,
-            "total": 232,
-            "rate": 47.8
-          }
-        }
-      },
-      {
-        "person": "잠실개미",
-        "opinions": 56,
-        "w": {
-          "63": {
-            "hits": 28,
-            "total": 52,
-            "rate": 53.8
-          },
-          "252": {
-            "hits": 12,
-            "total": 28,
-            "rate": 42.9
+            "total": 230,
+            "rate": 48.3
           }
         }
       },
@@ -1997,6 +1981,22 @@
             "hits": 80,
             "total": 210,
             "rate": 38.1
+          }
+        }
+      },
+      {
+        "person": "잠실개미",
+        "opinions": 52,
+        "w": {
+          "63": {
+            "hits": 24,
+            "total": 48,
+            "rate": 50
+          },
+          "252": {
+            "hits": 9,
+            "total": 24,
+            "rate": 37.5
           }
         }
       },
@@ -2034,49 +2034,49 @@
       },
       {
         "person": "캬오의 공부방",
-        "opinions": 757,
+        "opinions": 750,
         "w": {
           "63": {
-            "hits": 306,
-            "total": 743,
+            "hits": 303,
+            "total": 736,
             "rate": 41.2
           },
           "252": {
-            "hits": 141,
-            "total": 443,
-            "rate": 31.8
+            "hits": 138,
+            "total": 436,
+            "rate": 31.7
           }
         }
       },
       {
         "person": "우용용",
-        "opinions": 365,
+        "opinions": 355,
         "w": {
           "63": {
-            "hits": 169,
-            "total": 336,
-            "rate": 50.3
+            "hits": 165,
+            "total": 326,
+            "rate": 50.6
           },
           "252": {
-            "hits": 42,
-            "total": 142,
-            "rate": 29.6
+            "hits": 36,
+            "total": 132,
+            "rate": 27.3
           }
         }
       },
       {
         "person": "콤디티",
-        "opinions": 323,
+        "opinions": 322,
         "w": {
           "63": {
-            "hits": 125,
-            "total": 312,
-            "rate": 40.1
+            "hits": 124,
+            "total": 311,
+            "rate": 39.9
           },
           "252": {
-            "hits": 42,
-            "total": 153,
-            "rate": 27.5
+            "hits": 41,
+            "total": 152,
+            "rate": 27
           }
         }
       },
@@ -2098,17 +2098,17 @@
       },
       {
         "person": "너쟁이",
-        "opinions": 251,
+        "opinions": 244,
         "w": {
           "63": {
-            "hits": 85,
-            "total": 237,
-            "rate": 35.9
+            "hits": 82,
+            "total": 230,
+            "rate": 35.7
           },
           "252": {
-            "hits": 30,
-            "total": 127,
-            "rate": 23.6
+            "hits": 28,
+            "total": 120,
+            "rate": 23.3
           }
         }
       },
@@ -2208,19 +2208,9 @@
           }
         }
       }
-    ],
-    "refresh": {
-      "generatedAt": "2026-10-24T20:19:48.283Z",
-      "stocks": 1062,
-      "failures": []
-    }
+    ]
   },
   "mention_history": {
-    "2026-09-10": {
-      "stocks": [],
-      "sectors": [],
-      "opinions": []
-    },
     "2026-09-11": {
       "stocks": [],
       "sectors": [],
@@ -2350,12 +2340,37 @@
       "stocks": [],
       "sectors": [],
       "opinions": []
+    },
+    "2026-10-19": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-20": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-21": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-22": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
+    },
+    "2026-10-23": {
+      "stocks": [],
+      "sectors": [],
+      "opinions": []
     }
   },
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-10-24",
+    "asOf": "2026-10-25",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
