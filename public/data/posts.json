@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-29",
+  "date": "2026-10-30",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1744,34 +1744,34 @@
   ],
   "market": {
     "kospi": {
-      "index": 5937.66,
-      "asOf": "20261029",
-      "d1": -1.2,
-      "d5": 7.3,
-      "d20": -13.6,
+      "index": 5620.95,
+      "asOf": "20261030",
+      "d1": -5.3,
+      "d5": 1.3,
+      "d20": -17.8,
       "flows": null,
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 753.23,
-      "asOf": "20261029",
-      "d1": -2.3,
-      "d5": -1.4,
-      "d20": -11.4,
+      "index": 720.46,
+      "asOf": "20261030",
+      "d1": -4.4,
+      "d5": -4.2,
+      "d20": -15.8,
       "flows": null,
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 26241.206,
+      "index": 26184.724,
       "asOf": "20261029",
-      "d1": -1.2,
-      "d5": 0.9
+      "d1": -1.4,
+      "d5": 0.7
     },
     "sp500": {
-      "index": 7725.09,
+      "index": 7720.39,
       "asOf": "20261029",
-      "d1": -0.2,
-      "d5": 0.8
+      "d1": -0.3,
+      "d5": 0.7
     }
   },
   "prices": {
@@ -1788,8 +1788,8 @@
         "institutionToday": 245680,
         "foreign5d": 202706,
         "institution5d": 3533676,
-        "foreignRate": 46.18,
-        "volume": 24911188,
+        "foreignRate": 46.17,
+        "volume": 24975596,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1808,8 +1808,8 @@
         "institutionToday": -167108,
         "foreign5d": -277603,
         "institution5d": 815168,
-        "foreignRate": 48.7,
-        "volume": 4498298,
+        "foreignRate": 48.72,
+        "volume": 4549384,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-10-29",
-    "generatedAt": "2026-10-29T14:35:37.295Z",
+    "date": "2026-10-30",
+    "generatedAt": "2026-10-30T02:11:09.855Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-10-30",
+      "buy_pct": 0
+    },
     {
       "date": "2026-10-29",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-10-26",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-10-25",
       "buy_pct": 0
     }
   ],
@@ -2211,11 +2211,6 @@
     ]
   },
   "mention_history": {
-    "2026-09-15": {
-      "stocks": [],
-      "sectors": [],
-      "opinions": []
-    },
     "2026-09-16": {
       "stocks": [],
       "sectors": [],
@@ -2360,7 +2355,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-10-29",
+    "asOf": "2026-10-30",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
