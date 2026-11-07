@@ -1849,7 +1849,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-10-30",
+    "asOf": "2026-11-06",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1865,8 +1865,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-09-09",
-      "historyEnd": "2026-10-30",
+      "historyStart": "2024-08-29",
+      "historyEnd": "2026-11-06",
       "eligibleMentions": 6622,
       "independentEpisodes": 5358,
       "repeatedMentionsExcluded": 1264
@@ -1877,14 +1877,14 @@
         "opinions": 383,
         "w": {
           "63": {
-            "hits": 210,
-            "total": 374,
-            "rate": 56.1
+            "hits": 212,
+            "total": 376,
+            "rate": 56.4
           },
           "252": {
-            "hits": 129,
-            "total": 220,
-            "rate": 58.6
+            "hits": 134,
+            "total": 229,
+            "rate": 58.5
           }
         }
       },
@@ -1894,13 +1894,13 @@
         "w": {
           "63": {
             "hits": 75,
-            "total": 157,
-            "rate": 47.8
+            "total": 158,
+            "rate": 47.5
           },
           "252": {
-            "hits": 42,
-            "total": 74,
-            "rate": 56.8
+            "hits": 45,
+            "total": 78,
+            "rate": 57.7
           }
         }
       },
@@ -1910,8 +1910,8 @@
         "w": {
           "63": {
             "hits": 345,
-            "total": 641,
-            "rate": 53.8
+            "total": 642,
+            "rate": 53.7
           },
           "252": {
             "hits": 198,
@@ -1941,9 +1941,9 @@
         "opinions": 100,
         "w": {
           "63": {
-            "hits": 46,
-            "total": 99,
-            "rate": 46.5
+            "hits": 47,
+            "total": 100,
+            "rate": 47
           },
           "252": {
             "hits": 30,
@@ -1958,13 +1958,13 @@
         "w": {
           "63": {
             "hits": 240,
-            "total": 464,
-            "rate": 51.7
+            "total": 466,
+            "rate": 51.5
           },
           "252": {
-            "hits": 115,
-            "total": 237,
-            "rate": 48.5
+            "hits": 119,
+            "total": 248,
+            "rate": 48
           }
         }
       },
@@ -1973,14 +1973,14 @@
         "opinions": 418,
         "w": {
           "63": {
-            "hits": 196,
-            "total": 408,
-            "rate": 48
+            "hits": 197,
+            "total": 413,
+            "rate": 47.7
           },
           "252": {
-            "hits": 84,
-            "total": 217,
-            "rate": 38.7
+            "hits": 86,
+            "total": 221,
+            "rate": 38.9
           }
         }
       },
@@ -1989,9 +1989,9 @@
         "opinions": 52,
         "w": {
           "63": {
-            "hits": 24,
-            "total": 48,
-            "rate": 50
+            "hits": 25,
+            "total": 52,
+            "rate": 48.1
           },
           "252": {
             "hits": 9,
@@ -2005,14 +2005,14 @@
         "opinions": 370,
         "w": {
           "63": {
-            "hits": 147,
-            "total": 353,
-            "rate": 41.6
+            "hits": 149,
+            "total": 356,
+            "rate": 41.9
           },
           "252": {
-            "hits": 66,
-            "total": 179,
-            "rate": 36.9
+            "hits": 68,
+            "total": 184,
+            "rate": 37
           }
         }
       },
@@ -2037,14 +2037,14 @@
         "opinions": 750,
         "w": {
           "63": {
-            "hits": 304,
-            "total": 741,
-            "rate": 41
+            "hits": 307,
+            "total": 747,
+            "rate": 41.1
           },
           "252": {
-            "hits": 140,
-            "total": 441,
-            "rate": 31.7
+            "hits": 143,
+            "total": 447,
+            "rate": 32
           }
         }
       },
@@ -2054,13 +2054,13 @@
         "w": {
           "63": {
             "hits": 168,
-            "total": 330,
-            "rate": 50.9
+            "total": 332,
+            "rate": 50.6
           },
           "252": {
-            "hits": 38,
-            "total": 136,
-            "rate": 27.9
+            "hits": 43,
+            "total": 142,
+            "rate": 30.3
           }
         }
       },
@@ -2070,13 +2070,13 @@
         "w": {
           "63": {
             "hits": 125,
-            "total": 313,
-            "rate": 39.9
+            "total": 315,
+            "rate": 39.7
           },
           "252": {
-            "hits": 43,
-            "total": 160,
-            "rate": 26.9
+            "hits": 45,
+            "total": 165,
+            "rate": 27.3
           }
         }
       },
@@ -2122,9 +2122,9 @@
             "rate": 50
           },
           "252": {
-            "hits": 17,
-            "total": 79,
-            "rate": 21.5
+            "hits": 18,
+            "total": 80,
+            "rate": 22.5
           }
         }
       },
@@ -2149,9 +2149,9 @@
         "opinions": 170,
         "w": {
           "63": {
-            "hits": 66,
-            "total": 160,
-            "rate": 41.3
+            "hits": 67,
+            "total": 161,
+            "rate": 41.6
           },
           "252": {
             "hits": 0,
@@ -2166,8 +2166,8 @@
         "w": {
           "63": {
             "hits": 50,
-            "total": 190,
-            "rate": 26.3
+            "total": 193,
+            "rate": 25.9
           },
           "252": {
             "hits": 0,
@@ -2208,7 +2208,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-11-07T21:33:22.394Z",
+      "stocks": 1056,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-09-24": {
