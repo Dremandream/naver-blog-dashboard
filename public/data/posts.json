@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-13",
+  "date": "2026-11-14",
   "daily_briefs": [
     {
       "headline": "반도체 강세론 압도적이나, SK하이닉스 20일 -10.7%·AI 토큰 수익성 논쟁이 강세 확신을 흔든다",
@@ -1744,52 +1744,52 @@
   ],
   "market": {
     "kospi": {
-      "index": 5387.52,
+      "index": 5290.53,
       "asOf": "20261113",
-      "d1": 0.8,
-      "d5": 6.5,
-      "d20": -4.9,
+      "d1": -1,
+      "d5": 4.6,
+      "d20": -6.7,
       "flows": null,
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 713,
+      "index": 699.66,
       "asOf": "20261113",
-      "d1": 2.4,
-      "d5": 10.7,
-      "d20": -10.3,
+      "d1": 0.4,
+      "d5": 8.6,
+      "d20": -12,
       "flows": null,
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 25366.093,
-      "asOf": "20261112",
-      "d1": -0.4,
-      "d5": 4.3
+      "index": 24947.665,
+      "asOf": "20261113",
+      "d1": -1.6,
+      "d5": 1.5
     },
     "sp500": {
-      "index": 7592.4,
-      "asOf": "20261112",
-      "d1": -0.4,
-      "d5": 3.2
+      "index": 7525.99,
+      "asOf": "20261113",
+      "d1": -0.9,
+      "d5": 2
     }
   },
   "prices": {
     "삼성전자": {
       "market": "KR",
-      "price": 206000,
-      "asOf": "20261111",
-      "d1": 3.6,
-      "d5": -5.5,
-      "d20": -11.2,
+      "price": 208000,
+      "asOf": "20261112",
+      "d1": 1,
+      "d5": 3.2,
+      "d20": -1,
       "investor": {
-        "asOf": "20261112",
-        "foreignToday": 3611532,
-        "institutionToday": -1283117,
-        "foreign5d": 5191714,
-        "institution5d": 176969,
+        "asOf": "20261113",
+        "foreignToday": 8216,
+        "institutionToday": -328604,
+        "foreign5d": 5855908,
+        "institution5d": 91291,
         "foreignRate": 46.07,
-        "volume": 19721557,
+        "volume": 12822005,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1797,19 +1797,19 @@
     },
     "SK하이닉스": {
       "market": "KR",
-      "price": 1277000,
-      "asOf": "20261111",
-      "d1": 5.4,
-      "d5": -8.5,
-      "d20": -10,
+      "price": 1254000,
+      "asOf": "20261112",
+      "d1": -1.8,
+      "d5": -0.8,
+      "d20": -0.6,
       "investor": {
-        "asOf": "20261112",
-        "foreignToday": -685802,
-        "institutionToday": 393605,
-        "foreign5d": -2130831,
-        "institution5d": 960150,
-        "foreignRate": 47.94,
-        "volume": 4238276,
+        "asOf": "20261113",
+        "foreignToday": -370341,
+        "institutionToday": 24207,
+        "foreign5d": -852398,
+        "institution5d": 233783,
+        "foreignRate": 47.89,
+        "volume": 3199812,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1817,8 +1817,8 @@
     }
   },
   "verdicts": {
-    "date": "2026-11-13",
-    "generatedAt": "2026-11-13T02:59:15.333Z",
+    "date": "2026-11-14",
+    "generatedAt": "2026-11-13T15:36:50.388Z",
     "items": [],
     "critic": {
       "pass": true,
@@ -1827,6 +1827,10 @@
     }
   },
   "verdict_history": [
+    {
+      "date": "2026-11-14",
+      "buy_pct": 0
+    },
     {
       "date": "2026-11-13",
       "buy_pct": 0
@@ -1841,10 +1845,6 @@
     },
     {
       "date": "2026-11-10",
-      "buy_pct": 0
-    },
-    {
-      "date": "2026-11-09",
       "buy_pct": 0
     }
   ],
@@ -2211,11 +2211,6 @@
     ]
   },
   "mention_history": {
-    "2026-09-30": {
-      "stocks": [],
-      "sectors": [],
-      "opinions": []
-    },
     "2026-10-01": {
       "stocks": [],
       "sectors": [],
@@ -2355,7 +2350,7 @@
   "peter_fear_greed": {
     "score": null,
     "label": "데이터 부족",
-    "asOf": "2026-11-13",
+    "asOf": "2026-11-14",
     "postCount": 0,
     "dayCount": 0,
     "evidence": [],
