@@ -1849,7 +1849,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-11-06",
+    "asOf": "2026-11-13",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1865,13 +1865,29 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-09-14",
-      "historyEnd": "2026-11-06",
+      "historyStart": "2024-09-05",
+      "historyEnd": "2026-11-13",
       "eligibleMentions": 6589,
       "independentEpisodes": 5331,
       "repeatedMentionsExcluded": 1258
     },
     "sources": [
+      {
+        "person": "ITK 미주투",
+        "opinions": 185,
+        "w": {
+          "63": {
+            "hits": 75,
+            "total": 159,
+            "rate": 47.2
+          },
+          "252": {
+            "hits": 47,
+            "total": 81,
+            "rate": 58
+          }
+        }
+      },
       {
         "person": "피카츄 아저씨",
         "opinions": 380,
@@ -1882,25 +1898,9 @@
             "rate": 56
           },
           "252": {
-            "hits": 131,
-            "total": 226,
-            "rate": 58
-          }
-        }
-      },
-      {
-        "person": "ITK 미주투",
-        "opinions": 185,
-        "w": {
-          "63": {
-            "hits": 74,
-            "total": 157,
-            "rate": 47.1
-          },
-          "252": {
-            "hits": 44,
-            "total": 77,
-            "rate": 57.1
+            "hits": 132,
+            "total": 228,
+            "rate": 57.9
           }
         }
       },
@@ -1909,14 +1909,14 @@
         "opinions": 660,
         "w": {
           "63": {
-            "hits": 342,
-            "total": 637,
+            "hits": 343,
+            "total": 639,
             "rate": 53.7
           },
           "252": {
-            "hits": 196,
-            "total": 345,
-            "rate": 56.8
+            "hits": 203,
+            "total": 354,
+            "rate": 57.3
           }
         }
       },
@@ -1931,8 +1931,8 @@
           },
           "252": {
             "hits": 30,
-            "total": 58,
-            "rate": 51.7
+            "total": 59,
+            "rate": 50.8
           }
         }
       },
@@ -1947,8 +1947,8 @@
           },
           "252": {
             "hits": 42,
-            "total": 82,
-            "rate": 51.2
+            "total": 83,
+            "rate": 50.6
           }
         }
       },
@@ -1957,9 +1957,9 @@
         "opinions": 479,
         "w": {
           "63": {
-            "hits": 239,
-            "total": 465,
-            "rate": 51.4
+            "hits": 244,
+            "total": 473,
+            "rate": 51.6
           },
           "252": {
             "hits": 118,
@@ -1973,14 +1973,30 @@
         "opinions": 414,
         "w": {
           "63": {
-            "hits": 196,
-            "total": 409,
-            "rate": 47.9
+            "hits": 197,
+            "total": 413,
+            "rate": 47.7
           },
           "252": {
-            "hits": 85,
-            "total": 217,
-            "rate": 39.2
+            "hits": 89,
+            "total": 226,
+            "rate": 39.4
+          }
+        }
+      },
+      {
+        "person": "펭미업",
+        "opinions": 368,
+        "w": {
+          "63": {
+            "hits": 153,
+            "total": 359,
+            "rate": 42.6
+          },
+          "252": {
+            "hits": 72,
+            "total": 189,
+            "rate": 38.1
           }
         }
       },
@@ -1997,22 +2013,6 @@
             "hits": 9,
             "total": 24,
             "rate": 37.5
-          }
-        }
-      },
-      {
-        "person": "펭미업",
-        "opinions": 368,
-        "w": {
-          "63": {
-            "hits": 148,
-            "total": 354,
-            "rate": 41.8
-          },
-          "252": {
-            "hits": 67,
-            "total": 182,
-            "rate": 36.8
           }
         }
       },
@@ -2037,14 +2037,14 @@
         "opinions": 750,
         "w": {
           "63": {
-            "hits": 307,
-            "total": 747,
-            "rate": 41.1
+            "hits": 308,
+            "total": 748,
+            "rate": 41.2
           },
           "252": {
-            "hits": 143,
-            "total": 447,
-            "rate": 32
+            "hits": 146,
+            "total": 453,
+            "rate": 32.2
           }
         }
       },
@@ -2053,14 +2053,14 @@
         "opinions": 355,
         "w": {
           "63": {
-            "hits": 168,
-            "total": 332,
-            "rate": 50.6
+            "hits": 174,
+            "total": 345,
+            "rate": 50.4
           },
           "252": {
-            "hits": 43,
-            "total": 142,
-            "rate": 30.3
+            "hits": 47,
+            "total": 153,
+            "rate": 30.7
           }
         }
       },
@@ -2069,9 +2069,9 @@
         "opinions": 321,
         "w": {
           "63": {
-            "hits": 124,
-            "total": 314,
-            "rate": 39.5
+            "hits": 125,
+            "total": 317,
+            "rate": 39.4
           },
           "252": {
             "hits": 44,
@@ -2090,9 +2090,9 @@
             "rate": 41.9
           },
           "252": {
-            "hits": 44,
-            "total": 172,
-            "rate": 25.6
+            "hits": 46,
+            "total": 175,
+            "rate": 26.3
           }
         }
       },
@@ -2101,14 +2101,14 @@
         "opinions": 241,
         "w": {
           "63": {
-            "hits": 82,
-            "total": 227,
-            "rate": 36.1
+            "hits": 87,
+            "total": 233,
+            "rate": 37.3
           },
           "252": {
-            "hits": 31,
-            "total": 124,
-            "rate": 25
+            "hits": 32,
+            "total": 127,
+            "rate": 25.2
           }
         }
       },
@@ -2117,9 +2117,9 @@
         "opinions": 145,
         "w": {
           "63": {
-            "hits": 63,
-            "total": 126,
-            "rate": 50
+            "hits": 65,
+            "total": 131,
+            "rate": 49.6
           },
           "252": {
             "hits": 18,
@@ -2134,8 +2134,8 @@
         "w": {
           "63": {
             "hits": 37,
-            "total": 66,
-            "rate": 56.1
+            "total": 68,
+            "rate": 54.4
           },
           "252": {
             "hits": 5,
@@ -2150,8 +2150,8 @@
         "w": {
           "63": {
             "hits": 67,
-            "total": 161,
-            "rate": 41.6
+            "total": 166,
+            "rate": 40.4
           },
           "252": {
             "hits": 0,
@@ -2165,9 +2165,9 @@
         "opinions": 206,
         "w": {
           "63": {
-            "hits": 50,
-            "total": 193,
-            "rate": 25.9
+            "hits": 55,
+            "total": 204,
+            "rate": 27
           },
           "252": {
             "hits": 0,
@@ -2208,7 +2208,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-11-14T22:05:08.375Z",
+      "stocks": 1055,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-10-01": {
