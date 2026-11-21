@@ -1849,7 +1849,7 @@
     }
   ],
   "source_scores": {
-    "asOf": "2026-11-13",
+    "asOf": "2026-11-20",
     "schemaVersion": 1,
     "methodology": "next-trading-day-market-relative-independent-episodes",
     "episodeGapDays": 7,
@@ -1865,8 +1865,8 @@
       }
     ],
     "coverage": {
-      "historyStart": "2024-09-19",
-      "historyEnd": "2026-11-13",
+      "historyStart": "2024-09-12",
+      "historyEnd": "2026-11-20",
       "eligibleMentions": 6571,
       "independentEpisodes": 5315,
       "repeatedMentionsExcluded": 1256
@@ -1878,13 +1878,13 @@
         "w": {
           "63": {
             "hits": 75,
-            "total": 159,
-            "rate": 47.2
+            "total": 161,
+            "rate": 46.6
           },
           "252": {
-            "hits": 47,
-            "total": 81,
-            "rate": 58
+            "hits": 48,
+            "total": 83,
+            "rate": 57.8
           }
         }
       },
@@ -1893,14 +1893,14 @@
         "opinions": 380,
         "w": {
           "63": {
-            "hits": 209,
-            "total": 373,
+            "hits": 210,
+            "total": 375,
             "rate": 56
           },
           "252": {
-            "hits": 132,
-            "total": 228,
-            "rate": 57.9
+            "hits": 133,
+            "total": 233,
+            "rate": 57.1
           }
         }
       },
@@ -1914,9 +1914,25 @@
             "rate": 53.5
           },
           "252": {
-            "hits": 201,
-            "total": 350,
-            "rate": 57.4
+            "hits": 202,
+            "total": 354,
+            "rate": 57.1
+          }
+        }
+      },
+      {
+        "person": "레드버드",
+        "opinions": 119,
+        "w": {
+          "63": {
+            "hits": 68,
+            "total": 117,
+            "rate": 58.1
+          },
+          "252": {
+            "hits": 44,
+            "total": 85,
+            "rate": 51.8
           }
         }
       },
@@ -1937,34 +1953,34 @@
         }
       },
       {
-        "person": "레드버드",
-        "opinions": 119,
-        "w": {
-          "63": {
-            "hits": 68,
-            "total": 117,
-            "rate": 58.1
-          },
-          "252": {
-            "hits": 42,
-            "total": 83,
-            "rate": 50.6
-          }
-        }
-      },
-      {
         "person": "너는 무한하지 않느냐",
         "opinions": 479,
         "w": {
           "63": {
-            "hits": 244,
-            "total": 473,
-            "rate": 51.6
+            "hits": 245,
+            "total": 474,
+            "rate": 51.7
           },
           "252": {
             "hits": 118,
-            "total": 247,
-            "rate": 47.8
+            "total": 250,
+            "rate": 47.2
+          }
+        }
+      },
+      {
+        "person": "IT는 SK",
+        "opinions": 414,
+        "w": {
+          "63": {
+            "hits": 197,
+            "total": 414,
+            "rate": 47.6
+          },
+          "252": {
+            "hits": 96,
+            "total": 237,
+            "rate": 40.5
           }
         }
       },
@@ -1985,34 +2001,18 @@
         }
       },
       {
-        "person": "IT는 SK",
-        "opinions": 414,
-        "w": {
-          "63": {
-            "hits": 197,
-            "total": 413,
-            "rate": 47.7
-          },
-          "252": {
-            "hits": 89,
-            "total": 226,
-            "rate": 39.4
-          }
-        }
-      },
-      {
         "person": "펭미업",
         "opinions": 368,
         "w": {
           "63": {
-            "hits": 153,
-            "total": 359,
-            "rate": 42.6
+            "hits": 155,
+            "total": 365,
+            "rate": 42.5
           },
           "252": {
             "hits": 72,
-            "total": 189,
-            "rate": 38.1
+            "total": 193,
+            "rate": 37.3
           }
         }
       },
@@ -2042,9 +2042,9 @@
             "rate": 41.2
           },
           "252": {
-            "hits": 146,
-            "total": 453,
-            "rate": 32.2
+            "hits": 152,
+            "total": 470,
+            "rate": 32.3
           }
         }
       },
@@ -2053,46 +2053,14 @@
         "opinions": 355,
         "w": {
           "63": {
-            "hits": 174,
-            "total": 345,
+            "hits": 177,
+            "total": 351,
             "rate": 50.4
           },
           "252": {
-            "hits": 47,
-            "total": 153,
-            "rate": 30.7
-          }
-        }
-      },
-      {
-        "person": "콤디티",
-        "opinions": 321,
-        "w": {
-          "63": {
-            "hits": 125,
-            "total": 317,
-            "rate": 39.4
-          },
-          "252": {
-            "hits": 44,
-            "total": 164,
-            "rate": 26.8
-          }
-        }
-      },
-      {
-        "person": "씹배",
-        "opinions": 250,
-        "w": {
-          "63": {
-            "hits": 103,
-            "total": 246,
-            "rate": 41.9
-          },
-          "252": {
-            "hits": 46,
-            "total": 175,
-            "rate": 26.3
+            "hits": 50,
+            "total": 158,
+            "rate": 31.6
           }
         }
       },
@@ -2101,14 +2069,46 @@
         "opinions": 238,
         "w": {
           "63": {
-            "hits": 86,
-            "total": 230,
-            "rate": 37.4
+            "hits": 90,
+            "total": 237,
+            "rate": 38
           },
           "252": {
-            "hits": 32,
-            "total": 124,
-            "rate": 25.8
+            "hits": 33,
+            "total": 125,
+            "rate": 26.4
+          }
+        }
+      },
+      {
+        "person": "씹배",
+        "opinions": 250,
+        "w": {
+          "63": {
+            "hits": 105,
+            "total": 250,
+            "rate": 42
+          },
+          "252": {
+            "hits": 46,
+            "total": 176,
+            "rate": 26.1
+          }
+        }
+      },
+      {
+        "person": "콤디티",
+        "opinions": 321,
+        "w": {
+          "63": {
+            "hits": 126,
+            "total": 318,
+            "rate": 39.6
+          },
+          "252": {
+            "hits": 44,
+            "total": 170,
+            "rate": 25.9
           }
         }
       },
@@ -2122,9 +2122,9 @@
             "rate": 49.2
           },
           "252": {
-            "hits": 15,
-            "total": 75,
-            "rate": 20
+            "hits": 17,
+            "total": 77,
+            "rate": 22.1
           }
         }
       },
@@ -2150,8 +2150,8 @@
         "w": {
           "63": {
             "hits": 67,
-            "total": 166,
-            "rate": 40.4
+            "total": 167,
+            "rate": 40.1
           },
           "252": {
             "hits": 0,
@@ -2166,8 +2166,8 @@
         "w": {
           "63": {
             "hits": 55,
-            "total": 204,
-            "rate": 27
+            "total": 205,
+            "rate": 26.8
           },
           "252": {
             "hits": 0,
@@ -2208,7 +2208,12 @@
           }
         }
       }
-    ]
+    ],
+    "refresh": {
+      "generatedAt": "2026-11-21T22:52:19.632Z",
+      "stocks": 1055,
+      "failures": []
+    }
   },
   "mention_history": {
     "2026-10-08": {
