@@ -1744,34 +1744,34 @@
   ],
   "market": {
     "kospi": {
-      "index": 5006.03,
-      "asOf": "20261124",
-      "d1": 6.3,
-      "d5": 0.8,
-      "d20": -11.2,
+      "index": 4722.98,
+      "asOf": "20261125",
+      "d1": -5.7,
+      "d5": -6.8,
+      "d20": -21.4,
       "flows": null,
       "dataSource": "naver"
     },
     "kosdaq": {
-      "index": 665.88,
-      "asOf": "20261124",
-      "d1": 4.8,
-      "d5": 2.4,
-      "d20": -10.5,
+      "index": 652.44,
+      "asOf": "20261125",
+      "d1": -2,
+      "d5": -1.6,
+      "d20": -15.4,
       "flows": null,
       "dataSource": "naver"
     },
     "nasdaq": {
-      "index": 23674.782,
+      "index": 23733.535,
       "asOf": "20261124",
-      "d1": -1.7,
-      "d5": -2.7
+      "d1": -1.5,
+      "d5": -2.4
     },
     "sp500": {
-      "index": 7186.55,
+      "index": 7201.09,
       "asOf": "20261124",
-      "d1": -0.7,
-      "d5": -2.1
+      "d1": -0.5,
+      "d5": -1.9
     }
   },
   "prices": {
@@ -1788,8 +1788,8 @@
         "institutionToday": 1176494,
         "foreign5d": -1427827,
         "institution5d": 840584,
-        "foreignRate": 45.89,
-        "volume": 17045817,
+        "foreignRate": 45.9,
+        "volume": 17079045,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1808,8 +1808,8 @@
         "institutionToday": -844,
         "foreign5d": -547496,
         "institution5d": -361500,
-        "foreignRate": 49.33,
-        "volume": 3595962,
+        "foreignRate": 49.32,
+        "volume": 3611127,
         "forwardPer": null,
         "pbr": null,
         "source": "naver"
@@ -1818,7 +1818,7 @@
   },
   "verdicts": {
     "date": "2026-11-25",
-    "generatedAt": "2026-11-24T19:01:31.975Z",
+    "generatedAt": "2026-11-25T05:05:18.915Z",
     "items": [],
     "critic": {
       "pass": true,
